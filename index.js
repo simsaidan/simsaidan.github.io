@@ -4,7 +4,7 @@ const selected = select.options[select.selectedIndex].text;
 
 button.addEventListener('click', () => {
   if (selected === 'Link 1') {
-    window.location = 'cnn.com';
+    window.location = 'https://cnn.com';
   } else if (selected === 'Link 2') {
     window.location = 'https://www.espn.com/';
   }
