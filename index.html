@@ -44,6 +44,23 @@
   </div>
 
   <style>
+    div {
+      display: block;
+    }
+
+    .tournament {
+      margin: 40px 0;
+      padding-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .t_heading {
+      margin-bottom: 10px;
+      color: var(--white);
+      padding: 10px 20px;
+    }
+
     .item_date {
       font-family: Monda, sans-serif;
       font-size: 12px;
@@ -57,15 +74,97 @@
       text-transform: uppercase;
     }
 
+    .item_body {
+      padding: 20px 15px;
+      background-color: #fff
+    }
+
+    .item_info {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      display: block;
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
+      object-fit: contain;
+      margin: 0 10px 0 0;
+    }
+
+    .prefix {
+      margin-right: 10px;
+      margin-bottom: -4px;
+    }
+
+    .item_team {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .item_inner {
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: reverse;
+      flex-direction: column-reverse;
+    }
+
+    .item_result {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .item_bottom {
+      background: #eee;
+      padding: 5px 15px;
+      border-radius: 0 0 8px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+    }
+
+    .round {
+      display: block;
+      width: 100%;
+      margin: 5px 0 10px;
+      font-size: 15px;
+      color: var(--dark-color);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+
+    a,
     time,
     span,
-    div {
+    p,
+    div,
+    img,
+    h3 {
       margin: 0;
       padding: 0;
       border: 0;
       font-size: 100%;
       font-family: inherit;
       vertical-align: baseline;
+    }
+
+    h3 {
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
     }
   </style>
   <script src="index.js"></script>
