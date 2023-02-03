@@ -91,17 +91,31 @@
     }
 
     .item_body {
+      display: flex;
       padding: 20px 15px;
       background-color: #fff;
       text-align: left;
+      -webkit-box-flex: 1;
+      flex-grow: 1;
+      border-radius: 0;
+      -webkit-box-align: center;
+      align-items: center;
+      box-sizing: border-box;
+      -webkit-box-direction: normal;
     }
 
     .item_info {
+      margin-bottom: 0;
+      min-width: 50%;
+      -webkit-box-flex: 1;
+      flex-grow: 1;
+      margin-right: auto;
+      -webkit-box-align: center;
+      box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: flex-start;
-      margin-bottom: 20px;
       text-align: left;
     }
 
@@ -136,10 +150,13 @@
     }
 
     .item_inner {
-      display: flex;
-      box-sizing: border-box;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
       flex-direction: row;
       -webkit-box-align: center;
+      align-items: center;
+      display: flex;
+      box-sizing: border-box;
       text-align: left;
     }
 
@@ -175,7 +192,6 @@
       color: #b31b1b;
       margin-right: auto;
       text-transform: uppercase;
-      color: #00339f;
       font-weight: 600;
       font-size: 12px;
       text-align: left;
