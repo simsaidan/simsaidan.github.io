@@ -25,6 +25,7 @@
         </div>
         <div class="item_body">
           <div class="item_info">
+            <img src="cornell.png" alt="Cornell logo" class="logo" />
             <span class="prefix">vs.</span>
             <div class="item_team">
               <h3>Millburn</h3>
@@ -135,6 +136,14 @@
       min-width: 50px;
       object-fit: contain;
       margin: 0 10px 0 0;
+      box-sizing: border-box;
+      text-align: left;
+      -webkit-box-direction: normal;
+    }
+
+    img {
+      overflow-clip-margin: content-box;
+      overflow: clip;
     }
 
     .prefix {
