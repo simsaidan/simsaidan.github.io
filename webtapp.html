@@ -11,7 +11,7 @@
   Stats
   <script>
     const dateDiv = document.querySelector('.date');
-    dateDiv.textContent = new Date().toLocaleDateString();
+    dateDiv.textContent = new Date().toLocaleDateString({ weekday: 'long' });
   </script>
 </body>
 
