@@ -6,12 +6,17 @@
   <div class="date"> Date</div>
   <div class="server">Serving:</div>
   <hr>
-  Point Adderr
+  Point Adderrr
   <hr>
   Stats
   <script>
     const dateDiv = document.querySelector('.date');
-    dateDiv.textContent = new Date().toLocaleDateString({ weekday: 'long' });
+    dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    }).format(new Date());
   </script>
 </body>
 
