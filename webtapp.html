@@ -27,6 +27,8 @@
   <hr>
   <div>Play-by-Play</div>
   <script>
+    const score = document.querySelector('.score')
+    score.textContent = 0;
     const dateDiv = document.querySelector('.date');
     dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
