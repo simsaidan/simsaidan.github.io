@@ -90,7 +90,13 @@
     }).format(new Date());
 
     function makeScore() {
-      return apts + '-' + bpts
+      let scorestr = '';
+      for (let i = 0; i < prevSets.length; i++) {
+        scorestr += prevSets[i];
+        scorestr += ", "
+      }
+      scorestr += agames + '-' + bgames + ", " + apts + '-' + bpts
+      return scorestr
     }
 
     function increment() {
