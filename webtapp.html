@@ -27,9 +27,28 @@
     <input type="radio" name="serveIn" value="serveout"> No
   </div>
   <div class="pointq">Who won the point?</div>
+  <div class="radio">
+    <input type="radio" name="whowon" value="Awon"> Player A
+    <input type="radio" name="whowon" value="Bwon"> Player B
+  </div>
   <div class="pointq">How was the point won?</div>
+  <div class="radio">
+    <input type="radio" name="howwon" value="ace"> Ace
+    <input type="radio" name="howwon" value="swinner"> Service Winner
+    <input type="radio" name="howwon" value="df"> Double Fault
+  </div>
+  <div class="radio">
+    <input type="radio" name="howwon" value="fhw"> FH Winner
+    <input type="radio" name="howwon" value="bhw"> BH Winner
+    <input type="radio" name="howwon" value="fhe"> FH Error
+    <input type="radio" name="howwon" value="bhe"> BH Error
+  </div>
+  <div class="radio">
+    <input type="radio" name="howwon" value="nw"> Net Winner
+    <input type="radio" name="howwon" value="ne"> Net Error
+  </div>
   <div class="button">
-    <button type="button" class="submitb">Submit Point</button>
+    <button type="button" class="submitb" onclick="increment()">Submit Point</button>
   </div>
   <hr>
   <div>Stats</div>
@@ -45,6 +64,15 @@
       day: 'numeric',
       weekday: 'long'
     }).format(new Date());
+
+    function increment() {
+      var div = document.querySelector("score");
+      var num = parseInt(div.textContent);
+      num++;
+      div.textContent = num;
+    }
+
+
   </script>
 </body>
 
