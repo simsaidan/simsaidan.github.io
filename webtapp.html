@@ -72,8 +72,15 @@
   <hr>
   <div>Play-by-Play</div>
   <script>
+    var apts = 0;
+    var bpts = 0;
+    var agames = 0;
+    var bgames = 0;
+    let prevSets = [];
+    let gameScores = [0, 15, 30, 40];
     const score = document.querySelector('.score')
-    score.textContent = 0;
+    score.textContent = apts + '-' + bpts;
+
     const dateDiv = document.querySelector('.date');
     dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
