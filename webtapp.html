@@ -89,11 +89,14 @@
       weekday: 'long'
     }).format(new Date());
 
+    function makeScore() {
+      return apts + '-' + bpts
+    }
+
     function increment() {
       var div = document.querySelector(".score");
-      var num = parseInt(div.textContent);
-      num++;
-      div.textContent = num;
+      apts++
+      div.textContent = makeScore();
     }
 
 
