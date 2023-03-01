@@ -103,6 +103,10 @@
       var div = document.querySelector(".score");
       if (apts === 40) {
         apts = 0;
+        agames++;
+        if (agames === 6) {
+          agames = 0;
+        }
       }
       else {
         apts = gameScores[gameScores.indexOf(apts) + 1]
