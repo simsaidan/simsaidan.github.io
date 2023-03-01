@@ -95,7 +95,12 @@
 
     function increment() {
       var div = document.querySelector(".score");
-      apts++
+      if (apts === 40) {
+        apts = 0;
+      }
+      else {
+        apts = gameScores[gameScores.indexOf(apts) + 1]
+      }
       div.textContent = makeScore();
     }
 
