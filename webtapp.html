@@ -80,6 +80,9 @@
     let gameScores = [0, 15, 30, 40];
     const score = document.querySelector('.score')
     score.textContent = apts + '-' + bpts;
+    let mstats = {
+      tpoints: 0
+    };
 
     const dateDiv = document.querySelector('.date');
     dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
@@ -106,6 +109,7 @@
         agames++;
         if (agames === 6) {
           agames = 0;
+
         }
       }
       else {
