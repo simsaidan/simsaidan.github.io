@@ -109,13 +109,15 @@
         agames++;
         if (agames === 6) {
           agames = 0;
-
+          prevSets.push(agames + '-' + bgames)
         }
       }
       else {
         apts = gameScores[gameScores.indexOf(apts) + 1]
       }
       div.textContent = makeScore();
+
+      mstats.tpoints++;
     }
 
 
