@@ -66,7 +66,7 @@
     <button type="button" class="bmenubutton">Returning</button>
     <button type="button" class="bmenubutton">W/E & Net</button>
     <button type="button" class="bmenubutton">Aces/DF</button>
-    <button type="button" class="bmenubutton">Total</button>
+    <button type="button" class="bmenubutton" onclick="totalbf()">Total</button>
   </div>
   <div class="btt">Serve</div>
   <div>
@@ -195,6 +195,15 @@
       weekday: 'long'
     }).format(new Date());
 
+    function totalbf() {
+      const thead = document.querySelector('.btt');
+      thead.textContent = 'Points';
+      const mhead = document.querySelector('.btm');
+      thead.textContent = 'Games';
+      const bhead = document.querySelector('.btb');
+      thead.textContent = 'Time';
+    }
+
     function makeScore() {
       let scorestr = '';
       for (let i = 0; i < prevSets.length; i++) {
@@ -204,6 +213,7 @@
       scorestr += agames + '-' + bgames + ", " + apts + '-' + bpts
       return scorestr
     }
+
 
     function increment() {
       var div = document.querySelector(".score");
