@@ -168,6 +168,16 @@
         <td class="bm3">Match Time</td>
         <td class="br3">0:00</td>
       </tr>
+      <tr class="table-row">
+        <td class="bl4"></td>
+        <td class="bm4"></td>
+        <td class="br4"></td>
+      </tr>
+      <tr class="table-row">
+        <td class="bl5"></td>
+        <td class="bm5"></td>
+        <td class="br5"></td>
+      </tr>
     </table>
   </div>
   <hr>
@@ -199,9 +209,30 @@
       const thead = document.querySelector('.btt');
       thead.textContent = 'Points';
       const mhead = document.querySelector('.btm');
-      thead.textContent = 'Games';
+      mhead.textContent = 'Games';
       const bhead = document.querySelector('.btb');
-      thead.textContent = 'Time';
+      bhead.textContent = 'Time';
+      const bl5 = document.querySelector('.bl5');
+      bl5.textContent = ''
+      const bm5 = document.querySelector('.bm5');
+      bm5.textContent = 'Match Time'
+      const br5 = document.querySelector('.br5');
+      br5.textContent = ''
+      const bl4 = document.querySelector('.bl4');
+      bl4.textContent = ''
+      const bm4 = document.querySelector('.bm4');
+      bm4.textContent = 'Avg. Set Time (min)'
+      const br4 = document.querySelector('.br4');
+      br4.textContent = ''
+      const bl3 = document.querySelector('.bl3');
+      bl3.textContent = ''
+      const bm3 = document.querySelector('.bm3');
+      bm3.textContent = 'Avg. Set Time (min)'
+      const br3 = document.querySelector('.br3');
+      br3.textContent = ''
+
+
+
     }
 
     function makeScore() {
