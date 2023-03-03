@@ -1009,8 +1009,7 @@
 
     function increment() {
       var div = document.querySelector(".score");
-      var checkedRadiowinner = document.querySelector('.radio input[type="radio"]:checked');
-      var winner = checkedRadiowinner.value;
+      let winner = document.querySelector('input[name="whowon"]:checked').value;
       if (winner === 'Awon') {
         if (apts === 40 || apts === 'AD') {
           apts = 0;
