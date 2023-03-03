@@ -204,14 +204,7 @@
       day: 'numeric',
       weekday: 'long'
     }).format(new Date());
-
-    function totalbf() {
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Points';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Games';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Time';
+    function totalbfbottom() {
       const bl5 = document.querySelector('.bl5');
       bl5.textContent = ''
       const bm5 = document.querySelector('.bm5');
@@ -242,6 +235,8 @@
       bm1.textContent = 'Avg. Point Time (Sec)'
       const br1 = document.querySelector('.br1');
       br1.textContent = ''
+    }
+    function totalbfmiddle() {
       const ml5 = document.querySelector('.ml5');
       ml5.textContent = ''
       const mm5 = document.querySelector('.mm5');
@@ -284,6 +279,15 @@
       mm7.textContent = ''
       const mr7 = document.querySelector('.mr7');
       mr7.textContent = ''
+    }
+    function totalbf() {
+      const thead = document.querySelector('.btt');
+      thead.textContent = 'Points';
+      const mhead = document.querySelector('.btm');
+      mhead.textContent = 'Games';
+      const bhead = document.querySelector('.btb');
+      bhead.textContent = 'Time';
+
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
       const tm1 = document.querySelector('.tm1');
@@ -326,7 +330,8 @@
       tm7.textContent = ''
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
-
+      totalbfbottom()
+      totalbfmiddle()
 
     }
 
