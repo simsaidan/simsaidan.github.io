@@ -62,7 +62,7 @@
   </div>
   <div class="Button Menu">
     <button type="button" class="bmenubutton" onclick="overviewbf()">Overview</button>
-    <button type="button" class="bmenubutton">Serving</button>
+    <button type="button" class="bmenubutton" onclick="servingbf()">Serving</button>
     <button type="button" class="bmenubutton">Returning</button>
     <button type="button" class="bmenubutton">W/E & Net</button>
     <button type="button" class="bmenubutton">Aces/DF</button>
@@ -454,6 +454,13 @@
 
 
     }
+    function servingbf() {
+      const thead = document.querySelector('.btm');
+      thead.textContent = 'Points';
+      const tm1 = document.querySelector('.tm1');
+      tm1.textContent = 'It works'
+    }
+
     function makeScore() {
       let scorestr = '';
       for (let i = 0; i < prevSets.length; i++) {
