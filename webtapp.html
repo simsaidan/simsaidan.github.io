@@ -49,7 +49,8 @@
   </div>
   <div class="button">
     <button type="button" class="submitb" onclick="increment()">Submit Point</button>
-    <button type="button" class="resetb" onclick="location.reload()">Reset Match</button>
+    <button type="button" class="resetb"
+      onclick="if (confirm('Are you sure you want to reload?')) { location.reload(); }">Reset Match</button>
   </div>
   <hr>
   <div class="Players">
@@ -196,6 +197,9 @@
     let mstats = {
       tpoints: 0
     };
+
+    var match_done = false;
+    var tiebreak = 0;
 
     const dateDiv = document.querySelector('.date');
     dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
