@@ -61,7 +61,7 @@
     <span class="RatingB">Player B</span>
   </div>
   <div class="Button Menu">
-    <button type="button" class="bmenubutton">Overview</button>
+    <button type="button" class="bmenubutton" onclick="overviewbf()">Overview</button>
     <button type="button" class="bmenubutton">Serving</button>
     <button type="button" class="bmenubutton">Returning</button>
     <button type="button" class="bmenubutton">W/E & Net</button>
@@ -330,7 +330,7 @@
 
     }
 
-    function overviewbf{
+    function overviewbf() {
       const thead = document.querySelector('.btt');
       thead.textContent = 'Serve';
       const mhead = document.querySelector('.btm');
