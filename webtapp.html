@@ -1009,18 +1009,39 @@
 
     function increment() {
       var div = document.querySelector(".score");
-      if (apts === 40) {
-        apts = 0;
-        agames++;
-        if (agames === 6) {
-          prevSets.push(agames + '-' + bgames)
-          agames = 0;
-
-
+      var checkedRadiowinner = document.querySelector('.radio input[type="radio"]:checked');
+      var winner = checkedRadiowinner.value;
+      if (winner === 'Awon') {
+        if (apts === 40 || apts === 'AD') {
+          apts = 0;
+          bpts = 0;
+          agames++;
+          if (agames === 6) {
+            prevSets.push(agames + '-' + bgames)
+            agames = 0;
+            bgames = 0;
+          }
+        }
+        else {
+          apts = gameScores[gameScores.indexOf(apts) + 1]
+        }
+      }
+      else if (winner === 'B') {
+        if (bpts === 40 || bpts === 'AD') {
+          apts = 0;
+          bpts = 0;
+          bgames++;
+          if (bgames === 6) {
+            prevSets.push(agames + '-' + bgames)
+            bgames = 0;
+            agames = 0;
+          }
+        } else {
+          bpts = gameScores[gameScores.indexOf(bpts) + 1]
         }
       }
       else {
-        apts = gameScores[gameScores.indexOf(apts) + 1]
+        return
       }
       div.textContent = makeScore();
 
