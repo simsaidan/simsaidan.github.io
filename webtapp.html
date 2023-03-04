@@ -1011,7 +1011,13 @@
       var div = document.querySelector(".score");
       let winner = document.querySelector('input[name="whowon"]:checked').value;
       if (winner === 'Awon') {
-        if (apts === 40 || apts === 'AD') {
+        if (apts === 40 && bpts === 'AD') {
+          bpts = 40
+        }
+        else if (apts === 40 && bpts === 40) {
+          apts = 'AD'
+        }
+        else if (apts === 40 || apts === 'AD') {
           apts = 0;
           bpts = 0;
           agames++;
@@ -1026,7 +1032,13 @@
         }
       }
       else if (winner === 'Bwon') {
-        if (bpts === 40 || bpts === 'AD') {
+        if (bpts === 40 && apts === 'AD') {
+          apts = 40
+        }
+        else if (bpts === 40 && apts === 40) {
+          bpts = 'AD'
+        }
+        else if (bpts === 40 || bpts === 'AD') {
           apts = 0;
           bpts = 0;
           bgames++;
