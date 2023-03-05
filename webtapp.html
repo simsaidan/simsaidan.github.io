@@ -1011,7 +1011,19 @@
       var div = document.querySelector(".score");
       let winner = document.querySelector('input[name="whowon"]:checked').value;
       if (winner === 'Awon') {
-        if (apts === 40 && bpts === 'AD') {
+        if (tiebreak === 7) {
+          apts++
+          if (apts >= 7 && apts > bpts + 1) {
+            agames++
+            prevSets.push(agames + '-' + bgames + ' ' + '(' + bpts + ')')
+            apts = 0
+            bpts = 0
+            agames = 0
+            bgames = 0
+            tiebreak = 0
+          }
+        }
+        else if (apts === 40 && bpts === 'AD') {
           bpts = 40
         }
         else if (apts === 40 && bpts === 40) {
@@ -1035,7 +1047,19 @@
         }
       }
       else if (winner === 'Bwon') {
-        if (bpts === 40 && apts === 'AD') {
+        if (tiebreak === 7) {
+          bpts++
+          if (bpts >= 7 && bpts > apts + 1) {
+            agames++
+            prevSets.push(agames + '-' + bgames + ' ' + '(' + apts + ')')
+            apts = 0
+            bpts = 0
+            agames = 0
+            bgames = 0
+            tiebreak = 0
+          }
+        }
+        else if (bpts === 40 && apts === 'AD') {
           apts = 40
         }
         else if (bpts === 40 && apts === 40) {
