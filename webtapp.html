@@ -183,6 +183,8 @@
   </div>
   <hr>
   <div>Play-by-Play</div>
+  <div class="pbp"></div>
+
   <script>
     var apts = 0;
     var bpts = 0;
@@ -1006,11 +1008,16 @@
       return scorestr
     }
 
-    function makeStats() {
+    function makeStats(winner, event) {
 
     }
-    function makePbp() {
-
+    function makePbp(winner, event) {
+      const pbp = document.querySelector('.pbp');
+      if (winner === 'Awon') {
+        pbp.textContent += 'A won the point\n';
+      } else if (winner === 'Bwon') {
+        pbp.textContent += 'B won the point\n';
+      }
     }
 
 
@@ -1092,6 +1099,7 @@
         return
       }
       div.textContent = makeScore();
+      makePbp()
 
       mstats.tpoints++;
     }
