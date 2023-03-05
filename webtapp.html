@@ -1021,10 +1021,13 @@
           apts = 0;
           bpts = 0;
           agames++;
-          if (agames === 6) {
+          if (agames === 6 && bgames < 5 || agames === 7) {
             prevSets.push(agames + '-' + bgames)
             agames = 0;
             bgames = 0;
+          }
+          else if (agames === 6 && bgames === 6) {
+            tiebreak = 7
           }
         }
         else {
