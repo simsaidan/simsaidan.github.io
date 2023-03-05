@@ -307,7 +307,7 @@
       bhead.textContent = 'Time';
 
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ''
+      tl1.textContent = mstats.tpoints
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Points Played'
       const tr1 = document.querySelector('.tr1');
@@ -1021,7 +1021,7 @@
     }
 
     function makeStats(winner, event) {
-
+      mstats.tpoints++;
     }
     function makePbp(winner, event) {
       const pbp = document.querySelector('.pbp');
@@ -1113,6 +1113,7 @@
       }
       div.textContent = makeScore();
       makePbp(winner, 0)
+      makeStats(winner, 0)
 
       mstats.tpoints++;
     }
