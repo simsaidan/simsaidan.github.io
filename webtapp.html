@@ -1045,10 +1045,13 @@
           apts = 0;
           bpts = 0;
           bgames++;
-          if (bgames === 6) {
+          if (bgames === 6 && agames < 5 || bgames === 7) {
             prevSets.push(agames + '-' + bgames)
             bgames = 0;
             agames = 0;
+          }
+          else if (bgames === 6 && agames === 6) {
+            tiebreak = 7
           }
         } else {
           bpts = gameScores[gameScores.indexOf(bpts) + 1]
