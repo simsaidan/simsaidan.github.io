@@ -1014,7 +1014,8 @@
     function makePbp(winner, event) {
       const pbp = document.querySelector('.pbp');
       if (winner === 'Awon') {
-        pbp.textContent += 'A won the point \n';
+        pbp.textContent += 'A won the point';
+        pbp.textContent += '\n'
       } else if (winner === 'Bwon') {
         pbp.textContent += 'B won the point \n';
       }
