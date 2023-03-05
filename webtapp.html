@@ -209,8 +209,10 @@
     const score = document.querySelector('.score')
     score.textContent = apts + '-' + bpts;
     let mstats = {
-      tpoints: 0
+      apoints: 0,
+      bpoints: 0
     };
+    var statmode = 'Overview'
 
     var match_done = false;
     var tiebreak = 0;
@@ -299,6 +301,7 @@
       mr7.textContent = ''
     }
     function totalbf() {
+      statmode = 'Total'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Points';
       const mhead = document.querySelector('.btm');
@@ -307,17 +310,17 @@
       bhead.textContent = 'Time';
 
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = mstats.tpoints
+      tl1.textContent = mstats.apoints + mstats.bpoints
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Points Played'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ''
+      tr1.textContent = mstats.apoints + mstats.bpoints
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = ''
+      tl2.textContent = mstats.apoints
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Points Won'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = ''
+      tr2.textContent = mstats.bpoints
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ''
       const tm3 = document.querySelector('.tm3');
@@ -562,6 +565,7 @@
       mr7.textContent = ''
     }
     function servingbf() {
+      statmode = 'Serving'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Serve';
       const mhead = document.querySelector('.btm');
@@ -694,6 +698,7 @@
     }
 
     function returnbf() {
+      statmode = 'Returning'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Return';
       const mhead = document.querySelector('.btm');
@@ -823,6 +828,7 @@
       mr7.textContent = ''
     }
     function wenbf() {
+      statmode = 'Wen'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Winners & Errors';
       const mhead = document.querySelector('.btm');
@@ -954,6 +960,7 @@
       mr7.textContent = ''
     }
     function adfbf() {
+      statmode = 'Adf'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Aces';
       const mhead = document.querySelector('.btm');
@@ -1021,8 +1028,20 @@
     }
 
     function makeStats(winner, event) {
-      mstats.tpoints++;
-      totalbf()
+
+      if (winner === 'Awon') {
+        mstats.apoints++;
+      } else if (winner === 'Bwon') {
+        mstats.bpoints++;
+      }
+      switch (statmode) {
+        case 'Total': totalbf(); break;
+        case 'Overview': overviewbf(); break;
+        case 'Wen': wenbf(); break;
+        case 'Returning': returnbf(); break;
+        case 'Adf': adfbf(); break;
+        case 'Serving': servingbf(); break;
+      }
     }
     function makePbp(winner, event) {
       const pbp = document.querySelector('.pbp');
