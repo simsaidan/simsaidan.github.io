@@ -210,7 +210,9 @@
     score.textContent = apts + '-' + bpts;
     let mstats = {
       apoints: 0,
-      bpoints: 0
+      bpoints: 0,
+      totalagames: 0,
+      totalbgames: 0
     };
     var statmode = 'Overview'
 
@@ -652,7 +654,7 @@
       br1.textContent = ''
     }
 
-    function servingbfmiddle() {
+    function returningbfmiddle() {
       const ml5 = document.querySelector('.ml5');
       ml5.textContent = ''
       const mm5 = document.querySelector('.mm5');
@@ -1080,6 +1082,7 @@
           apts = 0;
           bpts = 0;
           agames++;
+          mstats.totalagames++;
           if (agames === 6 && bgames < 5 || agames === 7) {
             prevSets.push(agames + '-' + bgames)
             agames = 0;
@@ -1115,6 +1118,7 @@
         else if (bpts === 40 || bpts === 'AD') {
           apts = 0;
           bpts = 0;
+          mstats.totalbgames++;
           bgames++;
           if (bgames === 6 && agames < 5 || bgames === 7) {
             prevSets.push(agames + '-' + bgames)
