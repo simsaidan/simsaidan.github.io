@@ -43,7 +43,7 @@
     <input type="radio" name="whowon" value="Awon"> Player A
     <input type="radio" name="whowon" value="Bwon"> Player B
   </div>
-  <div class="pointq">How was the point won???</div>
+  <div class="pointq">How was the point won?</div>
   <div class="radio">
     <input type="radio" name="howwon" value="ace"> Ace
     <input type="radio" name="howwon" value="swinner"> Service Winner
@@ -617,6 +617,7 @@
     }
 
     function servingbf() {
+      confirm("Cat poop?")
       statmode = 'Serving'
       const thead = document.querySelector('.btt');
       thead.textContent = 'Serve';
