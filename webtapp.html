@@ -568,17 +568,7 @@
       const mr7 = document.querySelector('.mr7');
       mr7.textContent = ''
     }
-    function servingbf() {
-      statmode = 'Serving'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Serve';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Points';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Games';
-      servingbfmiddle()
-      servingbfbottom()
-
+    function servingbftop() {
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
       const tm1 = document.querySelector('.tm1');
@@ -621,6 +611,21 @@
       tm7.textContent = ''
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
+    }
+
+    function servingbf() {
+      statmode = 'Serving'
+      const thead = document.querySelector('.btt');
+      thead.textContent = 'Serve';
+      const mhead = document.querySelector('.btm');
+      mhead.textContent = 'Points';
+      const bhead = document.querySelector('.btb');
+      bhead.textContent = 'Games';
+      servingbfmiddle()
+      servingbfbottom()
+      servingbftop()
+
+
 
     }
 
