@@ -43,7 +43,7 @@
     <input type="radio" name="whowon" value="Awon"> Player A
     <input type="radio" name="whowon" value="Bwon"> Player B
   </div>
-  <div class="pointq">How was the point won?</div>
+  <div class="pointq">How was the point won???</div>
   <div class="radio">
     <input type="radio" name="howwon" value="ace"> Ace
     <input type="radio" name="howwon" value="swinner"> Service Winner
@@ -576,6 +576,8 @@
       mhead.textContent = 'Points';
       const bhead = document.querySelector('.btb');
       bhead.textContent = 'Games';
+      servingbfmiddle()
+      servingbfbottom()
 
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
@@ -619,8 +621,7 @@
       tm7.textContent = ''
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
-      servingbfmiddle()
-      servingbfbottom()
+
     }
 
     function returningbfbottom() {
