@@ -33,7 +33,7 @@
     <progress value="0.5" max="1"></progress>
   </div>
   <hr>
-  <div class="pointq">Was the first serve in?</div>
+  <div class="pointq">Was the first serve in???</div>
   <div class="radio">
     <input type="radio" name="serveIn" value="servein"> Yes
     <input type="radio" name="serveIn" value="serveout"> No
@@ -628,7 +628,7 @@
 
     }
 
-    function returningbfbottom() {
+    function returnbfbottom() {
       const bl5 = document.querySelector('.bl5');
       bl5.textContent = ''
       const bm5 = document.querySelector('.bm5');
@@ -661,7 +661,7 @@
       br1.textContent = ''
     }
 
-    function returningbfmiddle() {
+    function returnbfmiddle() {
       const ml5 = document.querySelector('.ml5');
       ml5.textContent = ''
       const mm5 = document.querySelector('.mm5');
@@ -708,12 +708,7 @@
 
     function returnbf() {
       statmode = 'Returning'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Return';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Points';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Games';
+      changeTitles("Return", "Points", "Games")
 
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
