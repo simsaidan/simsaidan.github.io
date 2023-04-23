@@ -219,6 +219,7 @@
     var match_done = false;
     var tiebreak = 0;
     var server = "Player A";
+    var tbserver = '';
     var divserver = document.querySelector(".server");
     divserver.textContent = "Serving: " + server;
 
@@ -1094,6 +1095,9 @@
             agames = 0
             bgames = 0
             tiebreak = 0
+            if (server === tbserver) {
+              toggleServer()
+            }
           }
           if ((apts + bpts) % 2 === 0) {
             toggleServer()
@@ -1118,6 +1122,7 @@
           }
           else if (agames === 6 && bgames === 6) {
             tiebreak = 7
+            tbserver = server;
           }
         }
         else {
@@ -1135,6 +1140,10 @@
             agames = 0
             bgames = 0
             tiebreak = 0
+            if (server === tbserver) {
+              toggleServer()
+            }
+
           }
           if ((apts + bpts) % 2 === 0) {
             toggleServer()
@@ -1159,6 +1168,7 @@
           }
           else if (bgames === 6 && agames === 6) {
             tiebreak = 7
+            tbserver = server;
           }
         } else {
           bpts = gameScores[gameScores.indexOf(bpts) + 1]
