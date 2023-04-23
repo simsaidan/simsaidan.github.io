@@ -486,11 +486,11 @@
       const tr2 = document.querySelector('.tr2');
       tr2.textContent = mstats.bdfs
       const tl3 = document.querySelector('.tl3');
-      tl3.textContent = (mstats.afirstpts + mstats.asecondpts === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm3 = document.querySelector('.tm3');
       tm3.textContent = '1st Serve %'
       const tr3 = document.querySelector('.tr3');
-      tr3.textContent = (mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl4 = document.querySelector('.tl4');
       tl4.textContent = ''
       const tm4 = document.querySelector('.tm4');
