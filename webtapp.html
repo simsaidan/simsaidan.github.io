@@ -218,8 +218,11 @@
 
     var match_done = false;
     var tiebreak = 0;
+    var server = "Player A";
+    var divserver = document.querySelector(".server");
+    divserver.textContent = "Serving: " + server;
 
-    var choice = prompt("What is your favorite color?", "Red, Green, Blue");
+
 
     const dateDiv = document.querySelector('.date');
     dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
@@ -229,6 +232,7 @@
       weekday: 'long'
     }).format(new Date());
 
+
     function changeTitles(top, mid, bot) {
       const thead = document.querySelector('.btt');
       thead.textContent = top;
@@ -236,6 +240,16 @@
       mhead.textContent = mid;
       const bhead = document.querySelector('.btb');
       bhead.textContent = bot;
+    }
+
+    function toggleServer() {
+      var divserver = document.querySelector(".server");
+
+      if (divserver.textContent === "Serving: Player A") {
+        divserver.textContent = "Serving: Player B";
+      } else {
+        divserver.textContent = "Serving: Player A";
+      }
     }
 
     function totalbfbottom() {
@@ -1090,6 +1104,7 @@
           apts = 0;
           bpts = 0;
           agames++;
+          toggleServer()
           mstats.totalagames++;
           if (agames === 6 && bgames < 5 || agames === 7) {
             prevSets.push(agames + '-' + bgames)
@@ -1128,6 +1143,7 @@
           bpts = 0;
           mstats.totalbgames++;
           bgames++;
+          toggleServer()
           if (bgames === 6 && agames < 5 || bgames === 7) {
             prevSets.push(agames + '-' + bgames)
             bgames = 0;
