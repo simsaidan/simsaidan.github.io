@@ -33,7 +33,7 @@
     <progress value="0.5" max="1"></progress>
   </div>
   <hr>
-  <div class="pointq">Was the first serve in???</div>
+  <div class="pointq">Was the first serve in?</div>
   <div class="radio">
     <input type="radio" name="serveIn" value="servein"> Yes
     <input type="radio" name="serveIn" value="serveout"> No
@@ -836,15 +836,8 @@
       const mr7 = document.querySelector('.mr7');
       mr7.textContent = ''
     }
-    function wenbf() {
-      statmode = 'Wen'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Winners & Errors';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Net';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Dominance';
 
+    function wenbftop() {
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
       const tm1 = document.querySelector('.tm1');
@@ -888,7 +881,14 @@
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
       wenbfmiddle()
+    }
+    function wenbf() {
+      statmode = 'Wen'
+      changeTitles('Winners & Errors', 'Net', "Dominance")
       wenbfbottom()
+      wenbftop()
+
+
     }
 
     function adfbfbottom() {
@@ -968,15 +968,8 @@
       const mr7 = document.querySelector('.mr7');
       mr7.textContent = ''
     }
-    function adfbf() {
-      statmode = 'Adf'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Aces';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Double Faults';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Other';
 
+    function adfbftop{
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
       const tm1 = document.querySelector('.tm1');
@@ -1020,7 +1013,12 @@
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
       adfbfmiddle()
+    }
+    function adfbf() {
+      statmode = 'Adf'
+      changeTitles("Aces", "Double Faults", "Other")
       adfbfbottom()
+      adfbftop()
     }
 
     function makeScore() {
