@@ -33,7 +33,7 @@
     <progress value="0.5" max="1"></progress>
   </div>
   <hr>
-  <div class="pointq">Was the first serve in???</div>
+  <div class="pointq">Was the first serve in?</div>
   <div class="radio">
     <input type="radio" name="serveIn" value="servein"> Yes
     <input type="radio" name="serveIn" value="serveout"> No
@@ -440,6 +440,7 @@
     }
     function overviewbf() {
       changeTitles('Serve', 'Return', 'Total')
+      statmode = 'Overview'
 
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
@@ -564,7 +565,7 @@
       mm7.textContent = 'BPs Faced per Set'
       const mr7 = document.querySelector('.mr7');
       mr7.textContent = ''
-      servingbfbottom()
+
     }
     function servingbftop() {
       const tl1 = document.querySelector('.tl1');
@@ -706,10 +707,7 @@
       mr7.textContent = ''
     }
 
-    function returnbf() {
-      statmode = 'Returning'
-      changeTitles("Return", "Points", "Games")
-
+    function returnbftop() {
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = ''
       const tm1 = document.querySelector('.tm1');
@@ -752,6 +750,13 @@
       tm7.textContent = ''
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ''
+    }
+
+    function returnbf() {
+      statmode = 'Returning'
+      changeTitles("Return", "Points", "Games")
+
+      returnbftop()
       returnbfmiddle()
       returnbfbottom()
     }
