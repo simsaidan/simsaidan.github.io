@@ -212,7 +212,11 @@
       apoints: 0,
       bpoints: 0,
       totalagames: 0,
-      totalbgames: 0
+      totalbgames: 0,
+      aaces: 0,
+      baces: 0,
+      adfs: 0,
+      bdfs: 0,
     };
     var statmode = 'Overview'
 
@@ -462,17 +466,17 @@
       statmode = 'Overview'
 
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ''
+      tl1.textContent = mstats.aaces
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Aces'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ''
+      tr1.textContent = mstats.baces
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = ''
+      tl2.textContent = mstats.adfs
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Double Faults'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = ''
+      tr2.textContent = mstats.bdfs
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ''
       const tm3 = document.querySelector('.tm3');
@@ -1058,11 +1062,16 @@
 
       if (winner === 'Awon') {
         mstats.apoints++;
+        switch (event) {
+          case 'ace': mstats.aaces++; break;
+          case 'df': mstats.bdfs++; break;
+        }
       } else if (winner === 'Bwon') {
         mstats.bpoints++;
-      }
-      if (event === 'ace') {
-        confirm("Cat poop?")
+        switch (event) {
+          case 'ace': mstats.baces++; break;
+          case 'df': mstats.adfs++; break;
+        }
       }
       switch (statmode) {
         case 'Total': totalbf(); break;
