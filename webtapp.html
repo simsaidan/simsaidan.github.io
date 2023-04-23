@@ -227,6 +227,14 @@
       weekday: 'long'
     }).format(new Date());
 
+    function changeTitles(top, mid, bot) {
+      const thead = document.querySelector('.btt');
+      thead.textContent = top;
+      const mhead = document.querySelector('.btm');
+      mhead.textContent = mid;
+      const bhead = document.querySelector('.btb');
+      bhead.textContent = bot;
+    }
 
     function totalbfbottom() {
       const bl5 = document.querySelector('.bl5');
@@ -306,12 +314,7 @@
     }
     function totalbf() {
       statmode = 'Total'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Points';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Games';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Time';
+      changeTitles('Points', 'Games', 'Time')
 
       const tl1 = document.querySelector('.tl1');
       tl1.textContent = mstats.apoints + mstats.bpoints
@@ -436,12 +439,7 @@
       mr7.textContent = ''
     }
     function overviewbf() {
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Serve';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Return';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Total';
+      changeTitles('Serve', 'Return', 'Total')
 
 
       const tl1 = document.querySelector('.tl1');
