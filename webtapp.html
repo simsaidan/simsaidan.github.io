@@ -247,8 +247,10 @@
 
       if (divserver.textContent === "Serving: Player A") {
         divserver.textContent = "Serving: Player B";
+        server = "Player B"
       } else {
         divserver.textContent = "Serving: Player A";
+        server = "Player A"
       }
     }
 
@@ -1093,6 +1095,9 @@
             bgames = 0
             tiebreak = 0
           }
+          if ((apts + bpts) % 2 === 0) {
+            toggleServer()
+          }
         }
         else if (apts === 40 && bpts === 'AD') {
           bpts = 40
@@ -1130,6 +1135,9 @@
             agames = 0
             bgames = 0
             tiebreak = 0
+          }
+          if ((apts + bpts) % 2 === 0) {
+            toggleServer()
           }
         }
         else if (bpts === 40 && apts === 'AD') {
