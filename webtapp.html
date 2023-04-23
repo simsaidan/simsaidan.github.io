@@ -1061,6 +1061,9 @@
       } else if (winner === 'Bwon') {
         mstats.bpoints++;
       }
+      if (event === 'ace') {
+        confirm("Cat poop?")
+      }
       switch (statmode) {
         case 'Total': totalbf(); break;
         case 'Overview': overviewbf(); break;
@@ -1178,8 +1181,10 @@
         return
       }
       div.textContent = makeScore();
+      const selected = document.querySelector('input[name="howwon"]:checked');
+      const selection = selected.value;
       makePbp(winner, 0)
-      makeStats(winner, 0)
+      makeStats(winner, selection)
 
       mstats.tpoints++;
     }
