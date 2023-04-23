@@ -1132,6 +1132,14 @@
     function increment() {
       var div = document.querySelector(".score");
       let winner = document.querySelector('input[name="whowon"]:checked').value;
+
+      mstats.tpoints++;
+      const selection = document.querySelector('input[name="howwon"]:checked').value;
+      const servein = document.querySelector('input[name="serveIn"]:checked').value;
+
+      makePbp(winner, 0)
+      makeStats(winner, selection, servein)
+
       if (winner === 'Awon') {
         if (tiebreak === 7) {
           apts++
@@ -1226,13 +1234,9 @@
         return
       }
       div.textContent = makeScore();
-      const selection = document.querySelector('input[name="howwon"]:checked').value;
-      const servein = document.querySelector('input[name="serveIn"]:checked').value;
 
-      makePbp(winner, 0)
-      makeStats(winner, selection, servein)
 
-      mstats.tpoints++;
+
     }
 
 
