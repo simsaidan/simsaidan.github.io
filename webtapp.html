@@ -266,6 +266,9 @@
         server = "Player A"
       }
     }
+    function changeValue(code, l, m, r) {
+      const left = document.querySelector('.' + code)
+    }
 
     function totalbfbottom() {
       const bl5 = document.querySelector('.bl5');
@@ -1233,7 +1236,7 @@
 
       div.textContent = makeScore();
       makePbp(winner, 0)
-
+      confirm(mstats.tpoints)
       makeStats(winner, selection, servein, prevserver)
 
 
