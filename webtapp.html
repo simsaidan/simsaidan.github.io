@@ -385,11 +385,8 @@
       mr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
 
     }
-    function overviewbf() {
-      changeTitles('Serve', 'Return', 'Total')
-      statmode = 'Overview'
+    function overviewtopbf() {
       changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
-
       changeValue('t2', mstats.adfs, 'Double Faults', mstats.bdfs)
 
       const tl3 = document.querySelector('.tl3');
@@ -422,8 +419,14 @@
       tm7.textContent = 'Service Points Won %'
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
-      overviewbfbottom()
       overviewbfmiddle()
+    }
+    function overviewbf() {
+      changeTitles('Serve', 'Return', 'Total')
+      statmode = 'Overview'
+
+      overviewbfbottom()
+      overviewbftop()
 
     }
 
@@ -530,17 +533,8 @@
     function servingbf() {
       servingbfbottom()
       statmode = 'Serving'
-      const thead = document.querySelector('.btt');
-      thead.textContent = 'Serve';
-      const mhead = document.querySelector('.btm');
-      mhead.textContent = 'Points';
-      const bhead = document.querySelector('.btb');
-      bhead.textContent = 'Games';
-
+      changeTitles('Serve', 'Points', 'Games')
       servingbftop()
-
-
-
     }
 
     function returnbfbottom() {
