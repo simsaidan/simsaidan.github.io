@@ -492,17 +492,17 @@
       const tr3 = document.querySelector('.tr3');
       tr3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = ''
+      tl4.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = '1st Serve Won %'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = ''
+      tr4.textContent = (mstats.bfirstpts === 0) ? '-' : (100 * mstats.bfirstwonpts / (mstats.bfirstpts)).toFixed(2)
       const tl5 = document.querySelector('.tl5');
-      tl5.textContent = ''
+      tl5.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
       const tm5 = document.querySelector('.tm5');
       tm5.textContent = '2nd Serve Won %'
       const tr5 = document.querySelector('.tr5');
-      tr5.textContent = ''
+      tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
       const tl6 = document.querySelector('.tl6');
       tl6.textContent = ''
       const tm6 = document.querySelector('.tm6');
