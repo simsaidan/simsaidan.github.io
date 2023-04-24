@@ -1066,8 +1066,8 @@
       return scorestr
     }
 
-    function makeStats(winner, event, fsin) {
-      if (server === 'Player A') {
+    function makeStats(winner, event, fsin, ps) {
+      if (ps === 'Player A') {
         if (fsin === 'servein') {
           mstats.afirstpts++;
           if (winner === 'Awon') {
@@ -1132,8 +1132,7 @@
     function increment() {
       var div = document.querySelector(".score");
       let winner = document.querySelector('input[name="whowon"]:checked').value;
-
-
+      var prevserver = server;
 
       if (winner === 'Awon') {
         if (tiebreak === 7) {
@@ -1235,7 +1234,7 @@
       div.textContent = makeScore();
       makePbp(winner, 0)
 
-      makeStats(winner, selection, servein)
+      makeStats(winner, selection, servein, prevserver)
 
 
 
