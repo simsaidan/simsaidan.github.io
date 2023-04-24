@@ -278,80 +278,28 @@
     }
 
     function totalbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = 'Match Time'
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = 'Avg. Set Time (min)'
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
-      const bl3 = document.querySelector('.bl3');
-      bl3.textContent = ''
-      const bm3 = document.querySelector('.bm3');
-      bm3.textContent = 'Avg. Service Game Time (min)'
-      const br3 = document.querySelector('.br3');
-      br3.textContent = ''
-      const bl2 = document.querySelector('.bl2');
-      bl2.textContent = ''
-      const bm2 = document.querySelector('.bm2');
-      bm2.textContent = 'Avg. Game Time (min)'
-      const br2 = document.querySelector('.br2');
-      br2.textContent = ''
-      const bl1 = document.querySelector('.bl1');
-      bl1.textContent = ''
-      const bm1 = document.querySelector('.bm1');
-      bm1.textContent = 'Avg. Point Time (Sec)'
-      const br1 = document.querySelector('.br1');
-      br1.textContent = ''
+      changeValue('b1', '', 'Avg. Point Time (Sec)', '')
+      changeValue('b2', '', 'Avg. Game Time (min)', '')
+      changeValue('b3', '', 'Avg. Service Game Time (min)', '')
+      changeValue('b4', '', 'Avg. Set Time (min)', '')
+      changeValue('b5', '', 'Match Time', '')
+
+
     }
     function totalbfmiddle() {
-      const ml5 = document.querySelector('.ml5');
-      ml5.textContent = ''
-      const mm5 = document.querySelector('.mm5');
-      mm5.textContent = ''
-      const mr5 = document.querySelector('.mr5');
-      mr5.textContent = ''
-      const ml4 = document.querySelector('.ml4');
-      ml4.textContent = ''
-      const mm4 = document.querySelector('.mm4');
-      mm4.textContent = ''
-      const mr4 = document.querySelector('.mr4');
-      mr4.textContent = ''
+      changeValue('m1', mstats.totalagames + mstats.totalbgames, 'Games Won', mstats.totalagames + mstats.totalbgames)
+      changeValue('m2', mstats.totalagames, 'Games Won', mstats.totalbgames)
+      changeValue('m4', '', '', '')
+      changeValue('m5', '', '', '')
+      changeValue('m6', '', '', '')
+      changeValue('m7', '', '', '')
+
       const ml3 = document.querySelector('.ml3');
       ml3.textContent = (mstats.totalagames === 0 && mstats.totalbgames === 0) ? '-' : (100 * mstats.totalagames / (mstats.totalagames + mstats.totalbgames)).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Games Won %'
       const mr3 = document.querySelector('.mr3');
       mr3.textContent = (mstats.totalagames === 0 && mstats.totalbgames === 0) ? '-' : (100 * mstats.totalbgames / (mstats.totalagames + mstats.totalbgames)).toFixed(2)
-      const ml2 = document.querySelector('.ml2');
-      ml2.textContent = mstats.totalagames
-      const mm2 = document.querySelector('.mm2');
-      mm2.textContent = 'Games Won'
-      const mr2 = document.querySelector('.mr2');
-      mr2.textContent = mstats.totalbgames
-      const ml1 = document.querySelector('.ml1');
-      ml1.textContent = mstats.totalagames + mstats.totalbgames
-      const mm1 = document.querySelector('.mm1');
-      mm1.textContent = 'Games Played'
-      const mr1 = document.querySelector('.mr1');
-      mr1.textContent = mstats.totalagames + mstats.totalbgames
-      const ml6 = document.querySelector('.ml6');
-      ml6.textContent = ''
-      const mm6 = document.querySelector('.mm6');
-      mm6.textContent = ''
-      const mr6 = document.querySelector('.mr6');
-      mr6.textContent = ''
-      const ml7 = document.querySelector('.ml7');
-      ml7.textContent = ''
-      const mm7 = document.querySelector('.mm7');
-      mm7.textContent = ''
-      const mr7 = document.querySelector('.mr7');
-      mr7.textContent = ''
     }
     function totalbf() {
       statmode = 'Total'
@@ -404,50 +352,19 @@
 
     }
     function overviewbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = ''
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = ''
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
-      const bl3 = document.querySelector('.bl3');
-      bl3.textContent = ''
-      const bm3 = document.querySelector('.bm3');
-      bm3.textContent = 'Match Time'
-      const br3 = document.querySelector('.br3');
-      br3.textContent = ''
-      const bl2 = document.querySelector('.bl2');
-      bl2.textContent = mstats.apoints
-      const bm2 = document.querySelector('.bm2');
-      bm2.textContent = 'Total Points Won'
-      const br2 = document.querySelector('.br2');
-      br2.textContent = mstats.bpoints
-      const bl1 = document.querySelector('.bl1');
-      bl1.textContent = ''
-      const bm1 = document.querySelector('.bm1');
-      bm1.textContent = 'Points Dominance'
-      const br1 = document.querySelector('.br1');
-      br1.textContent = ''
+      changeValue('b1', '', 'Points Dominance', '')
+      changeValue('b2', mstats.apoints, 'Total Points Won', mstats.bpoints)
+      changeValue('b3', '', 'Match Time', '')
+      changeValue('b4', '', '', '')
+      changeValue('b5', '', '', '')
+
     }
     function overviewbfmiddle() {
-      const ml5 = document.querySelector('.ml5');
-      ml5.textContent = ''
-      const mm5 = document.querySelector('.mm5');
-      mm5.textContent = ''
-      const mr5 = document.querySelector('.mr5');
-      mr5.textContent = ''
-      const ml4 = document.querySelector('.ml4');
-      ml4.textContent = ''
-      const mm4 = document.querySelector('.mm4');
-      mm4.textContent = ''
-      const mr4 = document.querySelector('.mr4');
-      mr4.textContent = ''
+      changeValue('m4', '', '', '')
+      changeValue('m5', '', '', '')
+      changeValue('m6', '', '', '')
+      changeValue('m7', '', '', '')
+
       const ml3 = document.querySelector('.ml3');
       ml3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const mm3 = document.querySelector('.mm3');
@@ -466,30 +383,15 @@
       mm1.textContent = '1st Serve Return Won %'
       const mr1 = document.querySelector('.mr1');
       mr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
-      const ml6 = document.querySelector('.ml6');
-      ml6.textContent = ''
-      const mm6 = document.querySelector('.mm6');
-      mm6.textContent = ''
-      const mr6 = document.querySelector('.mr6');
-      mr6.textContent = ''
-      const ml7 = document.querySelector('.ml7');
-      ml7.textContent = ''
-      const mm7 = document.querySelector('.mm7');
-      mm7.textContent = ''
-      const mr7 = document.querySelector('.mr7');
-      mr7.textContent = ''
+
     }
     function overviewbf() {
       changeTitles('Serve', 'Return', 'Total')
       statmode = 'Overview'
       changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
 
-      const tl2 = document.querySelector('.tl2');
-      tl2.textContent = mstats.adfs
-      const tm2 = document.querySelector('.tm2');
-      tm2.textContent = 'Double Faults'
-      const tr2 = document.querySelector('.tr2');
-      tr2.textContent = mstats.bdfs
+      changeValue('t2', mstats.adfs, 'Double Faults', mstats.bdfs)
+
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm3 = document.querySelector('.tm3');
@@ -526,36 +428,12 @@
     }
 
     function servingbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = ''
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = ''
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
-      const bl3 = document.querySelector('.bl3');
-      bl3.textContent = ''
-      const bm3 = document.querySelector('.bm3');
-      bm3.textContent = ''
-      const br3 = document.querySelector('.br3');
-      br3.textContent = ''
-      const bl2 = document.querySelector('.bl2');
-      bl2.textContent = ''
-      const bm2 = document.querySelector('.bm2');
-      bm2.textContent = 'Service Games Lost per Set'
-      const br2 = document.querySelector('.br2');
-      br2.textContent = ''
-      const bl1 = document.querySelector('.bl1');
-      bl1.textContent = ''
-      const bm1 = document.querySelector('.bm1');
-      bm1.textContent = 'Service Games Won %'
-      const br1 = document.querySelector('.br1');
-      br1.textContent = ''
+      changeValue('b1', '', 'Service Games Won %', '')
+      changeValue('b2', '', 'Service Games Lost per Set', '')
+      changeValue('b3', '', '', '')
+      changeValue('b4', '', '', '')
+      changeValue('b5', '', '', '')
+
     }
 
     function servingbfmiddle() {
