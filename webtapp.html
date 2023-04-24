@@ -24,7 +24,7 @@
 <body>
   <div class="score">Score</div>
   <div class="Players">
-    <span class="PlayerA">Player A</span>
+    <span class="PlayerA">Player AA</span>
     <span class="PlayerB">Player B</span>
   </div>
   <div class="date"> Date</div>
@@ -1233,8 +1233,9 @@
       const servein = document.querySelector('input[name="serveIn"]:checked').value;
 
       makePbp(winner, 0)
-      makeStats(winner, selection, servein)
       confirm("Rat cat")
+      makeStats(winner, selection, servein)
+
       div.textContent = makeScore();
 
     }
