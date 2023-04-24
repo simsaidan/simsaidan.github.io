@@ -266,8 +266,15 @@
         server = "Player A"
       }
     }
-    function changeValue(code, l, m, r) {
-      const left = document.querySelector('.' + code)
+    function changeValue(code, lef, mid, rig) {
+      const left = document.querySelector('.' + code[0] + 'l' + code[1])
+      left.textContent = lef
+
+      const middle = document.querySelector('.' + code[0] + 'm' + code[1])
+      middle.textContent = mid
+
+      const right = document.querySelector('.' + code[0] + 'r' + code[1])
+      right.textContent = rig
     }
 
     function totalbfbottom() {
@@ -475,13 +482,8 @@
     function overviewbf() {
       changeTitles('Serve', 'Return', 'Total')
       statmode = 'Overview'
+      changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
 
-      const tl1 = document.querySelector('.tl1');
-      tl1.textContent = mstats.aaces
-      const tm1 = document.querySelector('.tm1');
-      tm1.textContent = 'Aces'
-      const tr1 = document.querySelector('.tr1');
-      tr1.textContent = mstats.baces
       const tl2 = document.querySelector('.tl2');
       tl2.textContent = mstats.adfs
       const tm2 = document.querySelector('.tm2');
@@ -1230,13 +1232,12 @@
       else {
         return
       }
-      mstats.tpoints++;
+
       const selection = document.querySelector('input[name="howwon"]:checked').value;
       const servein = document.querySelector('input[name="serveIn"]:checked').value;
 
       div.textContent = makeScore();
       makePbp(winner, 0)
-      confirm(mstats.tpoints)
       makeStats(winner, selection, servein, prevserver)
 
 
