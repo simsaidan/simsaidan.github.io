@@ -439,23 +439,23 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = ''
+      ml3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Return Points Won %'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = ''
+      mr3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = ''
+      ml2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
       const mm2 = document.querySelector('.mm2');
-      mm2.textContent = '2nd Serve Return %'
+      mm2.textContent = '2nd Serve Return Won %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = ''
+      mr2.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ''
+      ml1.textContent = (mstats.bfirstpts === 0) ? '-' : (100 * mstats.bfirstwonpts / (mstats.bfirstpts)).toFixed(2)
       const mm1 = document.querySelector('.mm1');
-      mm1.textContent = '1st Serve Return %'
+      mm1.textContent = '1st Serve Return Won %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ''
+      mr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
       const ml6 = document.querySelector('.ml6');
       ml6.textContent = ''
       const mm6 = document.querySelector('.mm6');
@@ -510,11 +510,11 @@
       const tr6 = document.querySelector('.tr6');
       tr6.textContent = ''
       const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
+      tl7.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm7 = document.querySelector('.tm7');
       tm7.textContent = 'Service Points Won %'
       const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+      tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       overviewbfbottom()
       overviewbfmiddle()
 
