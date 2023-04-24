@@ -1232,11 +1232,12 @@
       const selection = document.querySelector('input[name="howwon"]:checked').value;
       const servein = document.querySelector('input[name="serveIn"]:checked').value;
 
+      div.textContent = makeScore();
       makePbp(winner, 0)
-      confirm("Rat cat")
+
       makeStats(winner, selection, servein)
 
-      div.textContent = makeScore();
+
 
     }
 
