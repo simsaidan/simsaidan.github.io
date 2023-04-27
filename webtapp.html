@@ -388,6 +388,7 @@
     function overviewtopbf() {
       changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
       changeValue('t2', mstats.adfs, 'Double Faults', mstats.bdfs)
+      confirm("wtf is going on?")
 
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
