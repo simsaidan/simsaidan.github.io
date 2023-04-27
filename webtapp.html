@@ -25,7 +25,7 @@
   <div class="score">Score</div>
   <div class="Players">
     <span class="PlayerA">Player AAA</span>
-    <span class="PlayerB">Player BB</span>
+    <span class="PlayerB">Player B</span>
   </div>
   <div class="date"> Date</div>
   <div class="server">Serving:</div>
@@ -408,7 +408,7 @@
       tm5.textContent = '2nd Serve Won %'
       const tr5 = document.querySelector('.tr5');
       tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
-      confirm("wtf is going on?")
+
       const tl6 = document.querySelector('.tl6');
       tl6.textContent = ''
       const tm6 = document.querySelector('.tm6');
@@ -421,6 +421,7 @@
       tm7.textContent = 'Service Points Won %'
       const tr7 = document.querySelector('.tr7');
       tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      confirm("wtf is going on?")
       overviewbfmiddle()
     }
     function overviewbf() {
