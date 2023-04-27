@@ -416,14 +416,14 @@
       const tr6 = document.querySelector('.tr6');
       tr6.textContent = ''
 
-      confirm("wtf is going on?")
+
       const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl7.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm7 = document.querySelector('.tm7');
       tm7.textContent = 'Service Points Won %'
       const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
-
+      tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      confirm("wtf is going on?")
       overviewbfmiddle()
     }
     function overviewbf() {
