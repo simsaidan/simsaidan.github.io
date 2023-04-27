@@ -25,7 +25,7 @@
   <div class="score">Score</div>
   <div class="Players">
     <span class="PlayerA">Player AAA</span>
-    <span class="PlayerB">Player B</span>
+    <span class="PlayerB">Player BB</span>
   </div>
   <div class="date"> Date</div>
   <div class="server">Serving:</div>
@@ -388,7 +388,7 @@
     function overviewtopbf() {
       changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
       changeValue('t2', mstats.adfs, 'Double Faults', mstats.bdfs)
-      confirm("wtf is going on?")
+
 
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
@@ -408,6 +408,7 @@
       tm5.textContent = '2nd Serve Won %'
       const tr5 = document.querySelector('.tr5');
       tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
+      confirm("wtf is going on?")
       const tl6 = document.querySelector('.tl6');
       tl6.textContent = ''
       const tm6 = document.querySelector('.tm6');
@@ -427,7 +428,7 @@
 
       statmode = 'Overview'
       overviewtopbf()
-      confirm("wtf is going on?")
+
       overviewbfbottom()
 
 
