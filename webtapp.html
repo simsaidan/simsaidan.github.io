@@ -497,29 +497,29 @@
     }
     function servingbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ''
+      tl1.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = '1st Serve %'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ''
+      tr1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = ''
+      tl2.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = '2nd Serve %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = ''
+      tr2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
       const tl3 = document.querySelector('.tl3');
-      tl3.textContent = ''
+      tl3.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
       const tm3 = document.querySelector('.tm3');
       tm3.textContent = '1st Serve Won %'
       const tr3 = document.querySelector('.tr3');
-      tr3.textContent = ''
+      tr3.textContent = (mstats.bfirstpts === 0) ? '-' : (100 * mstats.bfirstwonpts / (mstats.bfirstpts)).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = ''
+      tl4.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = '2nd Serve Won %'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = ''
+      tr4.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
       const tl5 = document.querySelector('.tl5');
       tl5.textContent = ''
       const tm5 = document.querySelector('.tm5');
@@ -532,12 +532,8 @@
       tm6.textContent = 'Serve Rating'
       const tr6 = document.querySelector('.tr6');
       tr6.textContent = ''
-      const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
-      const tm7 = document.querySelector('.tm7');
-      tm7.textContent = ''
-      const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+      changeValue('t7', '', '', '')
+
       servingbfmiddle()
     }
 
