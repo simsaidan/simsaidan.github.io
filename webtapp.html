@@ -24,7 +24,7 @@
 <body>
   <div class="score">Score</div>
   <div class="Players">
-    <span class="PlayerA">Player AA</span>
+    <span class="PlayerA">Player AAA</span>
     <span class="PlayerB">Player B</span>
   </div>
   <div class="date"> Date</div>
@@ -423,7 +423,7 @@
     }
     function overviewbf() {
       changeTitles('Serve', 'Return', 'Total')
-
+      confirm("wtf is going on?")
       statmode = 'Overview'
       overviewtopbf()
 
@@ -988,7 +988,7 @@
           case 'df': mstats.adfs++; break;
         }
       }
-      confirm("wtf is going on?")
+
       switch (statmode) {
         case 'Total': totalbf(); break;
         case 'Overview': overviewbf(); break;
