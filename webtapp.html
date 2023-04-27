@@ -362,10 +362,11 @@
     function overviewbfmiddle() {
 
       changeValue('m4', '', '', '')
+      confirm("wtf is going on?")
       changeValue('m5', '', '', '')
       changeValue('m6', '', '', '')
       changeValue('m7', '', '', '')
-      confirm("wtf is going on?")
+
 
       const ml3 = document.querySelector('.ml3');
       ml3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
