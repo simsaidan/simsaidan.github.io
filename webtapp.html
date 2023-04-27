@@ -426,7 +426,7 @@
 
       statmode = 'Overview'
       overviewtopbf()
-      confirm("wtf is going on?")
+
       overviewbfbottom()
 
 
@@ -988,6 +988,7 @@
           case 'df': mstats.adfs++; break;
         }
       }
+      confirm("wtf is going on?")
       switch (statmode) {
         case 'Total': totalbf(); break;
         case 'Overview': overviewbf(); break;
@@ -1072,7 +1073,6 @@
             if (server === tbserver) {
               toggleServer()
             }
-
           }
           if ((apts + bpts) % 2 === 1) {
             toggleServer()
