@@ -751,11 +751,11 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = (mstats.asecondpts) === 0 ? '-' : (100 * mstats.adfs / (mstats.asecondpts)).toFixed(2)
+      ml3.textContent = (mstats.asecondpts) === 0 ? '-' : (mstats.adfs / (mstats.asecondpts)).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'DFs per 2nd Serve'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = (mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bsecondpts)).toFixed(2)
+      mr3.textContent = (mstats.bsecondpts) === 0 ? '-' : (mstats.bdfs / (mstats.bsecondpts)).toFixed(2)
       const ml2 = document.querySelector('.ml2');
       ml2.textContent = (mstats.afirstpts + mstats.asecondpts) === 0 ? '-' : (100 * mstats.adfs / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const mm2 = document.querySelector('.mm2');
