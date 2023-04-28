@@ -329,24 +329,10 @@
       tm4.textContent = 'Rtn. to Svc. Points Ratio'
       const tr4 = document.querySelector('.tr4');
       tr4.textContent = ''
-      const tl5 = document.querySelector('.tl5');
-      tl5.textContent = ''
-      const tm5 = document.querySelector('.tm5');
-      tm5.textContent = ''
-      const tr5 = document.querySelector('.tr5');
-      tr5.textContent = ''
-      const tl6 = document.querySelector('.tl6');
-      tl6.textContent = ''
-      const tm6 = document.querySelector('.tm6');
-      tm6.textContent = ''
-      const tr6 = document.querySelector('.tr6');
-      tr6.textContent = ''
-      const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
-      const tm7 = document.querySelector('.tm7');
-      tm7.textContent = ''
-      const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+
+      changeValue('t5', '', '', '')
+      changeValue('t6', '', '', '')
+      changeValue('t7', '', '', '')
       totalbfbottom()
       totalbfmiddle()
 
@@ -545,24 +531,10 @@
     }
 
     function returnbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = ''
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = ''
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
-      const bl3 = document.querySelector('.bl3');
-      bl3.textContent = ''
-      const bm3 = document.querySelector('.bm3');
-      bm3.textContent = ''
-      const br3 = document.querySelector('.br3');
-      br3.textContent = ''
+      changeValue('b3', '', '', '')
+      changeValue('b4', '', '', '')
+      changeValue('b5', '', '', '')
+
       const bl2 = document.querySelector('.bl2');
       bl2.textContent = ''
       const bm2 = document.querySelector('.bm2');
@@ -624,11 +596,11 @@
 
     function returnbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ''
+      tl1.textContent = (mstats.bfirstpts === 0) ? '-' : (100 - (100 * mstats.bfirstwonpts / (mstats.bfirstpts))).toFixed(2)
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = '1st Serve Return Won %'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ''
+      tr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 - (100 * mstats.afirstwonpts / (mstats.afirstpts))).toFixed(2)
       const tl2 = document.querySelector('.tl2');
       tl2.textContent = ''
       const tm2 = document.querySelector('.tm2');
@@ -641,30 +613,11 @@
       tm3.textContent = 'Return Rating'
       const tr3 = document.querySelector('.tr3');
       tr3.textContent = ''
-      const tl4 = document.querySelector('.tl4');
-      tl4.textContent = ''
-      const tm4 = document.querySelector('.tm4');
-      tm4.textContent = ''
-      const tr4 = document.querySelector('.tr4');
-      tr4.textContent = ''
-      const tl5 = document.querySelector('.tl5');
-      tl5.textContent = ''
-      const tm5 = document.querySelector('.tm5');
-      tm5.textContent = ''
-      const tr5 = document.querySelector('.tr5');
-      tr5.textContent = ''
-      const tl6 = document.querySelector('.tl6');
-      tl6.textContent = ''
-      const tm6 = document.querySelector('.tm6');
-      tm6.textContent = ''
-      const tr6 = document.querySelector('.tr6');
-      tr6.textContent = ''
-      const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
-      const tm7 = document.querySelector('.tm7');
-      tm7.textContent = ''
-      const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+      changeValue('t4', '', '', '')
+      changeValue('t5', '', '', '')
+      changeValue('t6', '', '', '')
+      changeValue('t7', '', '', '')
+
       returnbfmiddle()
     }
 
@@ -676,18 +629,9 @@
 
     }
     function wenbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = ''
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = ''
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
+      changeValue('b4', '', '', '')
+      changeValue('b5', '', '', '')
+
       const bl3 = document.querySelector('.bl3');
       bl3.textContent = ''
       const bm3 = document.querySelector('.bm3');
@@ -708,12 +652,10 @@
       br1.textContent = ''
     }
     function wenbfmiddle() {
-      const ml5 = document.querySelector('.ml5');
-      ml5.textContent = ''
-      const mm5 = document.querySelector('.mm5');
-      mm5.textContent = ''
-      const mr5 = document.querySelector('.mr5');
-      mr5.textContent = ''
+      changeValue('m5', '', '', '')
+      changeValue('m6', '', '', '')
+      changeValue('m7', '', '', '')
+
       const ml4 = document.querySelector('.ml4');
       ml4.textContent = ''
       const mm4 = document.querySelector('.mm4');
@@ -738,18 +680,7 @@
       mm1.textContent = 'Net Points %'
       const mr1 = document.querySelector('.mr1');
       mr1.textContent = ''
-      const ml6 = document.querySelector('.ml6');
-      ml6.textContent = ''
-      const mm6 = document.querySelector('.mm6');
-      mm6.textContent = ''
-      const mr6 = document.querySelector('.mr6');
-      mr6.textContent = ''
-      const ml7 = document.querySelector('.ml7');
-      ml7.textContent = ''
-      const mm7 = document.querySelector('.mm7');
-      mm7.textContent = ''
-      const mr7 = document.querySelector('.mr7');
-      mr7.textContent = ''
+
     }
 
     function wenbftop() {
@@ -777,24 +708,10 @@
       tm4.textContent = 'Winners per Opp. Error'
       const tr4 = document.querySelector('.tr4');
       tr4.textContent = ''
-      const tl5 = document.querySelector('.tl5');
-      tl5.textContent = ''
-      const tm5 = document.querySelector('.tm5');
-      tm5.textContent = ''
-      const tr5 = document.querySelector('.tr5');
-      tr5.textContent = ''
-      const tl6 = document.querySelector('.tl6');
-      tl6.textContent = ''
-      const tm6 = document.querySelector('.tm6');
-      tm6.textContent = ''
-      const tr6 = document.querySelector('.tr6');
-      tr6.textContent = ''
-      const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
-      const tm7 = document.querySelector('.tm7');
-      tm7.textContent = ''
-      const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+
+      changeValue('t5', '', '', '')
+      changeValue('t6', '', '', '')
+      changeValue('t7', '', '', '')
       wenbfmiddle()
     }
     function wenbf() {
@@ -807,36 +724,17 @@
     }
 
     function adfbfbottom() {
-      const bl5 = document.querySelector('.bl5');
-      bl5.textContent = ''
-      const bm5 = document.querySelector('.bm5');
-      bm5.textContent = ''
-      const br5 = document.querySelector('.br5');
-      br5.textContent = ''
-      const bl4 = document.querySelector('.bl4');
-      bl4.textContent = ''
-      const bm4 = document.querySelector('.bm4');
-      bm4.textContent = ''
-      const br4 = document.querySelector('.br4');
-      br4.textContent = ''
-      const bl3 = document.querySelector('.bl3');
-      bl3.textContent = ''
-      const bm3 = document.querySelector('.bm3');
-      bm3.textContent = ''
-      const br3 = document.querySelector('.br3');
-      br3.textContent = ''
-      const bl2 = document.querySelector('.bl2');
-      bl2.textContent = ''
-      const bm2 = document.querySelector('.bm2');
-      bm2.textContent = ''
-      const br2 = document.querySelector('.br2');
-      br2.textContent = ''
+      changeValue('b2', '', '', '')
+      changeValue('b3', '', '', '')
+      changeValue('b4', '', '', '')
+      changeValue('b5', '', '', '')
+
       const bl1 = document.querySelector('.bl1');
-      bl1.textContent = ''
+      bl1.textContent = (mstats.aaces + mstats.adfs) === 0 ? '-' : ((mstats.adfs === 0) ? "inf" : (mstats.aaces / (mstats.adfs)).toFixed(2))
       const bm1 = document.querySelector('.bm1');
       bm1.textContent = 'Ace/DF Ratio'
       const br1 = document.querySelector('.br1');
-      br1.textContent = ''
+      br1.textContent = (mstats.baces + mstats.bdfs) === 0 ? '-' : ((mstats.bdfs === 0) ? "inf" : (mstats.baces / (mstats.bdfs)).toFixed(2))
     }
 
     function adfbfmiddle() {
@@ -853,35 +751,26 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = ''
+      ml3.textContent = (mstats.asecondpts) === 0 ? '-' : (100 * mstats.adfs / (mstats.asecondpts)).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'DFs per 2nd Serve'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = ''
+      mr3.textContent = (mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bsecondpts)).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = ''
+      ml2.textContent = (mstats.afirstpts + mstats.asecondpts) === 0 ? '-' : (100 * mstats.adfs / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = 'Double Fault %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = ''
+      mr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bfirstpts + astats.bsecondpts)).toFixed(2)
       const ml1 = document.querySelector('.ml1');
       ml1.textContent = mstats.adfs
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Double Faults'
       const mr1 = document.querySelector('.mr1');
       mr1.textContent = mstats.bdfs
-      const ml6 = document.querySelector('.ml6');
-      ml6.textContent = ''
-      const mm6 = document.querySelector('.mm6');
-      mm6.textContent = ''
-      const mr6 = document.querySelector('.mr6');
-      mr6.textContent = ''
-      const ml7 = document.querySelector('.ml7');
-      ml7.textContent = ''
-      const mm7 = document.querySelector('.mm7');
-      mm7.textContent = ''
-      const mr7 = document.querySelector('.mr7');
-      mr7.textContent = ''
+
+      changeValue('m6', '', '', '')
+      changeValue('m7', '', '', '')
     }
 
     function adfbftop() {
@@ -892,11 +781,11 @@
       const tr1 = document.querySelector('.tr1');
       tr1.textContent = mstats.baces
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = ''
+      tl2.textContent = (mstats.afirstpts + mstats.asecondpts) === 0 ? '-' : (100 * mstats.aaces / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Ace %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = ''
+      tr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.baces / (mstats.bfirstpts + astats.bsecondpts)).toFixed(2)
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ''
       const tm3 = document.querySelector('.tm3');
@@ -909,24 +798,9 @@
       tm4.textContent = 'Aces per Set'
       const tr4 = document.querySelector('.tr4');
       tr4.textContent = ''
-      const tl5 = document.querySelector('.tl5');
-      tl5.textContent = ''
-      const tm5 = document.querySelector('.tm5');
-      tm5.textContent = ''
-      const tr5 = document.querySelector('.tr5');
-      tr5.textContent = ''
-      const tl6 = document.querySelector('.tl6');
-      tl6.textContent = ''
-      const tm6 = document.querySelector('.tm6');
-      tm6.textContent = ''
-      const tr6 = document.querySelector('.tr6');
-      tr6.textContent = ''
-      const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ''
-      const tm7 = document.querySelector('.tm7');
-      tm7.textContent = ''
-      const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ''
+      changeValue('t5', '', '', '')
+      changeValue('t6', '', '', '')
+      changeValue('t7', '', '', '')
       adfbfmiddle()
     }
 
@@ -1012,7 +886,6 @@
         pbp.textContent += 'B won the point \n';
       }
     }
-
 
     function increment() {
       var div = document.querySelector(".score");
@@ -1118,11 +991,7 @@
       div.textContent = makeScore();
       makePbp(winner, 0)
       makeStats(winner, selection, servein, prevserver)
-
-
-
     }
-
 
   </script>
 </body>
