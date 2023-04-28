@@ -503,11 +503,11 @@
       const tr1 = document.querySelector('.tr1');
       tr1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
+      tl2.textContent = ''
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = '2nd Serve %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
+      tr2.textContent = ''
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
       const tm3 = document.querySelector('.tm3');
@@ -865,11 +865,11 @@
       const mr2 = document.querySelector('.mr2');
       mr2.textContent = ''
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ''
+      ml1.textContent = mstats.adfs
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Double Faults'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ''
+      mr1.textContent = mstats.bdfs
       const ml6 = document.querySelector('.ml6');
       ml6.textContent = ''
       const mm6 = document.querySelector('.mm6');
@@ -886,11 +886,11 @@
 
     function adfbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ''
+      tl1.textContent = mstats.aaces
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Aces'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ''
+      tr1.textContent = mstats.baces
       const tl2 = document.querySelector('.tl2');
       tl2.textContent = ''
       const tm2 = document.querySelector('.tm2');
