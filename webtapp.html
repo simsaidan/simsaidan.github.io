@@ -575,11 +575,11 @@
       const mr2 = document.querySelector('.mr2');
       mr2.textContent = ''
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ''
+      ml1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 - (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Return Points Won %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ''
+      mr1.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 - (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
       const ml6 = document.querySelector('.ml6');
       ml6.textContent = ''
       const mm6 = document.querySelector('.mm6');
@@ -761,7 +761,7 @@
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = 'Double Fault %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bfirstpts + astats.bsecondpts)).toFixed(2)
+      mr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const ml1 = document.querySelector('.ml1');
       ml1.textContent = mstats.adfs
       const mm1 = document.querySelector('.mm1');
@@ -785,7 +785,7 @@
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Ace %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.baces / (mstats.bfirstpts + astats.bsecondpts)).toFixed(2)
+      tr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.baces / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ''
       const tm3 = document.querySelector('.tm3');
