@@ -234,6 +234,7 @@
     var tbserver = '';
     var divserver = document.querySelector(".server");
     divserver.textContent = "Serving: " + server;
+    var startTime = new Date();
 
 
 
@@ -278,11 +279,12 @@
     }
 
     function totalbfbottom() {
+      var cTime = new Date()
       changeValue('b1', '', 'Avg. Point Time (Sec)', '')
       changeValue('b2', '', 'Avg. Game Time (min)', '')
       changeValue('b3', '', 'Avg. Service Game Time (min)', '')
       changeValue('b4', '', 'Avg. Set Time (min)', '')
-      changeValue('b5', '', 'Match Time', '')
+      changeValue('b5', cTime - startTime, 'Match Time', cTime - startTime)
 
 
     }
