@@ -352,8 +352,8 @@
     }
     function overviewbfbottom() {
       var eTime = new Date() - startTime;
-      var apd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))) / ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
-      var bpd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))) / ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
+      var apd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0 || mstats.afirstwonpts + mstats.asecondwonpts === 0) ? '-' : ((1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))) / ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
+      var bpd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0 || mstats.bfirstwonpts + mstats.bsecondwonpts === 0) ? '-' : ((1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))) / ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
       changeValue('b1', apd, 'Points Dominance', bpd)
       changeValue('b2', mstats.apoints, 'Total Points Won', mstats.bpoints)
       changeValue('b3', formatTotalTime(eTime), 'Match Time', formatTotalTime(eTime))
