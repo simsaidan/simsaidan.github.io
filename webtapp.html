@@ -256,6 +256,12 @@
       bhead.textContent = bot;
     }
 
+    function formatTotalTime(t) {
+      let hours = Math.floor(t / 3600000);
+      let minutes = Math.floor((t - (hours * 3600000)) / 60000);
+      return hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
+    }
+
     function toggleServer() {
       var divserver = document.querySelector(".server");
 
@@ -279,12 +285,13 @@
     }
 
     function totalbfbottom() {
-      var cTime = new Date()
-      changeValue('b1', '', 'Avg. Point Time (Sec)', '')
+      var eTime = new Date() - startTime;
+      var pointTime = (mstats.apoints + mstats.bpoints) === 0 ? '-' : ((etime / 1000) / (mstats.apoints + mstats.bpoints)).toFixed(1)
+      changeValue('b1', pointTime, 'Avg. Point Time (Sec)', pointTime)
       changeValue('b2', '', 'Avg. Game Time (min)', '')
       changeValue('b3', '', 'Avg. Service Game Time (min)', '')
       changeValue('b4', '', 'Avg. Set Time (min)', '')
-      changeValue('b5', cTime - startTime, 'Match Time', cTime - startTime)
+      changeValue('b5', formatTotalTime(eTime), 'Match Time', formatTotalTime(eTime))
 
 
     }
