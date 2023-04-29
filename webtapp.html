@@ -224,7 +224,11 @@
       bfirstpts: 0,
       bfirstwonpts: 0,
       bsecondpts: 0,
-      bsecondwonpts: 0
+      bsecondwonpts: 0,
+      anetpoints: 0,
+      anetwonpoints: 0,
+      bnetpoints: 0,
+      bnetwonpoints: 0,
     };
     var statmode = 'Overview'
 
@@ -333,11 +337,11 @@
       const tr3 = document.querySelector('.tr3');
       tr3.textContent = (mstats.apoints === 0 && mstats.bpoints === 0) ? '-' : (100 * mstats.bpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = ''
+      tl4.textContent = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.afirstpts + mstats.asecondpts === 0) ? '-' : ((mstats.bfirstpts + mstats.bsecondpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = 'Rtn. to Svc. Points Ratio'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = ''
+      tr4.textContent = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.afirstpts + mstats.asecondpts === 0) ? '-' : ((mstats.afirstpts + mstats.asecondpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
 
       changeValue('t5', '', '', '')
       changeValue('t6', '', '', '')
@@ -347,9 +351,10 @@
 
     }
     function overviewbfbottom() {
+      var eTime = new Date() - startTime;
       changeValue('b1', '', 'Points Dominance', '')
       changeValue('b2', mstats.apoints, 'Total Points Won', mstats.bpoints)
-      changeValue('b3', '', 'Match Time', '')
+      changeValue('b3', formatTotalTime(eTime), 'Match Time', formatTotalTime(eTime))
       changeValue('b4', '', '', '')
       changeValue('b5', '', '', '')
 
