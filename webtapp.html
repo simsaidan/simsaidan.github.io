@@ -43,6 +43,11 @@
     <input type="radio" name="whowon" value="Awon"> Player A
     <input type="radio" name="whowon" value="Bwon"> Player B
   </div>
+  <div class="pointq">Who came to the net?</div>
+  <div class="checkboxes">
+    <input type="checkbox" name="whocame" value="Acame"> Player A
+    <input type="checkbox" name="whocame" value="Bcame"> Player B
+  </div>
   <div class="pointq">How was the point won?</div>
   <div class="radio">
     <input type="radio" name="howwon" value="ace"> Ace
@@ -352,8 +357,8 @@
     }
     function overviewbfbottom() {
       var eTime = new Date() - startTime;
-      var apd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0 || mstats.afirstwonpts + mstats.asecondwonpts === 0) ? '-' : ((1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))) / ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
-      var bpd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0 || mstats.bfirstwonpts + mstats.bsecondwonpts === 0) ? '-' : ((1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))) / ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
+      var apd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))) / (1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)))).toFixed(2)
+      var bpd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))) / (1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)))).toFixed(2)
       changeValue('b1', apd, 'Points Dominance', bpd)
       changeValue('b2', mstats.apoints, 'Total Points Won', mstats.bpoints)
       changeValue('b3', formatTotalTime(eTime), 'Match Time', formatTotalTime(eTime))
@@ -505,11 +510,11 @@
       const tr1 = document.querySelector('.tr1');
       tr1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = ''
+      tl2.textContent = (mstats.asecondpts === 0) ? '-' : (100 * (1 - mstats.adfs / mstats.asecondpts)).toFixed(2)
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = '2nd Serve %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = ''
+      tr2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * (1 - mstats.bdfs / mstats.bsecondpts)).toFixed(2)
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
       const tm3 = document.querySelector('.tm3');
