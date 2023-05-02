@@ -679,23 +679,23 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = ''
+      ml3.textContent = (mstats.apoints === 0) ? '-' : (mstats.anetwonpoints / mstats.apoints).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Points Won at Net %'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = ''
+      mr3.textContent = (mstats.bpoints === 0) ? '-' : (mstats.bnetwonpoints / mstats.bpoints).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = ''
+      ml2.textContent = (mstats.anetpoints === 0) ? '-' : (mstats.anetwonpoints / mstats.anetpoints).toFixed(2)
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = 'Net Points Won %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = ''
+      mr2.textContent = (mstats.bnetpoints === 0) ? '-' : (mstats.bnetwonpoints / mstats.bnetpoints).toFixed(2)
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ''
+      ml1.textContent = (mstats.apoints + mstats.bpoints === 0) ? '-' : (mstats.anetpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Net Points %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ''
+      mr1.textContent = (mstats.apoints + mstats.bpoints === 0) ? '-' : (mstats.bnetpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
 
     }
 
