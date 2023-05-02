@@ -214,13 +214,8 @@
     const score = document.querySelector('.score')
     score.textContent = apts + '-' + bpts;
     let mstats = {
-      apoints: 0,
-      bpoints: 0,
-      totalagames: 0,
-      totalbgames: 0,
-      aaces: 0,
-      baces: 0,
-      adfs: 0,
+      apoints: 0, bpoints: 0, totalagames: 0, totalbgames: 0, aaces: 0,
+      baces: 0, adfs: 0,
       bdfs: 0,
       afirstpts: 0,
       afirstwonpts: 0,
@@ -846,6 +841,15 @@
     }
 
     function makeStats(winner, event, fsin, ps) {
+
+      let selections = [];
+      if (document.querySelector('input[name="whocame"]:checked')) {
+        let checked = document.querySelectorAll('input[name="whocame"]:checked');
+        for (let i = 0; i < checked.length; i++) {
+          selections.push(checked[i].value);
+        }
+      }
+      confirm(selections)
       if (ps === 'Player A') {
         if (fsin === 'servein') {
           mstats.afirstpts++;
