@@ -849,7 +849,18 @@
           selections.push(checked[i].value);
         }
       }
-      confirm(selections)
+      if (selections.includes('Acame')) {
+        mstats.anetpoints++
+        if (winner === "Awon") {
+          mstats.anetwonpoints++
+        }
+      }
+      if (selections.includes('Bcame')) {
+        mstats.bnetpoints++
+        if (winner === "Bwon") {
+          mstats.bnetwonpoints++
+        }
+      }
       if (ps === 'Player A') {
         if (fsin === 'servein') {
           mstats.afirstpts++;
