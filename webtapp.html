@@ -231,6 +231,8 @@
       bnetwonpoints: 0,
       abreakpoints: 0,
       bbreakpoints: 0,
+      abreaks: 0,
+      bbreaks: 0
     };
     var statmode = 'Overview'
 
@@ -951,6 +953,21 @@
       var div = document.querySelector(".score");
       let winner = document.querySelector('input[name="whowon"]:checked').value;
       var prevserver = server;
+
+      if (isBreakPoint(server, apts, bpts)) {
+        if (server === "Player A") {
+          mstats.bbreakpoints++
+          if (winner === 'Bwon') {
+            mstats.bbreaks++
+          }
+        }
+        if (server === 'Player B') {
+          mstats.abreakpoints++
+          if (winner === 'Awon') {
+            mstats.abreaks++
+          }
+        }
+      }
 
       if (winner === 'Awon') {
         if (tiebreak === 7) {
