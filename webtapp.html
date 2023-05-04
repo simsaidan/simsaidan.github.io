@@ -442,11 +442,11 @@
       tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
 
       const tl6 = document.querySelector('.tl6');
-      tl6.textContent = mstats.abreakpoints
+      tl6.textContent = mstats.abreaks + "/" + mstats.abreakpoints
       const tm6 = document.querySelector('.tm6');
       tm6.textContent = 'Break Points'
       const tr6 = document.querySelector('.tr6');
-      tr6.textContent = mstats.bbreakpoints
+      tr6.textContent = mstats.bbreaks + "/" + mstats.bbreakpoints
 
 
       const tl7 = document.querySelector('.tl7');
