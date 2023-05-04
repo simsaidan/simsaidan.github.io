@@ -229,6 +229,8 @@
       anetwonpoints: 0,
       bnetpoints: 0,
       bnetwonpoints: 0,
+      abreakpoints: 0,
+      bbreakpoints: 0,
     };
     var statmode = 'Overview'
 
@@ -286,6 +288,28 @@
 
       const right = document.querySelector('.' + code[0] + 'r' + code[1])
       right.textContent = rig
+    }
+
+    function isBreakPoint(server, playerAPoints, playerBPoints) {
+      // If player A is serving
+      if (server === 'A') {
+        // It's a break point if:
+        // - Player B has 40 points and player A has 30 points
+        // - Player B has advantage (ad) 
+        if ((playerBPoints === 40 && playerAPoints === 30) || playerBPoints === 'ad') {
+          return true;
+        }
+      }
+      // If player B is serving
+      else if (server === 'B') {
+        // It's a break point if: 
+        // - Player A has 40 points and player B has 30 points
+        // - Player A has advantage (ad)
+        if ((playerAPoints === 40 && playerBPoints === 30) || playerAPoints === 'ad') {
+          return true;
+        }
+      }
+      return false;
     }
 
     function totalbfbottom() {
@@ -416,11 +440,11 @@
       tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
 
       const tl6 = document.querySelector('.tl6');
-      tl6.textContent = ''
+      tl6.textContent = mstats.abreakpoints
       const tm6 = document.querySelector('.tm6');
       tm6.textContent = 'Break Points'
       const tr6 = document.querySelector('.tr6');
-      tr6.textContent = ''
+      tr6.textContent = mstats.bbreakpoints
 
 
       const tl7 = document.querySelector('.tl7');
