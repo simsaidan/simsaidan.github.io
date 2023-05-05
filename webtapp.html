@@ -296,6 +296,7 @@
         this.aGames = 0;
         this.bGames = 0;
         this.done = false;
+        this.prevSets = []
       }
       getTotalPoints() {
         return this.players[0].pointsWon + this.players[1].pointsWon;
@@ -344,19 +345,22 @@
           this.bGames = 0;
         }
       }
+      getPrevSets() {
+        return this.prevSets;
+      }
+
+      addPrevSets(set) {
+        this.prevSets.push(set);
+      }
     }
 
     let PlayerA = new Player("Player A");
     let PlayerB = new Player("Player B");
     let match = new Match(PlayerA, PlayerB);
 
-    var asets = 0;
-    var bsets = 0;
-    let prevSets = [];
     let gameScores = [0, 15, 30, 40];
     const score = document.querySelector('.score')
     score.textContent = match.getPoints(PlayerA) + '-' + match.getPoints(PlayerB);
-
     var statmode = 'Overview'
 
     var tiebreak = 0;
@@ -970,8 +974,8 @@
 
     function makeScore() {
       let scorestr = '';
-      for (let i = 0; i < prevSets.length; i++) {
-        scorestr += prevSets[i];
+      for (let i = 0; i < match.getPrevSets().length; i++) {
+        scorestr += match.getPrevSets()[i];
         scorestr += ", "
       }
       if (match.getGames(PlayerA) != '0' || match.getGames(PlayerB) != '0') {
@@ -1090,7 +1094,7 @@
           match.setPoints(PlayerA, match.getPoints(PlayerA) + 1)
           if (match.getPoints(PlayerA) >= 7 && match.getPoints(PlayerA) > match.getPoints(PlayerB) + 1) {
             match.setGames(PlayerA, match.getGames(PlayerA) + 1)
-            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerB) + ')')
+            match.addPrevSets(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerB) + ')')
             match.reset(true)
             tiebreak = 0
             if (server === tbserver) {
@@ -1114,7 +1118,7 @@
           toggleServer()
           PlayerA.inc("Games")
           if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) < 5 || match.getGames(PlayerA) === 7) {
-            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
+            match.addPrevSets(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
             match.reset(true)
 
           }
@@ -1132,7 +1136,7 @@
           match.setPoints(PlayerB, match.getPoints(PlayerB) + 1)
           if (match.getPoints(PlayerB) >= 7 && match.getPoints(PlayerB) > match.getPoints(PlayerA) + 1) {
             match.setGames(PlayerB, match.getGames(PlayerB) + 1)
-            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerA) + ')')
+            match.addPrevSets(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerA) + ')')
             match.reset(true)
             tiebreak = 0
             if (server === tbserver) {
@@ -1155,7 +1159,7 @@
           match.setGames(PlayerB, match.getGames(PlayerB) + 1)
           toggleServer()
           if (match.getGames(PlayerB) === 6 && match.getGames(PlayerA) < 5 || match.getGames(PlayerB) === 7) {
-            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
+            match.addPrevSets(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
             reset(true)
           }
           else if (match.getGames(PlayerB) === 6 && match.getGames(PlayerA) === 6) {
