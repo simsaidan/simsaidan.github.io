@@ -291,6 +291,10 @@
     class Match {
       constructor(player1, player2) {
         this.players = [player1, player2];
+        this.aPoints = 0;
+        this.bPoints = 0;
+        this.aGames = 0;
+        this.bGames = 0;
       }
       getTotalPoints() {
         return this.players[0].pointsWon + this.players[1].pointsWon;
@@ -298,25 +302,59 @@
       getTotalGames() {
         return this.players[0].gamesWon + this.players[1].gamesWon;
       }
+      getPoints(player) {
+        if (player === this.players[0]) {
+          return this.aPoints;
+        }
+        else {
+          return this.bPoints;
+        }
+      }
+      getGames(player) {
+        if (player === this.players[0]) {
+          return this.aGames;
+        }
+        else {
+          return this.bGames;
+        }
+      }
+      setPoints(player, points) {
+        if (player === this.players[0]) {
+          this.aPoints = points;
+        }
+        else {
+          this.bPoints = points;
+        }
+      }
 
-
+      setGames(player, value) {
+        if (player === this.players[0]) {
+          this.aGames = value;
+        }
+        else {
+          this.bGames = value;
+        }
+      }
+      reset(set = false) {
+        this.aPoints = 0;
+        this.bPoints = 0;
+        if (set) {
+          this.aGames = 0;
+          this.bGames = 0;
+        }
+      }
     }
+
     let PlayerA = new Player("Player A");
     let PlayerB = new Player("Player B");
     let match = new Match(PlayerA, PlayerB);
 
-
-
-    var apts = 0;
-    var bpts = 0;
-    var agames = 0;
-    var bgames = 0;
     var asets = 0;
     var bsets = 0;
     let prevSets = [];
     let gameScores = [0, 15, 30, 40];
     const score = document.querySelector('.score')
-    score.textContent = apts + '-' + bpts;
+    score.textContent = match.getPoints(PlayerA) + '-' + match.getPoints(PlayerB);
 
     var statmode = 'Overview'
 
@@ -327,7 +365,6 @@
     var divserver = document.querySelector(".server");
     divserver.textContent = "Serving: " + server;
     var startTime = new Date();
-
 
 
     const dateDiv = document.querySelector('.date');
@@ -542,13 +579,9 @@
     }
     function overviewbf() {
       changeTitles('Serve', 'Return', 'Total')
-
       statmode = 'Overview'
       overviewtopbf()
-
       overviewbfbottom()
-
-
     }
 
     function servingbfbottom() {
@@ -629,7 +662,7 @@
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = '2nd Serve Won %'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = (PlayerAB.getSecondServePoints() === 0) ? '-' : (100 * PlayerB.getSecondServePointsWon() / PlayerB.getSecondServePoints()).toFixed(2)
+      tr4.textContent = (PlayerB.getSecondServePoints() === 0) ? '-' : (100 * PlayerB.getSecondServePointsWon() / PlayerB.getSecondServePoints()).toFixed(2)
       const tl5 = document.querySelector('.tl5');
       tl5.textContent = ''
       const tm5 = document.querySelector('.tm5');
@@ -941,10 +974,10 @@
         scorestr += prevSets[i];
         scorestr += ", "
       }
-      if (agames != '0' || bgames != '0') {
-        scorestr += agames + '-' + bgames + ", "
+      if (match.getGames(PlayerA) != '0' || match.getGames(PlayerB) != '0') {
+        scorestr += match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ", "
       }
-      scorestr += apts + '-' + bpts
+      scorestr += match.getPoints(PlayerA) + '-' + match.getPoints(PlayerB)
       return scorestr
     }
 
@@ -1036,7 +1069,7 @@
       let winner = document.querySelector('input[name="whowon"]:checked').value;
       var prevserver = server;
 
-      if (isBreakPoint(server, apts, bpts)) {
+      if (isBreakPoint(server, match.getPoints(PlayerA), match.getPoints(PlayerB))) {
         if (server === "Player A") {
           PlayerB.inc("Break Points")
 
@@ -1054,91 +1087,83 @@
 
       if (winner === 'Awon') {
         if (tiebreak === 7) {
-          apts++
-          if (apts >= 7 && apts > bpts + 1) {
-            agames++
-            prevSets.push(agames + '-' + bgames + ' ' + '(' + bpts + ')')
-            apts = 0
-            bpts = 0
-            agames = 0
-            bgames = 0
+          match.setPoints(PlayerA, match.getPoints(PlayerA) + 1)
+          if (match.getPoints(PlayerA) >= 7 && match.getPoints(PlayerA) > match.getPoints(PlayerB) + 1) {
+            match.setGames(PlayerA, match.getGames(PlayerA) + 1)
+            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerB) + ')')
+            match.reset(true)
             tiebreak = 0
             if (server === tbserver) {
               toggleServer()
             }
           }
-          if ((apts + bpts) % 2 === 1) {
+          if ((match.getPoints(PlayerA) + match.getPoints(PlayerB)) % 2 === 1) {
             toggleServer()
           }
         }
-        else if (apts === 40 && bpts === 'AD') {
-          bpts = 40
+        else if (match.getPoints(PlayerA) === 40 && match.getPoints(PlayerB) === 'AD') {
+          match.setPoints(PlayerB, 40)
         }
-        else if (apts === 40 && bpts === 40) {
-          apts = 'AD'
+        else if (match.getPoints(PlayerA) === 40 && match.getPoints(PlayerB) === 40) {
+          match.setPoints(PlayerA, 'AD')
+
         }
-        else if (apts === 40 || apts === 'AD') {
-          apts = 0;
-          bpts = 0;
-          agames++;
+        else if (match.getPoints(PlayerA) === 40 || match.getPoints(PlayerA) === 'AD') {
+          match.reset()
+          match.setGames(PlayerA, match.getGames(PlayerA) + 1)
           toggleServer()
           PlayerA.inc("Games")
-          if (agames === 6 && bgames < 5 || agames === 7) {
-            prevSets.push(agames + '-' + bgames)
-            agames = 0;
-            bgames = 0;
+          if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) < 5 || match.getGames(PlayerA) === 7) {
+            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
+            reset(true)
+
           }
-          else if (agames === 6 && bgames === 6) {
+          else if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) === 6) {
             tiebreak = 7
             tbserver = server;
           }
         }
         else {
-          apts = gameScores[gameScores.indexOf(apts) + 1]
+          match.setPoints(PlayerA, gameScores[gameScores.indexOf(match.getPoints(PlayerA)) + 1])
         }
       }
       else if (winner === 'Bwon') {
         if (tiebreak === 7) {
-          bpts++
-          if (bpts >= 7 && bpts > apts + 1) {
-            bgames++
-            prevSets.push(agames + '-' + bgames + ' ' + '(' + apts + ')')
-            apts = 0
-            bpts = 0
-            agames = 0
-            bgames = 0
+          match.setPoints(PlayerB, match.getPoints(PlayerB) + 1)
+          if (match.getPoints(PlayerB) >= 7 && match.getPoints(PlayerB) > match.getPoints(PlayerA) + 1) {
+            match.setGames(PlayerB, match.getGames(PlayerB) + 1)
+            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB) + ' ' + '(' + match.getPoints(PlayerA) + ')')
+            match.reset(true)
             tiebreak = 0
             if (server === tbserver) {
               toggleServer()
             }
           }
-          if ((apts + bpts) % 2 === 1) {
+          if ((match.getPoints(PlayerA) + match.getPoints(PlayerB)) % 2 === 1) {
             toggleServer()
           }
         }
-        else if (bpts === 40 && apts === 'AD') {
-          apts = 40
+        else if (match.getPoints(PlayerB) === 40 && match.getPoints(PlayerA) === 'AD') {
+          match.setPoints(PlayerA, 40)
         }
-        else if (bpts === 40 && apts === 40) {
-          bpts = 'AD'
+        else if (match.getPoints(PlayerB) === 40 && match.getPoints(PlayerA) === 40) {
+          match.setPoints(PlayerB, 'AD')
         }
-        else if (bpts === 40 || bpts === 'AD') {
-          apts = 0;
-          bpts = 0;
+        else if (match.getPoints(PlayerB) === 40 || match.getPoints(PlayerB) === 'AD') {
+          match.reset()
           PlayerB.inc("Games")
-          bgames++;
+          match.setGames(PlayerB, match.getGames(PlayerB) + 1)
           toggleServer()
-          if (bgames === 6 && agames < 5 || bgames === 7) {
-            prevSets.push(agames + '-' + bgames)
-            bgames = 0;
-            agames = 0;
+          if (match.getGames(PlayerB) === 6 && match.getGames(PlayerA) < 5 || match.getGames(PlayerB) === 7) {
+            prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
+            reset(true)
           }
-          else if (bgames === 6 && agames === 6) {
+          else if (match.getGames(PlayerB) === 6 && match.getGames(PlayerA) === 6) {
             tiebreak = 7
             tbserver = server;
           }
         } else {
-          bpts = gameScores[gameScores.indexOf(bpts) + 1]
+          match.setPoints(PlayerB, gameScores[gameScores.indexOf(match.getPoints(PlayerB)) + 1])
         }
       }
       else {
