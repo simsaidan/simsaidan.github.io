@@ -295,6 +295,7 @@
         this.bPoints = 0;
         this.aGames = 0;
         this.bGames = 0;
+        this.done = false;
       }
       getTotalPoints() {
         return this.players[0].pointsWon + this.players[1].pointsWon;
@@ -358,7 +359,6 @@
 
     var statmode = 'Overview'
 
-    var match_done = false;
     var tiebreak = 0;
     var server = "Player A";
     var tbserver = '';
@@ -1115,6 +1115,7 @@
           PlayerA.inc("Games")
           if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) < 5 || match.getGames(PlayerA) === 7) {
             prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
+            confirm(prevSets)
             reset(true)
 
           }
