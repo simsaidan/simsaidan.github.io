@@ -203,6 +203,110 @@
   <div class="pbp"></div>
 
   <script>
+    class Player {
+      constructor(name) {
+        this.name = name;
+        this.aces = 0;
+        this.pointsWon = 0;
+        this.gamesWon = 0;
+        this.dfs = 0;
+        this.firstServePoints = 0;
+        this.firstServePointsWon = 0;
+        this.secondServePoints = 0;
+        this.secondServePointsWon = 0;
+        this.netPoints = 0;
+        this.netPointsWon = 0;
+        this.breakPoints = 0;
+        this.breaks = 0;
+
+      }
+      getPointsWon() {
+        return this.pointsWon;
+      }
+
+      getGamesWon() {
+        return this.gamesWon;
+      }
+      getPointsServed() {
+        return this.firstServePoints + this.secondServePoints;
+      }
+      getServicePointsWon() {
+        return this.firstServePointsWon + this.secondServePointsWon;
+      }
+      getFirstServePoints() {
+        return this.firstServePoints;
+      }
+
+      getSecondServePoints() {
+        return this.secondServePoints;
+      }
+
+      getFirstServePointsWon() {
+        return this.firstServePointsWon;
+      }
+
+      getSecondServePointsWon() {
+        return this.secondServePointsWon;
+      }
+      getDoubleFaults() {
+        return this.dfs;
+      }
+
+      getAces() {
+        return this.aces;
+      }
+      getBreakPoints() {
+        return this.breakPoints;
+      }
+
+      getBreakPointsWon() {
+        return this.breaks;
+      }
+      getNetPoints() {
+        return this.netPoints;
+      }
+
+      getNetPointsWon() {
+        return this.netPointsWon;
+      }
+
+      inc(stat) {
+        switch (stat) {
+          case "Games": this.gamesWon++; break;
+          case "Points": this.pointsWon++; break;
+          case "First Serve Points": this.firstServePoints++; break;
+          case "Second Serve Points": this.secondServePoints++; break;
+          case "First Serve Points Won": this.firstServePointsWon++; break;
+          case "Second Serve Points Won": this.secondServePointsWon++; break;
+          case "Net Points": this.netPoints++; break;
+          case "Net Points Won": this.netPointsWon++; break;
+          case "Break Points": this.breakPoints++; break;
+          case "Break Points Won": this.breaks++; break;
+          case "Aces": this.aces++; break;
+          case "Double Faults": this.dfs++; break;
+        }
+      }
+    }
+
+    class Match {
+      constructor(player1, player2) {
+        this.players = [player1, player2];
+      }
+      getTotalPoints() {
+        return this.players[0].pointsWon + this.players[1].pointsWon;
+      }
+      getTotalGames() {
+        return this.players[0].gamesWon + this.players[1].gamesWon;
+      }
+
+
+    }
+    let PlayerA = new Player("Player A");
+    let PlayerB = new Player("Player B");
+    let match = new Match(PlayerA, PlayerB);
+
+
+
     var apts = 0;
     var bpts = 0;
     var agames = 0;
@@ -213,27 +317,7 @@
     let gameScores = [0, 15, 30, 40];
     const score = document.querySelector('.score')
     score.textContent = apts + '-' + bpts;
-    let mstats = {
-      apoints: 0, bpoints: 0, totalagames: 0, totalbgames: 0, aaces: 0,
-      baces: 0, adfs: 0,
-      bdfs: 0,
-      afirstpts: 0,
-      afirstwonpts: 0,
-      asecondpts: 0,
-      asecondwonpts: 0,
-      bfirstpts: 0,
-      bfirstwonpts: 0,
-      bsecondpts: 0,
-      bsecondwonpts: 0,
-      anetpoints: 0,
-      anetwonpoints: 0,
-      bnetpoints: 0,
-      bnetwonpoints: 0,
-      abreakpoints: 0,
-      bbreakpoints: 0,
-      abreaks: 0,
-      bbreaks: 0
-    };
+
     var statmode = 'Overview'
 
     var match_done = false;
@@ -316,7 +400,7 @@
 
     function totalbfbottom() {
       var eTime = new Date() - startTime;
-      var pointTime = (mstats.apoints + mstats.bpoints) === 0 ? '-' : ((eTime / 1000) / (mstats.apoints + mstats.bpoints)).toFixed(1)
+      var pointTime = match.getTotalPoints() === 0 ? '-' : ((eTime / 1000) / match.getTotalPoints()).toFixed(1)
       changeValue('b1', pointTime, 'Avg. Point Time (Sec)', pointTime)
       changeValue('b2', '', 'Avg. Game Time (min)', '')
       changeValue('b3', '', 'Avg. Service Game Time (min)', '')
@@ -326,48 +410,48 @@
 
     }
     function totalbfmiddle() {
-      changeValue('m1', mstats.totalagames + mstats.totalbgames, 'Games Played', mstats.totalagames + mstats.totalbgames)
-      changeValue('m2', mstats.totalagames, 'Games Won', mstats.totalbgames)
+      changeValue('m1', match.getTotalGames(), 'Games Played', match.getTotalGames())
+      changeValue('m2', PlayerA.getGamesWon(), 'Games Won', PlayerB.getGamesWon())
       changeValue('m4', '', '', '')
       changeValue('m5', '', '', '')
       changeValue('m6', '', '', '')
       changeValue('m7', '', '', '')
 
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = (mstats.totalagames === 0 && mstats.totalbgames === 0) ? '-' : (100 * mstats.totalagames / (mstats.totalagames + mstats.totalbgames)).toFixed(2)
+      ml3.textContent = (match.getTotalGames() === 0) ? '-' : (100 * PlayerA.getGamesWon() / (match.getTotalGames())).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Games Won %'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = (mstats.totalagames === 0 && mstats.totalbgames === 0) ? '-' : (100 * mstats.totalbgames / (mstats.totalagames + mstats.totalbgames)).toFixed(2)
+      mr3.textContent = (match.getTotalGames() === 0) ? '-' : (100 * PlayerB.getGamesWon() / (match.getTotalGames())).toFixed(2)
     }
     function totalbf() {
       statmode = 'Total'
       changeTitles('Points', 'Games', 'Time')
 
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = mstats.apoints + mstats.bpoints
+      tl1.textContent = match.getTotalPoints()
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Points Played'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = mstats.apoints + mstats.bpoints
+      tr1.textContent = match.getTotalPoints()
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = mstats.apoints
+      tl2.textContent = PlayerA.getPointsWon()
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Points Won'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = mstats.bpoints
+      tr2.textContent = PlayerB.getPointsWon()
       const tl3 = document.querySelector('.tl3');
-      tl3.textContent = (mstats.apoints === 0 && mstats.bpoints === 0) ? '-' : (100 * mstats.apoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
+      tl3.textContent = (match.getTotalPoints() === 0) ? '-' : (100 * PlayerA.getPointsWon() / match.getTotalPoints()).toFixed(2)
       const tm3 = document.querySelector('.tm3');
       tm3.textContent = 'Points Won %'
       const tr3 = document.querySelector('.tr3');
-      tr3.textContent = (mstats.apoints === 0 && mstats.bpoints === 0) ? '-' : (100 * mstats.bpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
+      tr3.textContent = (match.getTotalPoints() === 0) ? '-' : (100 * PlayerB.getPointsWon() / (match.getTotalPoints())).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((mstats.bfirstpts + mstats.bsecondpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl4.textContent = (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) ? '-' : (PlayerB.getPointsServed() / PlayerA.getPointsServed()).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = 'Rtn. to Svc. Points Ratio'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((mstats.afirstpts + mstats.asecondpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr4.textContent = (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) ? '-' : (PlayerA.getPointsServed() / PlayerB.getPointsServed()).toFixed(2)
 
       changeValue('t5', '', '', '')
       changeValue('t6', '', '', '')
@@ -378,10 +462,10 @@
     }
     function overviewbfbottom() {
       var eTime = new Date() - startTime;
-      var apd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))) / (1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)))).toFixed(2)
-      var bpd = (mstats.afirstpts + mstats.asecondpts === 0 || mstats.bfirstpts + mstats.bsecondpts === 0) ? '-' : ((1 - ((mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))) / (1 - ((mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)))).toFixed(2)
+      var apd = (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) ? '-' : ((1 - ((PlayerB.getServicePointsWon()) / (PlayerB.getPointsServed()))) / (1 - ((PlayerA.getServicePointsWon()) / (PlayerA.getPointsServed())))).toFixed(2)
+      var bpd = (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) ? '-' : ((1 - ((PlayerA.getServicePointsWon()) / PlayerA.getPointsServed())) / (1 - (PlayerB.getServicePointsWon() / PlayerB.getPointsServed()))).toFixed(2)
       changeValue('b1', apd, 'Points Dominance', bpd)
-      changeValue('b2', mstats.apoints, 'Total Points Won', mstats.bpoints)
+      changeValue('b2', PlayerA.getPointsWon(), 'Total Points Won', PlayerB.getPointsWon())
       changeValue('b3', formatTotalTime(eTime), 'Match Time', formatTotalTime(eTime))
       changeValue('b4', '', '', '')
       changeValue('b5', '', '', '')
@@ -390,71 +474,69 @@
     function overviewbfmiddle() {
 
       changeValue('m4', '', '', '')
-
       changeValue('m5', '', '', '')
       changeValue('m6', '', '', '')
-      //confirm("wtf is going on?")
       changeValue('m7', '', '', '')
 
 
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 - (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
+      ml3.textContent = (PlayerB.getPointsServed() === 0) ? '-' : (100 - (100 * (PlayerB.getServicePointsWon()) / (PlayerB.getPointsServed()))).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Return Points Won %'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 - (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
+      mr3.textContent = (PlayerA.getPointsServed() === 0) ? '-' : (100 - (100 * PlayerA.getServicePointsWon() / PlayerA.getPointsServed())).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 - (100 * mstats.bsecondwonpts / (mstats.bsecondpts))).toFixed(2)
+      ml2.textContent = (PlayerB.getSecondServePoints() === 0) ? '-' : (100 - (100 * PlayerB.getSecondServePointsWon() / PlayerB.getSecondServePoints())).toFixed(2)
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = '2nd Serve Return Won %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = (mstats.asecondpts === 0) ? '-' : (100 - (100 * mstats.asecondwonpts / (mstats.asecondpts))).toFixed(2)
+      mr2.textContent = (PlayerA.getSecondServePoints() === 0) ? '-' : (100 - (100 * PlayerA.getSecondServePointsWon() / PlayerA.getSecondServePoints())).toFixed(2)
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = (mstats.bfirstpts === 0) ? '-' : (100 - (100 * mstats.bfirstwonpts / (mstats.bfirstpts))).toFixed(2)
+      ml1.textContent = (PlayerB.getFirstServePoints() === 0) ? '-' : (100 - (100 * PlayerB.getFirstServePointsWon() / PlayerB.getFirstServePoints())).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = '1st Serve Return Won %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 - (100 * mstats.afirstwonpts / (mstats.afirstpts))).toFixed(2)
+      mr1.textContent = (PlayerA.getFirstServePoints() === 0) ? '-' : (100 - (100 * PlayerA.getFirstServePointsWon() / PlayerA.getFirstServePoints())).toFixed(2)
 
     }
     function overviewtopbf() {
-      changeValue('t1', mstats.aaces, 'Aces', mstats.baces)
-      changeValue('t2', mstats.adfs, 'Double Faults', mstats.bdfs)
+      changeValue('t1', PlayerA.getAces(), 'Aces', PlayerB.getAces())
+      changeValue('t2', PlayerA.getDoubleFaults(), 'Double Faults', PlayerB.getDoubleFaults())
 
 
       const tl3 = document.querySelector('.tl3');
-      tl3.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl3.textContent = ((PlayerA.getPointsServed()) === 0) ? '-' : (100 * PlayerA.getFirstServePoints() / PlayerA.getPointsServed()).toFixed(2)
       const tm3 = document.querySelector('.tm3');
       tm3.textContent = '1st Serve %'
       const tr3 = document.querySelector('.tr3');
-      tr3.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr3.textContent = ((PlayerB.getPointsServed()) === 0) ? '-' : (100 * PlayerB.getFirstServePoints() / PlayerB.getPointsServed()).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
+      tl4.textContent = (PlayerA.getFirstServePoints() === 0) ? '-' : (100 * PlayerA.getFirstServePointsWon() / PlayerA.getFirstServePoints()).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = '1st Serve Won %'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = (mstats.bfirstpts === 0) ? '-' : (100 * mstats.bfirstwonpts / (mstats.bfirstpts)).toFixed(2)
+      tr4.textContent = (PlayerB.getFirstServePoints() === 0) ? '-' : (100 * PlayerB.getFirstServePointsWon() / PlayerB.getFirstServePoints()).toFixed(2)
       const tl5 = document.querySelector('.tl5');
-      tl5.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
+      tl5.textContent = (PlayerA.getSecondServePoints() === 0) ? '-' : (100 * PlayerA.getSecondServePointsWon() / PlayerA.getSecondServePoints()).toFixed(2)
       const tm5 = document.querySelector('.tm5');
       tm5.textContent = '2nd Serve Won %'
       const tr5 = document.querySelector('.tr5');
-      tr5.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
+      tr5.textContent = (PlayerB.getSecondServePoints() === 0) ? '-' : (100 * PlayerB.getSecondServePointsWon() / PlayerB.getSecondServePoints()).toFixed(2)
 
       const tl6 = document.querySelector('.tl6');
-      tl6.textContent = mstats.abreaks + "/" + mstats.abreakpoints
+      tl6.textContent = PlayerA.getBreakPointsWon() + "/" + PlayerA.getBreakPoints()
       const tm6 = document.querySelector('.tm6');
       tm6.textContent = 'Break Points'
       const tr6 = document.querySelector('.tr6');
-      tr6.textContent = mstats.bbreaks + "/" + mstats.bbreakpoints
+      tr6.textContent = PlayerB.getBreakPointsWon() + "/" + PlayerB.getBreakPoints()
 
 
       const tl7 = document.querySelector('.tl7');
-      tl7.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl7.textContent = (PlayerA.getPointsServed() === 0) ? '-' : (100 * PlayerA.getServicePointsWon() / PlayerA.getPointsServed()).toFixed(2)
       const tm7 = document.querySelector('.tm7');
       tm7.textContent = 'Service Points Won %'
       const tr7 = document.querySelector('.tr7');
-      tr7.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr7.textContent = (PlayerB.getPointsServed() === 0) ? '-' : (100 * PlayerB.getServicePointsWon() / PlayerB.getPointsServed()).toFixed(2)
 
       overviewbfmiddle()
     }
@@ -504,11 +586,11 @@
       const mr2 = document.querySelector('.mr2');
       mr2.textContent = ''
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      ml1.textContent = (PlayerA.getPointsServed() === 0) ? '-' : (100 * (PlayerA.getServicePointsWon()) / PlayerA.getPointsServed()).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Service Points Won %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      mr1.textContent = (PlayerB.getPointsServed() === 0) ? '-' : (100 * (PlayerB.getServicePointsWon()) / PlayerB.getPointsServed()).toFixed(2)
       const ml6 = document.querySelector('.ml6');
       ml6.textContent = ''
       const mm6 = document.querySelector('.mm6');
@@ -525,29 +607,29 @@
     }
     function servingbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 * mstats.afirstpts / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl1.textContent = (PlayerA.getPointsServed() === 0) ? '-' : (100 * PlayerA.getFirstServePoints() / PlayerA.getPointsServed()).toFixed(2)
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = '1st Serve %'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 * mstats.bfirstpts / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr1.textContent = (PlayerB.getPointsServed() === 0) ? '-' : (100 * PlayerB.getFirstServePoints() / PlayerB.getPointsServed()).toFixed(2)
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = (mstats.asecondpts === 0) ? '-' : (100 * (1 - mstats.adfs / mstats.asecondpts)).toFixed(2)
+      tl2.textContent = (PlayerA.getSecondServePoints() === 0) ? '-' : (100 * (1 - PlayerA.getDoubleFaults() / PlayerA.getSecondServePoints())).toFixed(2)
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = '2nd Serve %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * (1 - mstats.bdfs / mstats.bsecondpts)).toFixed(2)
+      tr2.textContent = (PlayerB.getSecondServePoints() === 0) ? '-' : (100 * (1 - PlayerB.getDoubleFaults() / PlayerB.getSecondServePoints())).toFixed(2)
       const tl3 = document.querySelector('.tl3');
-      tl3.textContent = (mstats.afirstpts === 0) ? '-' : (100 * mstats.afirstwonpts / (mstats.afirstpts)).toFixed(2)
+      tl3.textContent = (PlayerA.getFirstServePoints() === 0) ? '-' : (100 * PlayerA.getFirstServePointsWon() / PlayerA.getFirstServePoints()).toFixed(2)
       const tm3 = document.querySelector('.tm3');
       tm3.textContent = '1st Serve Won %'
       const tr3 = document.querySelector('.tr3');
-      tr3.textContent = (mstats.bfirstpts === 0) ? '-' : (100 * mstats.bfirstwonpts / (mstats.bfirstpts)).toFixed(2)
+      tr3.textContent = (PlayerB.getFirstServePoints() === 0) ? '-' : (100 * PlayerB.getFirstServePointsWon() / PlayerB.getFirstServePoints()).toFixed(2)
       const tl4 = document.querySelector('.tl4');
-      tl4.textContent = (mstats.asecondpts === 0) ? '-' : (100 * mstats.asecondwonpts / (mstats.asecondpts)).toFixed(2)
+      tl4.textContent = (PlayerA.getSecondServePoints() === 0) ? '-' : (100 * PlayerA.getSecondServePointsWon() / PlayerA.getSecondServePoints()).toFixed(2)
       const tm4 = document.querySelector('.tm4');
       tm4.textContent = '2nd Serve Won %'
       const tr4 = document.querySelector('.tr4');
-      tr4.textContent = (mstats.bsecondpts === 0) ? '-' : (100 * mstats.bsecondwonpts / (mstats.bsecondpts)).toFixed(2)
+      tr4.textContent = (PlayerAB.getSecondServePoints() === 0) ? '-' : (100 * PlayerB.getSecondServePointsWon() / PlayerB.getSecondServePoints()).toFixed(2)
       const tl5 = document.querySelector('.tl5');
       tl5.textContent = ''
       const tm5 = document.querySelector('.tm5');
@@ -617,11 +699,11 @@
       const mr2 = document.querySelector('.mr2');
       mr2.textContent = ''
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = ((mstats.bfirstpts + mstats.bsecondpts) === 0) ? '-' : (100 - (100 * (mstats.bfirstwonpts + mstats.bsecondwonpts) / (mstats.bfirstpts + mstats.bsecondpts))).toFixed(2)
+      ml1.textContent = (PlayerB.getPointsServed() === 0) ? '-' : (100 - (100 * (PlayerB.getServicePointsWon()) / (PlayerB.getPointsServed()))).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Return Points Won %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = ((mstats.afirstpts + mstats.asecondpts) === 0) ? '-' : (100 - (100 * (mstats.afirstwonpts + mstats.asecondwonpts) / (mstats.afirstpts + mstats.asecondpts))).toFixed(2)
+      mr1.textContent = ((PlayerA.getPointsServed()) === 0) ? '-' : (100 - (100 * (PlayerA.getServicePointsWon()) / (PlayerA.getPointsServed()))).toFixed(2)
       const ml6 = document.querySelector('.ml6');
       ml6.textContent = ''
       const mm6 = document.querySelector('.mm6');
@@ -638,11 +720,11 @@
 
     function returnbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = (mstats.bfirstpts === 0) ? '-' : (100 - (100 * mstats.bfirstwonpts / (mstats.bfirstpts))).toFixed(2)
+      tl1.textContent = (PlayerB.getFirstServePoints() === 0) ? '-' : (100 - (100 * PlayerB.getFirstServePointsWon() / PlayerB.getFirstServePoints())).toFixed(2)
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = '1st Serve Return Won %'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = (mstats.afirstpts === 0) ? '-' : (100 - (100 * mstats.afirstwonpts / (mstats.afirstpts))).toFixed(2)
+      tr1.textContent = (PlayerA.getFirstServePoints() === 0) ? '-' : (100 - (100 * PlayerA.getFirstServePointsWon() / PlayerA.getFirstServePoints())).toFixed(2)
       const tl2 = document.querySelector('.tl2');
       tl2.textContent = ''
       const tm2 = document.querySelector('.tm2');
@@ -705,23 +787,23 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = (mstats.apoints === 0) ? '-' : (mstats.anetwonpoints / mstats.apoints).toFixed(2)
+      ml3.textContent = (PlayerA.getPointsWon() === 0) ? '-' : (PlayerA.getNetPointsWon() / PlayerA.getPointsWon()).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'Points Won at Net %'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = (mstats.bpoints === 0) ? '-' : (mstats.bnetwonpoints / mstats.bpoints).toFixed(2)
+      mr3.textContent = (PlayerB.getPointsWon() === 0) ? '-' : (PlayerB.getNetPointsWon() / PlayerB.getPointsWon()).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = (mstats.anetpoints === 0) ? '-' : (mstats.anetwonpoints / mstats.anetpoints).toFixed(2)
+      ml2.textContent = (PlayerA.getNetPoints() === 0) ? '-' : (PlayerA.getNetPointsWon() / PlayerA.getNetPoints()).toFixed(2)
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = 'Net Points Won %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = (mstats.bnetpoints === 0) ? '-' : (mstats.bnetwonpoints / mstats.bnetpoints).toFixed(2)
+      mr2.textContent = (PlayerB.getNetPoints() === 0) ? '-' : (PlayerB.getNetPointsWon() / PlayerB.getNetPoints()).toFixed(2)
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = (mstats.apoints + mstats.bpoints === 0) ? '-' : (mstats.anetpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
+      ml1.textContent = (match.getTotalPoints() === 0) ? '-' : (PlayerA.getNetPoints() / match.getTotalPoints()).toFixed(2)
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Net Points %'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = (mstats.apoints + mstats.bpoints === 0) ? '-' : (mstats.bnetpoints / (mstats.apoints + mstats.bpoints)).toFixed(2)
+      mr1.textContent = (match.getTotalPoints() === 0) ? '-' : (PlayerB.getNetPoints() / match.getTotalPoints()).toFixed(2)
 
     }
 
@@ -772,11 +854,11 @@
       changeValue('b5', '', '', '')
 
       const bl1 = document.querySelector('.bl1');
-      bl1.textContent = (mstats.aaces + mstats.adfs) === 0 ? '-' : ((mstats.adfs === 0) ? "inf" : (mstats.aaces / (mstats.adfs)).toFixed(2))
+      bl1.textContent = (PlayerA.getAces() + PlayerA.getDoubleFaults()) === 0 ? '-' : ((PlayerA.getDoubleFaults() === 0) ? "inf" : (PlayerA.getAces() / (PlayerA.getDoubleFaults())).toFixed(2))
       const bm1 = document.querySelector('.bm1');
       bm1.textContent = 'Ace/DF Ratio'
       const br1 = document.querySelector('.br1');
-      br1.textContent = (mstats.baces + mstats.bdfs) === 0 ? '-' : ((mstats.bdfs === 0) ? "inf" : (mstats.baces / (mstats.bdfs)).toFixed(2))
+      br1.textContent = (PlayerB.getAces() + PlayerB.getDoubleFaults()) === 0 ? '-' : ((PlayerB.getDoubleFaults() === 0) ? "inf" : (PlayerB.getAces() / PlayerB.getDoubleFaults()).toFixed(2))
     }
 
     function adfbfmiddle() {
@@ -793,23 +875,23 @@
       const mr4 = document.querySelector('.mr4');
       mr4.textContent = ''
       const ml3 = document.querySelector('.ml3');
-      ml3.textContent = (mstats.asecondpts) === 0 ? '-' : (mstats.adfs / (mstats.asecondpts)).toFixed(2)
+      ml3.textContent = (PlayerA.secondServePoints()) === 0 ? '-' : (PlayerA.getDoubleFaults() / PlayerA.getSecondServePoints()).toFixed(2)
       const mm3 = document.querySelector('.mm3');
       mm3.textContent = 'DFs per 2nd Serve'
       const mr3 = document.querySelector('.mr3');
-      mr3.textContent = (mstats.bsecondpts) === 0 ? '-' : (mstats.bdfs / (mstats.bsecondpts)).toFixed(2)
+      mr3.textContent = (PlayerB.secondServePoints()) === 0 ? '-' : (PlayerB.getDoubleFaults() / PlayerB.getSecondServePoints()).toFixed(2)
       const ml2 = document.querySelector('.ml2');
-      ml2.textContent = (mstats.afirstpts + mstats.asecondpts) === 0 ? '-' : (100 * mstats.adfs / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      ml2.textContent = PlayerA.getPointsServed() === 0 ? '-' : (100 * PlayerA.getDoubleFaults() / PlayerA.getPointsServed()).toFixed(2)
       const mm2 = document.querySelector('.mm2');
       mm2.textContent = 'Double Fault %'
       const mr2 = document.querySelector('.mr2');
-      mr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.bdfs / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      mr2.textContent = PlayerB.getPointsServed() === 0 ? '-' : (100 * PlayerB.getDoubleFaults() / PlayerB.getPointsServed()).toFixed(2)
       const ml1 = document.querySelector('.ml1');
-      ml1.textContent = mstats.adfs
+      ml1.textContent = PlayerA.getDoubleFaults()
       const mm1 = document.querySelector('.mm1');
       mm1.textContent = 'Double Faults'
       const mr1 = document.querySelector('.mr1');
-      mr1.textContent = mstats.bdfs
+      mr1.textContent = PlayerB.getDoubleFaults()
 
       changeValue('m6', '', '', '')
       changeValue('m7', '', '', '')
@@ -817,17 +899,17 @@
 
     function adfbftop() {
       const tl1 = document.querySelector('.tl1');
-      tl1.textContent = mstats.aaces
+      tl1.textContent = PlayerA.getAces()
       const tm1 = document.querySelector('.tm1');
       tm1.textContent = 'Aces'
       const tr1 = document.querySelector('.tr1');
-      tr1.textContent = mstats.baces
+      tr1.textContent = PlayerB.getAces()
       const tl2 = document.querySelector('.tl2');
-      tl2.textContent = (mstats.afirstpts + mstats.asecondpts) === 0 ? '-' : (100 * mstats.aaces / (mstats.afirstpts + mstats.asecondpts)).toFixed(2)
+      tl2.textContent = (PlayerA.getPointsServed()) === 0 ? '-' : (100 * PlayerA.getAces() / PlayerA.getPointsServed()).toFixed(2)
       const tm2 = document.querySelector('.tm2');
       tm2.textContent = 'Ace %'
       const tr2 = document.querySelector('.tr2');
-      tr2.textContent = (mstats.bfirstpts + mstats.bsecondpts) === 0 ? '-' : (100 * mstats.baces / (mstats.bfirstpts + mstats.bsecondpts)).toFixed(2)
+      tr2.textContent = (PlayerB.getPointsServed()) === 0 ? '-' : (100 * PlayerB.getAces() / PlayerB.getPointsServed()).toFixed(2)
       const tl3 = document.querySelector('.tl3');
       tl3.textContent = ''
       const tm3 = document.querySelector('.tm3');
@@ -876,57 +958,57 @@
         }
       }
       if (selections.includes('Acame')) {
-        mstats.anetpoints++
+        PlayerA.inc("Net Points")
         if (winner === "Awon") {
-          mstats.anetwonpoints++
+          PlayerA.inc("Net Points Won")
         }
       }
       if (selections.includes('Bcame')) {
-        mstats.bnetpoints++
+        PlayerB.inc("Net Points")
         if (winner === "Bwon") {
-          mstats.bnetwonpoints++
+          PlayerB.inc("Net Points Won")
         }
       }
       if (ps === 'Player A') {
         if (fsin === 'servein') {
-          mstats.afirstpts++;
+          PlayerA.inc("First Serve Points")
           if (winner === 'Awon') {
-            mstats.afirstwonpts++;
+            PlayerA.inc("First Serve Points Won")
           }
         }
         else {
-          mstats.asecondpts++;
+          PlayerA.inc("Second Serve Points")
           if (winner === 'Awon') {
-            mstats.asecondwonpts++;
+            PlayerA.inc("Second Serve Points Won")
           }
         }
       }
       else {
         if (fsin === 'servein') {
-          mstats.bfirstpts++;
+          PlayerB.inc("First Serve Points")
           if (winner === 'Bwon') {
-            mstats.bfirstwonpts++;
+            PlayerB.inc("First Serve Points Won")
           }
         }
         else {
-          mstats.bsecondpts++;
+          PlayerB.inc("Second Serve Points")
           if (winner === 'Bwon') {
-            mstats.bsecondwonpts++;
+            PlayerB.inc("Second Serve Points Won")
           }
         }
 
       }
       if (winner === 'Awon') {
-        mstats.apoints++;
+        PlayerA.inc("Points")
         switch (event) {
-          case 'ace': mstats.aaces++; break;
-          case 'df': mstats.bdfs++; break;
+          case 'ace': PlayerA.inc("Aces"); break;
+          case 'df': PlayerB.inc("Double Faults"); break;
         }
       } else if (winner === 'Bwon') {
-        mstats.bpoints++;
+        PlayerB.inc("Points")
         switch (event) {
-          case 'ace': mstats.baces++; break;
-          case 'df': mstats.adfs++; break;
+          case 'ace': PlayerB.inc("Aces"); break;
+          case 'df': PlayerA.inc("Double Faults"); break;
         }
       }
 
@@ -956,15 +1038,16 @@
 
       if (isBreakPoint(server, apts, bpts)) {
         if (server === "Player A") {
-          mstats.bbreakpoints++
+          PlayerB.inc("Break Points")
+
           if (winner === 'Bwon') {
-            mstats.bbreaks++
+            PlayerB.inc("Break Points Won")
           }
         }
         if (server === 'Player B') {
-          mstats.abreakpoints++
+          PlayerA.inc("Break Points")
           if (winner === 'Awon') {
-            mstats.abreaks++
+            PlayerA.inc("Break Points Won")
           }
         }
       }
@@ -999,7 +1082,7 @@
           bpts = 0;
           agames++;
           toggleServer()
-          mstats.totalagames++;
+          PlayerA.inc("Games")
           if (agames === 6 && bgames < 5 || agames === 7) {
             prevSets.push(agames + '-' + bgames)
             agames = 0;
@@ -1042,7 +1125,7 @@
         else if (bpts === 40 || bpts === 'AD') {
           apts = 0;
           bpts = 0;
-          mstats.totalbgames++;
+          PlayerB.inc("Games")
           bgames++;
           toggleServer()
           if (bgames === 6 && agames < 5 || bgames === 7) {
