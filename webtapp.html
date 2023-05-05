@@ -1115,8 +1115,8 @@
           PlayerA.inc("Games")
           if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) < 5 || match.getGames(PlayerA) === 7) {
             prevSets.push(match.getGames(PlayerA) + '-' + match.getGames(PlayerB))
-            confirm(prevSets)
             reset(true)
+            confirm(prevSets)
 
           }
           else if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) === 6) {
@@ -1173,7 +1173,7 @@
 
       const selection = document.querySelector('input[name="howwon"]:checked').value;
       const servein = document.querySelector('input[name="serveIn"]:checked').value;
-      confirm("cat")
+
       div.textContent = makeScore();
       makePbp(winner, 0)
       makeStats(winner, selection, servein, prevserver)
