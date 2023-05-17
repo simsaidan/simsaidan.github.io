@@ -418,13 +418,13 @@
     }
 
     function isBreakPoint(server, playerAPoints, playerBPoints) {
-      confirm(PlayerA.getBreakPoints())
+      let serverPoints = [0, 15, 30]
       // If player A is serving
       if (server === 'Player A') {
         // It's a break point if:
         // - Player B has 40 points and player A has 30 points
         // - Player B has advantage (ad) 
-        if ((playerBPoints === 40 && playerAPoints === 30) || playerBPoints === 'ad') {
+        if ((playerBPoints === 40 && serverPoints.indexOf(playerAPoints) != -1) || playerBPoints === 'ad') {
           return true;
         }
       }
@@ -433,7 +433,7 @@
         // It's a break point if: 
         // - Player A has 40 points and player B has 30 points
         // - Player A has advantage (ad)
-        if ((playerAPoints === 40 && playerBPoints === 30) || playerAPoints === 'ad') {
+        if ((playerAPoints === 40 && serverPoints.indexOf(playerBPoints) != -1) || playerAPoints === 'ad') {
           return true;
         }
       }
