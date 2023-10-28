@@ -6,3 +6,8 @@ h1 {
 body {
   text-align: center;
 }
+
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+}
