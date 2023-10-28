@@ -1,6 +1,6 @@
 h1 {
   color: green;
-  font-size: 2rem;
+  font-size: 4rem;
 }
 
 body {
@@ -8,5 +8,5 @@ body {
 }
 
 table {
-  margin: 0 auto;
+  text-align: center;
 }
