@@ -10,9 +10,10 @@ body {
 .grid {
   margin-left: auto;
   margin-right: auto;
+  border: 2px solid black;
 }
 
 td {
-  width: 100px;
-  height: 100px;
+  width: 175px;
+  height: 175px;
 }
