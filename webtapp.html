@@ -218,6 +218,11 @@
         this.netPointsWon = 0;
         this.breakPoints = 0;
         this.breaks = 0;
+        this.serviceWinners = 0;
+        this.forehandWinners = 0;
+        this.backhandWinners = 0;
+        this.netWinners = 0;
+
 
       }
       getPointsWon() {
@@ -270,6 +275,16 @@
         return this.netPointsWon;
       }
 
+      getTotalWinners() {
+        return (
+          this.aces +
+          this.forehandWinners +
+          this.backhandWinners +
+          this.netWinners +
+          this.serviceWinners
+        );
+      }
+
       inc(stat) {
         switch (stat) {
           case "Games": this.gamesWon++; break;
@@ -284,6 +299,10 @@
           case "Break Points Won": this.breaks++; break;
           case "Aces": this.aces++; break;
           case "Double Faults": this.dfs++; break;
+          case "Forehand Winners": this.forehandWinners++; break;
+          case "Backhand Winners": this.backhandWinners++; break;
+          case "Net Winners": this.netWinners++; break;
+          case "Service Winners": this.serviceWinners++; break;
         }
       }
     }
@@ -1033,12 +1052,21 @@
         switch (event) {
           case 'ace': PlayerA.inc("Aces"); break;
           case 'df': PlayerB.inc("Double Faults"); break;
+          case 'swinner': PlayerA.inc("Service Winners"); break;
+          case 'fhw': PlayerA.inc("Forehand Winners"); break;
+          case 'bhw': PlayerA.inc("Backhand Winners"); break;
+          case 'nw': PlayerA.inc("Net Winners"); break;
+
         }
       } else if (winner === 'Bwon') {
         PlayerB.inc("Points")
         switch (event) {
           case 'ace': PlayerB.inc("Aces"); break;
           case 'df': PlayerA.inc("Double Faults"); break;
+          case 'swinner': PlayerB.inc("Service Winners"); break;
+          case 'fhw': PlayerB.inc("Forehand Winners"); break;
+          case 'bhw': PlayerB.inc("Backhand Winners"); break;
+          case 'nw': PlayerB.inc("Net Winners"); break;
         }
       }
 
