@@ -1,6 +1,6 @@
 h1 {
   color: green;
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 body {
@@ -10,4 +10,9 @@ body {
 .grid {
   margin-left: auto;
   margin-right: auto;
+}
+
+td {
+  width: 100px;
+  height: 100px;
 }
