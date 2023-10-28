@@ -1,18 +1,8 @@
 h1 {
-  text-align: center;
-
   color: green;
   font-size: 2rem;
 }
 
-.grid {
-  text-align: center;
-}
-
-.endgame {
-  text-align: center;
-}
-
-p {
+body {
   text-align: center;
 }
