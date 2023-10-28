@@ -1,0 +1,1 @@
+const categories = [["Left Handed"]];
