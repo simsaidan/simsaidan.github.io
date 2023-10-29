@@ -15,3 +15,5 @@ function setCategories() {
   td.textContent = 'cats rock';
 
 }
+
+setCategories()
