@@ -5,7 +5,13 @@ const categories = [["Left Handed"],
 ["Grand Slam Winner", "5+ Slams", "GS Finalist but no GS", "Wimbledon Champion"],
 ["Top 5 Ranking"],
 ["Played Davis Cup", "Won Davis Cup"],
-["Olympic Medalist", "Played in Olympics"]];
+["Olympic Medalist", "Played in Olympics"],
+["Won Rogers Cup"]];
 
 
 
+function setCategories() {
+  const td = document.getElementById('leftCat');
+  td.textContent = 'cats rock';
+
+}
