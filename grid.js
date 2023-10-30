@@ -81,7 +81,8 @@ function setCategories() {
   for (let i = 0; i < 3; i++) {
     cats.push(trimmedCategories[colParts[i]]);
   }
-
+  confirm(cats)
+  confirm(here)
   const td4 = document.getElementById('topRow');
   td4.textContent = cats[3];
   const td5 = document.getElementById('midRow');
