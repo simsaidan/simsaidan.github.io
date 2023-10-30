@@ -65,9 +65,9 @@ function setCategories() {
   const td = document.getElementById('topRow');
   td.textContent = cats[0];
   const td2 = document.getElementById('midRow');
-  td.textContent = cats[1];
+  td2.textContent = cats[1];
   const td3 = document.getElementById('bottomRow');
-  td.textContent = cats[2];
+  td3.textContent = cats[2];
 
 }
 
