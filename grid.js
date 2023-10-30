@@ -6,7 +6,8 @@ const categories = [["Left Handed"],
 ["Top 5 Ranking"],
 ["Played Davis Cup", "Won Davis Cup"],
 ["Olympic Medalist", "Played in Olympics"],
-["Won Rogers Cup"]];
+["Won Rogers Cup"],
+["Played in NextGen Finals"]];
 
 
 
