@@ -11,15 +11,14 @@ const categories = [["Left Handed"],
 
 
 confirm("here");
-document.addEventListener('DOMContentLoaded', () => {
-  confirm("wtf");
-  function setCategories() {
-    const td = document.getElementById('leftCat');
-    alert("cat poop");
-    td.textContent = 'cats rock';
 
-  }
+confirm("wtf");
+function setCategories() {
+  const td = document.getElementById('leftCat');
+  alert("cat poop");
+  td.textContent = 'cats rock';
 
-  setCategories();
+}
 
-});
+setCategories();
+
