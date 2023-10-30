@@ -10,12 +10,9 @@ const categories = [["Left Handed"],
 ["Played in NextGen Finals"]];
 
 
-confirm("here");
 
-confirm("wtf");
 function setCategories() {
   const td = document.getElementById('leftCat');
-  alert("cat poop");
   td.textContent = 'cats rock';
 
 }
