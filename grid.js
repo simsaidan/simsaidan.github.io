@@ -1,4 +1,4 @@
-const categories = [["Left Handed"],
+let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
 ["Not from Europe", "From Australia", "From Asia", "From South America", "American", "From Europe"],
 ["Won at least 20 titles", "No titles", "Title on All 3 Surfaces", "Unseeded Champion"],
@@ -9,11 +9,25 @@ const categories = [["Left Handed"],
 ["Won Rogers Cup"],
 ["Played in NextGen Finals"]];
 
+let forbidden = {};
+
+
+function flatten(arr) {
+  let flattened = [];
+
+  arr.forEach(subarr => {
+    flattened = flattened.concat(subarr);
+  });
+
+  return flattened;
+}
 
 
 function setCategories() {
+  let cats = [];
+  let flattenedCategories = flatten(categories);
+  confirm(flattenedCategories);
   const td = document.getElementById('leftCat');
-  confirm("cats rule")
   td.textContent = 'cats rock';
 
 }
