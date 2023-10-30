@@ -10,9 +10,9 @@ const categories = [["Left Handed"],
 ["Played in NextGen Finals"]];
 
 
-
+confirm("here");
 document.addEventListener('DOMContentLoaded', () => {
-
+  confirm("wtf");
   function setCategories() {
     const td = document.getElementById('leftCat');
     alert("cat poop");
