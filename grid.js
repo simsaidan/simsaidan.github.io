@@ -9,7 +9,7 @@ let categories = [["Left Handed"],
 ["Won Rogers Cup"],
 ["Played in NextGen Finals"]];
 
-let forbidden = {};
+let forbidden = { "Left Handed": [], "Born after 1995": "Born before 1975" };
 
 
 function flatten(arr) {
@@ -62,12 +62,32 @@ function setCategories() {
     cats.push(flattenedCategories[rowParts[i]]);
   }
 
-  const td = document.getElementById('topRow');
+  const td = document.getElementById('leftCol');
   td.textContent = cats[0];
-  const td2 = document.getElementById('midRow');
+  const td2 = document.getElementById('midCol');
   td2.textContent = cats[1];
-  const td3 = document.getElementById('bottomRow');
+  const td3 = document.getElementById('rightCol');
   td3.textContent = cats[2];
+
+  let trimmedCategories = flattenedCategories;
+
+  let colHash = cyrb53(date.split("").reverse().join("")).toString();
+  const colParts = [
+    parseInt(colHash.substring(0, 3)) % trimmedCategories.length,
+    parseInt(colHash.substring(3, 6)) % trimmedCategories.length,
+    parseInt(colHash.substring(6, 9)) % trimmedCategories.length
+  ];
+
+  for (let i = 0; i < 3; i++) {
+    cats.push(trimmedCategories[colParts[i]]);
+  }
+
+  const td4 = document.getElementById('topRow');
+  td4.textContent = cats[3];
+  const td5 = document.getElementById('midRow');
+  td5.textContent = cats[4];
+  const td6 = document.getElementById('bottomRow');
+  td6.textContent = cats[5];
 
 }
 
