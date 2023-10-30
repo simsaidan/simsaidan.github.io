@@ -9,7 +9,7 @@ let categories = [["Left Handed"],
 ["Won Rogers Cup"],
 ["Played in NextGen Finals"]];
 
-let forbidden = { "Left Handed": [], "Born after 1995": "Born before 1975" };
+let forbidden = { "Left Handed": [], "Born after 1995": ["Born before 1975"] };
 
 
 function flatten(arr) {
