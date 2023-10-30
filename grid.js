@@ -22,13 +22,30 @@ function flatten(arr) {
   return flattened;
 }
 
+function getTodayDate() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1;
+  let dd = today.getDate();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  return `${yyyy}-${mm}-${dd}`;
+}
 
 function setCategories() {
   let cats = [];
+  let date = getTodayDate();
+  confirm(date)
   let flattenedCategories = flatten(categories);
-  confirm(flattenedCategories);
+
+  for (let i = 0; i < 6; i++) {
+    cats.push('apple');
+  }
+
   const td = document.getElementById('leftCat');
-  td.textContent = 'cats rock';
+  td.textContent = cats[0];
 
 }
 
