@@ -58,6 +58,18 @@ function setCategories() {
     parseInt(datehash.substring(6, 9)) % flattenedCategories.length
   ];
 
+  if (rowParts[1] === rowParts[0]) {
+    rowParts[1] = (rowParts[1] + 1) % flattenedCategories.length;
+  }
+
+  if (rowParts[2] === rowParts[0]) {
+    rowParts[2] = (rowParts[2] + 1) % flattenedCategories.length;
+  }
+
+  if (rowParts[2] === rowParts[1]) {
+    rowParts[2] = (rowParts[2] + 1) % flattenedCategories.length;
+  }
+
   for (let i = 0; i < 3; i++) {
     cats.push(flattenedCategories[rowParts[i]]);
   }
@@ -78,6 +90,18 @@ function setCategories() {
     parseInt(colHash.substring(6, 9)) % trimmedCategories.length
   ];
 
+  if (colParts[1] === colParts[0]) {
+    colParts[1] = (colParts[1] + 1) % trimmedCategories.length;
+  }
+
+  if (colParts[2] === colParts[0]) {
+    colParts[2] = (colParts[2] + 1) % trimmedCategories.length;
+  }
+
+  if (colParts[2] === colParts[1]) {
+    colParts[2] = (colParts[2] + 1) % trimmedCategories.length;
+  }
+
   for (let i = 0; i < 3; i++) {
     cats.push(trimmedCategories[colParts[i]]);
   }
@@ -88,6 +112,7 @@ function setCategories() {
   const td6 = document.getElementById('bottomRow');
   td6.textContent = cats[5];
 
+  confirm(cats);
 }
 
 setCategories();
