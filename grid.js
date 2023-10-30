@@ -14,11 +14,9 @@ let forbidden = {};
 
 function flatten(arr) {
   let flattened = [];
-
   arr.forEach(subarr => {
     flattened = flattened.concat(subarr);
   });
-
   return flattened;
 }
 
@@ -34,18 +32,42 @@ function getTodayDate() {
   return `${yyyy}-${mm}-${dd}`;
 }
 
+const cyrb53 = (str, seed = 0) => {
+  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+  for (let i = 0, ch; i < str.length; i++) {
+    ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+  h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+  h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+
+  return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+};
+
 function setCategories() {
   let cats = [];
   let date = getTodayDate();
-  confirm(date)
+  let datehash = cyrb53(date).toString();
   let flattenedCategories = flatten(categories);
+  const rowParts = [
+    parseInt(datehash.substring(0, 3)) % flattenedCategories.length,
+    parseInt(datehash.substring(3, 6)) % flattenedCategories.length,
+    parseInt(datehash.substring(6, 9)) % flattenedCategories.length
+  ];
 
-  for (let i = 0; i < 6; i++) {
-    cats.push('apple');
+  for (let i = 0; i < 3; i++) {
+    cats.push(flattenedCategories[rowParts[i]]);
   }
 
-  const td = document.getElementById('leftCat');
+  const td = document.getElementById('topRow');
   td.textContent = cats[0];
+  const td2 = document.getElementById('midRow');
+  td.textContent = cats[1];
+  const td3 = document.getElementById('bottomRow');
+  td.textContent = cats[2];
 
 }
 
