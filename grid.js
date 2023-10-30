@@ -82,7 +82,7 @@ function setCategories() {
     cats.push(trimmedCategories[colParts[i]]);
   }
   confirm(cats)
-  confirm(here)
+  comfirm("here")
   const td4 = document.getElementById('topRow');
   td4.textContent = cats[3];
   const td5 = document.getElementById('midRow');
