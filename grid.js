@@ -13,6 +13,7 @@ const categories = [["Left Handed"],
 
 function setCategories() {
   const td = document.getElementById('leftCat');
+  confirm("cats rule")
   td.textContent = 'cats rock';
 
 }
