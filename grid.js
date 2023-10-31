@@ -122,7 +122,7 @@ function setCategories() {
 
   let trimmedCategories = noDups.filter(cat => {
     for (let key in cats) {
-      if (forbidden[key].includes(cat)) {
+      if (forbidden[cats[key]].includes(cat)) {
         return false;
       }
     }
