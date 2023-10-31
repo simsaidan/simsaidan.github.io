@@ -1,4 +1,4 @@
-let randomMode = true;
+let randomMode = !true;
 
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
