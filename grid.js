@@ -1,3 +1,5 @@
+let randomMode = false;
+
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
 ["Not from Europe", "From Australia", "From Asia", "From South America", "American", "From Europe"],
@@ -9,7 +11,32 @@ let categories = [["Left Handed"],
 ["Won Rogers Cup"],
 ["Played in NextGen Finals"]];
 
-let forbidden = { "Left Handed": [], "Born after 1995": ["Born before 1975"] };
+let forbidden = {
+  "Left Handed": [],
+  "Born after 1995": ["Born before 1975"],
+  "Born before 1975": ["Born after 1995", "Played in NextGen Finals"],
+  "Not from Europe": ["From Europe"],
+  "From Australia": ["From Asia", "From Europe", "From South America", "American"],
+  "From Asia": ["From Australia", "From Europe", "From South America", "American"],
+  "From South America": ["From Australia", "From Asia", "From Europe", "American"],
+  "American": ["From Australia", "From Asia", "From Europe", "From South America"],
+  "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
+  "Won at least 20 titles": ["No titles"],
+  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "Grand Slam Winner", "Won Rogers Cup", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces"],
+  "Title on All 3 Surfaces": ["No titles"],
+  "Unseeded Champion": ["No titles"],
+  "Grand Slam Winner": ["GS Finalist but no GS", "No titles"],
+  "5+ Slams": ["No titles"],
+  "GS Finalist but no GS": ["Grand Slam Winner", "5+ Slams"],
+  "Wimbledon Champion": ["No titles"],
+  "Top 5 Ranking": [],
+  "Played Davis Cup": [],
+  "Won Davis Cup": [],
+  "Olympic Medalist": [],
+  "Played in Olympics": [],
+  "Won Rogers Cup": ["No titles"],
+  "Played in NextGen Finals": ["Born before 1975"]
+};
 
 
 function flatten(arr) {
@@ -81,7 +108,19 @@ function setCategories() {
   const td3 = document.getElementById('rightCol');
   td3.textContent = cats[2];
 
-  let trimmedCategories = flattenedCategories;
+  let noDups = flattenedCategories.filter(cat => {
+    return !cats.includes(cat)
+  });
+
+
+  let trimmedCategories = noDups.filter(cat => {
+    for (let key in cats) {
+      if (cats[key].includes(cat)) {
+        return false;
+      }
+    }
+    return true;
+  })
 
   let colHash = cyrb53(date.split("").reverse().join("")).toString();
   const colParts = [
@@ -112,7 +151,7 @@ function setCategories() {
   const td6 = document.getElementById('bottomRow');
   td6.textContent = cats[5];
 
-  confirm(cats);
+  confirm(cats)
 }
 
 setCategories();
