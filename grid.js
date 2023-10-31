@@ -151,7 +151,6 @@ function setCategories() {
   const td6 = document.getElementById('bottomRow');
   td6.textContent = cats[5];
 
-  confirm(cats)
 }
 
 setCategories();
