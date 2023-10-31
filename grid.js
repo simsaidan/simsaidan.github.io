@@ -78,6 +78,13 @@ function setCategories() {
   let cats = [];
   let date = getTodayDate();
   let datehash = cyrb53(date).toString();
+  if (randomMode) {
+    let randomNum = '';
+    for (let i = 0; i < 12; i++) {
+      randomNum += Math.floor(Math.random() * 10);
+    }
+    datehash = randomNum;
+  }
   let flattenedCategories = flatten(categories);
   const rowParts = [
     parseInt(datehash.substring(0, 3)) % flattenedCategories.length,
@@ -123,6 +130,13 @@ function setCategories() {
   })
 
   let colHash = cyrb53(date.split("").reverse().join("")).toString();
+  if (randomMode) {
+    let randomNum = '';
+    for (let i = 0; i < 12; i++) {
+      randomNum += Math.floor(Math.random() * 10);
+    }
+    colHash = randomNum;
+  }
   const colParts = [
     parseInt(colHash.substring(0, 3)) % trimmedCategories.length,
     parseInt(colHash.substring(3, 6)) % trimmedCategories.length,
