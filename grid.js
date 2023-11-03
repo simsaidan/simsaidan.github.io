@@ -46,6 +46,10 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+function submit() {
+  alert("a")
+}
+
 function flatten(arr) {
   let flattened = [];
   arr.forEach(subarr => {
