@@ -48,6 +48,10 @@ function closeForm() {
 
 function submit() {
   alert("a")
+  const player = document.getElementById('email').value;
+  alert(player)
+
+
 }
 
 function flatten(arr) {
