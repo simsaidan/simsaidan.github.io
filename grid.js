@@ -46,7 +46,8 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-function submit() {
+function submit(event) {
+  event.preventDefault();
   alert("a")
   const player = document.getElementById('email').value;
   alert(player)
