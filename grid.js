@@ -43,6 +43,7 @@ function openForm() {
 }
 
 function closeForm() {
+  alert("shitsburg")
   document.getElementById("myForm").style.display = "none";
 }
 
