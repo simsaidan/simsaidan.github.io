@@ -38,6 +38,13 @@ let forbidden = {
   "Played in NextGen Finals": ["Born before 1975"]
 };
 
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
 
 function flatten(arr) {
   let flattened = [];
