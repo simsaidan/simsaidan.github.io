@@ -38,7 +38,10 @@ let forbidden = {
   "Played in NextGen Finals": ["Born before 1975"]
 };
 
-function openForm() {
+let clicked = 'button1'
+
+function openForm(b) {
+  clicked = b
   document.getElementById("myForm").style.display = "block";
 }
 
@@ -83,9 +86,9 @@ function verify(label, player) {
   return true;
 }
 
-function submit(buttid) {
-  confirm(buttid)
-  buttonCats = getCats(buttid)
+function submit() {
+  confirm(b)
+  buttonCats = getCats(b)
 
   const player = document.getElementById('email').value;
   confirm(buttonCats[0])
