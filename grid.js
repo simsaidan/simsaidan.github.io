@@ -74,7 +74,9 @@ function getCats(button) {
 }
 
 function verify(label, player) {
+  confirm("iowfnnenlfe")
   const a = document.getElementById(label).value;
+
   alert(a);
   return true;
 }
