@@ -74,7 +74,7 @@ function getCats(button) {
 }
 
 function verify(label, player) {
-  const a = document.getElementById(label).textContent;
+  const a = document.getElementById(label).value;
   alert(a);
   return true;
 }
