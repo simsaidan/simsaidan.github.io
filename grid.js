@@ -73,11 +73,20 @@ function getCats(button) {
 
 }
 
+function verify(label, player) {
+  const a = document.getElementById(label).textContent;
+  alert(a);
+  return true;
+}
+
 function submit(buttid) {
   buttonCats = getCats(buttid)
-  alert(buttonCats)
+
   const player = document.getElementById('email').value;
-  document.getElementById('button1').textContent = player;
+
+  if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
+    document.getElementById('button1').textContent = player;
+  }
 }
 
 function flatten(arr) {
