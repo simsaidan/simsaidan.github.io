@@ -44,6 +44,7 @@ function openForm() {
 
 function closeForm() {
   alert("shitsburg")
+  const player = document.getElementById('email').value;
   document.getElementById("myForm").style.display = "none";
 }
 
