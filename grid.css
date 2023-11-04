@@ -32,7 +32,7 @@ td button {
 .form-popup {
   display: none;
   position: fixed;
-  bottom: 0;
+  bottom: 15px;
   right: 15px;
   border: 3px solid #f1f1f1;
   z-index: 9;
@@ -77,4 +77,10 @@ td button {
 
 .form-popup .btn:hover {
   opacity: 1;
+}
+
+.guesses {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
 }

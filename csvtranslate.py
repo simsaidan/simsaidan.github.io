@@ -1,12 +1,16 @@
 import csv
 import json
 
-with open("atp_players.csv") as csvf:
-    csv_reader = csv.DictReader(csvf)
+json_list = []
 
-    json_list = []
-    for row in csv_reader:
-        json_list.append(row)
+csv_files = ["file1.csv", "file2.csv", "file3.csv"]
 
-with open("players.json", "w") as jsonf:
-    jsonf.write(json.dumps(json_list, indent=4))
+for csv_file in csv_files:
+    with open(csv_file) as f:
+        csv_reader = csv.DictReader(f)
+
+        for row in csv_reader:
+            json_list.append(row)
+
+with open("rankings.json", "w") as f:
+    f.write(json.dumps(json_list, indent=4))
