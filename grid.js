@@ -52,41 +52,32 @@ function getCats(button) {
 
   switch (button) {
     case 'button1':
-      alert('button1');
-      break;
+      return 'button1';
     case 'button2':
-      alert('button2');
-      break;
+      return 'button2';
     case 'button3':
-      alert('button3');
-      break;
+      return 'button3';
     case 'button4':
-      alert('button4');
-      break;
+      return 'button4';
     case 'button5':
-      alert('button5');
-      break;
+      return 'button5';
     case 'button6':
-      alert('button6');
-      break;
+      return 'button6';
     case 'button7':
-      alert('button7');
-      break;
+      return 'button7';
     case 'button8':
-      alert('button8');
-      break;
+      return 'button8';
     case 'button9':
-      alert('button9');
-      break;
+      return 'button9';
     default:
-      alert('Unknown button');
+      return 'Unknown button';
   }
 
 }
 
-
 function submit() {
-  getCats('button1')
+  buttonCats = getCats('button1')
+  alert(buttonCats)
   const player = document.getElementById('email').value;
   document.getElementById('button1').textContent = player;
 }
