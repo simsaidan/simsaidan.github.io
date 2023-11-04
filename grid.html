@@ -49,21 +49,21 @@
   </div>
 
   <div class="form-popup" id="myForm">
-    <form class="form-container">
 
-      <label for="email">Player:</label>
-      <input id="email" required list="emailSuggestions">
 
-      <datalist id="emailSuggestions">
-        <option value="john@example.com"></option>
-        <option value="mary@example.com"></option>
-        <option value="peter@example.com"></option>
-      </datalist>
+    <label for="email">Player:</label>
+    <input id="email" required list="emailSuggestions">
 
-      <button type="button" class="btn" onclick="submit()">Enter</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Back</button>
-      <button type="button" class="btn cancel" onclick="submit()">Back</button>
-    </form>
+    <datalist id="emailSuggestions">
+      <option value="john@example.com"></option>
+      <option value="mary@example.com"></option>
+      <option value="peter@example.com"></option>
+    </datalist>
+
+    <button type="button" class="btn" onclick="submit()">Enter</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Back</button>
+    <button type="button" class="btn cancel" onclick="submit()">Back</button>
+
   </div>
 
   <script src="grid.js"></script>
