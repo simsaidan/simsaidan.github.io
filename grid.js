@@ -80,11 +80,11 @@ function verify(label, player) {
 }
 
 function submit(buttid) {
-  confirm("applesaiuce")
+
   buttonCats = getCats(buttid)
 
   const player = document.getElementById('email').value;
-
+  confirm("applesaiuce")
   if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
     document.getElementById('button1').textContent = player;
   }
