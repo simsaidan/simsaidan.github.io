@@ -52,31 +52,29 @@ function getCats(button) {
 
   switch (button) {
     case 'button1':
-      return 'button1';
+      return ["leftCol", "topRow"];
     case 'button2':
-      return 'button2';
+      return ["midCol", "topRow"];
     case 'button3':
-      return 'button3';
+      return ["rightCol", "topRow"];
     case 'button4':
-      return 'button4';
+      return ["leftCol", "midRow"];
     case 'button5':
-      return 'button5';
+      return ["midCol", "midRow"];
     case 'button6':
-      return 'button6';
+      return ["rightCol", "midRow"];
     case 'button7':
-      return 'button7';
+      return ["leftCol", "bottomRow"];
     case 'button8':
-      return 'button8';
+      return ["midCol", "bottomRow"];
     case 'button9':
-      return 'button9';
-    default:
-      return 'Unknown button';
+      return ["rightCol", "bottomRow"];
   }
 
 }
 
-function submit() {
-  buttonCats = getCats('button1')
+function submit(buttid) {
+  buttonCats = getCats(buttid)
   alert(buttonCats)
   const player = document.getElementById('email').value;
   document.getElementById('button1').textContent = player;
