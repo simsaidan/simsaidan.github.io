@@ -1,4 +1,24 @@
-import players from './players.json'
+let playerData;
+
+function fetchData(jsonFilePath) {
+  return fetch(jsonFilePath)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${jsonFilePath}: ${response.status}`);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error fetching JSON file:', error);
+    });
+}
+
+const jsonFilePath = 'players.json';
+fetchData(jsonFilePath)
+  .then(jsonData => {
+    globalJsonData = jsonData;
+  });
+
 
 let randomMode = !true;
 
@@ -81,7 +101,7 @@ function getCats(button) {
 }
 
 function american(player) {
-  const americans = players.filter(player => player.ioc === 'USA');
+  const americans = playerData.filter(player => player.ioc === 'USA');
   const numAmericans = americans.length;
   confirm(numAmericans)
 }
