@@ -69,6 +69,8 @@ function getCats(button) {
       return ["midCol", "bottomRow"];
     case 'button9':
       return ["rightCol", "bottomRow"];
+    default:
+      return ["Oh", "no"]
   }
 
 }
