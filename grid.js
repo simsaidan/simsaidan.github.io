@@ -8,7 +8,7 @@ let categories = [["Left Handed"],
 ["Top 5 Ranking"],
 ["Played Davis Cup", "Won Davis Cup"],
 ["Olympic Medalist", "Played in Olympics"],
-["Won Rogers Cup"],
+["Won Rogers Cup", "Won Miami Open"],
 ["Played in NextGen Finals"]];
 
 let forbidden = {
@@ -22,7 +22,7 @@ let forbidden = {
   "American": ["From Australia", "From Asia", "From Europe", "From South America"],
   "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
   "Won at least 20 titles": ["No titles"],
-  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "Grand Slam Winner", "Won Rogers Cup", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces"],
+  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces"],
   "Title on All 3 Surfaces": ["No titles"],
   "Unseeded Champion": ["No titles"],
   "Grand Slam Winner": ["GS Finalist but no GS", "No titles"],
@@ -35,6 +35,7 @@ let forbidden = {
   "Olympic Medalist": [],
   "Played in Olympics": [],
   "Won Rogers Cup": ["No titles"],
+  "Won Miami Open": ["No titles"],
   "Played in NextGen Finals": ["Born before 1975"]
 };
 
@@ -79,19 +80,16 @@ function getCats(button) {
 }
 
 function verify(label, player) {
-  confirm("iowfnnenlfe")
-  const a = document.getElementById(label).value;
+
+  const a = document.getElementById(label).textContent;
 
   alert(a);
   return true;
 }
 
 function submit() {
-  confirm(clicked)
   buttonCats = getCats(clicked)
-
   const player = document.getElementById('email').value;
-  confirm(buttonCats[0])
   if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
     document.getElementById('button1').textContent = player;
   }
