@@ -1,3 +1,5 @@
+import players from './players.json'
+
 let randomMode = !true;
 
 let categories = [["Left Handed"],
@@ -79,7 +81,6 @@ function getCats(button) {
 }
 
 function american(player) {
-  const players = require('./players.json');
   const americans = players.filter(player => player.ioc === 'USA');
   const numAmericans = americans.length;
   confirm(numAmericans)
