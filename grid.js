@@ -43,16 +43,14 @@ function openForm() {
 }
 
 function closeForm() {
-  alert("shitsburg")
-  const player = document.getElementById('email').value;
+
+
   document.getElementById("myForm").style.display = "none";
 }
 
 function submit() {
-  confirm(forbidden)
-  alert("a")
   const player = document.getElementById('email').value;
-  alert(player)
+  document.getElementById('button1').textContent = player;
 }
 
 function flatten(arr) {
