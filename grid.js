@@ -87,8 +87,8 @@ function verify(label, player) {
 }
 
 function submit() {
-  confirm(b)
-  buttonCats = getCats(b)
+  confirm(clicked)
+  buttonCats = getCats(clicked)
 
   const player = document.getElementById('email').value;
   confirm(buttonCats[0])
