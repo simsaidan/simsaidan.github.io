@@ -48,7 +48,45 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+function getCats(button) {
+
+  switch (button) {
+    case 'button1':
+      alert('button1');
+      break;
+    case 'button2':
+      alert('button2');
+      break;
+    case 'button3':
+      alert('button3');
+      break;
+    case 'button4':
+      alert('button4');
+      break;
+    case 'button5':
+      alert('button5');
+      break;
+    case 'button6':
+      alert('button6');
+      break;
+    case 'button7':
+      alert('button7');
+      break;
+    case 'button8':
+      alert('button8');
+      break;
+    case 'button9':
+      alert('button9');
+      break;
+    default:
+      alert('Unknown button');
+  }
+
+}
+
+
 function submit() {
+  getCats('button1')
   const player = document.getElementById('email').value;
   document.getElementById('button1').textContent = player;
 }
