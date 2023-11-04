@@ -70,7 +70,6 @@ function openForm(b) {
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
-  american()
 }
 
 function getCats(button) {
@@ -100,16 +99,30 @@ function getCats(button) {
 
 }
 
-function american(player) {
-  const americans = playerData.filter(player => player.ioc === 'USA');
-  const numAmericans = americans.length;
-  confirm(numAmericans)
+function american(name_first, name_last) {
+  return playerData.some(player =>
+    player.name_first === name_first &&
+    player.name_last === name_last &&
+    player.ioc === 'USA');
 }
-
 function verify(label, player) {
+  const name = player.trim();
+  const [firstName, lastName] = name.split(' ');
   const a = document.getElementById(label).textContent;
-  alert(a);
-  return true;
+  let res;
+  switch (a) {
+    case "American":
+      res = american(firstName, lastName);
+      if (!res) {
+        alert("Incorrect - American");
+      }
+      break;
+
+    default:
+      alert("Not implemented");
+      res = false;
+  }
+  return res;
 }
 
 function submit() {
