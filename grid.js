@@ -47,9 +47,8 @@ function openForm(b) {
 }
 
 function closeForm() {
-
-
   document.getElementById("myForm").style.display = "none";
+  american()
 }
 
 function getCats(button) {
@@ -79,10 +78,15 @@ function getCats(button) {
 
 }
 
+function american(player) {
+  const players = require('./players.json');
+  const americans = players.filter(player => player.IOC === 'USA');
+  const numAmericans = americans.length;
+  confirm(numAmericans)
+}
+
 function verify(label, player) {
-
   const a = document.getElementById(label).textContent;
-
   alert(a);
   return true;
 }
