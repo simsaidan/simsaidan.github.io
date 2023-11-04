@@ -16,7 +16,7 @@ function fetchData(jsonFilePath) {
 const jsonFilePath = 'players.json';
 fetchData(jsonFilePath)
   .then(jsonData => {
-    globalJsonData = jsonData;
+    playerData = jsonData;
   });
 
 
