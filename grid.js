@@ -48,6 +48,7 @@ function closeForm() {
 }
 
 function submit() {
+  confirm(forbidden)
   alert("a")
   const player = document.getElementById('email').value;
   alert(player)
