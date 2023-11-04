@@ -86,7 +86,7 @@ function submit(buttid) {
   buttonCats = getCats(buttid)
 
   const player = document.getElementById('email').value;
-  confirm("applesaiuce")
+  confirm(buttonCats[0])
   if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
     document.getElementById('button1').textContent = player;
   }
