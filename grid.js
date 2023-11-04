@@ -80,7 +80,7 @@ function getCats(button) {
 
 function american(player) {
   const players = require('./players.json');
-  const americans = players.filter(player => player.IOC === 'USA');
+  const americans = players.filter(player => player.ioc === 'USA');
   const numAmericans = americans.length;
   confirm(numAmericans)
 }
