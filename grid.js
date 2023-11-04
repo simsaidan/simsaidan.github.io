@@ -64,7 +64,8 @@ let forbidden = {
 let clicked = 'button1'
 
 function openForm(b) {
-  clicked = b
+  document.getElementById("email").value = "";
+  clicked = b;
   document.getElementById("myForm").style.display = "block";
 }
 
