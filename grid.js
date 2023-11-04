@@ -109,7 +109,7 @@ function verify(label, player) {
   const name = player.trim();
   const [firstName, lastName] = name.split(' ');
   const a = document.getElementById(label).textContent;
-  alert('a')
+  alert(a)
   let res;
   switch (a) {
     case "American":
