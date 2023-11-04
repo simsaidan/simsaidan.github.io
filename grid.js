@@ -84,7 +84,7 @@ function verify(label, player) {
 }
 
 function submit(buttid) {
-
+  confirm(buttid)
   buttonCats = getCats(buttid)
 
   const player = document.getElementById('email').value;
