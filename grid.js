@@ -201,10 +201,11 @@ function submit() {
   if (!playerExists(name)) {
     alert("Player does not exist!");
   } else if (seen.includes(name)) {
-    alert("You have already submitted this name!");
+    alert("You have already used this name!");
   } else {
     if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
       document.getElementById(clicked).textContent = player;
+      document.getElementById(clicked).style.backgroundColor = "rgba(154, 205, 50, 0.8)";
       seen.push(name);
     }
     closeForm()
