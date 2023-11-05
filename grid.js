@@ -100,28 +100,27 @@ function getCats(button) {
 
 }
 
-function checkCountry(name_first, name_last, countryCode) {
+function checkCountry(fullName, countryCode) {
   return playerData.some(player =>
-    player.name_first === name_first &&
-    player.name_last === name_last &&
-    player.ioc === countryCode);
+    player.name_first + ' ' + player.name_last === fullName &&
+    player.ioc === countryCode
+  );
 }
 
 function verify(label, player) {
   const name = player.trim();
-  const [firstName, lastName] = name.split(' ');
   const a = document.getElementById(label).textContent;
   alert(a)
   let res;
   switch (a) {
     case "American":
-      res = checkCountry(firstName, lastName, 'USA');
+      res = checkCountry(name, 'USA');
       if (!res) {
         alert("Incorrect - American");
       }
       break;
     case "From Australia":
-      res = checkCountry(firstName, lastName, 'AUS');
+      res = checkCountry(name, 'AUS');
       if (!res) {
         alert("Incorrect - From Australia");
       }
@@ -139,6 +138,7 @@ function submit() {
   if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
     document.getElementById('button1').textContent = player;
   }
+  closeForm()
 }
 
 function flatten(arr) {
