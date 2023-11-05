@@ -1,4 +1,7 @@
 let playerData;
+let rankingsData;
+let singlesData;
+let doublesData;
 
 function fetchData(jsonFilePath) {
   return fetch(jsonFilePath)
@@ -13,12 +16,27 @@ function fetchData(jsonFilePath) {
     });
 }
 
-const jsonFilePath = 'players.json';
-fetchData(jsonFilePath)
-  .then(jsonData => {
-    playerData = jsonData;
-  });
+const playersPath = 'players.json';
+const rankingsPath = 'rankings.json';
+const singlesPath = 'singles.json';
+const doublesPath = 'doubles.json';
 
+fetchData(playersPath)
+  .then(playersJson => {
+    playerData = playersJson;
+    return fetchData(rankingsPath);
+  })
+  .then(rankingsJson => {
+    rankingsData = rankingsJson;
+    return fetchData(singlesPath);
+  })
+  .then(singlesJson => {
+    singlesData = singlesJson;
+    return fetchData(doublesPath);
+  })
+  .then(doublesJson => {
+    doublesData = doublesJson;
+  });
 
 let randomMode = !true;
 
