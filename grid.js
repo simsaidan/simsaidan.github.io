@@ -100,12 +100,13 @@ function getCats(button) {
 
 }
 
-function american(name_first, name_last) {
+function checkCountry(name_first, name_last, countryCode) {
   return playerData.some(player =>
     player.name_first === name_first &&
     player.name_last === name_last &&
-    player.ioc === 'USA');
+    player.ioc === countryCode);
 }
+
 function verify(label, player) {
   const name = player.trim();
   const [firstName, lastName] = name.split(' ');
@@ -114,12 +115,17 @@ function verify(label, player) {
   let res;
   switch (a) {
     case "American":
-      res = american(firstName, lastName);
+      res = checkCountry(firstName, lastName, 'USA');
       if (!res) {
         alert("Incorrect - American");
       }
       break;
-
+    case "From Australia":
+      res = checkCountry(firstName, lastName, 'AUS');
+      if (!res) {
+        alert("Incorrect - From Australia");
+      }
+      break;
     default:
       alert("Not implemented");
       res = false;
