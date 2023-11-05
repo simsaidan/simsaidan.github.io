@@ -38,6 +38,13 @@ fetchData(playersPath)
     doublesData = doublesJson;
   });
 
+
+const europeanIOCCodes = ['ALB', 'AND', 'ARM', 'AUT', 'AZE', 'BEL', 'BIH', 'BLR',
+  'BUL', 'CYP', 'CZE', 'DEN', 'ESP', 'EST', 'FIN', 'FRA', 'GEO', 'GER', 'GRE',
+  'HUN', 'IRL', 'ISL', 'ITA', 'KOS', 'LAT', 'LIE', 'LTU', 'LUX', 'MDA', 'MKD',
+  'MLT', 'MNE', 'MON', 'NED', 'NOR', 'POL', 'POR', 'ROU', 'RUS', 'SMR', 'SRB',
+  'SVK', 'SLO', 'ESP', 'SWE', 'SUI', 'TUR', 'UKR', 'GBR'
+];
 let randomMode = !true;
 
 let categories = [["Left Handed"],
@@ -118,6 +125,15 @@ function getCats(button) {
 
 }
 
+function isNotEuropean(fullName) {
+  return playerData.some(player => {
+    return (
+      player.name_first + ' ' + player.name_last === fullName &&
+      !europeanCountries.includes(player.ioc)
+    );
+  });
+}
+
 function checkCountry(fullName, countryCode) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName &&
@@ -141,6 +157,12 @@ function verify(label, player) {
       res = checkCountry(name, 'AUS');
       if (!res) {
         alert("Incorrect - From Australia");
+      }
+      break;
+    case "Not from Europe":
+      res = isNotEuropean(name)
+      if (!res) {
+        alert("Incorrect - Not from Europe");
       }
       break;
     default:
