@@ -56,7 +56,8 @@ let categories = [["Left Handed"],
 ["Played Davis Cup", "Won Davis Cup"],
 ["Olympic Medalist", "Played in Olympics"],
 ["Won Rogers Cup", "Won Miami Open"],
-["Played in NextGen Finals"]];
+["Played in NextGen Finals"],
+["Shorter than 6ft (183 cm)"]];
 
 let forbidden = {
   "Left Handed": [],
@@ -83,7 +84,8 @@ let forbidden = {
   "Played in Olympics": [],
   "Won Rogers Cup": ["No titles"],
   "Won Miami Open": ["No titles"],
-  "Played in NextGen Finals": ["Born before 1975"]
+  "Played in NextGen Finals": ["Born before 1975"],
+  "Shorter than 6ft (183 cm)": []
 };
 
 let clicked = 'button1'
