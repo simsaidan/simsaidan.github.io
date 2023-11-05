@@ -89,6 +89,7 @@ let forbidden = {
 };
 
 let clicked = 'button1'
+let seen = []
 
 function openForm(b) {
   document.getElementById("email").value = "";
@@ -125,6 +126,12 @@ function getCats(button) {
       return ["Oh", "no"]
   }
 
+}
+
+function playerExists(fullName) {
+  return playerData.some(player =>
+    player.name_first + ' ' + player.name_last === fullName
+  );
 }
 
 function short(fullName) {
@@ -191,7 +198,9 @@ function submit() {
   const player = document.getElementById('email').value;
   const name = player.trim();
 
-  if (seen.includes(name)) {
+  if (!playerExists(name)) {
+    alert("Player does not exist!");
+  } else if (seen.includes(name)) {
     alert("You have already submitted this name!");
   } else {
     if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
@@ -201,6 +210,7 @@ function submit() {
     closeForm()
   }
 }
+
 
 function flatten(arr) {
   let flattened = [];
