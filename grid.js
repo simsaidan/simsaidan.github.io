@@ -176,7 +176,7 @@ function submit() {
   buttonCats = getCats(clicked)
   const player = document.getElementById('email').value;
   if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
-    document.getElementById('button1').textContent = player;
+    document.getElementById(clicked).textContent = player;
   }
   closeForm()
 }
