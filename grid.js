@@ -127,6 +127,13 @@ function getCats(button) {
 
 }
 
+function short(fullName) {
+  return playerData.some(player =>
+    player.name_first + ' ' + player.name_last === fullName &&
+    player.height < 183
+  );
+}
+
 function isNotEuropean(fullName) {
   return playerData.some(player => {
     return (
@@ -166,6 +173,12 @@ function verify(label, name) {
         alert("Incorrect - Not from Europe");
       }
       break;
+    case "Shorter than 6ft (183 cm)":
+      res = short(name)
+      if (!res) {
+        alert("Incorrect - Shorter than 6ft (183 cm)")
+      }
+      break;
     default:
       alert("Not implemented");
       res = false;
@@ -177,10 +190,16 @@ function submit() {
   buttonCats = getCats(clicked)
   const player = document.getElementById('email').value;
   const name = player.trim();
-  if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
-    document.getElementById(clicked).textContent = player;
+
+  if (seen.includes(name)) {
+    alert("You have already submitted this name!");
+  } else {
+    if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
+      document.getElementById(clicked).textContent = player;
+      seen.push(name);
+    }
+    closeForm()
   }
-  closeForm()
 }
 
 function flatten(arr) {
