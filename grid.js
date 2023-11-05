@@ -134,6 +134,13 @@ function playerExists(fullName) {
   );
 }
 
+function young(fullName) {
+  return playerData.some(player => {
+    return player.name_first + ' ' + player.name_last === fullName &&
+      +player.dob.slice(0, 4) > 1995;
+  });
+}
+
 function short(fullName) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName &&
@@ -184,6 +191,12 @@ function verify(label, name) {
       res = short(name)
       if (!res) {
         alert("Incorrect - Shorter than 6ft (183 cm)")
+      }
+      break;
+    case "Born after 1995":
+      res = young(name)
+      if (!res) {
+        alert("Incorrect - Born after 1995")
       }
       break;
     default:
