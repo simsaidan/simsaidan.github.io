@@ -143,8 +143,7 @@ function checkCountry(fullName, countryCode) {
   );
 }
 
-function verify(label, player) {
-  const name = player.trim();
+function verify(label, name) {
   const a = document.getElementById(label).textContent;
   alert(a)
   let res;
@@ -177,7 +176,8 @@ function verify(label, player) {
 function submit() {
   buttonCats = getCats(clicked)
   const player = document.getElementById('email').value;
-  if (verify(buttonCats[0], player) && verify(buttonCats[1], player)) {
+  const name = player.trim();
+  if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
     document.getElementById(clicked).textContent = player;
   }
   closeForm()
