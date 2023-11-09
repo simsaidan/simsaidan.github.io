@@ -107,7 +107,7 @@ function openForm(b) {
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
-  alert(countUniqueNames())
+  alert(countPlayers())
 }
 
 function getCats(button) {
@@ -143,14 +143,14 @@ function playerExists(fullName) {
   );
 }
 
-function countUniqueNames() {
-  const uniqueNames = new Set();
+function countPlayers() {
+  let count = 0;
 
   playerData.forEach(player => {
-    uniqueNames.add(player.name_first + ' ' + player.name_last);
+    count++;
   });
 
-  return uniqueNames.size;
+  return count;
 }
 
 function young(fullName) {
