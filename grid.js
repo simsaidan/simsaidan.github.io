@@ -45,6 +45,14 @@ const europeanCountries = ['ALB', 'AND', 'ARM', 'AUT', 'AZE', 'BEL', 'BIH', 'BLR
   'MLT', 'MNE', 'MON', 'NED', 'NOR', 'POL', 'POR', 'ROU', 'RUS', 'SMR', 'SRB',
   'SVK', 'SLO', 'ESP', 'SWE', 'SUI', 'TUR', 'UKR', 'GBR'
 ];
+
+const asianCountries = [
+  'AFG', 'BHR', 'BGD', 'BRN', 'KHM', 'CHN', 'IND', 'IDN', 'IRQ', 'IRN', 'ISR',
+  'JPN', 'JOR', 'KAZ', 'KWT', 'KGZ', 'LAO', 'LBN', 'MYS', 'MDV', 'MGL', 'MMR',
+  'NPL', 'OMN', 'PAK', 'PSE', 'PHL', 'QAT', 'KOR', 'SAU', 'SGP', 'LKA', 'SYR',
+  'TJK', 'THA', 'TLS', 'ARE', 'UZB', 'VNM', 'YEM'
+];
+
 let randomMode = !true;
 
 let categories = [["Left Handed"],
@@ -141,6 +149,13 @@ function young(fullName) {
   });
 }
 
+function lefty(fullName) {
+  return playerData.some(player =>
+    player.name_first + ' ' + player.name_last === fullName &&
+    player.hand === 'L'
+  );
+}
+
 function short(fullName) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName &&
@@ -173,6 +188,12 @@ function verify(label, name) {
       res = checkCountry(name, 'USA');
       if (!res) {
         alert("Incorrect - American");
+      }
+      break;
+    case "Left Handed":
+      res = lefty(name);
+      if (!res) {
+        alert("Incorrect - Left Handed");
       }
       break;
     case "From Australia":
