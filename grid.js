@@ -107,6 +107,7 @@ function openForm(b) {
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
+  alert(countUniqueNames())
 }
 
 function getCats(button) {
@@ -140,6 +141,16 @@ function playerExists(fullName) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName
   );
+}
+
+function countUniqueNames() {
+  const uniqueNames = new Set();
+
+  playerData.forEach(player => {
+    uniqueNames.add(player.name_first + ' ' + player.name_last);
+  });
+
+  return uniqueNames.size;
 }
 
 function young(fullName) {
