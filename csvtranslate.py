@@ -4,7 +4,7 @@ import json
 json_list = []
 
 
-csv_files = ["csv/atp_matches_doubles_" + str(x) + ".csv" for x in range(2000, 2021)]
+csv_files = ["csv/atp_matches_" + str(x) + ".csv" for x in range(1968, 2024)]
 
 for csv_file in csv_files:
     with open(csv_file) as f:
@@ -18,39 +18,20 @@ for csv_file in csv_files:
 
             del row_copy["match_num"]
 
-            del row_copy["winner_seed"]
             del row_copy["winner_entry"]
+
+            del row_copy["winner_hand"]
+            del row_copy["winner_ht"]
+            del row_copy["winner_ioc"]
+            del row_copy["winner_age"]
 
             del row_copy["loser_seed"]
             del row_copy["loser_entry"]
 
-            del row_copy["winner1_hand"]
-            del row_copy["winner1_ht"]
-            del row_copy["winner1_ioc"]
-            del row_copy["winner1_age"]
-
-            del row_copy["winner2_hand"]
-            del row_copy["winner2_ht"]
-            del row_copy["winner2_ioc"]
-            del row_copy["winner2_age"]
-
-            del row_copy["loser1_hand"]
-            del row_copy["loser1_ht"]
-            del row_copy["loser1_ioc"]
-            del row_copy["loser1_age"]
-
-            del row_copy["loser2_hand"]
-            del row_copy["loser2_ht"]
-            del row_copy["loser2_ioc"]
-            del row_copy["loser2_age"]
-            del row_copy["winner1_rank"]
-            del row_copy["winner1_rank_points"]
-            del row_copy["winner2_rank"]
-            del row_copy["winner2_rank_points"]
-            del row_copy["loser1_rank"]
-            del row_copy["loser1_rank_points"]
-            del row_copy["loser2_rank"]
-            del row_copy["loser2_rank_points"]
+            del row_copy["loser_hand"]
+            del row_copy["loser_ht"]
+            del row_copy["loser_ioc"]
+            del row_copy["loser_age"]
 
             del row_copy["w_ace"]
             del row_copy["w_df"]
@@ -70,9 +51,13 @@ for csv_file in csv_files:
             del row_copy["l_SvGms"]
             del row_copy["l_bpSaved"]
             del row_copy["l_bpFaced"]
+            del row_copy["winner_rank"]
+            del row_copy["winner_rank_points"]
+            del row_copy["loser_rank"]
+            del row_copy["loser_rank_points"]
 
             # Append modified row
             json_list.append(row_copy)
 
-with open("doubles.json", "w") as f:
+with open("singles.json", "w") as f:
     f.write(json.dumps(json_list, indent=4))

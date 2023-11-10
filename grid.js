@@ -198,6 +198,22 @@ function wonSlam(name) {
 
 }
 
+function nextGen(name) {
+
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    if (singlesData.some(match =>
+      match.tourney_name === 'NextGen Finals' &&
+      (match.winner_id === matches[i] || match.loser_id === matches[i])
+    )) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function young(fullName) {
   return playerData.some(player => {
     return player.name_first + ' ' + player.name_last === fullName &&
@@ -257,6 +273,12 @@ function verify(label, name) {
       res = lefty(name);
       if (!res) {
         alert("Incorrect - Left Handed");
+      }
+      break;
+    case "Played in NextGen Finals":
+      res = nextGen(name);
+      if (!res) {
+        alert("Incorrect - Played in NextGen Finals");
       }
       break;
     case "Grand Slam Winner":
