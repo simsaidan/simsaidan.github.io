@@ -107,7 +107,7 @@ function openForm(b) {
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
-  alert(countPlayers())
+
 }
 
 function getCats(button) {
@@ -143,14 +143,32 @@ function playerExists(fullName) {
   );
 }
 
-function countPlayers() {
-  let count = 0;
+function getPlayerIds(fullName) {
+  const matches = [];
 
   playerData.forEach(player => {
-    count++;
+    if (player.name_first + ' ' + player.name_last === fullName) {
+      matches.push(player.player_id);
+    }
   });
 
-  return count;
+  return matches;
+}
+
+function topFive(name) {
+
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+
+    if (rankingsData.some(rank => rank.player === playerId && rank.rank < 6)) {
+      return true;
+    }
+  }
+
+  return false;
+
 }
 
 function young(fullName) {
@@ -205,6 +223,12 @@ function verify(label, name) {
       res = lefty(name);
       if (!res) {
         alert("Incorrect - Left Handed");
+      }
+      break;
+    case "Top 5 Ranking":
+      res = topFive(name);
+      if (!res) {
+        alert("Incorrect - Top 5 Ranking");
       }
       break;
     case "From Australia":
