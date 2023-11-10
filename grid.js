@@ -198,6 +198,32 @@ function wonSlam(name) {
 
 }
 
+function wonTournament(name, tourneyName) {
+
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+
+    if (
+      singlesData.some(match =>
+        match.tourney_name === tourneyName &&
+        match.winner_id === playerId &&
+        match.round === 'F'
+      ) ||
+      doublesData.some(match =>
+        match.tourney_name === tourneyName &&
+        (match.winner1_id === playerId || match.winner2_id === playerId) &&
+        match.round === 'F'
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function nextGen(name) {
 
   const matches = getPlayerIds(name);
@@ -273,6 +299,12 @@ function verify(label, name) {
       res = lefty(name);
       if (!res) {
         alert("Incorrect - Left Handed");
+      }
+      break;
+    case "Won US Open":
+      res = wonTournament(name, "US Open");
+      if (!res) {
+        alert("Incorrect - Won US Open");
       }
       break;
     case "Played in NextGen Finals":
