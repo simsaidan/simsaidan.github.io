@@ -301,10 +301,10 @@ function verify(label, name) {
         alert("Incorrect - Left Handed");
       }
       break;
-    case "Won US Open":
+    case "US Open Champion":
       res = wonTournament(name, "US Open");
       if (!res) {
-        alert("Incorrect - Won US Open");
+        alert("Incorrect - US Open Champion");
       }
       break;
     case "Played in NextGen Finals":
