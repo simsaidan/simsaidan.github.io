@@ -171,6 +171,32 @@ function topFive(name) {
 
 }
 
+function wonSlam(name) {
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+
+    if (
+      singlesData.some(match =>
+        match.tourney_level === 'G' &&
+        match.winner_id === playerId &&
+        match.round === 'F'
+      ) ||
+      doublesData.some(match =>
+        match.tourney_level === 'G' &&
+        (match.winner1_id === playerId || match.winner2_id === playerId) &&
+        match.round === 'F'
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+
+}
+
 function young(fullName) {
   return playerData.some(player => {
     return player.name_first + ' ' + player.name_last === fullName &&
@@ -223,6 +249,12 @@ function verify(label, name) {
       res = lefty(name);
       if (!res) {
         alert("Incorrect - Left Handed");
+      }
+      break;
+    case "Grand Slam Winner":
+      res = wonSlam(name);
+      if (!res) {
+        alert("Incorrect - Grand Slam Winner");
       }
       break;
     case "Top 5 Ranking":
