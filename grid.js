@@ -302,7 +302,7 @@ function verify(label, name) {
       }
       break;
     case "US Open Champion":
-      res = wonTournament(name, "US Open");
+      res = wonTournament(name, "US Open") || wonTournament(name, "Us Open");
       if (!res) {
         alert("Incorrect - US Open Champion");
       }
