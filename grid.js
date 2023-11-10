@@ -65,7 +65,7 @@ let categories = [["Left Handed"],
 ["Olympic Medalist", "Played in Olympics"],
 ["Won Rogers Cup", "Won Miami Open"],
 ["Played in NextGen Finals"],
-["Shorter than 6ft (183 cm)"]];
+["Shorter than 6ft (183 cm)", "Above 6ft 4in (193 cm)"]];
 
 let forbidden = {
   "Left Handed": [],
@@ -93,7 +93,8 @@ let forbidden = {
   "Won Rogers Cup": ["No titles"],
   "Won Miami Open": ["No titles"],
   "Played in NextGen Finals": ["Born before 1975"],
-  "Shorter than 6ft (183 cm)": []
+  "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
+  "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"]
 };
 
 let clicked = 'button1'
@@ -265,13 +266,14 @@ function submit() {
   buttonCats = getCats(clicked)
   const player = document.getElementById('email').value;
   const name = player.trim();
+  matches = getPlayerIds(name)
 
   if (!playerExists(name)) {
     alert("Player does not exist!");
   } else if (seen.includes(name)) {
     alert("You have already used this name!");
   } else {
-    if (verify(buttonCats[0], player) && verify(buttonCats[1], name)) {
+    if (verify(buttonCats[0], name) && verify(buttonCats[1], name)) {
       document.getElementById(clicked).textContent = player;
       document.getElementById(clicked).style.backgroundColor = "rgba(154, 205, 50, 0.8)";
       seen.push(name);
