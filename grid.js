@@ -218,6 +218,13 @@ function short(fullName) {
   );
 }
 
+function tall(fullName) {
+  return playerData.some(player =>
+    player.name_first + ' ' + player.name_last === fullName &&
+    player.height > 194
+  );
+}
+
 function isNotEuropean(fullName) {
   return playerData.some(player => {
     return (
@@ -279,6 +286,12 @@ function verify(label, name) {
       res = short(name)
       if (!res) {
         alert("Incorrect - Shorter than 6ft (183 cm)")
+      }
+      break;
+    case "Above 6ft 4in (193 cm)":
+      res = tall(name)
+      if (!res) {
+        alert("Incorrect - Above 6ft 4in (193 cm)")
       }
       break;
     case "Born after 1995":
