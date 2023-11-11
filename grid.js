@@ -65,7 +65,8 @@ let categories = [["Left Handed"],
 ["Olympic Medalist", "Played in Olympics"],
 ["Won Rogers Cup", "Won Miami Open", "Won Madrid Masters"],
 ["Played in NextGen Finals"],
-["Shorter than 6ft (183 cm)", "Above 6ft 4in (193 cm)"]];
+["Shorter than 6ft (183 cm)", "Above 6ft 4in (193 cm)"],
+["Played ATP Finals but no Masters title"]];
 
 let forbidden = {
   "Left Handed": [],
@@ -97,7 +98,8 @@ let forbidden = {
   "Won Madrid Masters": ["No titles"],
   "Played in NextGen Finals": ["Born before 1975"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
-  "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"]
+  "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"],
+  "Played ATP Finals but no Masters title": []
 };
 
 let clicked = 'button1'
@@ -408,6 +410,12 @@ function verify(label, name) {
       res = checkCountry(name, 'AUS');
       if (!res) {
         alert("Incorrect - From Australia");
+      }
+      break;
+    case "From Spain":
+      res = checkCountry(name, 'ESP');
+      if (!res) {
+        alert("Incorrect - From Spain");
       }
       break;
     case "Not from Europe":
