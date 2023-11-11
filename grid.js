@@ -193,6 +193,40 @@ function wonSlam(name) {
       return true;
     }
   }
+  return false;
+
+
+}
+
+function fiveSlams(name) {
+  const playerIds = getPlayerIds(name);
+
+  for (let i = 0; i < playerIds.length; i++) {
+
+    let slamsWon = 0;
+
+    for (let j = 0; j < singlesData.length; j++) {
+      if (singlesData[j].winner_id === playerIds[i] &&
+        singlesData[j].tourney_level === 'G' &&
+        singlesData[j].round === 'F') {
+        slamsWon++;
+      }
+    }
+
+    for (let j = 0; j < doublesData.length; j++) {
+      if ((doublesData[j].winner1_id === playerIds[i] ||
+        doublesData[j].winner2_id === playerIds[i]) &&
+        doublesData[j].tourney_level === 'G' &&
+        doublesData[j].round === 'F') {
+        slamsWon++;
+      }
+    }
+
+    if (slamsWon >= 5) {
+      return true;
+    }
+
+  }
 
   return false;
 
@@ -293,6 +327,12 @@ function verify(label, name) {
       res = checkCountry(name, 'USA');
       if (!res) {
         alert("Incorrect - American");
+      }
+      break;
+    case "5+ Slams":
+      res = fiveSlams(name);
+      if (!res) {
+        alert("Incorrect - 5+ Slams");
       }
       break;
     case "Left Handed":
