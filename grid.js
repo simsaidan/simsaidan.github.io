@@ -271,6 +271,36 @@ function twentyTitles(name) {
 
 }
 
+function noTitlesWon(name) {
+  const playerIds = getPlayerIds(name);
+  for (let i = 0; i < playerIds.length; i++) {
+    let titlesWon = 0;
+
+    for (let j = 0; j < singlesData.length; j++) {
+      if (singlesData[j].winner_id === playerIds[i] &&
+        singlesData[j].round === 'F') {
+        titlesWon++;
+      }
+    }
+
+    for (let j = 0; j < doublesData.length; j++) {
+      if ((doublesData[j].winner1_id === playerIds[i] ||
+        doublesData[j].winner2_id === playerIds[i]) &&
+        doublesData[j].round === 'F') {
+        titlesWon++;
+      }
+    }
+
+    if (titlesWon === 0) {
+      return true;
+    }
+
+  }
+
+  return false;
+
+}
+
 function fiveSlams(name) {
   const playerIds = getPlayerIds(name);
 
@@ -429,6 +459,12 @@ function verify(label, name) {
       res = medaledInOlympics(name);
       if (!res) {
         alert("Incorrect - Olympic Medalist");
+      }
+      break;
+    case "No titles":
+      res = noTitlesWon(name);
+      if (!res) {
+        alert("Incorrect - No titles");
       }
       break;
     case "Played in NextGen Finals":
