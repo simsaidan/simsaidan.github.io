@@ -63,7 +63,7 @@ let categories = [["Left Handed"],
 ["Top 5 Ranking"],
 ["Played Davis Cup", "Won Davis Cup"],
 ["Olympic Medalist", "Played in Olympics"],
-["Won Rogers Cup", "Won Miami Open"],
+["Won Rogers Cup", "Won Miami Open", "Won Madrid Masters"],
 ["Played in NextGen Finals"],
 ["Shorter than 6ft (183 cm)", "Above 6ft 4in (193 cm)"]];
 
@@ -79,7 +79,7 @@ let forbidden = {
   "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
   "From Spain": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
   "Won at least 20 titles": ["No titles"],
-  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces"],
+  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters"],
   "Title on All 3 Surfaces": ["No titles"],
   "Unseeded Champion": ["No titles"],
   "Grand Slam Winner": ["GS Finalist but no GS", "No titles"],
@@ -94,6 +94,7 @@ let forbidden = {
   "Played in Olympics": [],
   "Won Rogers Cup": ["No titles"],
   "Won Miami Open": ["No titles"],
+  "Won Madrid Masters": ["No titles"],
   "Played in NextGen Finals": ["Born before 1975"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
   "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"]
