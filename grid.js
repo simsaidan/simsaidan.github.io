@@ -202,6 +202,43 @@ function wonSlam(name) {
 
 }
 
+function medaledInOlympics(name) {
+
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+
+    if (
+      singlesData.some(match =>
+        match.tourney_name.includes('Olympics') &&
+        (
+          (match.round === 'F' &&
+            (match.winner_id === playerId || match.loser_id === playerId)) ||
+          (match.round === 'BR' && match.winner_id === playerId)
+        )
+      ) ||
+      doublesData.some(match =>
+        match.tourney_name.includes('Olympics') &&
+        (
+          (match.round === 'F' &&
+            (match.winner1_id === playerId ||
+              match.winner2_id === playerId ||
+              match.loser1_id === playerId ||
+              match.loser2_id === playerId)) ||
+          (match.round === 'BR' &&
+            (match.winner1_id === playerId ||
+              match.winner2_id === playerId))
+        )
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function twentyTitles(name) {
   const playerIds = getPlayerIds(name);
 
@@ -386,6 +423,12 @@ function verify(label, name) {
       res = wonTournament(name, "US Open") || wonTournament(name, "Us Open");
       if (!res) {
         alert("Incorrect - US Open Champion");
+      }
+      break;
+    case "Olympic Medalist":
+      res = medaledInOlympics(name);
+      if (!res) {
+        alert("Incorrect - Olympic Medalist");
       }
       break;
     case "Played in NextGen Finals":
