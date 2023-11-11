@@ -503,6 +503,12 @@ function verify(label, name) {
         alert("Incorrect - Not from Europe");
       }
       break;
+    case "From Europe":
+      res = !isNotEuropean(name)
+      if (!res) {
+        alert("Incorrect - From Europe");
+      }
+      break;
     case "Shorter than 6ft (183 cm)":
       res = short(name)
       if (!res) {
