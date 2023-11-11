@@ -83,6 +83,7 @@ td button {
   position: fixed;
   bottom: 15px;
   left: 15px;
+  border: 2px solid black;
 }
 
 .button {

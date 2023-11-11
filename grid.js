@@ -198,6 +198,38 @@ function wonSlam(name) {
 
 }
 
+function twentyTitles(name) {
+  const playerIds = getPlayerIds(name);
+
+  for (let i = 0; i < playerIds.length; i++) {
+
+    let titlesWon = 0;
+
+    for (let j = 0; j < singlesData.length; j++) {
+      if (singlesData[j].winner_id === playerIds[i] &&
+        singlesData[j].round === 'F') {
+        titlesWon++;
+      }
+    }
+
+    for (let j = 0; j < doublesData.length; j++) {
+      if ((doublesData[j].winner1_id === playerIds[i] ||
+        doublesData[j].winner2_id === playerIds[i]) &&
+        doublesData[j].round === 'F') {
+        titlesWon++;
+      }
+    }
+
+    if (titlesWon >= 20) {
+      return true;
+    }
+
+  }
+
+  return false;
+
+}
+
 function fiveSlams(name) {
   const playerIds = getPlayerIds(name);
 
@@ -320,7 +352,6 @@ function checkCountry(fullName, countryCode) {
 
 function verify(label, name) {
   const a = document.getElementById(label).textContent;
-  alert(a)
   let res;
   switch (a) {
     case "American":
@@ -333,6 +364,12 @@ function verify(label, name) {
       res = fiveSlams(name);
       if (!res) {
         alert("Incorrect - 5+ Slams");
+      }
+      break;
+    case "Won at least 20 titles":
+      res = twentyTitles(name);
+      if (!res) {
+        alert("Incorrect - Won at least 20 titles");
       }
       break;
     case "Left Handed":
@@ -418,8 +455,9 @@ function submit() {
       document.getElementById(clicked).style.backgroundColor = "rgba(154, 205, 50, 0.8)";
       seen.push(name);
     }
-    closeForm()
+
   }
+  closeForm()
 }
 
 
