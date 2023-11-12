@@ -594,6 +594,7 @@ const cyrb53 = (str, seed = 0) => {
 function setCategories() {
   let cats = [];
   let date = getTodayDate();
+  date.setDate(date.getDate() - 1);
   let datehash = cyrb53(date).toString();
   if (randomMode) {
     let randomNum = '';
