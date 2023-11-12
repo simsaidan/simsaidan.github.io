@@ -568,7 +568,7 @@ function getTodayDate() {
   const today = new Date();
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1;
-  let dd = today.getDate();
+  let dd = today.getDate() - 1;
 
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
@@ -594,7 +594,7 @@ const cyrb53 = (str, seed = 0) => {
 function setCategories() {
   let cats = [];
   let date = getTodayDate();
-  date.setDate(date.getDate() - 1);
+
   let datehash = cyrb53(date).toString();
   if (randomMode) {
     let randomNum = '';
