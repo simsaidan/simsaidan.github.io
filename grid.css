@@ -83,7 +83,13 @@ td button {
   position: fixed;
   bottom: 15px;
   left: 15px;
+  padding: 10px;
   border: 2px solid black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.guesses p {
+  font-size: 30px;
 }
 
 .button {
