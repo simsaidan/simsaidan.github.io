@@ -38,7 +38,7 @@ fetchData(playersPath)
     doublesData = doublesJson;
   });
 
-const buttonsUsed = [];
+let buttonsUsed = [];
 
 for (let i = 1; i <= 9; i++) {
   buttonsUsed.push('button' + i);
