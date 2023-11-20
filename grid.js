@@ -127,7 +127,7 @@ function closeForm() {
 
 function giveUp() {
 
-  const buttons = document.querySelectorAll('.button button');
+  const buttons = document.querySelectorAll('td.button');
 
   buttons.forEach(button => {
     alert(button.id)
