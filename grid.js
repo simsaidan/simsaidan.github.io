@@ -561,6 +561,7 @@ function submit() {
       document.getElementById(clicked).style.backgroundColor = "rgba(154, 205, 50, 0.8)";
       seen.push(name);
     }
+    decGuesses();
 
   }
   closeForm()
