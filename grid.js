@@ -134,7 +134,7 @@ function giveUp() {
       button.disabled = true;
     }
   });
-
+  alert("You lose")
 }
 
 function decGuesses() {
