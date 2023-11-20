@@ -130,6 +130,7 @@ function giveUp() {
   const buttons = document.querySelectorAll('.button button');
 
   buttons.forEach(button => {
+    alert(button.id)
     if (buttonsUsed.includes(button.id)) {
       button.disabled = true;
     }
