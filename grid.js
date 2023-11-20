@@ -127,15 +127,16 @@ function closeForm() {
 
 function giveUp() {
 
-  const buttons = document.querySelectorAll('td.button');
+  const tds = document.querySelectorAll('td.button');
+  tds.forEach(td => {
+    const button = td.querySelector('button');
 
-  buttons.forEach(button => {
-    alert(button.id)
-    if (buttonsUsed.includes(button.id)) {
+    if (buttonsUsed.includes(td.id)) {
       button.disabled = true;
     }
+
   });
-  alert("You lose")
+  alert("You lose");
 }
 
 function decGuesses() {
