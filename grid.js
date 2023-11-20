@@ -38,6 +38,11 @@ fetchData(playersPath)
     doublesData = doublesJson;
   });
 
+const buttonsUsed = [];
+
+for (let i = 1; i <= 9; i++) {
+  buttonsUsed.push('button' + i);
+}
 
 const europeanCountries = ['ALB', 'AND', 'ARM', 'AUT', 'AZE', 'BEL', 'BIH', 'BLR',
   'BUL', 'CYP', 'CZE', 'DEN', 'ESP', 'EST', 'FIN', 'FRA', 'GEO', 'GER', 'GRE',
@@ -115,13 +120,25 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+function giveUp() {
+
+  const buttons = document.querySelectorAll('.button button');
+
+  buttons.forEach(button => {
+    if (buttonsUsed.includes(button.id)) {
+      button.disabled = true;
+    }
+  });
+
+}
+
 function decGuesses() {
   const guessesLeftElement = document.querySelector('.guesses-left');
   let guessesLeft = parseInt(guessesLeftElement.textContent);
   guessesLeft--;
   guessesLeftElement.textContent = guessesLeft;
   if (guessesLeft === 0) {
-    alert("You are out of guesses! Game over");
+    giveUp();
   }
 
 }
@@ -559,6 +576,7 @@ function submit() {
     if (verify(buttonCats[0], name) && verify(buttonCats[1], name)) {
       document.getElementById(clicked).textContent = player;
       document.getElementById(clicked).style.backgroundColor = "rgba(154, 205, 50, 0.8)";
+      buttonsUsed = buttonsUsed.filter(button => button !== 'clicked');
       seen.push(name);
     }
     decGuesses();
@@ -698,4 +716,5 @@ function setCategories() {
 }
 
 setCategories();
+alert("Welcome to Tennis Immaculate Grid")
 
