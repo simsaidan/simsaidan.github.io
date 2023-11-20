@@ -132,7 +132,9 @@ function giveUp() {
     const button = td.querySelector('button');
 
     if (buttonsUsed.includes(td.id)) {
-      button.disabled = true;
+      if (button) {
+        button.disabled = true;
+      }
     }
 
   });
