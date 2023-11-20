@@ -115,6 +115,17 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
+function decGuesses() {
+  const guessesLeftElement = document.querySelector('.guesses-left');
+  let guessesLeft = parseInt(guessesLeftElement.textContent);
+  guessesLeft--;
+  guessesLeftElement.textContent = guessesLeft;
+  if (guessesLeft === 0) {
+    alert("You are out of guesses! Game over");
+  }
+
+}
+
 function getCats(button) {
 
   switch (button) {
