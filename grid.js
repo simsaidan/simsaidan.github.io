@@ -51,6 +51,11 @@ const europeanCountries = ['ALB', 'AND', 'ARM', 'AUT', 'AZE', 'BEL', 'BIH', 'BLR
   'SVK', 'SLO', 'ESP', 'SWE', 'SUI', 'TUR', 'UKR', 'GBR'
 ];
 
+const southAmericanCountries = [
+  'ARG', 'BOL', 'BRA', 'CHL', 'COL', 'ECU', 'FLK', 'GUF', 'GUY', 'PRY',
+  'PER', 'SGS', 'SUR', 'URY', 'VEN'
+];
+
 const asianCountries = [
   'AFG', 'BHR', 'BGD', 'BRN', 'KHM', 'CHN', 'IND', 'IDN', 'IRQ', 'IRN', 'ISR',
   'JPN', 'JOR', 'KAZ', 'KWT', 'KGZ', 'LAO', 'LBN', 'MYS', 'MDV', 'MGL', 'MMR',
@@ -442,6 +447,15 @@ function isNotEuropean(fullName) {
   });
 }
 
+function isSouthAmerican(fullName) {
+  return playerData.some(player => {
+    return (
+      player.name_first + ' ' + player.name_last === fullName &&
+      southAmericanCountries.includes(player.ioc)
+    );
+  });
+}
+
 function checkCountry(fullName, countryCode) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName &&
@@ -535,6 +549,12 @@ function verify(label, name) {
       res = !isNotEuropean(name)
       if (!res) {
         alert("Incorrect - From Europe");
+      }
+      break;
+    case "From South America":
+      res = isSouthAmerican(name)
+      if (!res) {
+        alert("Incorrect - From South America");
       }
       break;
     case "Shorter than 6ft (183 cm)":
