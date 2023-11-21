@@ -213,6 +213,28 @@ function getPlayerIds(fullName) {
   return matches;
 }
 
+function suggestions() {
+  const frag = document.getElementById("email").value;
+  if (frag.length >= 4) {
+    matches = getPlayerNames(frag);
+    const topMatches = matches.slice(0, 15);
+    populateDatalist(topMatches);
+
+  }
+}
+
+function getPlayerNames(nameFrag) {
+  const matches = [];
+
+  playerData.forEach(player => {
+    if ((player.name_first + ' ' + player.name_last).includes(nameFrag)) {
+      matches.push(player.name_first + ' ' + player.name_last);
+    }
+  });
+
+  return matches;
+}
+
 function topFive(name) {
 
   const matches = getPlayerIds(name);

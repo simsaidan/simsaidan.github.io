@@ -52,12 +52,9 @@
 
 
     <label for="email">Player:</label>
-    <input id="email" required list="emailSuggestions">
+    <input onkeyup="suggestions()" id="email" required list="emailSuggestions">
 
     <datalist id="emailSuggestions">
-      <option value="john@example.com"></option>
-      <option value="mary@example.com"></option>
-      <option value="peter@example.com"></option>
     </datalist>
 
     <button type="button" class="btn" onclick="submit()">Enter</button>
