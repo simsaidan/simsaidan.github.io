@@ -216,7 +216,7 @@ function getPlayerIds(fullName) {
 function suggestions() {
   const frag = document.getElementById("email").value;
   if (frag.length >= 4) {
-    matches = getPlayerNames(frag);
+    matches = getPlayerNames(frag).reverse();
     const topMatches = matches.slice(0, 12);
     populateDatalist(topMatches);
 
