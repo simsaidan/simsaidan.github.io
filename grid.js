@@ -52,8 +52,8 @@ const europeanCountries = ['ALB', 'AND', 'ARM', 'AUT', 'AZE', 'BEL', 'BIH', 'BLR
 ];
 
 const southAmericanCountries = [
-  'ARG', 'BOL', 'BRA', 'CHL', 'COL', 'ECU', 'FLK', 'GUF', 'GUY', 'PRY',
-  'PER', 'SGS', 'SUR', 'URY', 'VEN'
+  'ARG', 'BOL', 'BRA', 'CHI', 'COL', 'ECU', 'FLK', 'GUF', 'GUY', 'PAR',
+  'PER', 'SGS', 'SUR', 'URU', 'VEN'
 ];
 
 const asianCountries = [
@@ -151,6 +151,22 @@ function decGuesses() {
   }
 
 }
+
+function populateDatalist(arr) {
+  const dataList = document.getElementById('emailSuggestions');
+
+  while (dataList.firstChild) {
+    dataList.removeChild(dataList.firstChild);
+  }
+
+  arr.forEach(item => {
+    let option = document.createElement('option');
+    option.value = item;
+    dataList.appendChild(option);
+  });
+
+}
+
 
 function getCats(button) {
 
@@ -738,7 +754,8 @@ function setCategories() {
   td6.textContent = cats[5];
 
 }
-
+const names = ['john', 'mary', 'peter'];
+populateDatalist(names);
 setCategories();
 alert("Welcome to Tennis Immaculate Grid")
 
