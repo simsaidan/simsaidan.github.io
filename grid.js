@@ -217,7 +217,7 @@ function suggestions() {
   const frag = document.getElementById("email").value;
   if (frag.length >= 4) {
     matches = getPlayerNames(frag);
-    const topMatches = matches.slice(0, 15);
+    const topMatches = matches.slice(0, 12);
     populateDatalist(topMatches);
 
   }
@@ -776,8 +776,6 @@ function setCategories() {
   td6.textContent = cats[5];
 
 }
-const names = ['john', 'mary', 'peter'];
-populateDatalist(names);
 setCategories();
 alert("Welcome to Tennis Immaculate Grid")
 
