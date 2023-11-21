@@ -12,6 +12,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   border: 2px solid black;
+  background: #fff;
 }
 
 td {
@@ -81,6 +82,7 @@ td button {
 }
 
 .guesses {
+  background: #fff;
   position: fixed;
   bottom: 15px;
   left: 15px;
