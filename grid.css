@@ -13,7 +13,7 @@ body {
   margin-right: auto;
   border: 2px solid black;
   background: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 td {
@@ -89,7 +89,7 @@ td button {
   left: 15px;
   padding: 10px;
   border: 2px solid black;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .guesses p {
