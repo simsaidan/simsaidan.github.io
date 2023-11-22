@@ -589,12 +589,7 @@ function verify(label, name) {
         alert("Incorrect - From Australia");
       }
       break;
-    case "From Spain":
-      res = checkCountry(name, 'ESP');
-      if (!res) {
-        alert("Incorrect - From Spain");
-      }
-      break;
+
     case "Not from Europe":
       res = isNotEuropean(name)
       if (!res) {
