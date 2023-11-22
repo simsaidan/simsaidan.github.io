@@ -678,7 +678,7 @@ function flatten(arr) {
 
 function getTodayDate() {
   const today = new Date();
-  const yyyy = today.getFullYear();
+  const yyyy = today.getFullYear() + 1;
   let mm = today.getMonth() + 1;
   let dd = today.getDate();
 
