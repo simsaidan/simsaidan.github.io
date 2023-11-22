@@ -65,6 +65,8 @@ const asianCountries = [
 
 let randomMode = !true;
 
+let countries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP" }
+
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
 ["Not from Europe", "From Australia", "From Asia", "From South America", "American", "From Europe", "From Spain"],
@@ -516,6 +518,11 @@ function verify(label, name) {
   const a = document.getElementById(label).textContent;
   let res;
   switch (a) {
+    case a in countries:
+      res = checkCountry(name, countries[a])
+      if (!res) {
+        alert("Incorrect")
+      }
     case "American":
       res = checkCountry(name, 'USA');
       if (!res) {
