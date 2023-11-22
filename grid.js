@@ -65,7 +65,6 @@ const asianCountries = [
 
 let randomMode = !true;
 
-let countries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP" }
 
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
@@ -518,11 +517,6 @@ function verify(label, name) {
   const a = document.getElementById(label).textContent;
   let res;
   switch (a) {
-    case a in countries:
-      res = checkCountry(name, countries[a])
-      if (!res) {
-        alert("Incorrect")
-      }
     case "American":
       res = checkCountry(name, 'USA');
       if (!res) {
@@ -589,7 +583,12 @@ function verify(label, name) {
         alert("Incorrect - From Australia");
       }
       break;
-
+    case "From Spain":
+      res = checkCountry(name, 'ESP');
+      if (!res) {
+        alert("Incorrect - From Spain");
+      }
+      break;
     case "Not from Europe":
       res = isNotEuropean(name)
       if (!res) {
@@ -673,7 +672,7 @@ function flatten(arr) {
 
 function getTodayDate() {
   const today = new Date();
-  const yyyy = today.getFullYear() + 1;
+  const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1;
   let dd = today.getDate();
 
