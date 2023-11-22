@@ -459,6 +459,13 @@ function young(fullName) {
   });
 }
 
+function old(fullName) {
+  return playerData.some(player => {
+    return player.name_first + ' ' + player.name_last === fullName &&
+      +player.dob.slice(0, 4) < 1975;
+  });
+}
+
 function lefty(fullName) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName &&
@@ -609,6 +616,12 @@ function verify(label, name) {
       res = tall(name)
       if (!res) {
         alert("Incorrect - Above 6ft 4in (193 cm)")
+      }
+      break;
+    case "Born before 1975":
+      res = old(name)
+      if (!res) {
+        alert("Incorrect - Born before 1975")
       }
       break;
     case "Born after 1995":
