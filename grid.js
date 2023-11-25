@@ -152,15 +152,12 @@ function populateDatalist(arr) {
   while (dataList.firstChild) {
     dataList.removeChild(dataList.firstChild);
   }
-
   arr.forEach(item => {
     let option = document.createElement('option');
     option.value = item;
     dataList.appendChild(option);
   });
-
 }
-
 
 function getCats(button) {
   switch (button) {
@@ -185,12 +182,6 @@ function getCats(button) {
     default:
       return ["Oh", "no"]
   }
-}
-
-function playerExists(fullName) {
-  return playerData.some(player =>
-    player.name_first + ' ' + player.name_last === fullName
-  );
 }
 
 function getPlayerIds(fullName) {
@@ -414,9 +405,7 @@ function wonTournament(name, tourneyName) {
 }
 
 function nextGen(name) {
-
   const matches = getPlayerIds(name);
-
   for (let i = 0; i < matches.length; i++) {
     if (singlesData.some(match =>
       match.tourney_name === 'NextGen Finals' &&
@@ -425,7 +414,6 @@ function nextGen(name) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -517,124 +505,130 @@ function checkCountry(fullName, countryCode) {
 function verify(label, name) {
   const a = document.getElementById(label).textContent;
   let res;
-  switch (a) {
-    case "American":
-      res = checkCountry(name, 'USA');
-      if (!res) {
-        alert("Incorrect - American");
-      }
-      break;
-    case "5+ Slams":
-      res = fiveSlams(name);
-      if (!res) {
-        alert("Incorrect - 5+ Slams");
-      }
-      break;
-    case "Won at least 20 titles":
-      res = twentyTitles(name);
-      if (!res) {
-        alert("Incorrect - Won at least 20 titles");
-      }
-      break;
-    case "Left Handed":
-      res = lefty(name);
-      if (!res) {
-        alert("Incorrect - Left Handed");
-      }
-      break;
-    case "US Open Champion":
-      res = wonTournament(name, "US Open") || wonTournament(name, "Us Open");
-      if (!res) {
-        alert("Incorrect - US Open Champion");
-      }
-      break;
-    case "Olympic Medalist":
-      res = medaledInOlympics(name);
-      if (!res) {
-        alert("Incorrect - Olympic Medalist");
-      }
-      break;
-    case "No titles":
-      res = noTitlesWon(name);
-      if (!res) {
-        alert("Incorrect - No titles");
-      }
-      break;
-    case "Played in NextGen Finals":
-      res = nextGen(name);
-      if (!res) {
-        alert("Incorrect - Played in NextGen Finals");
-      }
-      break;
-    case "Grand Slam Winner":
-      res = wonSlam(name);
-      if (!res) {
-        alert("Incorrect - Grand Slam Winner");
-      }
-      break;
-    case "Top 5 Ranking":
-      res = topFive(name);
-      if (!res) {
-        alert("Incorrect - Top 5 Ranking");
-      }
-      break;
-    case "From Australia":
-      res = checkCountry(name, 'AUS');
-      if (!res) {
-        alert("Incorrect - From Australia");
-      }
-      break;
-    case "From Spain":
-      res = checkCountry(name, 'ESP');
-      if (!res) {
-        alert("Incorrect - From Spain");
-      }
-      break;
-    case "Not from Europe":
-      res = isNotEuropean(name)
-      if (!res) {
-        alert("Incorrect - Not from Europe");
-      }
-      break;
-    case "From Europe":
-      res = !isNotEuropean(name)
-      if (!res) {
-        alert("Incorrect - From Europe");
-      }
-      break;
-    case "From South America":
-      res = isSouthAmerican(name)
-      if (!res) {
-        alert("Incorrect - From South America");
-      }
-      break;
-    case "Shorter than 6ft (183 cm)":
-      res = short(name)
-      if (!res) {
-        alert("Incorrect - Shorter than 6ft (183 cm)")
-      }
-      break;
-    case "Above 6ft 4in (193 cm)":
-      res = tall(name)
-      if (!res) {
-        alert("Incorrect - Above 6ft 4in (193 cm)")
-      }
-      break;
-    case "Born before 1975":
-      res = old(name)
-      if (!res) {
-        alert("Incorrect - Born before 1975")
-      }
-      break;
-    case "Born after 1995":
-      res = young(name)
-      if (!res) {
-        alert("Incorrect - Born after 1995")
-      }
-      break;
-    default:
-      alert("Not implemented");
-      res = false;
+  if (a in bigCountries) {
+    alert("It works!")
+    res = true;
+  }
+  else {
+    switch (a) {
+      case "American":
+        res = checkCountry(name, 'USA');
+        if (!res) {
+          alert("Incorrect - American");
+        }
+        break;
+      case "5+ Slams":
+        res = fiveSlams(name);
+        if (!res) {
+          alert("Incorrect - 5+ Slams");
+        }
+        break;
+      case "Won at least 20 titles":
+        res = twentyTitles(name);
+        if (!res) {
+          alert("Incorrect - Won at least 20 titles");
+        }
+        break;
+      case "Left Handed":
+        res = lefty(name);
+        if (!res) {
+          alert("Incorrect - Left Handed");
+        }
+        break;
+      case "US Open Champion":
+        res = wonTournament(name, "US Open") || wonTournament(name, "Us Open");
+        if (!res) {
+          alert("Incorrect - US Open Champion");
+        }
+        break;
+      case "Olympic Medalist":
+        res = medaledInOlympics(name);
+        if (!res) {
+          alert("Incorrect - Olympic Medalist");
+        }
+        break;
+      case "No titles":
+        res = noTitlesWon(name);
+        if (!res) {
+          alert("Incorrect - No titles");
+        }
+        break;
+      case "Played in NextGen Finals":
+        res = nextGen(name);
+        if (!res) {
+          alert("Incorrect - Played in NextGen Finals");
+        }
+        break;
+      case "Grand Slam Winner":
+        res = wonSlam(name);
+        if (!res) {
+          alert("Incorrect - Grand Slam Winner");
+        }
+        break;
+      case "Top 5 Ranking":
+        res = topFive(name);
+        if (!res) {
+          alert("Incorrect - Top 5 Ranking");
+        }
+        break;
+      case "From Australia":
+        res = checkCountry(name, 'AUS');
+        if (!res) {
+          alert("Incorrect - From Australia");
+        }
+        break;
+      case "From Spain":
+        res = checkCountry(name, 'ESP');
+        if (!res) {
+          alert("Incorrect - From Spain");
+        }
+        break;
+      case "Not from Europe":
+        res = isNotEuropean(name)
+        if (!res) {
+          alert("Incorrect - Not from Europe");
+        }
+        break;
+      case "From Europe":
+        res = !isNotEuropean(name)
+        if (!res) {
+          alert("Incorrect - From Europe");
+        }
+        break;
+      case "From South America":
+        res = isSouthAmerican(name)
+        if (!res) {
+          alert("Incorrect - From South America");
+        }
+        break;
+      case "Shorter than 6ft (183 cm)":
+        res = short(name)
+        if (!res) {
+          alert("Incorrect - Shorter than 6ft (183 cm)")
+        }
+        break;
+      case "Above 6ft 4in (193 cm)":
+        res = tall(name)
+        if (!res) {
+          alert("Incorrect - Above 6ft 4in (193 cm)")
+        }
+        break;
+      case "Born before 1975":
+        res = old(name)
+        if (!res) {
+          alert("Incorrect - Born before 1975")
+        }
+        break;
+      case "Born after 1995":
+        res = young(name)
+        if (!res) {
+          alert("Incorrect - Born after 1995")
+        }
+        break;
+      default:
+        alert("Not implemented");
+        res = false;
+    }
   }
   return res;
 }
