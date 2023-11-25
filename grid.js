@@ -1,7 +1,4 @@
-let playerData;
-let rankingsData;
-let singlesData;
-let doublesData;
+let playerData, rankingsData, singlesData, doublesData;
 
 function fetchData(jsonFilePath) {
   return fetch(jsonFilePath)
@@ -16,10 +13,8 @@ function fetchData(jsonFilePath) {
     });
 }
 
-const playersPath = 'players.json';
-const rankingsPath = 'rankings.json';
-const singlesPath = 'singles.json';
-const doublesPath = 'doubles.json';
+const [playersPath, rankingsPath] = ['players.json', 'rankings.json'];
+const [singlesPath, doublesPath] = ['singles.json', 'doubles.json'];
 
 fetchData(playersPath)
   .then(playersJson => {
@@ -196,16 +191,6 @@ function playerExists(fullName) {
   return playerData.some(player =>
     player.name_first + ' ' + player.name_last === fullName
   );
-}
-
-function getPlayerIds2(fullName) {
-  const matches = [];
-  playerData.forEach(player => {
-    if (player.name_first + ' ' + player.name_last === fullName) {
-      matches.push(player.player_id);
-    }
-  });
-  return matches;
 }
 
 function getPlayerIds(fullName) {
@@ -660,7 +645,7 @@ function submit() {
   const name = player.trim();
   matches = getPlayerIds(name)
 
-  if (!playerExists(name)) {
+  if (getPlayerIds(name).length == 0) {
     alert("Player does not exist!");
   } else if (seen.includes(name)) {
     alert("You have already used this name!");
