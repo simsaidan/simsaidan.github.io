@@ -34,7 +34,6 @@ fetchData(playersPath)
   });
 
 let buttonsUsed = [];
-
 for (let i = 1; i <= 9; i++) {
   buttonsUsed.push('button' + i);
 }
@@ -59,7 +58,6 @@ const asianCountries = [
 ];
 
 let randomMode = !true;
-
 let bigCountries = { "From Australia": "AUS", "American": "USA" }
 
 let categories = [["Left Handed"],
@@ -126,7 +124,6 @@ function giveUp() {
   const tds = document.querySelectorAll('td.button');
   tds.forEach(td => {
     const button = td.querySelector('button');
-
     if (buttonsUsed.includes(td.id)) {
       if (button) {
         button.disabled = true;
@@ -157,6 +154,10 @@ function populateDatalist(arr) {
     option.value = item;
     dataList.appendChild(option);
   });
+}
+
+function nameMatch(player, fullName) {
+  return player.name_first + ' ' + player.name_last === fullName;
 }
 
 function getCats(button) {
@@ -218,7 +219,6 @@ function topFive(name) {
     }
   }
   return false;
-
 }
 
 function wonSlam(name) {
@@ -243,12 +243,9 @@ function wonSlam(name) {
     }
   }
   return false;
-
-
 }
 
 function medaledInOlympics(name) {
-
   const matches = getPlayerIds(name);
 
   for (let i = 0; i < matches.length; i++) {
@@ -280,7 +277,6 @@ function medaledInOlympics(name) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -337,9 +333,7 @@ function noTitlesWon(name) {
     if (titlesWon === 0) {
       return true;
     }
-
   }
-
   return false;
 
 }
@@ -367,15 +361,12 @@ function fiveSlams(name) {
         slamsWon++;
       }
     }
-
     if (slamsWon >= 5) {
       return true;
     }
-
   }
 
   return false;
-
 }
 
 function wonTournament(name, tourneyName) {
@@ -400,7 +391,6 @@ function wonTournament(name, tourneyName) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -433,9 +423,7 @@ function old(fullName) {
 
 function lefty(fullName) {
   return playerData.some(player =>
-    player.name_first + ' ' + player.name_last === fullName &&
-    player.hand === 'L'
-  );
+    nameMatch(player, fullName) && player.hand === 'L');
 }
 
 function short(fullName) {
@@ -491,7 +479,6 @@ function lostSlam(name) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -507,7 +494,10 @@ function verify(label, name) {
   let res;
   if (a in bigCountries) {
     alert("It works!")
-    res = true;
+    res = checkCountry(name, bigCountries.get(a))
+    if (!res) {
+      alert("Incorrect - American");
+    }
   }
   else {
     switch (a) {
