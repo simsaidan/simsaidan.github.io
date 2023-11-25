@@ -1,5 +1,5 @@
 h1 {
-  color: green;
+  color: yellowgreen;
   font-size: 3.5rem;
 }
 
@@ -39,6 +39,7 @@ td button {
   right: 15px;
   border: 3px solid #f1f1f1;
   z-index: 9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .form-popup {

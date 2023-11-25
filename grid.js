@@ -65,6 +65,7 @@ const asianCountries = [
 
 let randomMode = !true;
 
+let bigCountries = { "From Australia": "AUS", "American": "USA" }
 
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
@@ -127,7 +128,6 @@ function closeForm() {
 }
 
 function giveUp() {
-
   const tds = document.querySelectorAll('td.button');
   tds.forEach(td => {
     const button = td.querySelector('button');
@@ -137,7 +137,6 @@ function giveUp() {
         button.disabled = true;
       }
     }
-
   });
   alert("You lose");
 }
@@ -150,7 +149,6 @@ function decGuesses() {
   if (guessesLeft === 0) {
     giveUp();
   }
-
 }
 
 function populateDatalist(arr) {
@@ -170,7 +168,6 @@ function populateDatalist(arr) {
 
 
 function getCats(button) {
-
   switch (button) {
     case 'button1':
       return ["leftCol", "topRow"];
@@ -193,7 +190,6 @@ function getCats(button) {
     default:
       return ["Oh", "no"]
   }
-
 }
 
 function playerExists(fullName) {
@@ -202,16 +198,20 @@ function playerExists(fullName) {
   );
 }
 
-function getPlayerIds(fullName) {
+function getPlayerIds2(fullName) {
   const matches = [];
-
   playerData.forEach(player => {
     if (player.name_first + ' ' + player.name_last === fullName) {
       matches.push(player.player_id);
     }
   });
-
   return matches;
+}
+
+function getPlayerIds(fullName) {
+  return playerData.filter(player =>
+    player.name_first + ' ' + player.name_last === fullName
+  ).map(player => player.player_id);
 }
 
 function suggestions() {
@@ -220,34 +220,27 @@ function suggestions() {
     matches = getPlayerNames(frag).reverse();
     const topMatches = matches.slice(0, 12);
     populateDatalist(topMatches);
-
   }
 }
 
 function getPlayerNames(nameFrag) {
   const matches = [];
-
   playerData.forEach(player => {
     if ((player.name_first + ' ' + player.name_last).includes(nameFrag)) {
       matches.push(player.name_first + ' ' + player.name_last);
     }
   });
-
   return matches;
 }
 
 function topFive(name) {
-
   const matches = getPlayerIds(name);
-
   for (let i = 0; i < matches.length; i++) {
     const playerId = matches[i];
-
     if (rankingsData.some(rank => rank.player === playerId && rank.rank < 6)) {
       return true;
     }
   }
-
   return false;
 
 }
@@ -340,9 +333,7 @@ function twentyTitles(name) {
     if (titlesWon >= 20) {
       return true;
     }
-
   }
-
   return false;
 
 }
@@ -504,6 +495,31 @@ function isSouthAmerican(fullName) {
       southAmericanCountries.includes(player.ioc)
     );
   });
+}
+
+function lostSlam(name) {
+  const matches = getPlayerIds(name);
+
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+
+    if (
+      singlesData.some(match =>
+        match.tourney_level === 'G' &&
+        match.loser_id === playerId &&
+        match.round === 'F'
+      ) ||
+      doublesData.some(match =>
+        match.tourney_level === 'G' &&
+        (match.loser1_id === playerId || match.loser2_id === playerId) &&
+        match.round === 'F'
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function checkCountry(fullName, countryCode) {
@@ -743,7 +759,6 @@ function setCategories() {
     return !cats.includes(cat)
   });
 
-
   let trimmedCategories = noDups.filter(cat => {
     for (let key in cats) {
       if (forbidden[cats[key]].includes(cat)) {
@@ -770,11 +785,9 @@ function setCategories() {
   if (colParts[1] === colParts[0]) {
     colParts[1] = (colParts[1] + 1) % trimmedCategories.length;
   }
-
   if (colParts[2] === colParts[0]) {
     colParts[2] = (colParts[2] + 1) % trimmedCategories.length;
   }
-
   if (colParts[2] === colParts[1]) {
     colParts[2] = (colParts[2] + 1) % trimmedCategories.length;
   }
