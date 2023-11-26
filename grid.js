@@ -60,19 +60,6 @@ const asianCountries = [
 let randomMode = !true;
 let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP" }
 
-let categories = [["Left Handed"],
-["Born after 1995", "Born before 1975"],
-["Not from Europe", "From Australia", "From Asia", "From South America", "American", "From Europe", "From Spain"],
-["Won at least 20 titles", "No titles", "Title on All 3 Surfaces", "Unseeded Champion"],
-["Grand Slam Winner", "5+ Slams", "GS Finalist but no GS", "Wimbledon Champion", "US Open Champion"],
-["Top 5 Ranking"],
-["Played Davis Cup", "Won Davis Cup"],
-["Olympic Medalist", "Played in Olympics"],
-["Won Rogers Cup", "Won Miami Open", "Won Madrid Masters"],
-["Played in NextGen Finals"],
-["Shorter than 6ft (183 cm)", "Above 6ft 4in (193 cm)"],
-["Played ATP Finals but no Masters title"]];
-
 let forbidden = {
   "Left Handed": [],
   "Born after 1995": ["Born before 1975"],
@@ -107,8 +94,7 @@ let forbidden = {
   "Played ATP Finals but no Masters title": []
 };
 
-let clicked = 'button1'
-let seen = []
+let [clicked, seen] = ['button1', []]
 
 function openForm(b) {
   document.getElementById("email").value = "";
@@ -124,10 +110,8 @@ function giveUp() {
   const tds = document.querySelectorAll('td.button');
   tds.forEach(td => {
     const button = td.querySelector('button');
-    if (buttonsUsed.includes(td.id)) {
-      if (button) {
-        button.disabled = true;
-      }
+    if (buttonsUsed.includes(td.id) && button) {
+      button.disabled = true;
     }
   });
   alert("You lose");
@@ -226,9 +210,7 @@ function wonSlam(name) {
   return false;
 }
 
-function medaledInOlympics(name) {
-  const matches = getPlayerIds(name);
-
+function medaledInOlympics(matches) {
   for (let i = 0; i < matches.length; i++) {
     const playerId = matches[i];
 
@@ -460,6 +442,7 @@ function checkCountry(fullName, countryCode) {
 
 function verify(label, name) {
   const a = document.getElementById(label).textContent;
+  const matches = getPlayerIds(name);
   let res;
   if (a in bigCountries) {
     res = checkCountry(name, bigCountries[a])
@@ -494,7 +477,7 @@ function verify(label, name) {
         }
         break;
       case "Olympic Medalist":
-        res = medaledInOlympics(name);
+        res = medaledInOlympics(matches);
         if (!res) {
           alert("Incorrect - Olympic Medalist");
         }
@@ -595,14 +578,6 @@ function submit() {
   closeForm()
 }
 
-function flatten(arr) {
-  let flattened = [];
-  arr.forEach(subarr => {
-    flattened = flattened.concat(subarr);
-  });
-  return flattened;
-}
-
 function keys(map) {
   let keysArr = [];
   for (let key in map) {
@@ -616,10 +591,8 @@ function getTodayDate() {
   const yyyy = today.getFullYear();
   let mm = today.getMonth() + 1;
   let dd = today.getDate();
-
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
-
   return `${yyyy}-${mm}-${dd}`;
 }
 
