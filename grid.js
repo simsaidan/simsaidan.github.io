@@ -160,31 +160,6 @@ function nameMatch(player, fullName) {
   return player.name_first + ' ' + player.name_last === fullName;
 }
 
-function getCats2(button) {
-  switch (button) {
-    case 'button1':
-      return ["leftCol", "topRow"];
-    case 'button2':
-      return ["midCol", "topRow"];
-    case 'button3':
-      return ["rightCol", "topRow"];
-    case 'button4':
-      return ["leftCol", "midRow"];
-    case 'button5':
-      return ["midCol", "midRow"];
-    case 'button6':
-      return ["rightCol", "midRow"];
-    case 'button7':
-      return ["leftCol", "bottomRow"];
-    case 'button8':
-      return ["midCol", "bottomRow"];
-    case 'button9':
-      return ["rightCol", "bottomRow"];
-    default:
-      return ["Oh", "no"]
-  }
-}
-
 function getCats(button) {
   const [cols, rows] = [['leftCol', 'midCol', 'rightCol'], ['topRow', 'midRow', 'bottomRow']];
   const num = button.replace('button', '');
@@ -616,11 +591,9 @@ function submit() {
       seen.push(name);
     }
     decGuesses();
-
   }
   closeForm()
 }
-
 
 function flatten(arr) {
   let flattened = [];
@@ -628,6 +601,14 @@ function flatten(arr) {
     flattened = flattened.concat(subarr);
   });
   return flattened;
+}
+
+function keys(map) {
+  let keysArr = [];
+  for (let key in map) {
+    keysArr.push(key);
+  }
+  return keysArr;
 }
 
 function getTodayDate() {
@@ -669,7 +650,7 @@ function setCategories() {
     }
     datehash = randomNum;
   }
-  let flattenedCategories = flatten(categories);
+  let flattenedCategories = keys(forbidden);
   const rowParts = [
     parseInt(datehash.substring(0, 3)) % flattenedCategories.length,
     parseInt(datehash.substring(3, 6)) % flattenedCategories.length,
