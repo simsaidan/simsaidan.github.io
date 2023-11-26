@@ -58,7 +58,7 @@ const asianCountries = [
 ];
 
 let randomMode = !true;
-let bigCountries = { "From Australia": "AUS", "American": "USA" }
+let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP" }
 
 let categories = [["Left Handed"],
 ["Born after 1995", "Born before 1975"],
@@ -187,8 +187,7 @@ function getCats(button) {
 
 function getPlayerIds(fullName) {
   return playerData.filter(player =>
-    player.name_first + ' ' + player.name_last === fullName
-  ).map(player => player.player_id);
+    nameMatch(player, fullName)).map(player => player.player_id);
 }
 
 function suggestions() {
@@ -409,15 +408,13 @@ function nextGen(name) {
 
 function young(fullName) {
   return playerData.some(player => {
-    return player.name_first + ' ' + player.name_last === fullName &&
-      +player.dob.slice(0, 4) > 1995;
+    return nameMatch(player, fullName) && +player.dob.slice(0, 4) > 1995;
   });
 }
 
 function old(fullName) {
   return playerData.some(player => {
-    return player.name_first + ' ' + player.name_last === fullName &&
-      +player.dob.slice(0, 4) < 1975;
+    return nameMatch(player, fullName) && +player.dob.slice(0, 4) < 1975;
   });
 }
 
@@ -428,33 +425,25 @@ function lefty(fullName) {
 
 function short(fullName) {
   return playerData.some(player =>
-    player.name_first + ' ' + player.name_last === fullName &&
-    player.height < 183
-  );
+    nameMatch(player, fullName) && player.height < 183);
 }
 
 function tall(fullName) {
   return playerData.some(player =>
-    player.name_first + ' ' + player.name_last === fullName &&
-    player.height > 194
-  );
+    nameMatch(player, fullName) && player.height > 194);
 }
 
 function isNotEuropean(fullName) {
   return playerData.some(player => {
     return (
-      player.name_first + ' ' + player.name_last === fullName &&
-      !europeanCountries.includes(player.ioc)
-    );
+      nameMatch(player, fullName) && !europeanCountries.includes(player.ioc));
   });
 }
 
 function isSouthAmerican(fullName) {
   return playerData.some(player => {
     return (
-      player.name_first + ' ' + player.name_last === fullName &&
-      southAmericanCountries.includes(player.ioc)
-    );
+      nameMatch(player, fullName) && southAmericanCountries.includes(player.ioc));
   });
 }
 
@@ -484,19 +473,16 @@ function lostSlam(name) {
 
 function checkCountry(fullName, countryCode) {
   return playerData.some(player =>
-    player.name_first + ' ' + player.name_last === fullName &&
-    player.ioc === countryCode
-  );
+    nameMatch(player, fullName) && player.ioc === countryCode);
 }
 
 function verify(label, name) {
   const a = document.getElementById(label).textContent;
   let res;
   if (a in bigCountries) {
-    alert("It works!")
     res = checkCountry(name, bigCountries[a])
     if (!res) {
-      alert("Incorrect - American");
+      alert("Incorrect - " + name);
     }
   }
   else {
@@ -559,12 +545,6 @@ function verify(label, name) {
         res = topFive(name);
         if (!res) {
           alert("Incorrect - Top 5 Ranking");
-        }
-        break;
-      case "From Australia":
-        res = checkCountry(name, 'AUS');
-        if (!res) {
-          alert("Incorrect - From Australia");
         }
         break;
       case "From Spain":
