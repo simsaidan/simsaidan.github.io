@@ -494,7 +494,7 @@ function verify(label, name) {
   let res;
   if (a in bigCountries) {
     alert("It works!")
-    res = checkCountry(name, bigCountries.get(a))
+    res = checkCountry(name, bigCountries[a])
     if (!res) {
       alert("Incorrect - American");
     }
