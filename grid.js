@@ -160,7 +160,7 @@ function nameMatch(player, fullName) {
   return player.name_first + ' ' + player.name_last === fullName;
 }
 
-function getCats(button) {
+function getCats2(button) {
   switch (button) {
     case 'button1':
       return ["leftCol", "topRow"];
@@ -183,6 +183,13 @@ function getCats(button) {
     default:
       return ["Oh", "no"]
   }
+}
+
+function getCats(button) {
+  const [cols, rows] = [['leftCol', 'midCol', 'rightCol'], ['topRow', 'midRow', 'bottomRow']];
+  const num = button.replace('button', '');
+  if (!num || num < 1 || num > 9) return ["Oh", "no"];
+  return [cols[(num - 1) % 3], rows[Math.ceil(num / 3) - 1]];
 }
 
 function getPlayerIds(fullName) {
@@ -482,17 +489,11 @@ function verify(label, name) {
   if (a in bigCountries) {
     res = checkCountry(name, bigCountries[a])
     if (!res) {
-      alert("Incorrect - " + name);
+      alert("Incorrect - " + a);
     }
   }
   else {
     switch (a) {
-      case "American":
-        res = checkCountry(name, 'USA');
-        if (!res) {
-          alert("Incorrect - American");
-        }
-        break;
       case "5+ Slams":
         res = fiveSlams(name);
         if (!res) {
@@ -545,12 +546,6 @@ function verify(label, name) {
         res = topFive(name);
         if (!res) {
           alert("Incorrect - Top 5 Ranking");
-        }
-        break;
-      case "From Spain":
-        res = checkCountry(name, 'ESP');
-        if (!res) {
-          alert("Incorrect - From Spain");
         }
         break;
       case "Not from Europe":
