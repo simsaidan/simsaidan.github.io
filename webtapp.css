@@ -1,0 +1,17 @@
+div {
+  text-align: center;
+  margin: auto;
+  width: 500px;
+}
+
+table {
+  margin: 0 auto;
+}
+
+.pbp {
+  white-space: pre-wrap;
+}
+
+.score {
+  font-size: 1.2em;
+}

@@ -175,8 +175,7 @@ function getPlayerNames(nameFrag) {
   return matches;
 }
 
-function topFive(name) {
-  const matches = getPlayerIds(name);
+function topFive(matches) {
   for (let i = 0; i < matches.length; i++) {
     const playerId = matches[i];
     if (rankingsData.some(rank => rank.player === playerId && rank.rank < 6)) {
@@ -328,17 +327,12 @@ function fiveSlams(name) {
       return true;
     }
   }
-
   return false;
 }
 
-function wonTournament(name, tourneyName) {
-
-  const matches = getPlayerIds(name);
-
+function wonTournament(matches, tourneyName) {
   for (let i = 0; i < matches.length; i++) {
     const playerId = matches[i];
-
     if (
       singlesData.some(match =>
         match.tourney_name === tourneyName &&
@@ -416,7 +410,6 @@ function lostSlam(name) {
 
   for (let i = 0; i < matches.length; i++) {
     const playerId = matches[i];
-
     if (
       singlesData.some(match =>
         match.tourney_level === 'G' &&
@@ -471,7 +464,7 @@ function verify(label, name) {
         }
         break;
       case "US Open Champion":
-        res = wonTournament(name, "US Open") || wonTournament(name, "Us Open");
+        res = wonTournament(matches, "US Open") || wonTournament(matches, "Us Open");
         if (!res) {
           alert("Incorrect - US Open Champion");
         }
@@ -501,7 +494,7 @@ function verify(label, name) {
         }
         break;
       case "Top 5 Ranking":
-        res = topFive(name);
+        res = topFive(matches);
         if (!res) {
           alert("Incorrect - Top 5 Ranking");
         }
