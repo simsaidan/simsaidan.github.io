@@ -6,34 +6,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lil Wayndle</title>
   <style>
+    /* Basic reset for body */
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background-color: #fff3e0;
-      /* Light warm peach background */
-      color: #5a2d0c;
-      /* Darker brown text for contrast */
+      background-color: #e0e0e0;
+      /* Neutral light gray background */
+      color: #333;
+      /* Dark gray text for universal appeal */
     }
 
     /* Header styles */
     header {
-      background-color: #ffab91;
-      /* Warm light red/orange */
-      color: #3e2723;
-      /* Deep brown for text */
+      background-color: #37474f;
+      /* Cool dark slate gray */
+      color: #eceff1;
+      /* Light bluish-gray text for contrast */
       padding: 20px 0;
       text-align: center;
+      margin-bottom: 40px;
+      /* Added space between header and input section */
     }
 
     #header-title {
       margin: 0;
-      font-size: 3em;
-      /* Increased size */
+      font-size: 3.5em;
+      /* Slightly larger */
+      font-family: 'Courier New', Courier, monospace;
+      /* Cooler, typewriter-like font */
     }
 
     /* Input section styles */
     .input-section {
-      margin: 20px auto;
+      margin: 40px auto;
+      /* Increased space as requested */
       text-align: center;
     }
 
@@ -41,19 +47,19 @@
       padding: 8px;
       width: 250px;
       border-radius: 5px;
-      border: 1px solid #ffb74d;
-      /* Softer orange border */
+      border: 1px solid #78909c;
+      /* Cool gray border */
       font-size: 16px;
-      background-color: #ffecb3;
-      /* Very light yellow background */
-      color: #5a2d0c;
+      background-color: #cfd8dc;
+      /* Light cool gray background */
+      color: #333;
       /* Keeping text color consistent */
     }
 
     #guess-button {
       padding: 10px 20px;
-      background-color: #ff9800;
-      /* Vibrant orange for the button */
+      background-color: #546e7a;
+      /* Cool blue-gray for the button */
       color: white;
       border: none;
       border-radius: 5px;
@@ -63,8 +69,8 @@
     }
 
     #guess-button:hover {
-      background-color: #f57c00;
-      /* Slightly darker orange on hover */
+      background-color: #455a64;
+      /* Slightly darker blue-gray on hover */
     }
 
     /* Table styles */
@@ -78,28 +84,28 @@
     #result-table td {
       text-align: left;
       padding: 8px;
-      border: 1px solid #ffccbc;
-      /* Light peach borders for cells */
+      border: 1px solid #b0bec5;
+      /* Subtle cool gray borders for cells */
     }
 
     #result-table th {
-      background-color: #ff7043;
-      /* Deeper orange for headers */
-      color: #3e2723;
-      /* Deep brown for header text */
+      background-color: #607d8b;
+      /* Blue-gray for headers */
+      color: #eceff1;
+      /* Light bluish-gray text */
     }
 
     #result-table tr:nth-child(even) {
-      background-color: #ffe0b2;
-      /* Lighter peach for alternating rows */
+      background-color: #cfd8dc;
+      /* Light cool gray for alternating rows */
     }
 
     /* Footer styles */
     footer {
-      background-color: #ffab91;
+      background-color: #37474f;
       /* Matching the header */
-      color: #3e2723;
-      /* Deep brown text */
+      color: #eceff1;
+      /* Light bluish-gray text */
       text-align: center;
       padding: 20px 0;
       position: fixed;
@@ -108,8 +114,8 @@
     }
 
     footer a {
-      color: #5d4037;
-      /* Warm brown for links */
+      color: #b0bec5;
+      /* Cool gray for links */
       text-decoration: none;
     }
 
