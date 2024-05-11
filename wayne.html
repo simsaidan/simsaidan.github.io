@@ -6,7 +6,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lil Wayndle</title>
   <style>
-    /* CSS section (leave empty for now) */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    /* Header styles */
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    #header-title {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    /* Input section styles */
+    .input-section {
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    #guess-input {
+      padding: 8px;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    #guess-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    #guess-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Table styles */
+    #result-table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+
+    #result-table th,
+    #result-table td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+
+    #result-table th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    #result-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Footer styles */
+    footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: #09f;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -24,11 +114,11 @@
     <table id="result-table">
       <thead>
         <tr>
-          <th>Column 1</th>
-          <th>Column 2</th>
-          <th>Column 3</th>
-          <th>Column 4</th>
-          <th>Column 5</th>
+          <th>Song</th>
+          <th>Album</th>
+          <th>Track #</th>
+          <th>Track Length</th>
+          <th>Features</th>
         </tr>
       </thead>
       <tbody>
