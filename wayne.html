@@ -159,7 +159,57 @@
   </footer>
 
   <script>
-        // JavaScript section (leave empty for now)
+    let guess = 1;
+    let songData
+    // JavaScript section (leave empty for now)
+    const cyrb53 = (str, seed = 0) => {
+      let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+      for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+      h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+      h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+
+      return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+    };
+
+    function hashTodaysDate() {
+      // Obtain today's date
+      const today = new Date();
+      // Format the date as a string, e.g., 'YYYY-MM-DD'
+      const dateString = today.toISOString().split('T')[0];
+      // Use the provided cyrb53 function to hash the date string
+      return cyrb53(dateString);
+    }
+    function fetchData(jsonFilePath) {
+      return fetch(jsonFilePath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch ${jsonFilePath}: ${response.status}`);
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error('Error fetching JSON file:', error);
+        });
+    }
+
+    const songPath = 'wayne.json';
+
+    fetchData(songPath)
+      .then(songJson => {
+        songData = songJson;
+        return fetchData(songPath);
+      })
+
+    alert(hashTodaysDate());
+    alert(songData);
+
+
   </script>
 </body>
 
