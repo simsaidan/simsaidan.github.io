@@ -114,6 +114,8 @@ function giveUp() {
       button.disabled = true;
     }
   });
+  const button = getElementById("giveUp");
+  button.disabled = true;
   alert("You lose");
 }
 
@@ -405,6 +407,12 @@ function isSouthAmerican(fullName) {
   });
 }
 
+function isAsian(fullName) {
+  return playerData.some(player => {
+    return (nameMatch(player, fullName) && asianCountries.includes(player.ioc));
+  })
+}
+
 function lostSlam(name) {
   const matches = getPlayerIds(name);
 
@@ -517,6 +525,12 @@ function verify(label, name) {
           alert("Incorrect - From South America");
         }
         break;
+      case "From Asia":
+        res = isAsian(name)
+        if (!res) {
+          alert("Incorrect - From Asia");
+        }
+        break;
       case "Shorter than 6ft (183 cm)":
         res = short(name)
         if (!res) {
@@ -541,6 +555,16 @@ function verify(label, name) {
           alert("Incorrect - Born after 1995")
         }
         break;
+      case "Won Miami Open":
+        res = wonTournament(matches, "Miami Masters")
+        if (!res) {
+          alert("Incorrect - Won Miami Open")
+        }
+      case "Won Rogers Cup":
+        res = wonTournament(matches, "Montreal / Toronto")
+        if (!res) {
+          alert("Incorrect - Won Rogers Cup")
+        }
       default:
         alert("Not implemented");
         res = false;
@@ -706,7 +730,7 @@ function getDaysBetweenDates(date1, date2) {
 
 const heading = document.getElementById('Grid Number');
 
-heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-05', getTodayDate());
+heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-06', getTodayDate());
 let info = "Tennis Immaculate Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
