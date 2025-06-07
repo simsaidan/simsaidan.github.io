@@ -531,6 +531,18 @@ function verify(label, name) {
           alert("Incorrect - From Asia");
         }
         break;
+      case "From Australia":
+        res = checkCountry(name, "AUS")
+        if (!res) {
+          alert("Incorrect - From Australia")
+        }
+        break;
+      case "From Spain":
+        res = checkCountry(name, "ESP")
+        if (!res) {
+          alert("Incorrect - From Spain")
+        }
+        break;
       case "Shorter than 6ft (183 cm)":
         res = short(name)
         if (!res) {
@@ -550,7 +562,7 @@ function verify(label, name) {
         }
         break;
       case "Born after 1995":
-        res = young(name)
+        res = young(name);
         if (!res) {
           alert("Incorrect - Born after 1995")
         }
@@ -560,11 +572,13 @@ function verify(label, name) {
         if (!res) {
           alert("Incorrect - Won Miami Open")
         }
+        break;
       case "Won Rogers Cup":
-        res = wonTournament(matches, "Montreal / Toronto")
+        res = wonTournament(matches, "Montreal / Toronto") || wonTournament(matches, "Canada Masters")
         if (!res) {
           alert("Incorrect - Won Rogers Cup")
         }
+        break;
       default:
         alert("Not implemented");
         res = false;
