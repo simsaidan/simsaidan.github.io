@@ -274,6 +274,52 @@ function twentyTitles(name) {
 
 }
 
+function titleAllThree(name) {
+  const playerIds = getPlayerIds(name);
+  for (let i = 0; i < playerIds.length; i++) {
+
+    let hardTitlesWon = 0;
+    let clayTitlesWon = 0;
+    let grassTitlesWon = 0;
+
+    for (let j = 0; j < singlesData.length; j++) {
+      if (singlesData[j].winner_id === playerIds[i] &&
+        singlesData[j].round === 'F') {
+        switch (singlesData[j].surface) {
+          case "Hard":
+            hardTitlesWon++;
+          case "Clay":
+            clayTitlesWon++;
+          case "Grass":
+            grassTitlesWon++;
+        }
+      }
+    }
+
+    for (let j = 0; j < doublesData.length; j++) {
+      if ((doublesData[j].winner1_id === playerIds[i] ||
+        doublesData[j].winner2_id === playerIds[i]) &&
+        doublesData[j].round === 'F') {
+        switch (doublesData[j].surface) {
+          case "Hard":
+            hardTitlesWon++;
+          case "Clay":
+            clayTitlesWon++;
+          case "Grass":
+            grassTitlesWon++;
+        }
+      }
+    }
+
+    if (hardTitlesWon > 0 && clayTitlesWon > 0 && grassTitlesWon > 0) {
+      return true;
+    }
+  }
+  return false;
+
+}
+
+
 function noTitlesWon(name) {
   const playerIds = getPlayerIds(name);
   for (let i = 0; i < playerIds.length; i++) {
@@ -301,6 +347,8 @@ function noTitlesWon(name) {
   return false;
 
 }
+
+
 
 function fiveSlams(name) {
   const playerIds = getPlayerIds(name);
@@ -364,6 +412,29 @@ function nextGen(name) {
     }
   }
   return false;
+}
+
+function inOlympics(name) {
+  const matches = getPlayerIds(name);
+  for (let i = 0; i < matches.length; i++) {
+    if (singlesData.some(match =>
+      match.tourney_name.includes("Olympics") &&
+      (match.winner_id === matches[i] || match.loser_id === matches[i])
+    )) {
+      return true;
+    }
+  }
+  for (let i = 0; i < matches.length; i++) {
+    if (doublesDataData.some(match =>
+      match.tourney_name.includes("Olympics") &&
+      (match.winner1_id === matches[i] || match.winner2_id === matches[i] || match.loser1_id === matches[i] || match.loser2_id === matches[i])
+    )) {
+      return true;
+    }
+  }
+
+  return false;
+
 }
 
 function young(fullName) {
@@ -483,6 +554,18 @@ function verify(label, name) {
           alert("Incorrect - Olympic Medalist");
         }
         break;
+      case "Played in Olympics":
+        res = inOlympics(name);
+        if (!res) {
+          alert("Incorrect - Played in Olympics");
+        }
+        break;
+      case "Title on all 3 Surfaces":
+        res = titleAllThree(name);
+        if (!res) {
+          alert("Incorrect - Title on all 3 Surfaces");
+        }
+        break;
       case "No titles":
         res = noTitlesWon(name);
         if (!res) {
@@ -531,18 +614,7 @@ function verify(label, name) {
           alert("Incorrect - From Asia");
         }
         break;
-      case "From Australia":
-        res = checkCountry(name, "AUS")
-        if (!res) {
-          alert("Incorrect - From Australia")
-        }
-        break;
-      case "From Spain":
-        res = checkCountry(name, "ESP")
-        if (!res) {
-          alert("Incorrect - From Spain")
-        }
-        break;
+
       case "Shorter than 6ft (183 cm)":
         res = short(name)
         if (!res) {
@@ -571,6 +643,12 @@ function verify(label, name) {
         res = wonTournament(matches, "Miami Masters")
         if (!res) {
           alert("Incorrect - Won Miami Open")
+        }
+        break;
+      case "Won Madrid Masters":
+        res = wonTournament(matches, "Madrid Masters")
+        if (!res) {
+          alert("Incorrect - Won Madrid Masters")
         }
         break;
       case "Won Rogers Cup":
@@ -744,7 +822,7 @@ function getDaysBetweenDates(date1, date2) {
 
 const heading = document.getElementById('Grid Number');
 
-heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-06', getTodayDate());
+heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-08', getTodayDate());
 let info = "Tennis Immaculate Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
