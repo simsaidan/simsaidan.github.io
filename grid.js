@@ -144,7 +144,7 @@ function giveUp() {
       button.disabled = true;
     }
   });
-  const button = getElementById("giveUp");
+  const button = document.getElementById("giveUp");
   button.disabled = true;
   alert("You lose" + 3);
 }
