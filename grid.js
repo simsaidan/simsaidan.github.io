@@ -70,7 +70,7 @@ let forbidden = {
   "From South America": ["From Australia", "From Asia", "From Europe", "American", "From Spain", "From France", "From Great Britain"],
   "American": ["From Australia", "From Asia", "From Europe", "From South America", "From Spain", "From France", "From Great Britain"],
   "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
-  "From Spain": ["From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain"],
+  "From Spain": ["Above 6ft 4in (193 cm)", "From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain"],
   "From France": ["From Australia", "From Asia", "From Spain", "From South America", "American", "Not from Europe", "From Great Britain"],
   "From Great Britain": ["From Australia", "From Spain", "From Asia", "From South America", "American", "Not from Europe", "From France"],
   "Won at least 20 titles": ["No titles", "Never Top 50"],
@@ -111,7 +111,7 @@ let forbidden = {
   "Won Paris Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Played in NextGen Finals": ["Born before 1975", "5+ Slams"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
-  "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"],
+  "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)", "From Spain"],
   "Played ATP Finals but no Masters title": ["Won Madrid Masters",
     "Won Monte-Carlo Masters",
     "Won Cincinnati",
@@ -200,7 +200,7 @@ function suggestions() {
 function getPlayerNames(nameFrag) {
   const matches = [];
   playerData.forEach(player => {
-    if ((player.name_first + ' ' + player.name_last).includes(nameFrag)) {
+    if ((player.name_first.toLowerCase() + ' ' + player.name_last.toLowerCase()).includes(nameFrag.toLowerCase())) {
       matches.push(player.name_first + ' ' + player.name_last);
     }
   });
