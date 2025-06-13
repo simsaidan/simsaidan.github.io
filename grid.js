@@ -678,7 +678,7 @@ function verify(label, name) {
           alert("Incorrect - Played in NextGen Finals");
         }
         break;
-      case "Played ATP finals but no Masters Title":
+      case "Played ATP Finals but no Masters Title":
         res = tourFinals(name) && !(wonTournament(matches, "Miami Masters") ||
           wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
           wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
