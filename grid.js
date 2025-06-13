@@ -477,6 +477,19 @@ function nextGen(name) {
   return false;
 }
 
+function tourFinals(name) {
+  const matches = getPlayerIds(name);
+  for (let i = 0; i < matches.length; i++) {
+    if (singlesData.some(match =>
+      match.tourney_name === 'Tour Finals' &&
+      (match.winner_id === matches[i] || match.loser_id === matches[i])
+    )) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function inOlympics(name) {
   const matches = getPlayerIds(name);
   for (let i = 0; i < matches.length; i++) {
@@ -647,7 +660,7 @@ function verify(label, name) {
           alert("Incorrect - Played in Olympics");
         }
         break;
-      case "Title on all 3 Surfaces":
+      case "Title on All 3 Surfaces":
         res = titleAllThree(name);
         if (!res) {
           alert("Incorrect - Title on all 3 Surfaces");
@@ -666,6 +679,14 @@ function verify(label, name) {
         }
         break;
       case "Played ATP finals but no Masters Title":
+        res = tourFinals(name) && !(wonTournament(matches, "Miami Masters") ||
+          wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
+          wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
+          wonTournament(matches, "Madrid Masters") || wonTournament(matches, "Monte Carlo Masters") ||
+          wonTournament(matches, "Cincinatti Masters") || wonTournament(matches, "Indian Wells Masters"))
+        if (!res) {
+          alert("Incorrect - Played ATP finals but no Masters Title");
+        }
         break;
       case "Grand Slam Winner":
         res = wonSlam(name);
@@ -959,7 +980,7 @@ function getDaysBetweenDates(date1, date2) {
 
 const heading = document.getElementById('Grid Number');
 
-heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-14', getTodayDate());
+heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-13', getTodayDate());
 let info = "Tennis Immaculate Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
