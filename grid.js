@@ -58,40 +58,70 @@ const asianCountries = [
 ];
 
 let randomMode = true;
-let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP" }
+let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP", "From France": "FRA", "From Great Britain": "GBR", }
 
 let forbidden = {
   "Left Handed": [],
-  "Born after 1995": ["Born before 1975"],
+  "Born after 1995": ["Born before 1975", "5+ Slams"],
   "Born before 1975": ["Born after 1995", "Played in NextGen Finals"],
-  "Not from Europe": ["From Europe", "From Spain"],
-  "From Australia": ["From Asia", "From Europe", "From South America", "American", "From Spain"],
-  "From Asia": ["From Australia", "From Europe", "From South America", "American", "From Spain"],
-  "From South America": ["From Australia", "From Asia", "From Europe", "American", "From Spain"],
-  "American": ["From Australia", "From Asia", "From Europe", "From South America", "From Spain"],
+  "Not from Europe": ["From Europe", "From Spain", "From France", "From Great Britain"],
+  "From Australia": ["From Asia", "From Europe", "From South America", "American", "From Spain", "From France", "From Great Britain"],
+  "From Asia": ["From Australia", "From Europe", "From South America", "American", "From Spain", "From France", "From Great Britain"],
+  "From South America": ["From Australia", "From Asia", "From Europe", "American", "From Spain", "From France", "From Great Britain"],
+  "American": ["From Australia", "From Asia", "From Europe", "From South America", "From Spain", "From France", "From Great Britain"],
   "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
-  "From Spain": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
-  "Won at least 20 titles": ["No titles"],
-  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters"],
-  "Title on All 3 Surfaces": ["No titles"],
+  "From Spain": ["From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain"],
+  "From France": ["From Australia", "From Asia", "From Spain", "From South America", "American", "Not from Europe", "From Great Britain"],
+  "From Great Britain": ["From Australia", "From Spain", "From Asia", "From South America", "American", "Not from Europe", "From France"],
+  "Won at least 20 titles": ["No titles", "Never Top 50"],
+  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters", "Top 5 Ranking", "AO Champion",
+    "French Open Champion",
+    "Won Monte-Carlo Masters",
+    "Won Cincinatti",
+    "Won Indian Wells",
+    "Won Rome",
+    "Won Shanghai Masters",
+    "Won Paris Masters",
+    "Olympic Medalist",
+    "Played ATP Finals but no Masters title"],
+  "Title on All 3 Surfaces": ["No titles", "Never Top 50"],
   "Unseeded Champion": ["No titles"],
-  "Grand Slam Winner": ["GS Finalist but no GS", "No titles"],
-  "5+ Slams": ["No titles"],
-  "GS Finalist but no GS": ["Grand Slam Winner", "5+ Slams", "Wimbledon Champion", "US Open Champion"],
-  "Wimbledon Champion": ["No titles", "GS Finalist but no GS"],
-  "US Open Champion": ["No titles", "GS Finalist but no GS"],
-  "Top 5 Ranking": [],
-  "Played Davis Cup": [],
-  "Won Davis Cup": [],
+  "Grand Slam Winner": ["GS Finalist but no GS", "No titles", "Never Top 50"],
+  "5+ Slams": ["No titles", "Never Top 50", "Born after 1995", "Played in NextGen Finals"],
+  "GS Finalist but no GS": ["Grand Slam Winner", "5+ Slams", "Wimbledon Champion", "US Open Champion", "AO Champion", "French Open Champion"],
+  "Wimbledon Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
+  "US Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
+  "AO Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
+  "French Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
+  "Top 5 Ranking": ["Never Top 50", "No Titles"],
+  "Never Top 50": ["Top 5 Ranking", "Won at least 20 Titles", "Title on All 3 Surfaces", "5+ Slams", "Wimbledon Champion",
+    "US Open Champion",
+    "AO Champion",
+    "French Open Champion", "Played ATP Finals but no Masters title"],
   "Olympic Medalist": [],
   "Played in Olympics": [],
-  "Won Rogers Cup": ["No titles"],
-  "Won Miami Open": ["No titles"],
-  "Won Madrid Masters": ["No titles"],
-  "Played in NextGen Finals": ["Born before 1975"],
+  "Won Rogers Cup": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Miami Open": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Madrid Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Monte-Carlo Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Cincinatti": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Indian Wells": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Rome": ["No Titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Shanghai Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Paris Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Played in NextGen Finals": ["Born before 1975", "5+ Slams"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
   "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)"],
-  "Played ATP Finals but no Masters title": []
+  "Played ATP Finals but no Masters title": ["Won Madrid Masters",
+    "Won Monte-Carlo Masters",
+    "Won Cincinnati",
+    "Won Indian Wells",
+    "Won Rome",
+    "Won Shanghai Masters",
+    "Won Paris Masters",
+    "Won Rogers Cup",
+    "Won Miami Open",
+    "Never Top 50"]
 };
 
 let [clicked, seen] = ['button1', []]
@@ -187,6 +217,16 @@ function topFive(matches) {
   return false;
 }
 
+function notTop50(matches) {
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+    if (rankingsData.some(rank => rank.player === playerId && rank.rank < 51)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function wonSlam(name) {
   const matches = getPlayerIds(name);
 
@@ -210,6 +250,8 @@ function wonSlam(name) {
   }
   return false;
 }
+
+
 
 function medaledInOlympics(matches) {
   for (let i = 0; i < matches.length; i++) {
@@ -401,6 +443,27 @@ function wonTournament(matches, tourneyName) {
   return false;
 }
 
+function unseededTitle(matches) {
+  for (let i = 0; i < matches.length; i++) {
+    const playerId = matches[i];
+    if (
+      singlesData.some(match =>
+        match.winner_seed === "" &&
+        match.winner_id === playerId &&
+        match.round === 'F'
+      ) ||
+      doublesData.some(match =>
+        match.winner_seed === "" &&
+        (match.winner1_id === playerId || match.winner2_id === playerId) &&
+        match.round === 'F'
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function nextGen(name) {
   const matches = getPlayerIds(name);
   for (let i = 0; i < matches.length; i++) {
@@ -425,7 +488,7 @@ function inOlympics(name) {
     }
   }
   for (let i = 0; i < matches.length; i++) {
-    if (doublesDataData.some(match =>
+    if (doublesData.some(match =>
       match.tourney_name.includes("Olympics") &&
       (match.winner1_id === matches[i] || match.winner2_id === matches[i] || match.loser1_id === matches[i] || match.loser2_id === matches[i])
     )) {
@@ -530,6 +593,12 @@ function verify(label, name) {
           alert("Incorrect - 5+ Slams");
         }
         break;
+      case "Unseeded Champion":
+        res = unseededTitle(matches);
+        if (!res) {
+          alert("Unseeded Champion");
+        }
+        break;
       case "Won at least 20 titles":
         res = twentyTitles(name);
         if (!res) {
@@ -546,6 +615,24 @@ function verify(label, name) {
         res = wonTournament(matches, "US Open") || wonTournament(matches, "Us Open");
         if (!res) {
           alert("Incorrect - US Open Champion");
+        }
+        break;
+      case "Wimbledon Champion":
+        res = wonTournament(matches, "Wimbledon");
+        if (!res) {
+          alert("Incorrect - Wimbledon Champion");
+        }
+        break;
+      case "AO Champion":
+        res = wonTournament(matches, "Australian Open");
+        if (!res) {
+          alert("Incorrect - AO Champion");
+        }
+        break;
+      case "French Open Champion":
+        res = wonTournament(matches, "Roland Garros");
+        if (!res) {
+          alert("Incorrect - French Open Champion");
         }
         break;
       case "Olympic Medalist":
@@ -578,16 +665,30 @@ function verify(label, name) {
           alert("Incorrect - Played in NextGen Finals");
         }
         break;
+      case "Played ATP finals but no Masters Title":
+        break;
       case "Grand Slam Winner":
         res = wonSlam(name);
         if (!res) {
           alert("Incorrect - Grand Slam Winner");
         }
         break;
+      case "GS Finalist but no GS":
+        res = !wonSlam(name) && lostSlam(name);
+        if (!res) {
+          alert("Incorrect - GS Finalist but no GS");
+        }
+        break;
       case "Top 5 Ranking":
         res = topFive(matches);
         if (!res) {
           alert("Incorrect - Top 5 Ranking");
+        }
+        break;
+      case "Never Top 50":
+        res = notTop50(matches);
+        if (!res) {
+          alert("Incorrect - Never Top 50");
         }
         break;
       case "Not from Europe":
@@ -651,8 +752,44 @@ function verify(label, name) {
           alert("Incorrect - Won Madrid Masters")
         }
         break;
+      case "Won Rome":
+        res = wonTournament(matches, "Rome Masters")
+        if (!res) {
+          alert("Incorrect - Won Rome")
+        }
+        break;
+      case "Won Shanghai Masters":
+        res = wonTournament(matches, "Shanghai Masters")
+        if (!res) {
+          alert("Incorrect - Won Shanghai Masters")
+        }
+        break;
+      case "Won Paris Masters":
+        res = wonTournament(matches, "Paris Masters")
+        if (!res) {
+          alert("Incorrect - Won Paris Masters")
+        }
+        break;
+      case "Won Cincinatti":
+        res = wonTournament(matches, "Cincinatti Masters")
+        if (!res) {
+          alert("Incorrect - Won Cincinatti")
+        }
+        break;
+      case "Won Monte-Carlo Masters":
+        res = wonTournament(matches, "Monte Carlo Masters")
+        if (!res) {
+          alert("Incorrect - Won Monte-Carlo Masters")
+        }
+        break;
+      case "Won Indian Wells":
+        res = wonTournament(matches, "Indian Wells Masters")
+        if (!res) {
+          alert("Incorrect - Won Indian Wells")
+        }
+        break;
       case "Won Rogers Cup":
-        res = wonTournament(matches, "Montreal / Toronto") || wonTournament(matches, "Canada Masters")
+        res = wonTournament(matches, "Canada Masters")
         if (!res) {
           alert("Incorrect - Won Rogers Cup")
         }
@@ -822,7 +959,7 @@ function getDaysBetweenDates(date1, date2) {
 
 const heading = document.getElementById('Grid Number');
 
-heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-08', getTodayDate());
+heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-14', getTodayDate());
 let info = "Tennis Immaculate Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
