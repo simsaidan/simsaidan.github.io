@@ -330,10 +330,13 @@ function titleAllThree(name) {
         switch (singlesData[j].surface) {
           case "Hard":
             hardTitlesWon++;
+            break;
           case "Clay":
             clayTitlesWon++;
+            break;
           case "Grass":
             grassTitlesWon++;
+            break;
         }
       }
     }
@@ -345,17 +348,16 @@ function titleAllThree(name) {
         switch (doublesData[j].surface) {
           case "Hard":
             hardTitlesWon++;
+            break;
           case "Clay":
             clayTitlesWon++;
+            break;
           case "Grass":
             grassTitlesWon++;
+            break;
         }
       }
     }
-    alert(hardTitlesWon);
-    alert(clayTitlesWon);
-    alert(grassTitlesWon);
-
     if (hardTitlesWon > 0 && clayTitlesWon > 0 && grassTitlesWon > 0) {
       return true;
     }
