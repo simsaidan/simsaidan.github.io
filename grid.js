@@ -146,7 +146,7 @@ function giveUp() {
   });
   const button = document.getElementById("giveUp");
   button.disabled = true;
-  alert("You lose" + 3);
+  alert(getEndMessage());
 }
 
 function decGuesses() {
@@ -981,6 +981,10 @@ function getDaysBetweenDates(date1, date2) {
   const diffInMs = d2 - d1; // milliseconds
   const msInDay = 1000 * 60 * 60 * 24;
   return Math.round(diffInMs / msInDay);
+}
+
+function getEndMessage() {
+  return 69;
 }
 
 const heading = document.getElementById('Grid Number');
