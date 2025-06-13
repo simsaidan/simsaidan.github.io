@@ -146,7 +146,7 @@ function giveUp() {
   });
   const button = getElementById("giveUp");
   button.disabled = true;
-  alert("You lose");
+  alert("You lose" + );
 }
 
 function decGuesses() {
@@ -352,6 +352,9 @@ function titleAllThree(name) {
         }
       }
     }
+    alert(hardTitlesWon);
+    alert(clayTitlesWon);
+    alert(grassTitlesWon);
 
     if (hardTitlesWon > 0 && clayTitlesWon > 0 && grassTitlesWon > 0) {
       return true;
