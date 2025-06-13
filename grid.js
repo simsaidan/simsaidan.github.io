@@ -146,7 +146,7 @@ function giveUp() {
   });
   const button = getElementById("giveUp");
   button.disabled = true;
-  alert("You lose" + );
+  alert("You lose" + 3);
 }
 
 function decGuesses() {
