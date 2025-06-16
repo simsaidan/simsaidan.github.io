@@ -144,9 +144,10 @@ function giveUp() {
       button.disabled = true;
     }
   });
-  const button = document.getElementById("giveUp");
-  button.disabled = true;
-  showResult(getEndMessage());
+  closeForm();
+  const giveUpBtn = document.getElementById("giveUp");
+  giveUpBtn.textContent = "See Results";
+  giveUpBtn.onclick = () => showResult();
 }
 
 function decGuesses() {
