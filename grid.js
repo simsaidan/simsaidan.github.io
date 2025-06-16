@@ -994,8 +994,20 @@ function getDaysBetweenDates(date1, date2) {
   return Math.round(diffInMs / msInDay);
 }
 
-function showResult(message) {
-  document.getElementById('resultText').innerHTML = message.replace(/\n/g, "<br>");
+function showResult() {
+  const { header, body } = getEndMessage();
+  const fullMessage = header + body;
+
+  // Display header and body (link is made clickable here)
+  document.getElementById('resultText').innerHTML =
+    header.replace(/\n/g, '<br>') +
+    body.replace(/\n/g, '<br>').replace(
+      /(https:\/\/[^\s<]+)/g,
+      '<a href="$1" target="_blank">$1</a>'
+    );
+
+  // Store only the body for copy
+  document.getElementById('resultPopup').dataset.copytext = body;
   document.getElementById('resultPopup').style.display = 'flex';
 }
 
@@ -1012,25 +1024,22 @@ function copyResult() {
 
 function getEndMessage() {
   const score = getScore();
-  let message = "You " + (score === 9 ? "win!" : "lose.") + "\n";
-  message += "Copy the below message to share your results with your friends!\n\n";
-  message += "Tennis Grid #" + getDaysBetweenDates('2025-06-16', getTodayDate()) + ": " + score + "/9" + "\n";
+  let header = "You " + (score === 9 ? "win!" : "lose.") + "\n\n";
+  header += "Copy the below message to share your results with your friends!\n\n";
 
-  // Add emoji grid
+  let body = "Tennis Grid #" + getDaysBetweenDates('2025-06-17', getTodayDate()) + "\n\n";
+
+  // Emoji grid
   for (let i = 1; i <= 9; i++) {
     const button = document.getElementById('button' + i);
     const isCorrect = button && button.style.backgroundColor === "rgba(154, 205, 50, 0.8)";
-    message += isCorrect ? "🎾" : "❌";
-
-    // Add newline after every 3 emojis to form a 3x3 grid
-    if (i % 3 === 0) message += "\n";
+    body += isCorrect ? "🎾" : "❌";
+    if (i % 3 === 0) body += "\n";
   }
 
-  // Add website link
-  message += '\n\nPlay here: <a href="https://simsaidan.github.io/grid.html" target="_blank">simsaidan.github.io/grid.html</a>';
+  body += "\nPlay here: https://simsaidan.github.io/grid.html";
 
-
-  return message;
+  return { header, body };
 }
 
 const heading = document.getElementById('Grid Number');
