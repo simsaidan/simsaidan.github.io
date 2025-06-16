@@ -57,7 +57,7 @@ const asianCountries = [
   'TJK', 'THA', 'TLS', 'ARE', 'UZB', 'VNM', 'YEM'
 ];
 
-let randomMode = true;
+let randomMode = false;
 let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP", "From France": "FRA", "From Great Britain": "GBR", }
 
 let forbidden = {
@@ -146,7 +146,7 @@ function giveUp() {
   });
   const button = document.getElementById("giveUp");
   button.disabled = true;
-  alert(getEndMessage());
+  showResult(getEndMessage());
 }
 
 function decGuesses() {
@@ -992,6 +992,22 @@ function getDaysBetweenDates(date1, date2) {
   const diffInMs = d2 - d1; // milliseconds
   const msInDay = 1000 * 60 * 60 * 24;
   return Math.round(diffInMs / msInDay);
+}
+
+function showResult(message) {
+  document.getElementById('resultText').textContent = message;
+  document.getElementById('resultPopup').style.display = 'flex';
+}
+
+function closeResult() {
+  document.getElementById('resultPopup').style.display = 'none';
+}
+
+function copyResult() {
+  const text = document.getElementById('resultText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard!");
+  });
 }
 
 function getEndMessage() {
