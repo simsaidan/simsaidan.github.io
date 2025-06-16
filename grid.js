@@ -77,7 +77,7 @@ let forbidden = {
   "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters", "Top 5 Ranking", "AO Champion",
     "French Open Champion",
     "Won Monte-Carlo Masters",
-    "Won Cincinatti",
+    "Won Cincinnatti",
     "Won Indian Wells",
     "Won Rome",
     "Won Shanghai Masters",
@@ -104,7 +104,7 @@ let forbidden = {
   "Won Miami Open": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Madrid Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Monte-Carlo Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Cincinatti": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Cincinnatti": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Indian Wells": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Rome": ["No Titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Shanghai Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
@@ -688,7 +688,7 @@ function verify(label, name) {
           wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
           wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
           wonTournament(matches, "Madrid Masters") || wonTournament(matches, "Monte Carlo Masters") ||
-          wonTournament(matches, "Cincinatti Masters") || wonTournament(matches, "Indian Wells Masters"))
+          wonTournament(matches, "Cincinnatti Masters") || wonTournament(matches, "Indian Wells Masters"))
         if (!res) {
           alert("Incorrect - Played ATP finals but no Masters Title");
         }
@@ -796,10 +796,10 @@ function verify(label, name) {
           alert("Incorrect - Won Paris Masters")
         }
         break;
-      case "Won Cincinatti":
+      case "Won Cincinnatti":
         res = wonTournament(matches, "Cincinatti Masters")
         if (!res) {
-          alert("Incorrect - Won Cincinatti")
+          alert("Incorrect - Won Cincinnatti")
         }
         break;
       case "Won Monte-Carlo Masters":
@@ -975,6 +975,17 @@ function setCategories() {
 }
 setCategories();
 
+function getScore() {
+  let score = 0;
+  for (let i = 1; i <= 9; i++) {
+    const button = document.getElementById('button' + i);
+    if (button && button.style.backgroundColor === "rgba(154, 205, 50, 0.8)") {
+      score++;
+    }
+  }
+  return score;
+}
+
 function getDaysBetweenDates(date1, date2) {
   const d1 = new Date(date1);
   const d2 = new Date(date2);
@@ -984,13 +995,18 @@ function getDaysBetweenDates(date1, date2) {
 }
 
 function getEndMessage() {
-  return 69;
+  const score = getScore();
+  let message = "You "
+  alert(score);
+  return "Copy the below message to share your results with your friends!" +
+    "\n\n" + "Tennis Grid #" + getDaysBetweenDates('2025-06-17', getTodayDate()) + "\n\n";
 }
 
 const heading = document.getElementById('Grid Number');
 
-heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-13', getTodayDate());
-let info = "Tennis Immaculate Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
+heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-17',
+  getTodayDate());
+let info = "Tennis Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
-alert("Welcome to Tennis Immaculate Grid" + "\n\n" + info + "\n\n" + info2)
+alert("Welcome to Tennis Grid" + "\n\n" + info + "\n\n" + info2)
