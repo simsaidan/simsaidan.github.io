@@ -995,7 +995,7 @@ function getDaysBetweenDates(date1, date2) {
 }
 
 function showResult(message) {
-  document.getElementById('resultText').textContent = message;
+  document.getElementById('resultText').innerHTML = message.replace(/\n/g, "<br>");
   document.getElementById('resultPopup').style.display = 'flex';
 }
 
@@ -1027,7 +1027,7 @@ function getEndMessage() {
   }
 
   // Add website link
-  message += "Play here: https://simsaidan.github.io/grid.html";
+  message += '\n\nPlay here: <a href="https://simsaidan.github.io/grid.html" target="_blank">simsaidan.github.io/grid.html</a>';
 
 
   return message;
