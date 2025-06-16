@@ -145,6 +145,7 @@ function giveUp() {
     }
   });
   closeForm();
+  showResult()
   const giveUpBtn = document.getElementById("giveUp");
   giveUpBtn.textContent = "See Results";
   giveUpBtn.onclick = () => showResult();
