@@ -995,19 +995,20 @@ function getDaysBetweenDates(date1, date2) {
 }
 
 function showResult() {
-  const { header, body } = getEndMessage();
-  const fullMessage = header + body;
+  const { header, copy } = getEndMessage();
 
-  // Display header and body (link is made clickable here)
-  document.getElementById('resultText').innerHTML =
-    header.replace(/\n/g, '<br>') +
-    body.replace(/\n/g, '<br>').replace(
-      /(https:\/\/[^\s<]+)/g,
-      '<a href="$1" target="_blank">$1</a>'
-    );
+  // Convert the entire message to HTML and insert into resultText
+  const fullMessage = header + copy;
+  const html = fullMessage
+    .replace(/</g, "&lt;") // escape HTML just in case
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br>")
+    .replace(/(https:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
 
-  // Store only the body for copy
-  document.getElementById('resultPopup').dataset.copytext = body;
+  document.getElementById('resultText').innerHTML = html;
+
+  // Save only the copy portion (not header) for clipboard use
+  document.getElementById('resultPopup').dataset.copy = copy;
   document.getElementById('resultPopup').style.display = 'flex';
 }
 
@@ -1016,30 +1017,28 @@ function closeResult() {
 }
 
 function copyResult() {
-  const text = document.getElementById('resultText').textContent;
-  navigator.clipboard.writeText(text).then(() => {
+  const copy = document.getElementById('resultPopup').dataset.copy;
+  navigator.clipboard.writeText(copy).then(() => {
     alert("Copied to clipboard!");
   });
 }
 
 function getEndMessage() {
   const score = getScore();
-  let header = "You " + (score === 9 ? "win!" : "lose.") + "\n\n";
-  header += "Copy the below message to share your results with your friends!\n\n";
+  const header = `You ${score === 9 ? "win!" : "lose."}\n\nCopy the below message to share your results with your friends!\n\n`;
 
-  let body = "Tennis Grid #" + getDaysBetweenDates('2025-06-17', getTodayDate()) + "\n\n";
+  let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())}\n\n`;
 
-  // Emoji grid
   for (let i = 1; i <= 9; i++) {
     const button = document.getElementById('button' + i);
     const isCorrect = button && button.style.backgroundColor === "rgba(154, 205, 50, 0.8)";
-    body += isCorrect ? "🎾" : "❌";
-    if (i % 3 === 0) body += "\n";
+    copy += isCorrect ? "🎾" : "❌";
+    if (i % 3 === 0) copy += "\n";
   }
 
-  body += "\nPlay here: https://simsaidan.github.io/grid.html";
+  copy += `\nPlay here: https://simsaidan.github.io/grid.html`;
 
-  return { header, body };
+  return { header, copy };
 }
 
 const heading = document.getElementById('Grid Number');
