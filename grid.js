@@ -998,7 +998,7 @@ function getEndMessage() {
   const score = getScore();
   let message = "You " + (score === 9 ? "win!" : "lose.") + "\n\n";
   message += "Copy the below message to share your results with your friends!\n\n";
-  message += "Tennis Grid #" + getDaysBetweenDates('2025-06-16', getTodayDate()) + "\n\n";
+  message += "Tennis Grid #" + getDaysBetweenDates('2025-06-16', getTodayDate()) + ": " + score + "/9" + "\n";
 
   // Add emoji grid
   for (let i = 1; i <= 9; i++) {
@@ -1009,6 +1009,10 @@ function getEndMessage() {
     // Add newline after every 3 emojis to form a 3x3 grid
     if (i % 3 === 0) message += "\n";
   }
+
+  // Add website link
+  message += "\nPlay here: https://simsaidan.github.io/grid.html";
+
 
   return message;
 }
