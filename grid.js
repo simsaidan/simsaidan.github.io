@@ -1025,9 +1025,9 @@ function copyResult() {
 
 function getEndMessage() {
   const score = getScore();
-  const header = `You ${score === 9 ? "win!" : "lose."}\n\nCopy the below message to share your results with your friends!\n\n`;
+  const header = `You ${score === 9 ? "win!" : "lose."}\nCopy the below message to share your results with your friends!\n\n`;
 
-  let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())}\n\n`;
+  let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())} ` + ': ' + score + '/9' + `\n`;
 
   for (let i = 1; i <= 9; i++) {
     const button = document.getElementById('button' + i);
@@ -1036,7 +1036,7 @@ function getEndMessage() {
     if (i % 3 === 0) copy += "\n";
   }
 
-  copy += `\nPlay here: https://simsaidan.github.io/grid.html`;
+  copy += `Play here: https://simsaidan.github.io/grid.html`;
 
   return { header, copy };
 }
