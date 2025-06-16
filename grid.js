@@ -1019,7 +1019,11 @@ function closeResult() {
 function copyResult() {
   const copy = document.getElementById('resultPopup').dataset.copy;
   navigator.clipboard.writeText(copy).then(() => {
-    alert("Copied to clipboard!");
+    const status = document.getElementById('copyStatus');
+    status.textContent = "Copied!";
+    setTimeout(() => {
+      status.textContent = "";
+    }, 2000); // Clear after 2 seconds
   });
 }
 
