@@ -996,7 +996,7 @@ function getDaysBetweenDates(date1, date2) {
 
 function getEndMessage() {
   const score = getScore();
-  let message = "You " + (score === 9 ? "win!" : "lose.") + "\n\n";
+  let message = "You " + (score === 9 ? "win!" : "lose.") + "\n";
   message += "Copy the below message to share your results with your friends!\n\n";
   message += "Tennis Grid #" + getDaysBetweenDates('2025-06-16', getTodayDate()) + ": " + score + "/9" + "\n";
 
@@ -1011,7 +1011,7 @@ function getEndMessage() {
   }
 
   // Add website link
-  message += "\nPlay here: https://simsaidan.github.io/grid.html";
+  message += "Play here: https://simsaidan.github.io/grid.html";
 
 
   return message;
