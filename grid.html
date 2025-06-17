@@ -73,6 +73,16 @@
   </div>
 
 
+  <div id="introPopup" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+         background: rgba(0, 0, 0, 0.7); z-index: 9999; justify-content: center; align-items: center;">
+    <div
+      style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; overflow-y: auto;">
+      <div id="introText" style="white-space: pre-wrap; font-family: inherit; line-height: 1.5;"></div>
+      <br>
+      <button onclick="closeIntro()" style="margin-top: 10px;">OK</button>
+    </div>
+  </div>
+
   <script src="grid.js"></script>
 </body>
 

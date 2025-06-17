@@ -57,7 +57,7 @@ const asianCountries = [
   'TJK', 'THA', 'TLS', 'ARE', 'UZB', 'VNM', 'YEM'
 ];
 
-let randomMode = false;
+let randomMode = !false;
 let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP", "From France": "FRA", "From Great Britain": "GBR", }
 
 let forbidden = {
@@ -123,6 +123,31 @@ let forbidden = {
     "Won Miami Open",
     "Never Top 50"]
 };
+
+const hints = {
+  "Left Handed": [], "Born after 1995": [], "Born before 1975": [],
+  "Not from Europe": [], "From Australia": [],
+  "From Asia": ["From an Asian country. Russian and Turkish players are considered European."],
+  "From South America": [],
+  "American": ["From the United States of America"],
+  "From Europe": ["From a European country. Russian and Turkish players are considered European."],
+  "From Spain": [], "From France": [], "From Great Britain": [], "Won at least 20 titles": [],
+  "No titles": [],
+  "Title on All 3 Surfaces": ["At least title on hard, one on clay, and one on grass."],
+  "Unseeded Champion": ["Player has at least once title they won without being seeded."],
+  "Grand Slam Winner": [], "5+ Slams": [], "GS Finalist but no GS": [],
+  "Wimbledon Champion": [], "US Open Champion": [], "AO Champion": [],
+  "French Open Champion": [],
+  "Top 5 Ranking": ["Player has at least one week in the top 5 in singles or doubles."],
+  "Never Top 50": ["Player has never been ranked in the top 50 in singles or doubles"],
+  "Olympic Medalist": [], "Played in Olympics": [], "Won Rogers Cup": [],
+  "Won Miami Open": [], "Won Madrid Masters": [], "Won Monte-Carlo Masters": [],
+  "Won Cincinnatti": [], "Won Indian Wells": [], "Won Rome": [],
+  "Won Shanghai Masters": [], "Won Paris Masters": [],
+  "Played in NextGen Finals": [], "Shorter than 6ft (183 cm)": [],
+  "Above 6ft 4in (193 cm)": [],
+  "Played ATP Finals but no Masters title": ["Player has played at least one ATP finals match but has never won a Masters title."]
+}
 
 let [clicked, seen] = ['button1', []]
 
@@ -974,8 +999,21 @@ function setCategories() {
   const td6 = document.getElementById('bottomRow');
   td6.textContent = cats[5];
 
+  updateCategoryHints();
 }
 setCategories();
+
+function updateCategoryHints() {
+  const ids = ['leftCol', 'midCol', 'rightCol', 'topRow', 'midRow', 'bottomRow'];
+
+  ids.forEach(id => {
+    const elem = document.getElementById(id);
+    const cat = elem.textContent;
+    const hint = hints[cat] && hints[cat].length > 0 ? hints[cat][0] : '';
+    elem.title = hint;
+  });
+}
+
 
 function getScore() {
   let score = 0;
@@ -1054,4 +1092,14 @@ heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-16',
 let info = "Tennis Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
 let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 
-alert("Welcome to Tennis Grid" + "\n\n" + info + "\n\n" + info2)
+function showIntro() {
+  const intro = "Welcome to Tennis Grid\n\n" + info + "\n\n" + info2;
+  document.getElementById('introText').textContent = intro;
+  document.getElementById('introPopup').style.display = 'flex';
+}
+
+function closeIntro() {
+  document.getElementById('introPopup').style.display = 'none';
+}
+
+showIntro();
