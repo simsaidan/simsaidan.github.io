@@ -1101,5 +1101,4 @@ function showIntro() {
 function closeIntro() {
   document.getElementById('introPopup').style.display = 'none';
 }
-
 showIntro();
