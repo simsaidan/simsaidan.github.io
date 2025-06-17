@@ -57,7 +57,7 @@ const asianCountries = [
   'TJK', 'THA', 'TLS', 'ARE', 'UZB', 'VNM', 'YEM'
 ];
 
-let randomMode = !false;
+let randomMode = false;
 let bigCountries = { "From Australia": "AUS", "American": "USA", "From Spain": "ESP", "From France": "FRA", "From Great Britain": "GBR", }
 
 let forbidden = {
