@@ -77,7 +77,7 @@ let forbidden = {
   "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters", "Top 5 Ranking", "AO Champion",
     "French Open Champion",
     "Won Monte-Carlo Masters",
-    "Won Cincinnatti",
+    "Won Cincinnati",
     "Won Indian Wells",
     "Won Rome",
     "Won Shanghai Masters",
@@ -104,7 +104,7 @@ let forbidden = {
   "Won Miami Open": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Madrid Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Monte-Carlo Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Cincinnatti": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Cincinnati": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Indian Wells": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Rome": ["No Titles", "Never Top 50", "Played ATP Finals but no Masters title"],
   "Won Shanghai Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
@@ -142,7 +142,7 @@ const hints = {
   "Never Top 50": ["Player has never been ranked in the top 50 in singles or doubles"],
   "Olympic Medalist": [], "Played in Olympics": [], "Won Rogers Cup": [],
   "Won Miami Open": [], "Won Madrid Masters": [], "Won Monte-Carlo Masters": [],
-  "Won Cincinnatti": [], "Won Indian Wells": [], "Won Rome": [],
+  "Won Cincinnati": [], "Won Indian Wells": [], "Won Rome": [],
   "Won Shanghai Masters": [], "Won Paris Masters": [],
   "Played in NextGen Finals": [], "Shorter than 6ft (183 cm)": [],
   "Above 6ft 4in (193 cm)": [],
@@ -715,7 +715,7 @@ function verify(label, name) {
           wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
           wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
           wonTournament(matches, "Madrid Masters") || wonTournament(matches, "Monte Carlo Masters") ||
-          wonTournament(matches, "Cincinnatti Masters") || wonTournament(matches, "Indian Wells Masters"))
+          wonTournament(matches, "Cincinnati Masters") || wonTournament(matches, "Indian Wells Masters"))
         if (!res) {
           alert("Incorrect - Played ATP finals but no Masters Title");
         }
@@ -823,10 +823,10 @@ function verify(label, name) {
           alert("Incorrect - Won Paris Masters")
         }
         break;
-      case "Won Cincinnatti":
-        res = wonTournament(matches, "Cincinatti Masters")
+      case "Won Cincinnati":
+        res = wonTournament(matches, "Cincinati Masters")
         if (!res) {
-          alert("Incorrect - Won Cincinnatti")
+          alert("Incorrect - Won Cincinnati")
         }
         break;
       case "Won Monte-Carlo Masters":
