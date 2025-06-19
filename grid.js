@@ -1089,11 +1089,12 @@ const heading = document.getElementById('Grid Number');
 
 heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-16',
   getTodayDate());
-let info = "Tennis Grid is a tennis trivia game where the goal is to find 9 tennis players that fit both the row and column categories displayed around the grid. To make a guess, click on one of the empty squares to open the entry form and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied and lose a guess. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
-let info2 = "Matches are only ATP matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
+let info = "Tennis Grid is a game where the goal is to find 9 players that fit the row and column categories displayed around the grid. To make a guess, click an empty square and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
+let info2 = "Matches are only men's singles and men's doubles matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
+let info3 = "Data Source: Player and match data provided by Jeff Sackmann under the CC BY-NC-SA 4.0 License. Adapted and used with modifications. This project is non-commercial and distributed under the same license."
 
 function showIntro() {
-  const intro = "Welcome to Tennis Grid\n\n" + info + "\n\n" + info2;
+  const intro = "Welcome to Tennis Grid\n\n" + info + "\n\n" + info2 + "\n\n" + info3;
   document.getElementById('introText').textContent = intro;
   document.getElementById('introPopup').style.display = 'flex';
 }
