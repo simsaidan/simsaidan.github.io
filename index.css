@@ -1,0 +1,99 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  color: #333;
+  background: #fff;
+  line-height: 1.6;
+}
+
+/* Top Nav */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+.top-nav .nav-left {
+  font-weight: bold;
+}
+
+.top-nav .nav-right a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 220px;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  background: #fafafa;
+}
+
+.sidebar .profile-pic {
+  width: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.sidebar h2 {
+  margin: 10px 0;
+  font-size: 1.2em;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 240px;
+  /* Sidebar width + some space */
+  padding: 80px 40px 40px;
+  max-width: 800px;
+}
+
+main h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  margin-top: 40px;
+}
+
+main ul {
+  margin-left: 20px;
+}
+
+main p {
+  margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 80px 20px 20px;
+  }
+}

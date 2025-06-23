@@ -1,160 +1,73 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>Welcome!</title>
-  <style>
-    .button {
-      text-decoration: none;
-      color: white;
-      background-color: #B31B1B;
-      cursor: pointer;
-      font-family: 'Lato', sans-serif;
-      font-weight: 900;
-      position: relative;
-      border-radius: 0 !important;
-      box-shadow: 2px 2px 4px 0px;
-      text-transform: uppercase;
-      white-space: normal;
-      margin: .5rem !important;
-      padding: 0.5rem 1rem;
-      font-size: 1.05rem;
-      line-height: 1.5;
-      display: inline-block;
-      text-align: center;
-      vertical-align: middle;
-      user-select: none;
-      border: 0 solid;
-
-    }
-
-    div {
-      text-align: center;
-    }
-
-    .upper {
-      justify-content: center !important;
-      display: flex;
-      flex-wrap: wrap;
-      margin-right: -15px;
-      margin-left: -15px;
-      box-sizing: border-box;
-      font-size: 1rem;
-      color: #495057;
-      font-family: "Proxima Nova", "helvetica", arial, sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.6;
-      text-align: left;
-
-    }
-
-    .inner {
-      flex-basis: 0;
-      flex-grow: 1;
-      max-width: 100%;
-      position: relative;
-      width: 100%;
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-bottom: 1rem !important;
-      padding-top: 1rem !important;
-      flex: 0 0 33.33%;
-      box-sizing: border-box;
-      display: block;
-      font-size: 1 rem;
-      color: #495057;
-      font-family: "Proxima Nova", "helvetica", arial, sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 1.6;
-      text-align: left;
-    }
-
-    .venmo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #e9ecef;
-      padding: 1rem;
-      height: 100%;
-      text-decoration: none;
-      font-family: 'Lato';
-      font-weight: 900;
-      border-radius: 0 !important;
-      color: #B31B1B;
-      cursor: pointer;
-      box-sizing: border-box;
-      font-size: 1 rem;
-      font-style: normal;
-      line-height: 1.6;
-
-    }
-
-    .im {
-      width: 100%;
-      border-radius: 5px;
-      margin-bottom: .5rem !important;
-      vertical-align: middle;
-      border-style: none;
-      box-sizing: border-box;
-      overflow-clip-margin: content-box;
-      overflow: clip;
-      font-family: 'Lato';
-      font-weight: 900;
-      color: #B31B1B;
-      cursor: pointer;
-
-      font-size: 1 rem;
-      font-style: normal;
-      line-height: 1.6;
-
-    }
-
-    .amount {
-      font-size: 3rem;
-      color: black;
-      box-sizing: border-box;
-      font-family: 'Lato';
-      font-weight: 900;
-      cursor: pointer;
-      font-style: normal;
-      line-height: 1.6;
-    }
-
-    .subtext {
-      font-size: 16px;
-      font-style: italic !important;
-      max-width: 100% !important;
-      margin-top: 0;
-      margin-bottom: 1 rem;
-      box-sizing: border-box;
-      display: block;
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-end: 0px;
-      margin-inline-start: 0px;
-      font-weight: 900;
-      font-family: 'Lato';
-      color: #B31B1B;
-      cursor: pointer;
-      text-align: left;
-      line-height: 1.6;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aidan Sims</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-  <h1>Aidan Sims</h1>
 
-  <a href="AidanSimsResumeF.pdf">Resume</a>
-  <a href="AidanSimsResumeF.pdf">Project Portfolio</a>
-  <a href="webtapp.html">Tennis Match Stats</a>
-  <a href="grid.html">Tennis Immaculate Grid</a>
-  <a href="wayne.html">Wayne</a>
-  <p>Welcome to my website!!</p>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">Aidan Sims</div>
+    <nav class="nav-right">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <img src="assets/profile.jpg" alt="Profile picture" class="profile-pic" />
+    <h2>Aidan Sims</h2>
+    <p>MS Student, Cornell University</p>
+    <p>📍 Ithaca, NY</p>
+    <p><a href="mailto:your@email.com">Email</a></p>
+    <p>
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a><br />
+      <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+    </p>
+  </aside>
 
-  <script src="index.js"></script>
+  <!-- Main Content -->
+  <main class="main-content">
+    <section id="about">
+      <h1>About Me</h1>
+      <p>I am a Master’s student at Cornell University, focusing on quantum information, semidefinite programming, and
+        algorithms. I currently work in the Wilde Lab...</p>
+    </section>
+
+    <section id="research">
+      <h1>Research / Publications</h1>
+      <ul>
+        <li><strong>Title of Paper</strong>, with co-authors. <em>Journal, Year</em> [link]</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h1>Projects</h1>
+      <ul>
+        <li><strong>Tennis Immaculate Grid</strong> — fun interactive game. [link]</li>
+      </ul>
+    </section>
+
+    <section id="cv">
+      <h1>CV</h1>
+      <p><a href="assets/AidanSims_CV.pdf" target="_blank">Download my CV (PDF)</a></p>
+    </section>
+
+    <section id="contact">
+      <h1>Contact</h1>
+      <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+    </section>
+  </main>
+
 </body>
 
 </html>
