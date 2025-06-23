@@ -73,8 +73,8 @@ let forbidden = {
   "From Spain": ["Above 6ft 4in (193 cm)", "From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain"],
   "From France": ["From Australia", "From Asia", "From Spain", "From South America", "American", "Not from Europe", "From Great Britain"],
   "From Great Britain": ["From Australia", "From Spain", "From Asia", "From South America", "American", "Not from Europe", "From France"],
-  "Won at least 20 titles": ["No titles", "Never Top 50"],
-  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters", "Top 5 Ranking", "AO Champion",
+  "Won at least 20 titles": ["No titles", "Never Top 50 in Singles"],
+  "No titles": ["Won at least 20 titles", "Wimbledon Champion", "US Open Champion", "Grand Slam Winner", "Won Rogers Cup", "Won Miami Open", "Unseeded Champion", "5+ Slams", "Title on All 3 Surfaces", "Won Madrid Masters", "Top 5 Singles Ranking", "AO Champion",
     "French Open Champion",
     "Won Monte-Carlo Masters",
     "Won Cincinnati",
@@ -84,31 +84,31 @@ let forbidden = {
     "Won Paris Masters",
     "Olympic Medalist",
     "Played ATP Finals but no Masters title"],
-  "Title on All 3 Surfaces": ["No titles", "Never Top 50"],
+  "Title on All 3 Surfaces": ["No titles", "Never Top 50 in Singles"],
   "Unseeded Champion": ["No titles"],
-  "Grand Slam Winner": ["GS Finalist but no GS", "No titles", "Never Top 50"],
-  "5+ Slams": ["No titles", "Never Top 50", "Born after 1995", "Played in NextGen Finals"],
+  "Grand Slam Winner": ["GS Finalist but no GS", "No titles", "Never Top 50 in Singles"],
+  "5+ Slams": ["No titles", "Never Top 50 in Singles", "Born after 1995", "Played in NextGen Finals"],
   "GS Finalist but no GS": ["Grand Slam Winner", "5+ Slams", "Wimbledon Champion", "US Open Champion", "AO Champion", "French Open Champion"],
-  "Wimbledon Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
-  "US Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
-  "AO Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
-  "French Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50"],
-  "Top 5 Ranking": ["Never Top 50", "No Titles"],
-  "Never Top 50": ["Top 5 Ranking", "Won at least 20 Titles", "Title on All 3 Surfaces", "5+ Slams", "Wimbledon Champion",
+  "Wimbledon Champion": ["No titles", "GS Finalist but no GS", "Never Top 50 in Singles"],
+  "US Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50 in Singles"],
+  "AO Champion": ["No titles", "GS Finalist but no GS", "Never Top 50 in Singles"],
+  "French Open Champion": ["No titles", "GS Finalist but no GS", "Never Top 50 in Singles"],
+  "Top 5 Singles Ranking": ["Never Top 50 in Singles", "No Titles"],
+  "Never Top 50 in Singles": ["Top 5 Singles Ranking", "Won at least 20 Titles", "Title on All 3 Surfaces", "5+ Slams", "Wimbledon Champion",
     "US Open Champion",
     "AO Champion",
     "French Open Champion", "Played ATP Finals but no Masters title"],
   "Olympic Medalist": [],
   "Played in Olympics": [],
-  "Won Rogers Cup": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Miami Open": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Madrid Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Monte-Carlo Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Cincinnati": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Indian Wells": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Rome": ["No Titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Shanghai Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
-  "Won Paris Masters": ["No titles", "Never Top 50", "Played ATP Finals but no Masters title"],
+  "Won Rogers Cup": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Miami Open": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Madrid Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Monte-Carlo Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Cincinnati": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Indian Wells": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Rome": ["No Titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Shanghai Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Paris Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Played in NextGen Finals": ["Born before 1975", "5+ Slams"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
   "Above 6ft 4in (193 cm)": ["Shorter than 6ft (183 cm)", "From Spain"],
@@ -121,7 +121,7 @@ let forbidden = {
     "Won Paris Masters",
     "Won Rogers Cup",
     "Won Miami Open",
-    "Never Top 50"]
+    "Never Top 50 in Singles"]
 };
 
 const hints = {
@@ -138,8 +138,8 @@ const hints = {
   "Grand Slam Winner": [], "5+ Slams": [], "GS Finalist but no GS": [],
   "Wimbledon Champion": [], "US Open Champion": [], "AO Champion": [],
   "French Open Champion": [],
-  "Top 5 Ranking": ["Player has at least one week in the top 5 in singles or doubles."],
-  "Never Top 50": ["Player has never been ranked in the top 50 in singles or doubles"],
+  "Top 5 Singles Ranking": ["Player has at least one week in the top 5 in singles."],
+  "Never Top 50 in Singles": ["Player has never been ranked in the top 50 in singles"],
   "Olympic Medalist": [], "Played in Olympics": [], "Won Rogers Cup": [],
   "Won Miami Open": [], "Won Madrid Masters": [], "Won Monte-Carlo Masters": [],
   "Won Cincinnati": [], "Won Indian Wells": [], "Won Rome": [],
@@ -732,16 +732,16 @@ function verify(label, name) {
           alert("Incorrect - GS Finalist but no GS");
         }
         break;
-      case "Top 5 Ranking":
+      case "Top 5 Singles Ranking":
         res = topFive(matches);
         if (!res) {
-          alert("Incorrect - Top 5 Ranking");
+          alert("Incorrect - Top 5 Singles Ranking");
         }
         break;
-      case "Never Top 50":
+      case "Never Top 50 in Singles":
         res = notTop50(matches);
         if (!res) {
-          alert("Incorrect - Never Top 50");
+          alert("Incorrect - Never Top 50 in Singles");
         }
         break;
       case "Not from Europe":
