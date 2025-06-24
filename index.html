@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
 <head>
   <meta charset="UTF-8" />
@@ -15,9 +17,8 @@
     <div class="nav-left">Aidan Sims</div>
     <nav class="nav-right">
       <a href="#about">About</a>
-      <a href="#research">Research</a>
+      <a href="assets/AidanSims_CV.pdf" target="_blank">Resume</a>
       <a href="#projects">Projects</a>
-      <a href="#cv">CV</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -25,13 +26,18 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <img src="pic.jpg" alt="Profile picture" class="profile-pic" />
-    <h2>Aidan Sims</h2>
     <p>Currently: Forward Deployed Engineer, Scale AI</p>
     <p>📍 San Francisco, CA</p>
     <p>
-      <a href="https://github.com/yourusername" target="_blank">GitHub</a><br />
-      <a href="https://www.linkedin.com/in/aidan-sims/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/yourusername" target="_blank">
+        <i class="fab fa-github fa-2x"></i>
+      </a>
+      &nbsp;
+      <a href="https://www.linkedin.com/in/aidan-sims/" target="_blank">
+        <i class="fab fa-linkedin fa-2x"></i>
+      </a>
     </p>
+
   </aside>
 
   <!-- Main Content -->
@@ -44,26 +50,35 @@
     <section id="research">
       <h1>Research / Publications</h1>
       <ul>
-        <li><strong>Title of Paper</strong>, with co-authors. <em>Journal, Year</em> [link]</li>
+        <li>
+          <a href="https://arxiv.org/pdf/2501.18522" target="_blank">
+            Semidefinite Approximations of the Matrix Logarithm and Quantum Information Functions
+          </a>, with M. M. Wilde. (Preprint: arXiv:2501.18522)
+        </li>
+        <li>
+          Presented as a talk and poster at [Conference Name or Event], [Year].
+        </li>
       </ul>
     </section>
 
-    <section id="projects">
-      <h1>Projects</h1>
-      <ul>
-        <li><strong>Tennis Immaculate Grid</strong> — fun interactive game. [link]</li>
-      </ul>
-    </section>
 
-    <section id="cv">
-      <h1>CV</h1>
-      <p><a href="assets/AidanSims_CV.pdf" target="_blank">Download my CV (PDF)</a></p>
-    </section>
+
+
+
 
     <section id="contact">
       <h1>Contact</h1>
-      <p>Email: <a href="mailto:your@email.com">your@email.com</a></p>
+      <form action="mailto:your@email.com" method="post" enctype="text/plain">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Message:</label><br>
+        <textarea name="message" rows="5" required></textarea><br><br>
+        <input type="submit" value="Send">
+      </form>
     </section>
+
   </main>
 
 </body>
