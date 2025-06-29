@@ -3,6 +3,46 @@
 import csv
 import json
 
+# Step 1: Load existing singles.json and remove 2023 and later
+with open('singles.json', 'r', encoding='utf-8') as f:
+    matches = json.load(f)
+
+filtered_matches = [
+    m for m in matches
+    if m['tourney_date'] < "20230101"
+]
+
+# Step 2: Gather new matches from 2023 and 2024 CSVs, filtering fields
+csv_files = ['csv/atp_matches_2023.csv', 'csv/atp_matches_2024.csv']
+fields_to_keep = [
+    "tourney_name",
+    "surface",
+    "tourney_level",
+    "tourney_date",
+    "winner_id",
+    "winner_seed",
+    "winner_name",
+    "loser_id",
+    "loser_name",
+    "score",
+    "round"
+]
+
+for csv_file in csv_files:
+    with open(csv_file, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            match = {key: row[key] for key in fields_to_keep}
+            filtered_matches.append(match)
+
+# Step 3: Overwrite singles.json with the updated matches
+with open('singles.json', 'w', encoding='utf-8') as f:
+    json.dump(filtered_matches, f, indent=4)
+
+print(f"Done. singles.json contains {len(filtered_matches)} matches.")
+
+quit()
+
 # Set your input/output file
 json_file = 'singles.json'
 
