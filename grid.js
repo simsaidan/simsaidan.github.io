@@ -824,7 +824,7 @@ function verify(label, name) {
         }
         break;
       case "Won Cincinnati":
-        res = wonTournament(matches, "Cincinati Masters")
+        res = wonTournament(matches, "Cincinnati Masters")
         if (!res) {
           alert("Incorrect - Won Cincinnati")
         }

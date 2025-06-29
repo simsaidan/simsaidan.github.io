@@ -3,6 +3,85 @@
 import csv
 import json
 
+
+# Input and output file paths
+csv_file = 'csv/players.csv'
+json_file = 'players.json'
+
+players = []
+with open(csv_file, newline='', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        # Everything as string (including empty fields)
+        player = {k: str(v) if v is not None else "" for k, v in row.items()}
+        players.append(player)
+
+with open(json_file, 'w', encoding='utf-8') as f:
+    json.dump(players, f, indent=4)
+
+print(f"Converted {len(players)} players to {json_file}")
+quit()
+
+
+# Step 1: Load all ranking entries
+with open('rankings.json', 'r') as f:
+    rankings = json.load(f)
+
+# Step 2: Track the best (lowest) rank for each player
+best_ranks = {}
+
+for entry in rankings:
+    player = entry['player']
+    rank = int(entry['rank'])  # convert to integer for comparison
+    # Update if first time or better rank found
+    if player not in best_ranks or rank < best_ranks[player]:
+        best_ranks[player] = rank
+
+# Step 3: Prepare output (just player and rank as strings)
+min_entries = [
+    {"player": player, "rank": str(rank)}
+    for player, rank in best_ranks.items()
+]
+
+with open('rankings.json', 'w') as f:
+    json.dump(min_entries, f, indent=4)
+
+print(f"Done! Best ranks for {len(min_entries)} players written to rankings.json.")
+quit()
+
+# Step 1: Load current rankings from JSON file
+with open('rankings.json', 'r') as f:
+    rankings = json.load(f)
+
+# Step 2: Remove entries from 2020 or later
+filtered_rankings = [entry for entry in rankings if entry["ranking_date"] < "20200101"]
+
+# Step 3: Load new entries from the two CSV files
+csv_files = ["csv/atp_rankings_20s.csv", "csv/atp_rankings_current.csv"]
+new_entries = []
+
+for csv_file in csv_files:
+    with open(csv_file, newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            entry = {
+                "ranking_date": str(row["ranking_date"]),
+                "rank": str(row["rank"]),
+                "player": str(row["player"]),
+                "points": str(row["points"])
+            }
+            new_entries.append(entry)
+
+# Step 4: Combine and save to the rankings.json file (overwrite)
+updated_rankings = filtered_rankings + new_entries
+
+with open('rankings.json', 'w') as f:
+    json.dump(updated_rankings, f, indent=4)
+
+print("Done! rankings.json has been updated.")
+quit()
+
+
 # Files
 json_file = "singles.json"
 csv_files = ["csv/atp_matches_2023.csv", "csv/atp_matches_2024.csv"]
