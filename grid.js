@@ -1090,7 +1090,7 @@ const heading = document.getElementById('Grid Number');
 heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-16',
   getTodayDate());
 let info = "Tennis Grid is a game where the goal is to find 9 players that fit the row and column categories displayed around the grid. To make a guess, click an empty square and start typing a player's full name. Once you've entered a name, click Enter to submit it. If the name satisfies both the associated row and column categories for that square, it will turn green. If not, you'll get an alert about which category was not satisfied. Keep figuring out the identities by referring to the paired row and column categories, satisfying all 9 squares correctly before you run out of guesses to win."
-let info2 = "Matches are only men's singles and men's doubles matches. Singles matches range from 1968 to end of 2023 US Open. Doubles matches are from 2000 to 2020 inclusive. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
+let info2 = "Matches are only men's singles and men's doubles matches. Singles matches and rankings range from 1968 to end of 2024. Doubles matches are from 2000 to March 2020. Players are valid if they are male and have played a match at any level (ATP, Challenger, Futures)."
 let info3 = `Data Source: Player and match data provided by <a href="https://github.com/JeffSackmann/tennis_atp" target="_blank">Jeff Sackmann</a> under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0 License</a>. Adapted and used with modifications. This project is non-commercial and distributed under the same license.`;
 
 function showIntro() {
