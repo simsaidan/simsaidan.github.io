@@ -3,6 +3,28 @@
 import csv
 import json
 
+# Set your input/output file
+json_file = 'singles.json'
+
+# Unwanted fields to remove
+fields_to_remove = {'loser_seed', 'best_of', 'tourney_id', 'draw_size', 'minutes'}
+
+# Load the data
+with open(json_file, 'r', encoding='utf-8') as f:
+    matches = json.load(f)
+
+# Remove unwanted fields from each match
+for match in matches:
+    for field in fields_to_remove:
+        match.pop(field, None)  # Safe: no error if field is absent
+
+# Save back to the same JSON file
+with open(json_file, 'w', encoding='utf-8') as f:
+    json.dump(matches, f, indent=4)
+
+print("Done! Unnecessary fields removed from singles.json.")
+
+quit()
 
 # Input and output file paths
 csv_file = 'csv/players.csv'
