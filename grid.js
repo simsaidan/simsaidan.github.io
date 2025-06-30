@@ -995,7 +995,7 @@ function getEndMessage() {
       const colCat = grid.cols[col];
       const rowPlayers = playersPerCategory[rowCat];
       const colPlayers = playersPerCategory[colCat];
-      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 2);
+      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 3);
       footer += `<td style='padding:2px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
     }
     footer += "</tr>";
