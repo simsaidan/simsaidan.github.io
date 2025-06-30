@@ -1011,6 +1011,9 @@ function getEndMessage() {
 }
 
 function precomputeCategoryPlayers(categories, players) {
+  console.log("players:", players);
+  console.log("typeof players:", typeof players);
+
   const result = {};
   for (const cat of categories) {
     result[cat] = [];
