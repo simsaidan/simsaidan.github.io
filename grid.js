@@ -998,7 +998,7 @@ function getEndMessage() {
       for (const name of rowSet) {
         if (colSet.has(name)) {
           intersection.push(name);
-          if (intersection.length === 2) break;  // limit to 2 players
+          if (intersection.length === 4) break;
         }
       }
       footer += `<td style='padding:2px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
