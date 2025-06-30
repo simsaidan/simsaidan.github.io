@@ -908,8 +908,7 @@ function getDaysBetweenDates(date1, date2) {
 function showResult() {
   const { header, copy, footer } = getEndMessage();
 
-  // Convert the entire message to HTML and insert into resultText
-  const fullMessage = header + copy + "\n";
+  const fullMessage = header + copy;
   const html = fullMessage
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -917,7 +916,10 @@ function showResult() {
     .replace(/(https:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
 
   document.getElementById('resultText').innerHTML = html + footer;
+  document.getElementById('resultPopup').dataset.copy = copy;  // If you want full footer in copy, do copy + footer
+  document.getElementById('resultPopup').style.display = 'flex';
 }
+
 
 function closeResult() {
   document.getElementById('resultPopup').style.display = 'none';
@@ -973,20 +975,17 @@ function getEndMessage() {
   }
   copy += "\nPlay here: https://simsaidan.github.io/grid.html\n\n";
 
-  // Now for the new footer section:
   const categories = [...getCategoriesGrid().rows, ...getCategoriesGrid().cols];
   const playersPerCategory = getPlayersPerCategoryWithVerify(categories);
   const grid = getCategoriesGrid();
 
-  let footer = "<table border='1' style='border-collapse:collapse;text-align:center;'>";
-  // header row
+  let footer = "<table border='1' style='border-collapse:collapse;text-align:center;font-size:small;'>";
   footer += "<tr><th></th>";
   grid.cols.forEach(col => {
     footer += `<th>${col}</th>`;
   });
   footer += "</tr>";
 
-  // data rows
   for (let row = 0; row < 3; row++) {
     footer += `<tr><td>${grid.rows[row]}</td>`;
     for (let col = 0; col < 3; col++) {
@@ -1003,6 +1002,7 @@ function getEndMessage() {
 
   return { header, copy, footer };
 }
+
 
 const heading = document.getElementById('Grid Number');
 
