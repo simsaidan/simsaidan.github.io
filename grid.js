@@ -39,6 +39,8 @@ fetchData(playersPath)
     // At this point, all data is fetched and you can proceed!
     // e.g., init game logic, call a function, etc.
     console.log('All data loaded!');
+    const precomputed = precomputeCategoryPlayers(Object.keys(forbidden), endgameData);
+    console.log(JSON.stringify(precomputed));
   });
 
 let buttonsUsed = [];
@@ -1027,15 +1029,6 @@ function precomputeCategoryPlayers(categories, players) {
   return result;
 }
 
-// Example usage:
-const allCategories = Object.keys(forbidden);  // or a trimmed list if you want
-const precomputed = precomputeCategoryPlayers(allCategories, endgameData);
-
-// Convert to JSON string:
-const json = JSON.stringify(precomputed);
-
-// You could log this, or copy/paste it into a file, or download as file:
-console.log(json);
 
 
 
