@@ -73,7 +73,7 @@ let forbidden = {
   "Born after 1995": ["Born before 1975", "5+ Slams"],
   "Born before 1975": ["Born after 1995", "Played in NextGen Finals"],
   "Not from Europe": ["From Europe", "From Spain", "From France", "From Great Britain"],
-  "From Australia": ["From Asia", "From Europe", "From South America", "American", "From Spain", "From France", "From Great Britain"],
+  "From Australia": ["From Asia", "From Europe", "From South America", "American", "From Spain", "From France", "From Great Britain", "Won Madrid Masters"],
   "From Asia": ["From Australia", "From Europe", "From South America", "American", "From Spain", "From France", "From Great Britain"],
   "From South America": ["From Australia", "From Asia", "From Europe", "American", "From Spain", "From France", "From Great Britain"],
   "American": ["From Australia", "From Asia", "From Europe", "From South America", "From Spain", "From France", "From Great Britain"],
@@ -110,7 +110,7 @@ let forbidden = {
   "Played in Olympics": [],
   "Won Rogers Cup": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Won Miami Open": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
-  "Won Madrid Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Madrid Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title", "From Australia"],
   "Won Monte-Carlo Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Won Cincinnati": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Won Indian Wells": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
@@ -953,16 +953,16 @@ function getCategoriesGrid() {
 
 function getPlayersPerCategoryWithVerify(categories) {
   const result = {};
-  let msg = '';
   for (const cat of categories) {
-    result[cat] = endgameData
-      .filter(entry => verify(cat, entry.name, true))
-      .map(entry => entry.name);
-    msg += `Category "${cat}": ${result[cat].length} players\n`;
+    result[cat] = new Set(
+      endgameData
+        .filter(entry => verify(cat, entry.name, true))
+        .map(entry => entry.name)
+    );
   }
-  alert(msg);
   return result;
 }
+
 
 function getEndMessage() {
   const score = getScore();
@@ -979,26 +979,28 @@ function getEndMessage() {
   copy += "\nPlay here: https://simsaidan.github.io/grid.html\n\n";
 
   const categories = [...getCategoriesGrid().rows, ...getCategoriesGrid().cols];
-  const playersPerCategory = getPlayersPerCategoryWithVerify(categories);
+  const playersPerCategory = getPlayersPerCategoryWithVerify(categories);  // returns Set per cat
   const grid = getCategoriesGrid();
 
   let footer = "<table style='border-collapse:collapse;text-align:center;font-size:small;'>";
-  // header row
   footer += "<tr><th style='padding:2px; border:1px solid #ccc;'></th>";
   grid.cols.forEach(col => {
     footer += `<th style='padding:2px; border:1px solid #ccc;'>${col}</th>`;
   });
   footer += "</tr>";
 
-  // data rows
   for (let row = 0; row < 3; row++) {
     footer += `<tr><td style='padding:2px; border:1px solid #ccc;'>${grid.rows[row]}</td>`;
     for (let col = 0; col < 3; col++) {
-      const rowCat = grid.rows[row];
-      const colCat = grid.cols[col];
-      const rowPlayers = playersPerCategory[rowCat];
-      const colPlayers = playersPerCategory[colCat];
-      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 3);
+      const rowSet = playersPerCategory[grid.rows[row]];
+      const colSet = playersPerCategory[grid.cols[col]];
+      const intersection = [];
+      for (const name of rowSet) {
+        if (colSet.has(name)) {
+          intersection.push(name);
+          if (intersection.length === 2) break;  // limit to 2 players
+        }
+      }
       footer += `<td style='padding:2px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
     }
     footer += "</tr>";
