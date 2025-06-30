@@ -909,18 +909,14 @@ function showResult() {
   const { header, copy, footer } = getEndMessage();
 
   // Convert the entire message to HTML and insert into resultText
-  const fullMessage = header + copy + footer;
+  const fullMessage = header + copy + "\n";
   const html = fullMessage
-    .replace(/</g, "&lt;") // escape HTML just in case
+    .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/\n/g, "<br>")
     .replace(/(https:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
 
-  document.getElementById('resultText').innerHTML = html;
-
-  // Save only the copy portion (not header) for clipboard use
-  document.getElementById('resultPopup').dataset.copy = copy;
-  document.getElementById('resultPopup').style.display = 'flex';
+  document.getElementById('resultText').innerHTML = html + footer;
 }
 
 function closeResult() {
@@ -982,22 +978,28 @@ function getEndMessage() {
   const playersPerCategory = getPlayersPerCategoryWithVerify(categories);
   const grid = getCategoriesGrid();
 
-  let footer = "";
+  let footer = "<table border='1' style='border-collapse:collapse;text-align:center;'>";
+  // header row
+  footer += "<tr><th></th>";
+  grid.cols.forEach(col => {
+    footer += `<th>${col}</th>`;
+  });
+  footer += "</tr>";
+
+  // data rows
   for (let row = 0; row < 3; row++) {
+    footer += `<tr><td>${grid.rows[row]}</td>`;
     for (let col = 0; col < 3; col++) {
       const rowCat = grid.rows[row];
       const colCat = grid.cols[col];
       const rowPlayers = playersPerCategory[rowCat];
       const colPlayers = playersPerCategory[colCat];
-      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 3);
-
-      footer += `${rowCat} + ${colCat}\n`;
-      if (intersection.length) {
-        intersection.forEach(name => { footer += name + "\n"; });
-      }
-      footer += "\n";
+      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 2);
+      footer += `<td>${intersection.join(", ") || "-"}</td>`;
     }
+    footer += "</tr>";
   }
+  footer += "</table>";
 
   return { header, copy, footer };
 }
