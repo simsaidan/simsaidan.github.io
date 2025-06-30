@@ -958,6 +958,7 @@ function getPlayersPerCategoryWithVerify(categories) {
       .filter(entry => verify(cat, entry.name, true))
       .map(entry => entry.name);
   }
+  alert(`Category "${cat}": ${result[cat].length} players`);
   return result;
 }
 
