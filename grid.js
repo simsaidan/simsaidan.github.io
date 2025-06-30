@@ -953,12 +953,14 @@ function getCategoriesGrid() {
 
 function getPlayersPerCategoryWithVerify(categories) {
   const result = {};
+  let msg = '';
   for (const cat of categories) {
     result[cat] = endgameData
       .filter(entry => verify(cat, entry.name, true))
       .map(entry => entry.name);
+    msg += `Category "${cat}": ${result[cat].length} players\n`;
   }
-  alert(`Category "${cat}": ${result[cat].length} players`);
+  alert(msg);
   return result;
 }
 
