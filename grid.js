@@ -1010,6 +1010,29 @@ function getEndMessage() {
   return { header, copy, footer };
 }
 
+function precomputeCategoryPlayers(categories, players) {
+  const result = {};
+  for (const cat of categories) {
+    result[cat] = [];
+    for (const player of players) {
+      if (verify(cat, player.name, true)) {
+        result[cat].push(player.name);
+      }
+    }
+  }
+  return result;
+}
+
+// Example usage:
+const allCategories = Object.keys(forbidden);  // or a trimmed list if you want
+const precomputed = precomputeCategoryPlayers(allCategories, endgameData);
+
+// Convert to JSON string:
+const json = JSON.stringify(precomputed);
+
+// You could log this, or copy/paste it into a file, or download as file:
+console.log(json);
+
 
 
 const heading = document.getElementById('Grid Number');
