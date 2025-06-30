@@ -1,4 +1,4 @@
-let playerData, rankingsData, singlesData, doublesData;
+let playerData, rankingsData, singlesData, doublesData, endgameData;
 
 function fetchData(jsonFilePath) {
   return fetch(jsonFilePath)
@@ -15,6 +15,7 @@ function fetchData(jsonFilePath) {
 
 const [playersPath, rankingsPath] = ['players.json', 'rankings.json'];
 const [singlesPath, doublesPath] = ['singles.json', 'doubles.json'];
+const endgamePath = 'endgame.json';
 
 fetchData(playersPath)
   .then(playersJson => {
@@ -31,6 +32,13 @@ fetchData(playersPath)
   })
   .then(doublesJson => {
     doublesData = doublesJson;
+    return fetchData(endgamePath);
+  })
+  .then(endgameJson => {
+    endgameData = endgameJson;
+    // At this point, all data is fetched and you can proceed!
+    // e.g., init game logic, call a function, etc.
+    console.log('All data loaded!');
   });
 
 let buttonsUsed = [];
@@ -620,238 +628,100 @@ function checkCountry(fullName, countryCode) {
     nameMatch(player, fullName) && player.ioc === countryCode);
 }
 
-function verify(label, name) {
+function verify(label, name, end = false) {
   const a = document.getElementById(label).textContent;
   const matches = getPlayerIds(name);
-  let res;
+  let res = false;
+
   if (a in bigCountries) {
-    res = checkCountry(name, bigCountries[a])
-    if (!res) {
-      alert("Incorrect - " + a);
-    }
-  }
-  else {
+    res = checkCountry(name, bigCountries[a]);
+  } else {
     switch (a) {
       case "5+ Slams":
-        res = fiveSlams(name);
-        if (!res) {
-          alert("Incorrect - 5+ Slams");
-        }
-        break;
+        res = fiveSlams(name); break;
       case "Unseeded Champion":
-        res = unseededTitle(matches);
-        if (!res) {
-          alert("Unseeded Champion");
-        }
-        break;
+        res = unseededTitle(matches); break;
       case "Won at least 20 titles":
-        res = twentyTitles(name);
-        if (!res) {
-          alert("Incorrect - Won at least 20 titles");
-        }
-        break;
+        res = twentyTitles(name); break;
       case "Left Handed":
-        res = lefty(name);
-        if (!res) {
-          alert("Incorrect - Left Handed");
-        }
-        break;
+        res = lefty(name); break;
       case "US Open Champion":
-        res = wonTournament(matches, "US Open") || wonTournament(matches, "Us Open");
-        if (!res) {
-          alert("Incorrect - US Open Champion");
-        }
-        break;
+        res = wonTournament(matches, "US Open") || wonTournament(matches, "Us Open"); break;
       case "Wimbledon Champion":
-        res = wonTournament(matches, "Wimbledon");
-        if (!res) {
-          alert("Incorrect - Wimbledon Champion");
-        }
-        break;
+        res = wonTournament(matches, "Wimbledon"); break;
       case "AO Champion":
-        res = wonTournament(matches, "Australian Open");
-        if (!res) {
-          alert("Incorrect - AO Champion");
-        }
-        break;
+        res = wonTournament(matches, "Australian Open"); break;
       case "French Open Champion":
-        res = wonTournament(matches, "Roland Garros");
-        if (!res) {
-          alert("Incorrect - French Open Champion");
-        }
-        break;
+        res = wonTournament(matches, "Roland Garros"); break;
       case "Olympic Medalist":
-        res = medaledInOlympics(matches);
-        if (!res) {
-          alert("Incorrect - Olympic Medalist");
-        }
-        break;
+        res = medaledInOlympics(matches); break;
       case "Played in Olympics":
-        res = inOlympics(name);
-        if (!res) {
-          alert("Incorrect - Played in Olympics");
-        }
-        break;
+        res = inOlympics(name); break;
       case "Title on All 3 Surfaces":
-        res = titleAllThree(name);
-        if (!res) {
-          alert("Incorrect - Title on all 3 Surfaces");
-        }
-        break;
+        res = titleAllThree(name); break;
       case "No titles":
-        res = noTitlesWon(name);
-        if (!res) {
-          alert("Incorrect - No titles");
-        }
-        break;
+        res = noTitlesWon(name); break;
       case "Played in NextGen Finals":
-        res = nextGen(name);
-        if (!res) {
-          alert("Incorrect - Played in NextGen Finals");
-        }
-        break;
+        res = nextGen(name); break;
       case "Played ATP Finals but no Masters title":
-        res = tourFinals(name) && !(wonTournament(matches, "Miami Masters") ||
-          wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
-          wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
-          wonTournament(matches, "Madrid Masters") || wonTournament(matches, "Monte Carlo Masters") ||
-          wonTournament(matches, "Cincinnati Masters") || wonTournament(matches, "Indian Wells Masters"))
-        if (!res) {
-          alert("Incorrect - Played ATP finals but no Masters Title");
-        }
+        res = tourFinals(name) &&
+          !(wonTournament(matches, "Miami Masters") ||
+            wonTournament(matches, "Paris Masters") || wonTournament(matches, "Canada Masters") ||
+            wonTournament(matches, "Shanghai Masters") || wonTournament(matches, "Rome Masters") ||
+            wonTournament(matches, "Madrid Masters") || wonTournament(matches, "Monte Carlo Masters") ||
+            wonTournament(matches, "Cincinnati Masters") || wonTournament(matches, "Indian Wells Masters"));
         break;
       case "Grand Slam Winner":
-        res = wonSlam(name);
-        if (!res) {
-          alert("Incorrect - Grand Slam Winner");
-        }
-        break;
+        res = wonSlam(name); break;
       case "GS Finalist but no GS":
-        res = !wonSlam(name) && lostSlam(name);
-        if (!res) {
-          alert("Incorrect - GS Finalist but no GS");
-        }
-        break;
+        res = !wonSlam(name) && lostSlam(name); break;
       case "Top 5 Singles Ranking":
-        res = topFive(matches);
-        if (!res) {
-          alert("Incorrect - Top 5 Singles Ranking");
-        }
-        break;
+        res = topFive(matches); break;
       case "Never Top 50 in Singles":
-        res = notTop50(matches);
-        if (!res) {
-          alert("Incorrect - Never Top 50 in Singles");
-        }
-        break;
+        res = notTop50(matches); break;
       case "Not from Europe":
-        res = isNotEuropean(name)
-        if (!res) {
-          alert("Incorrect - Not from Europe");
-        }
-        break;
+        res = isNotEuropean(name); break;
       case "From Europe":
-        res = !isNotEuropean(name)
-        if (!res) {
-          alert("Incorrect - From Europe");
-        }
-        break;
+        res = !isNotEuropean(name); break;
       case "From South America":
-        res = isSouthAmerican(name)
-        if (!res) {
-          alert("Incorrect - From South America");
-        }
-        break;
+        res = isSouthAmerican(name); break;
       case "From Asia":
-        res = isAsian(name)
-        if (!res) {
-          alert("Incorrect - From Asia");
-        }
-        break;
-
+        res = isAsian(name); break;
       case "Shorter than 6ft (183 cm)":
-        res = short(name)
-        if (!res) {
-          alert("Incorrect - Shorter than 6ft (183 cm)")
-        }
-        break;
+        res = short(name); break;
       case "Above 6ft 4in (193 cm)":
-        res = tall(name)
-        if (!res) {
-          alert("Incorrect - Above 6ft 4in (193 cm)")
-        }
-        break;
+        res = tall(name); break;
       case "Born before 1975":
-        res = old(name)
-        if (!res) {
-          alert("Incorrect - Born before 1975")
-        }
-        break;
+        res = old(name); break;
       case "Born after 1995":
-        res = young(name);
-        if (!res) {
-          alert("Incorrect - Born after 1995")
-        }
-        break;
+        res = young(name); break;
       case "Won Miami Open":
-        res = wonTournament(matches, "Miami Masters")
-        if (!res) {
-          alert("Incorrect - Won Miami Open")
-        }
-        break;
+        res = wonTournament(matches, "Miami Masters"); break;
       case "Won Madrid Masters":
-        res = wonTournament(matches, "Madrid Masters")
-        if (!res) {
-          alert("Incorrect - Won Madrid Masters")
-        }
-        break;
+        res = wonTournament(matches, "Madrid Masters"); break;
       case "Won Rome":
-        res = wonTournament(matches, "Rome Masters")
-        if (!res) {
-          alert("Incorrect - Won Rome")
-        }
-        break;
+        res = wonTournament(matches, "Rome Masters"); break;
       case "Won Shanghai Masters":
-        res = wonTournament(matches, "Shanghai Masters")
-        if (!res) {
-          alert("Incorrect - Won Shanghai Masters")
-        }
-        break;
+        res = wonTournament(matches, "Shanghai Masters"); break;
       case "Won Paris Masters":
-        res = wonTournament(matches, "Paris Masters")
-        if (!res) {
-          alert("Incorrect - Won Paris Masters")
-        }
-        break;
+        res = wonTournament(matches, "Paris Masters"); break;
       case "Won Cincinnati":
-        res = wonTournament(matches, "Cincinnati Masters")
-        if (!res) {
-          alert("Incorrect - Won Cincinnati")
-        }
-        break;
+        res = wonTournament(matches, "Cincinnati Masters"); break;
       case "Won Monte-Carlo Masters":
-        res = wonTournament(matches, "Monte Carlo Masters")
-        if (!res) {
-          alert("Incorrect - Won Monte-Carlo Masters")
-        }
-        break;
+        res = wonTournament(matches, "Monte Carlo Masters"); break;
       case "Won Indian Wells":
-        res = wonTournament(matches, "Indian Wells Masters")
-        if (!res) {
-          alert("Incorrect - Won Indian Wells")
-        }
-        break;
+        res = wonTournament(matches, "Indian Wells Masters"); break;
       case "Won Rogers Cup":
-        res = wonTournament(matches, "Canada Masters")
-        if (!res) {
-          alert("Incorrect - Won Rogers Cup")
-        }
-        break;
+        res = wonTournament(matches, "Canada Masters"); break;
       default:
-        alert("Not implemented");
-        res = false;
+        if (!end) alert("Not implemented"); // Only alert if not in end mode
+        return false;
     }
   }
+
+  // Only alert if not in end mode and the result is false
+  if (!res && !end) alert("Incorrect - " + a);
+
   return res;
 }
 
@@ -1098,7 +968,7 @@ function getEndMessage() {
   }
 
   // Play link
-  copy += "\nPlay here: https://simsaidan.github.io/grid.html\n";
+  copy += "\nPlay here: https://simsaidan.github.io/grid.html\n\n";
 
   // Build the footer section as a variable (not labeled "footer" in output!)
   let footer = "";

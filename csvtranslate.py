@@ -3,6 +3,92 @@
 import csv
 import json
 
+
+# Load the data
+with open('endgame.json', 'r', encoding='utf-8') as file:
+    players = json.load(file)
+
+# Filter players with matches >= 5
+filtered = [player for player in players if player.get('matches', 0) >= 5]
+
+# Optionally, print the number of removed entries
+print(f"Entries before: {len(players)}, after filtering: {len(filtered)}")
+
+# Save the filtered data back to endgame.json
+with open('endgame.json', 'w', encoding='utf-8') as file:
+    json.dump(filtered, file, indent=2, ensure_ascii=False)
+
+quit()
+
+# Load players.json
+with open('players.json', 'r', encoding='utf-8') as f:
+    players = json.load(f)
+
+# Build a mapping from player_id to full name
+id_to_name = {p['player_id']: f"{p['name_first']} {p['name_last']}" for p in players}
+
+# Load endgame.json (assumes previous format: dict or already list--handle both)
+with open('endgame.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Convert to list of dicts if needed
+if isinstance(data, dict):
+    as_list = [{"id": k, "matches": int(v)} for k, v in data.items()]
+else:
+    as_list = data
+
+# Add name field & sort by matches
+for entry in as_list:
+    entry["name"] = id_to_name.get(entry["id"], "")
+
+as_list.sort(key=lambda x: x["matches"], reverse=True)
+
+with open('endgame.json', 'w', encoding='utf-8') as f:
+    json.dump(as_list, f, indent=4)
+
+print('endgame.json now includes player names!')
+
+quit()
+
+
+# Load the original endgame.json (dictionary format)
+with open('endgame.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Convert to a list of {id, matches} objects
+as_list = [{"id": k, "matches": int(v)} for k, v in data.items()]
+
+# Sort by matches descending
+as_list.sort(key=lambda x: x["matches"], reverse=True)
+
+# Save as a new or overwrite the existing endgame.json
+with open('endgame.json', 'w', encoding='utf-8') as f:
+    json.dump(as_list, f, indent=4)
+
+print('Reformatted and sorted endgame.json!')
+
+quit()
+
+
+# Load the original endgame.json
+with open('endgame.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+# Sort by match count (descending)
+sorted_items = sorted(data.items(), key=lambda x: int(x[1]), reverse=True)
+
+# Convert back to dict
+sorted_dict = dict(sorted_items)
+
+# Save sorted to a new file or overwrite
+with open('endgame.json', 'w', encoding='utf-8') as f:
+    json.dump(sorted_dict, f, indent=4)
+
+print('Sorted endgame.json saved as endgame_sorted.json')
+quit()
+
+
+
 import matplotlib.pyplot as plt
 
 # Load match counts
