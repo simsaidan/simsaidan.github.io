@@ -15,7 +15,7 @@ function fetchData(jsonFilePath) {
 
 const [playersPath, rankingsPath] = ['players.json', 'rankings.json'];
 const [singlesPath, doublesPath] = ['singles.json', 'doubles.json'];
-const endgamePath = 'endgame.json';
+const [endgamePath, endgameResPath] = ['endgame.json', 'endgameres.json'];
 
 fetchData(playersPath)
   .then(playersJson => {
@@ -36,11 +36,11 @@ fetchData(playersPath)
   })
   .then(endgameJson => {
     endgameData = endgameJson;
-    // At this point, all data is fetched and you can proceed!
-    // e.g., init game logic, call a function, etc.
-    console.log('All data loaded!');
-    const precomputed = precomputeCategoryPlayers(Object.keys(forbidden), endgameData);
-    console.log(JSON.stringify(precomputed));
+    return fetchData(endgameResPath);  // ✅ load precomputed data
+  })
+  .then(endgameResJson => {
+    endgameResData = endgameResJson;
+    console.log('All data loaded including precomputed results!');
   });
 
 let buttonsUsed = [];
@@ -956,14 +956,11 @@ function getCategoriesGrid() {
 function getPlayersPerCategoryWithVerify(categories) {
   const result = {};
   for (const cat of categories) {
-    result[cat] = new Set(
-      endgameData
-        .filter(entry => verify(cat, entry.name, true))
-        .map(entry => entry.name)
-    );
+    result[cat] = new Set(endgameResData[cat] || []);
   }
   return result;
 }
+
 
 
 function getEndMessage() {
@@ -1011,27 +1008,6 @@ function getEndMessage() {
 
   return { header, copy, footer };
 }
-
-function precomputeCategoryPlayers(categories, players) {
-  console.log("players:", players);
-  console.log("typeof players:", typeof players);
-  alert("typeof players:", typeof players);
-
-  const result = {};
-  for (const cat of categories) {
-    result[cat] = [];
-    for (const player of players) {
-      if (verify(cat, player.name, true)) {
-        result[cat].push(player.name);
-      }
-    }
-  }
-  return result;
-}
-
-
-
-
 const heading = document.getElementById('Grid Number');
 
 heading.textContent = "Tennis Grid #" + getDaysBetweenDates('2025-06-16',
