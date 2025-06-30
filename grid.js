@@ -1067,12 +1067,29 @@ function copyResult() {
   });
 }
 
+function getCategoriesGrid() {
+  return {
+    rows: [
+      document.getElementById('topRow').textContent,
+      document.getElementById('midRow').textContent,
+      document.getElementById('bottomRow').textContent,
+    ],
+    cols: [
+      document.getElementById('leftCol').textContent,
+      document.getElementById('midCol').textContent,
+      document.getElementById('rightCol').textContent,
+    ]
+  };
+}
+
 function getEndMessage() {
   const score = getScore();
-  const header = `You ${score === 9 ? "win!" : "lose."}\nCopy the below message to share your results with your friends!\n\n`;
+  const header =
+    `You ${score === 9 ? "win!" : "lose."}\nCopy the below message to share your results with your friends!\n\n`;
 
-  let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())} ` + ': ' + score + '/9' + `\n`;
+  let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())} : ${score}/9\n`;
 
+  // Emoji results
   for (let i = 1; i <= 9; i++) {
     const button = document.getElementById('button' + i);
     const isCorrect = button && button.style.backgroundColor === "rgba(154, 205, 50, 0.8)";
@@ -1080,7 +1097,20 @@ function getEndMessage() {
     if (i % 3 === 0) copy += "\n";
   }
 
-  copy += `Play here: https://simsaidan.github.io/grid.html`;
+  // Add labeled grid below
+  const cats = getCategoriesGrid();
+  copy += "\n";
+  copy += "Grid Categories:\n";
+  copy += "\t|\t" + cats.cols.join(" | ") + "\n";
+  copy += "-".repeat(15) + "\n";
+  for (let i = 0; i < 3; i++) {
+    copy += `${cats.rows[i]}\t|`;
+    for (let j = 0; j < 3; j++) {
+      copy += "\t[" + cats.rows[i] + "/" + cats.cols[j] + "]\t";
+    }
+    copy += "\n";
+  }
+  copy += "\nPlay here: https://simsaidan.github.io/grid.html";
 
   return { header, copy };
 }

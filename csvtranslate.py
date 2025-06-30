@@ -3,6 +3,56 @@
 import csv
 import json
 
+import matplotlib.pyplot as plt
+
+# Load match counts
+with open('endgame.json', 'r', encoding='utf-8') as f:
+    match_counts = json.load(f)
+
+counts = list(match_counts.values())
+counts = [int(c) for c in counts]
+
+plt.figure(figsize=(10,6))
+plt.hist(counts, bins=range(0, max(counts)+10, 10), edgecolor='black', log=True)
+plt.title('Distribution of Player Match Counts')
+plt.xlabel('Number of Matches Played')
+plt.ylabel('Number of Players (log scale)')
+plt.grid(axis='y', alpha=0.75)
+plt.tight_layout()
+plt.show()
+quit()
+
+def build_match_count(singles_file='singles.json', doubles_file='doubles.json', output_file='endgame.json'):
+    match_count = {}
+
+    # Singles: count winner_id and loser_id
+    with open(singles_file, 'r', encoding='utf-8') as f:
+        singles_matches = json.load(f)
+    for match in singles_matches:
+        for key in ['winner_id', 'loser_id']:
+            pid = match.get(key)
+            if pid:
+                match_count[pid] = match_count.get(pid, 0) + 1
+
+    # Doubles: count winner1_id, winner2_id, loser1_id, loser2_id
+    with open(doubles_file, 'r', encoding='utf-8') as f:
+        doubles_matches = json.load(f)
+    for match in doubles_matches:
+        for key in ['winner1_id', 'winner2_id', 'loser1_id', 'loser2_id']:
+            pid = match.get(key)
+            if pid:
+                match_count[pid] = match_count.get(pid, 0) + 1
+
+    # Save to output
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(match_count, f, indent=4)
+
+    print(f"Match count for {len(match_count)} unique players saved to {output_file}")
+
+# Example usage:
+build_match_count()
+quit()
+
 # Step 1: Load existing singles.json and remove 2023 and later
 with open('singles.json', 'r', encoding='utf-8') as f:
     matches = json.load(f)
