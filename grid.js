@@ -629,7 +629,8 @@ function checkCountry(fullName, countryCode) {
 }
 
 function verify(label, name, end = false) {
-  const a = document.getElementById(label).textContent;
+  const a = end ? label : document.getElementById(label).textContent;
+
   const matches = getPlayerIds(name);
   let res = false;
 
