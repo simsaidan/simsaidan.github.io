@@ -979,22 +979,24 @@ function getEndMessage() {
   const playersPerCategory = getPlayersPerCategoryWithVerify(categories);
   const grid = getCategoriesGrid();
 
-  let footer = "<table border='1' style='border-collapse:collapse;text-align:center;font-size:small;'>";
-  footer += "<tr><th></th>";
+  let footer = "<table style='border-collapse:collapse;text-align:center;font-size:small;'>";
+  // header row
+  footer += "<tr><th style='padding:2px; border:1px solid #ccc;'></th>";
   grid.cols.forEach(col => {
-    footer += `<th>${col}</th>`;
+    footer += `<th style='padding:2px; border:1px solid #ccc;'>${col}</th>`;
   });
   footer += "</tr>";
 
+  // data rows
   for (let row = 0; row < 3; row++) {
-    footer += `<tr><td>${grid.rows[row]}</td>`;
+    footer += `<tr><td style='padding:2px; border:1px solid #ccc;'>${grid.rows[row]}</td>`;
     for (let col = 0; col < 3; col++) {
       const rowCat = grid.rows[row];
       const colCat = grid.cols[col];
       const rowPlayers = playersPerCategory[rowCat];
       const colPlayers = playersPerCategory[colCat];
       const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 2);
-      footer += `<td>${intersection.join(", ") || "-"}</td>`;
+      footer += `<td style='padding:2px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
     }
     footer += "</tr>";
   }
@@ -1002,6 +1004,7 @@ function getEndMessage() {
 
   return { header, copy, footer };
 }
+
 
 
 const heading = document.getElementById('Grid Number');
