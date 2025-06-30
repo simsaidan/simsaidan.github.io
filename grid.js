@@ -952,34 +952,53 @@ function getCategoriesGrid() {
   };
 }
 
+function getPlayersPerCategoryWithVerify(categories) {
+  const result = {};
+  for (const cat of categories) {
+    result[cat] = endgameData
+      .filter(entry => verify(cat, entry.name, true))
+      .map(entry => entry.name);
+  }
+  return result;
+}
+
 function getEndMessage() {
   const score = getScore();
   const header =
     `You ${score === 9 ? "win!" : "lose."}\nCopy the below message to share your results with your friends!\n\n`;
 
   let copy = `Tennis Grid #${getDaysBetweenDates('2025-06-16', getTodayDate())}: ${score}/9\n`;
-
-  // Emoji result grid
   for (let i = 1; i <= 9; i++) {
     const button = document.getElementById('button' + i);
     const isCorrect = button && button.style.backgroundColor === "rgba(154, 205, 50, 0.8)";
     copy += isCorrect ? "🎾" : "❌";
     if (i % 3 === 0) copy += "\n";
   }
-
-  // Play link
   copy += "\nPlay here: https://simsaidan.github.io/grid.html\n\n";
 
-  // Build the footer section as a variable (not labeled "footer" in output!)
+  // Now for the new footer section:
+  const categories = [...getCategoriesGrid().rows, ...getCategoriesGrid().cols];
+  const playersPerCategory = getPlayersPerCategoryWithVerify(categories);
+  const grid = getCategoriesGrid();
+
   let footer = "";
-  const cats = getCategoriesGrid();
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {
-      footer += cats.rows[row].trim() + " + " + cats.cols[col].trim() + "\n";
+      const rowCat = grid.rows[row];
+      const colCat = grid.cols[col];
+      const rowPlayers = playersPerCategory[rowCat];
+      const colPlayers = playersPerCategory[colCat];
+      const intersection = rowPlayers.filter(n => colPlayers.includes(n)).slice(0, 3);
+
+      footer += `${rowCat} + ${colCat}\n`;
+      if (intersection.length) {
+        intersection.forEach(name => { footer += name + "\n"; });
+      }
+      footer += "\n";
     }
   }
 
-  return { header, copy, footer }; // you could also return footer separately if desired
+  return { header, copy, footer };
 }
 
 const heading = document.getElementById('Grid Number');
