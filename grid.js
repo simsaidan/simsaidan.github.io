@@ -80,7 +80,7 @@ let forbidden = {
   "From South America": ["From Australia", "From Asia", "From Europe", "American", "From Spain", "From France", "From Great Britain"],
   "American": ["From Australia", "From Asia", "From Europe", "From South America", "From Spain", "From France", "From Great Britain"],
   "From Europe": ["From Australia", "From Asia", "From South America", "American", "Not from Europe"],
-  "From Spain": ["Above 6ft 4in (193 cm)", "From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain"],
+  "From Spain": ["Above 6ft 4in (193 cm)", "From Australia", "From Asia", "From South America", "American", "Not from Europe", "From France", "From Great Britain", "Won Shanghai Masters"],
   "From France": ["From Australia", "From Asia", "From Spain", "From South America", "American", "Not from Europe", "From Great Britain"],
   "From Great Britain": ["From Australia", "From Spain", "From Asia", "From South America", "American", "Not from Europe", "From France"],
   "Won at least 20 titles": ["No titles", "Never Top 50 in Singles"],
@@ -117,7 +117,7 @@ let forbidden = {
   "Won Cincinnati": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Won Indian Wells": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Won Rome": ["No Titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
-  "Won Shanghai Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
+  "Won Shanghai Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title", "From Spain"],
   "Won Paris Masters": ["No titles", "Never Top 50 in Singles", "Played ATP Finals but no Masters title"],
   "Played in NextGen Finals": ["Born before 1975", "5+ Slams"],
   "Shorter than 6ft (183 cm)": ["Above 6ft 4in (193 cm)"],
@@ -989,7 +989,7 @@ function getEndMessage() {
   footer += "</tr>";
 
   for (let row = 0; row < 3; row++) {
-    footer += `<tr><td style='padding:2px; border:1px solid #ccc;'>${grid.rows[row]}</td>`;
+    footer += `<tr><th style='padding:1px; border:1px solid #ccc;'>${grid.rows[row]}</th>`;
     for (let col = 0; col < 3; col++) {
       const rowSet = playersPerCategory[grid.rows[row]];
       const colSet = playersPerCategory[grid.cols[col]];
@@ -1000,7 +1000,7 @@ function getEndMessage() {
           if (intersection.length === 4) break;
         }
       }
-      footer += `<td style='padding:2px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
+      footer += `<td style='padding:1px; line-height:1; border:1px solid #ccc;'>${intersection.join(", ") || "-"}</td>`;
     }
     footer += "</tr>";
   }
