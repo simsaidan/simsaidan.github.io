@@ -53,9 +53,14 @@ body {
 }
 
 .sidebar .profile-pic {
-  width: 150px;
+  width: 200px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
 
-  margin-bottom: 10px;
+.sidebar p.location {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .sidebar h2 {
@@ -136,6 +141,35 @@ main p {
   display: block;
 }
 
+.sidebar p a.social-link {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+
+.sidebar p a.social-link i {
+  margin-right: 8px;
+  transition: color 0.2s ease;
+}
+
+/* Hover styling */
+.sidebar p a.social-link:hover {
+  color: #0072b1;
+  /* LinkedIn blue or a general hover color */
+}
+
+.sidebar p a.social-link:hover i.fab.fa-github {
+  color: #000;
+  /* GitHub: dark on hover */
+}
+
+.sidebar p a.social-link:hover i.fab.fa-linkedin {
+  color: #0072b1;
+  /* LinkedIn blue */
+}
 
 
 /* Responsive */

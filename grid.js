@@ -975,7 +975,7 @@ function getEndMessage() {
     copy += isCorrect ? "🎾" : "❌";
     if (i % 3 === 0) copy += "\n";
   }
-  copy += "\nPlay here: https://simsaidan.github.io/grid.html\n\n";
+  copy += "\nPlay here: https://simsaidan.github.io/grid.html\n";
 
   const categories = [...getCategoriesGrid().rows, ...getCategoriesGrid().cols];
   const playersPerCategory = getPlayersPerCategoryWithVerify(categories);  // returns Set per cat
