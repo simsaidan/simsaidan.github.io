@@ -1,22 +1,14 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const globe = Globe()
-    (document.getElementById('miniGlobe'))
-    .globeImageUrl(null) // removes earth texture
-    .bumpImageUrl(null)
-    .showGlobe(true)
-    .globeColor('rgba(255,255,255,0.05)') // faint ghost sphere
-    .showGraticules(true)
-    .backgroundColor(null)
-    .showAtmosphere(true)
-    .atmosphereColor('#00aaff')
-    .atmosphereAltitude(0.15)
-    .pointAltitude(0.02)
-    .pointColor(() => '#ff5722')
-    .pointsData([
-      { lat: 37.7749, lng: -122.4194 },
-      { lat: 40.7128, lng: -74.0060 }
-    ]);
-
-  globe.controls().autoRotate = true;
-  globe.controls().autoRotateSpeed = 0.6;
+window.addEventListener('DOMContentLoaded', () => {
+  // Only create globe if the globeViz div exists
+  const globeContainer = document.getElementById('globeViz');
+  if (globeContainer) {
+    const globe = Globe()
+      (globeContainer)
+      .globeImageUrl(null)           // No surface image: hollow
+      .showGraticules(true)          // Show latitude/longitude lines
+      .graticuleColor('#4b9cd3')     // Customize grid color if you want
+      .atmosphereColor('rgba(0,0,0,0)') // No atmosphere
+      .atmosphereAltitude(0)
+      .backgroundColor('rgba(0,0,0,0)'); // Transparent background
+  }
 });

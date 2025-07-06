@@ -68,32 +68,6 @@ body {
   font-size: 1.2em;
 }
 
-.contact-and-globe {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  margin-top: 20px;
-}
-
-#miniGlobe {
-  width: 300px;
-  height: 300px;
-  flex-shrink: 0;
-  background: transparent;
-}
-
-/* Responsive fallback for mobile */
-@media (max-width: 768px) {
-  .contact-and-globe {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #miniGlobe {
-    margin-top: 20px;
-  }
-}
-
 
 /* Main Content */
 .main-content {
@@ -101,6 +75,14 @@ body {
   /* Sidebar width + some space */
   padding: 80px 40px 40px;
   max-width: 800px;
+}
+
+#globeViz {
+  display: block;
+  margin: 2rem auto;
+  /* Optionally set min/max size or responsiveness */
+  max-width: 100%;
+  max-height: 60vw;
 }
 
 main h1 {
