@@ -1,14 +1,19 @@
 window.addEventListener('DOMContentLoaded', () => {
-  // Only create globe if the globeViz div exists
   const globeContainer = document.getElementById('globeViz');
-  if (globeContainer) {
-    const globe = Globe()
-      (globeContainer)
-      .globeImageUrl(null)           // No surface image: hollow
-      .showGraticules(true)          // Show latitude/longitude lines
-      .graticuleColor('#4b9cd3')     // Customize grid color if you want
-      .atmosphereColor('rgba(0,0,0,0)') // No atmosphere
-      .atmosphereAltitude(0)
-      .backgroundColor('rgba(0,0,0,0)'); // Transparent background
-  }
+  if (!globeContainer) return;
+
+  // Create the globe with no base or atmosphere
+  const globe = Globe()(globeContainer)
+    .backgroundColor('rgba(0,0,0,0)')
+    .showGlobe(false)
+    .showAtmosphere(false);
+
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas/land-110m.json')
+    .then(res => res.json())
+    .then(landTopo => {
+      globe
+        .polygonsData(topojson.feature(landTopo, landTopo.objects.land).features)
+        .polygonCapMaterial(new THREE.MeshLambertMaterial({ color: 'darkslategrey', side: THREE.DoubleSide }))
+        .polygonSideColor(() => 'rgba(0,0,0,0)');
+    });
 });
