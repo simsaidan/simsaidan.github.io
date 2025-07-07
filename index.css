@@ -82,12 +82,17 @@ body {
   height: 100px;
   margin: 2rem auto;
   border: 2px solid black;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
 }
 
 #globeViz canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100% !important;
   height: 100% !important;
-  display: block;
 }
 
 main h1 {

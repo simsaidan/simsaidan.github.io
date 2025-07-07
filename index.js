@@ -8,6 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
     .showGlobe(false)
     .showAtmosphere(false);
 
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = 0.5;
+
   fetch('https://cdn.jsdelivr.net/npm/world-atlas/land-110m.json')
     .then(res => res.json())
     .then(landTopo => {
