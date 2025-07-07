@@ -81,6 +81,7 @@ body {
   width: 100px;
   height: 100px;
   margin: 2rem auto;
+  border: 2px solid black;
 }
 
 #globeViz canvas {
