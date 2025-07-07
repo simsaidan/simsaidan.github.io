@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Create the globe with no base or atmosphere
   const globe = Globe()(globeContainer)
     .backgroundColor('rgba(0,0,0,0)')
-    .showGlobe(false)
+    .showGlobe(true)
     .showAtmosphere(false);
 
   globe.controls().autoRotate = true;
