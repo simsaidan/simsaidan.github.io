@@ -78,11 +78,9 @@ body {
 }
 
 #globeViz {
-  display: block;
+  width: 300px;
+  height: 300px;
   margin: 2rem auto;
-  /* Optionally set min/max size or responsiveness */
-  max-width: 100%;
-  max-height: 60vw;
 }
 
 #globeViz canvas {
