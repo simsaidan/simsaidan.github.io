@@ -44,7 +44,7 @@ body {
   position: fixed;
   top: 50px;
   left: 0;
-  width: 280px;
+  width: 290px;
   padding: 20px;
   border-right: 1px solid #ddd;
   height: calc(100% - 50px);
@@ -56,7 +56,7 @@ body {
   position: fixed;
   right: 0;
   top: 0;
-  width: 300px;
+  width: 290px;
   height: 100vh;
   background-color: #fafafa;
   border-left: 1px solid #ccc;
