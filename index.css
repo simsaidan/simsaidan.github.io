@@ -52,6 +52,19 @@ body {
   background: #fafafa;
 }
 
+#right-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #fafafa;
+  border-left: 1px solid #ccc;
+  overflow: auto;
+  padding: 10px;
+  z-index: 1;
+}
+
 .sidebar .profile-pic {
   width: 200px;
   margin-bottom: 20px;
