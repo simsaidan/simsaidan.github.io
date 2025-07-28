@@ -31,6 +31,10 @@ body {
 .top-nav .nav-left {
   font-weight: bold;
   font-size: 1.8em;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .top-nav .nav-right a {
@@ -181,25 +185,26 @@ main p {
   margin-bottom: 10px;
 }
 
+/* Keep transition and spacing */
 .sidebar p a.social-link i {
   margin-right: 8px;
   transition: color 0.2s ease;
 }
 
-/* Hover styling */
-.sidebar p a.social-link:hover {
+/* Only apply hover effect to LinkedIn */
+.sidebar p a.social-link:hover i.fab.fa-linkedin {
   color: #0072b1;
-  /* LinkedIn blue or a general hover color */
+}
+
+/* Prevent GitHub icon from changing color on hover */
+.sidebar p a.social-link i.fab.fa-github {
+  color: inherit;
+  /* stays same as parent */
 }
 
 .sidebar p a.social-link:hover i.fab.fa-github {
-  color: #000;
-  /* GitHub: dark on hover */
-}
-
-.sidebar p a.social-link:hover i.fab.fa-linkedin {
-  color: #0072b1;
-  /* LinkedIn blue */
+  color: inherit;
+  /* override hover change */
 }
 
 
