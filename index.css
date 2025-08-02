@@ -183,28 +183,31 @@ main p {
   color: #333;
   text-decoration: none;
   margin-bottom: 10px;
+  transition: color 0.2s ease;
 }
 
-/* Keep transition and spacing */
+/* Icon spacing + transition */
 .sidebar p a.social-link i {
   margin-right: 8px;
   transition: color 0.2s ease;
 }
 
-/* Only apply hover effect to LinkedIn */
-.sidebar p a.social-link:hover i.fab.fa-linkedin {
+/* LINKEDIN: hover changes both icon and text to blue */
+.sidebar p a.social-link.linkedin:hover {
   color: #0072b1;
 }
 
-/* Prevent GitHub icon from changing color on hover */
-.sidebar p a.social-link i.fab.fa-github {
-  color: inherit;
-  /* stays same as parent */
+.sidebar p a.social-link.linkedin:hover i.fab.fa-linkedin {
+  color: #0072b1;
 }
 
-.sidebar p a.social-link:hover i.fab.fa-github {
-  color: inherit;
-  /* override hover change */
+/* GITHUB: hover changes both icon and text to orange */
+.sidebar p a.social-link.github:hover {
+  color: #f09333;
+}
+
+.sidebar p a.social-link.github:hover i.fab.fa-github {
+  color: #f09333;
 }
 
 
