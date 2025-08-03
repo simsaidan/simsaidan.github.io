@@ -62,11 +62,150 @@
       <section id="dashboard">
         <h2>The Rating Dashboard</h2>
         <div class="dashboard">
-          <div class="rating" id="ratingDisplay">Rating: 0</div>
-          <input type="number" id="num1" placeholder="Number 1" />
-          <input type="number" id="num2" placeholder="Number 2" />
-          <br />
-          <button onclick="updateRating()">Calculate Rating</button>
+          <form id="statsForm" onsubmit="event.preventDefault(); updateRating();">
+            <table style="margin: 0 auto;">
+              <tr>
+                <td><label for="acePct">Ace Percentage</label></td>
+                <td><input type="number" id="acePct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="dfPct">Double Fault Percentage</label></td>
+                <td><input type="number" id="dfPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="firstServePct">First Serve Percentage</label></td>
+                <td><input type="number" id="firstServePct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="firstServeWinPct">First Serve Win Percentage</label></td>
+                <td><input type="number" id="firstServeWinPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="secondServeWinPct">Second Serve Win Percentage</label></td>
+                <td><input type="number" id="secondServeWinPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="breakPointsSavedPct">Break Points Saved Percentage</label></td>
+                <td><input type="number" id="breakPointsSavedPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="servicePointsWonPct">Service Points Won Percentage</label></td>
+                <td><input type="number" id="servicePointsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="firstServeReturnPtsWonPct">First Serve Return Points Won Percentage</label></td>
+                <td><input type="number" id="firstServeReturnPtsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="secondServeReturnPtsWonPct">Second Serve Return Points Won Percentage</label></td>
+                <td><input type="number" id="secondServeReturnPtsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="breakPointsWonPct">Break Points Won Percentage</label></td>
+                <td><input type="number" id="breakPointsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="returnPointsWonPct">Return Points Won Percentage</label></td>
+                <td><input type="number" id="returnPointsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="totalPointsWonPct">Points Won Percentage (All points)</label></td>
+                <td><input type="number" id="totalPointsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="acesPerServiceGame">Aces per Service Game</label></td>
+                <td><input type="number" id="acesPerServiceGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="dfPerSecondServe">Double Faults per Second Serve</label></td>
+                <td><input type="number" id="dfPerSecondServe" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="dfPerServiceGame">Double Faults per Service Game</label></td>
+                <td><input type="number" id="dfPerServiceGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="serviceInPlayPtsWon">Service In-Play Points Won</label></td>
+                <td><input type="number" id="serviceInPlayPtsWon" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="pointsPerServiceGame">Points per Service Game</label></td>
+                <td><input type="number" id="pointsPerServiceGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="pointsLostPerServiceGame">Points Lost per Service Game</label></td>
+                <td><input type="number" id="pointsLostPerServiceGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="breakPointsPerServiceGame">Break Points per Service Game</label></td>
+                <td><input type="number" id="breakPointsPerServiceGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="serviceGamesWonPct">Service Games Won Percentage</label></td>
+                <td><input type="number" id="serviceGamesWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="serviceGamesLostPerSet">Service Games Lost per Set</label></td>
+                <td><input type="number" id="serviceGamesLostPerSet" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="returnInPlayPtsWon">Return In-Play Points Won</label></td>
+                <td><input type="number" id="returnInPlayPtsWon" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="pointsPerReturnGame">Points per Return Game</label></td>
+                <td><input type="number" id="pointsPerReturnGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="pointsWonPerReturnGame">Points Won per Return Game</label></td>
+                <td><input type="number" id="pointsWonPerReturnGame" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="returnGamesWonPct">Return Games Won Percentage</label></td>
+                <td><input type="number" id="returnGamesWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="winnerPct">Winner Percentage (Winners per Point Won)</label></td>
+                <td><input type="number" id="winnerPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="uePct">Unforced Error Percentage (per Point Lost)</label></td>
+                <td><input type="number" id="uePct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="fePct">Forced Error Percentage</label></td>
+                <td><input type="number" id="fePct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="netPtsPlayedPct">Points Played at the Net Percentage</label></td>
+                <td><input type="number" id="netPtsPlayedPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="netPtsWonPct">Net Points Won Percentage</label></td>
+                <td><input type="number" id="netPtsWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="ptsWonAtNetPct">Points Won at the Net Percentage</label></td>
+                <td><input type="number" id="ptsWonAtNetPct" placeholder="%" step="0.1"></td>
+              </tr>
+              <tr>
+                <td><label for="secondServeSpeedRatio">Avg Second Serve Speed / First Serve Speed</label></td>
+                <td><input type="number" id="secondServeSpeedRatio" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="serveSpeedMaxRatio">Avg Serve Speed / Max Serve Speed</label></td>
+                <td><input type="number" id="serveSpeedMaxRatio" step="0.01"></td>
+              </tr>
+              <tr>
+                <td><label for="gamesWonPct">Games Won Percentage</label></td>
+                <td><input type="number" id="gamesWonPct" placeholder="%" step="0.1"></td>
+              </tr>
+            </table>
+            <div style="margin: 18px 0;">
+              <button type="submit">Calculate Rating</button>
+            </div>
+            <div class="rating" id="ratingDisplay">Rating: 0</div>
+          </form>
         </div>
         <p>
           Etiam semper, nunc nec molestie fermentum, ex nisi elementum quam, nec volutpat erat eros a ex. Suspendisse
