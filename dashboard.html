@@ -43,12 +43,13 @@
       </ul>
     </aside>
     <main class="main-content">
+      <h1 style="margin-top: 20px;">A Logistic Regression-Based Tennis Match Rating System</h1>
+      <p>
+        This blog post is based on a work I did in Spring 2023 as an analyst with
+        the Cornell Sports Analytics Club.
+      </p>
       <section id="introduction">
         <h2>Introduction</h2>
-        <p>
-          This blog post is based on a work I did in Spring 2023 as an analyst with
-          the Cornell Sports Analytics Club.
-        </p>
         <p>
           The goal of this project was to come up with a way to rate tennis
           performances in a single match, looking at important match statistics,
@@ -71,11 +72,56 @@
       <section id="motivation">
         <h2>Motivation</h2>
         <p>
-          Let's start by difference
+          Let's start by defining the difference between rating a player's ability
+          and rating someone's performance. To illustrate these differences further,
+          consider a scenario where Carlos Alcaraz plays a match on the ATP tour
+          and a fifteen-year old plays a match in a local tournament on the same day.
+          It is perfectly feasible that Carlos Alcaraz's performance out of 10 is worse
+          than the junior player's, especially if Carlos makes many unforced errors that
+          day and the fifteen-year old plays consistently. However, that fifteen-year old
+          will almost certainly never have the tennis ability of Carlos Alcaraz.
 
-          usefulness of ratingDisplay
+          Currently, there are a wide variety of tools to rate the ability of
+          a tennis player. The most popular and effective way is the
+          <a href="https://www.utrsports.net/" target="_blank"> Universal Tennis Rating</a>
+          , in which competitive tennis players are assigned a number between 1 (novice)
+          and 16 (top professional men's player). There is also
+          <a href="https://www.usta.com/en/home/coach-organize/tennis-tool-center/run-usta-programs/national/understanding-ntrp-ratings.html"
+            target="_blank">NTRP</a>,
+          an outdated system which rates player's abilities from 1 to 7, and
+          a newer system called
+          <a href="https://worldtennisnumber.com/" target="_blank">World Tennis Number</a>
 
-          other ways
+          Although there is a lack of a good performance rating system in tennis,
+          that does not mean that one would not be valuable. A
+
+        <ul>
+          <li></li>
+        </ul>
+
+
+        other ways
+
+        principles behind
+        </p>
+      </section>
+      <section id="implementation">
+        <h2>Implementation Details</h2>
+        <p>
+          Data for this project was obtained from the
+          <a href="https://ultimatetennisstatistics.com/" target="_blank">Ultimate
+            Tennis Statistics Website
+          </a> (probably the best tennis match data souce online).
+
+        </p>
+      </section>
+      <section id="conclusion">
+        <h2>Conclusion & Reflections</h2>
+        <p>
+          - basic testing
+          - future testing
+          why i think its bad
+          next steps
         </p>
       </section>
       <section id="dashboard">
@@ -230,30 +276,100 @@
           how to use this
         </p>
       </section>
-      <section id="implementation">
-        <h2>Implementation Details</h2>
-        <p>
-          where i got the data form
 
-        </p>
-      </section>
-      <section id="conclusion">
-        <h2>Conclusion & Reflections</h2>
-        <p>
-          - basic testing
-          - future testing
-          why i think its bad
-          next steps
-        </p>
-      </section>
     </main>
   </div>
   <script>
     function updateRating() {
-      const n1 = parseFloat(document.getElementById("num1").value) || 0;
-      const n2 = parseFloat(document.getElementById("num2").value) || 0;
-      const sum = n1 + n2;
-      document.getElementById("ratingDisplay").textContent = "Rating: " + sum;
+      const acePct = parseFloat(document.getElementById("acePct").value) || 0;
+      const dfPct = parseFloat(document.getElementById("dfPct").value) || 0;
+      const firstServePct = parseFloat(document.getElementById("firstServePct").value) || 0;
+      const firstServeWinPct = parseFloat(document.getElementById("firstServeWinPct").value) || 0;
+      const secondServeWinPct = parseFloat(document.getElementById("secondServeWinPct").value) || 0;
+      const breakPointsSavedPct = parseFloat(document.getElementById("breakPointsSavedPct").value) || 0;
+      const servicePointsWonPct = parseFloat(document.getElementById("servicePointsWonPct").value) || 0;
+      const firstServeReturnPtsWonPct = parseFloat(document.getElementById("firstServeReturnPtsWonPct").value) || 0;
+      const secondServeReturnPtsWonPct = parseFloat(document.getElementById("secondServeReturnPtsWonPct").value) || 0;
+      const breakPointsWonPct = parseFloat(document.getElementById("breakPointsWonPct").value) || 0;
+      const returnPointsWonPct = parseFloat(document.getElementById("returnPointsWonPct").value) || 0;
+      const totalPointsWonPct = parseFloat(document.getElementById("totalPointsWonPct").value) || 0;
+      const acesPerServiceGame = parseFloat(document.getElementById("acesPerServiceGame").value) || 0;
+      const dfPerSecondServe = parseFloat(document.getElementById("dfPerSecondServe").value) || 0;
+      const dfPerServiceGame = parseFloat(document.getElementById("dfPerServiceGame").value) || 0;
+      const serviceInPlayPtsWon = parseFloat(document.getElementById("serviceInPlayPtsWon").value) || 0;
+      const pointsPerServiceGame = parseFloat(document.getElementById("pointsPerServiceGame").value) || 0;
+      const pointsLostPerServiceGame = parseFloat(document.getElementById("pointsLostPerServiceGame").value) || 0;
+      const breakPointsPerServiceGame = parseFloat(document.getElementById("breakPointsPerServiceGame").value) || 0;
+      const serviceGamesWonPct = parseFloat(document.getElementById("serviceGamesWonPct").value) || 0;
+      const serviceGamesLostPerSet = parseFloat(document.getElementById("serviceGamesLostPerSet").value) || 0;
+      const returnInPlayPtsWon = parseFloat(document.getElementById("returnInPlayPtsWon").value) || 0;
+      const pointsPerReturnGame = parseFloat(document.getElementById("pointsPerReturnGame").value) || 0;
+      const pointsWonPerReturnGame = parseFloat(document.getElementById("pointsWonPerReturnGame").value) || 0;
+      const returnGamesWonPct = parseFloat(document.getElementById("returnGamesWonPct").value) || 0;
+      const winnerPct = parseFloat(document.getElementById("winnerPct").value) || 0;
+      const uePct = parseFloat(document.getElementById("uePct").value) || 0;
+      const fePct = parseFloat(document.getElementById("fePct").value) || 0;
+      const netPtsPlayedPct = parseFloat(document.getElementById("netPtsPlayedPct").value) || 0;
+      const netPtsWonPct = parseFloat(document.getElementById("netPtsWonPct").value) || 0;
+      const ptsWonAtNetPct = parseFloat(document.getElementById("ptsWonAtNetPct").value) || 0;
+      const secondServeSpeedRatio = parseFloat(document.getElementById("secondServeSpeedRatio").value) || 0;
+      const serveSpeedMaxRatio = parseFloat(document.getElementById("serveSpeedMaxRatio").value) || 0;
+      const gamesWonPct = parseFloat(document.getElementById("gamesWonPct").value) || 0;
+
+      // Example: sum all values (for demonstration)
+      const sum =
+        11360 * acePct +
+        -5670 * dfPct +
+        4502 * firstServePct +
+        29596 * firstServeWinPct +
+        26273 * secondServeWinPct +
+        57111 * breakPointsSavedPct +
+        33408 * servicePointsWonPct +
+        36208 * firstServeReturnPtsWonPct +
+        31558 * secondServeReturnPtsWonPct +
+        64654 * breakPointsWonPct +
+        73296 * returnPointsWonPct +
+        31887 * totalPointsWonPct +
+        64655 * acesPerServiceGame +
+        -12328 * dfPerSecondServe +
+        -40540 * dfPerServiceGame +
+        25440 * serviceInPlayPtsWon +
+        -80998 * pointsPerServiceGame +
+        -209633 * pointsLostPerServiceGame +
+        -89646 * breakPointsPerServiceGame +
+        60917 * serviceGamesWonPct +
+        -283257 * serviceGamesLostPerSet +
+        31112 * returnInPlayPtsWon +
+        62381 * pointsPerReturnGame +
+        251228 * pointsWonPerReturnGame +
+        73296 * returnGamesWonPct +
+        -1862 * winnerPct +
+        -13627 * uePct +
+        13959 * fePct +
+        -1233 * netPtsPlayedPct +
+        21526 * netPtsWonPct +
+        -6317 * ptsWonAtNetPct;
+
+      const sigmoided = 1 / (1 + Math.exp(-1 * (sum - 10.86) / 500000));
+      const scaled = 10 * sigmoided;
+      let out;
+      if (scaled > 8.4) {
+        out = scaled + 0.1;
+      } else {
+        out = Math.pow((scaled - 5.8) / 3, 3) + 6.5;
+        out += Math.pow(2, scaled - 8);
+      }
+      // Bounds check
+      if (out < 0) {
+        out = 0;
+      } else if (out > 10) {
+        out = 10;
+      }
+
+
+      document.getElementById("ratingDisplay").textContent = "Rating: " + out.toFixed(2);
+
+      // You can now use each variable individually for complex logic!
     }
   </script>
 </body>
