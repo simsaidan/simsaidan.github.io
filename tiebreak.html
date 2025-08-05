@@ -29,9 +29,9 @@
   <script src="https://unpkg.com/globe.gl"></script>
 
   <script>
-    const world = Globe()
+    const world = Globe().rendererConfig({ alpha: true })
       (document.getElementById('globeViz'))
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg').rendererConfig({ alpha: true })
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
 
 
     // Make the globe spin

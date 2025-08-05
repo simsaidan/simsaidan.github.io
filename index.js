@@ -2,21 +2,16 @@ window.addEventListener('DOMContentLoaded', () => {
   const globeContainer = document.getElementById('globeViz');
   if (!globeContainer) return;
 
-  // Create the globe with no base or atmosphere
-  const globe = Globe()(globeContainer)
-    .backgroundColor('rgba(0,0,0,0)')
-    .showGlobe(true)
-    .showAtmosphere(false);
+  const world = Globe()
+    .rendererConfig({ alpha: true }) // Enable transparency
+    (globeContainer)
+    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg');
 
-  globe.controls().autoRotate = true;
-  globe.controls().autoRotateSpeed = 0.5;
-
-  fetch('https://cdn.jsdelivr.net/npm/world-atlas/land-110m.json')
-    .then(res => res.json())
-    .then(landTopo => {
-      globe
-        .polygonsData(topojson.feature(landTopo, landTopo.objects.land).features)
-        .polygonCapMaterial(new THREE.MeshLambertMaterial({ color: 'darkslategrey', side: THREE.DoubleSide }))
-        .polygonSideColor(() => 'rgba(0,0,0,0)');
-    });
+  // Make the globe spin
+  let angle = 0;
+  setInterval(() => {
+    angle += 0.0015;
+    world.controls().autoRotate = false;
+    world.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
+  }, 30);
 });
