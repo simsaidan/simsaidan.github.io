@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
   if (!globeContainer) return;
 
   const world = Globe()
-    .rendererConfig({ alpha: true }) // Enable transparency
     (globeContainer)
     .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg');
 
