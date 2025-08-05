@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spinning Globe</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #globeViz {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="globeViz"></div>
+
+  <!-- Load Globe.gl from CDN -->
+  <script src="https://unpkg.com/globe.gl"></script>
+
+  <script>
+    const world = Globe()
+      (document.getElementById('globeViz'))
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png');
+
+    // Make the globe spin
+    let angle = 0;
+    setInterval(() => {
+      angle += 0.0015;
+      world.controls().autoRotate = false;
+      world.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
+    }, 30);
+  </script>
+</body>
+
+</html>
