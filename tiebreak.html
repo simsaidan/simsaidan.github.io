@@ -59,11 +59,11 @@
     const globe = Globe()(container)
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
 
-    // Transparent background
+    // Make background transparent
     globe.renderer().setClearColor(0x000000, 0);
     globe.scene().background = null;
 
-    // Resize canvas manually to container
+    // Resize canvas to match container
     const resizeGlobe = () => {
       const width = container.offsetWidth;
       const height = container.offsetHeight;
@@ -74,19 +74,19 @@
     };
     resizeGlobe();
 
-    // Zoom camera out to make globe small
-    globe.camera().position.z = 500;
+    // ✅ Center and zoom the camera manually
+    globe.camera().position.set(0, 0, 500); // Zoom out
+    globe.camera().lookAt(0, 0, 0);         // Look at globe center
     globe.controls().update();
-    globe.pointOfView({ lat: 0, lng: 0, altitude: 2.5 });
 
-    // Spin the globe
+    // ✅ Spin the globe
     let angle = 0;
     setInterval(() => {
       angle += 0.0015;
       globe.controls().autoRotate = false;
-      globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
-
+      globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 2.5 }, 0);
     }, 30);
+
   </script>
 </body>
 
