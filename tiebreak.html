@@ -10,27 +10,24 @@
     body {
       margin: 0;
       height: 100%;
+      background-color: white;
       overflow: hidden;
-      background-color: transparent;
     }
 
     #globeViz {
-      width: 60vw;
-      /* Smaller width */
-      height: 60vw;
-      /* Smaller height */
       position: absolute;
-
-      /* Vertically center */
-      /*left: 45%;
-      /* Align left edge */
-
-      /* Adjust vertical center */
+      top: 50px;
+      left: 50px;
+      width: 300px;
+      height: 300px;
+      pointer-events: none;
+      /* optional: disables mouse interaction */
     }
 
     #globeViz canvas {
       width: 100% !important;
       height: 100% !important;
+      display: block;
     }
   </style>
 </head>
@@ -39,26 +36,39 @@
   <h1>Experiment</h1>
   <div id="globeViz"></div>
 
-  <!-- Load Globe.gl from CDN -->
+  <!-- Load Globe.gl -->
   <script src="https://unpkg.com/globe.gl"></script>
 
   <script>
-    const world = Globe()
-      (document.getElementById('globeViz'))
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
+    // Make sure this is AFTER the DOM is loaded
+    const container = document.getElementById('globeViz');
 
-    world.renderer().setClearColor(0xFFFFFF, 0);
+    const world = Globe()(container)
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
+
+    // Set transparent background
+    world.renderer().setClearColor(0x000000, 0);
     world.scene().background = null;
 
-    world.renderer().setSize(container.offsetWidth, container.offsetHeight);
-    world.camera().aspect = container.offsetWidth / container.offsetHeight;
-    world.camera().updateProjectionMatrix();
+    // Force renderer and camera to use container's size
+    const resizeRenderer = () => {
+      const width = container.offsetWidth;
+      const height = container.offsetHeight;
 
+      world.renderer().setSize(width, height);
+      world.renderer().setPixelRatio(window.devicePixelRatio);
+
+      world.camera().aspect = width / height;
+      world.camera().updateProjectionMatrix();
+    };
+
+    resizeRenderer(); // Call once to set the size
+    window.addEventListener('resize', resizeRenderer); // Optional: responsive resize
 
     // Make the globe spin
     let angle = 0;
     setInterval(() => {
-      angle += 0.005;
+      angle += 0.015;
       world.controls().autoRotate = false;
       world.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
     }, 30);
