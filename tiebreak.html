@@ -11,37 +11,42 @@
       margin: 0;
       height: 100%;
       overflow: hidden;
-      background-color: transparent;
+      background-color: white;
+      /* Optional: set background to white */
     }
 
     #globeViz {
-      width: 100px;
-      /* Smaller width */
-      height: 100px;
-      /* Smaller height */
+      width: 400px;
+      height: 400px;
       position: absolute;
-
-      /* Vertically center */
-      left: 45%;
-      /* Align left edge */
-
-      /* Adjust vertical center */
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      background-color: transparent;
     }
   </style>
 </head>
 
 <body>
-  <h1>Experiment</h1>
   <div id="globeViz"></div>
 
   <!-- Load Globe.gl from CDN -->
-  <script src="https://unpkg.com/globe.gl"></script>
-
+  <script src="https://unpkg.com/three-globe"></script>
+  <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+  <script src="https://unpkg.com/three-globe"></script>
   <script>
-    const world = Globe()
-      (document.getElementById('globeViz'))
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
+    const globeContainer = document.getElementById('globeViz');
 
+    // Create the Globe instance
+    const world = Globe()(globeContainer)
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
+
+    // Make background transparent
+    const renderer = world.renderer();
+    renderer.setClearColor(0x000000, 0); // 0 alpha = transparent
+
+    // Optional: Disable auto background fill color
+    world.scene().background = null;
 
     // Make the globe spin
     let angle = 0;
