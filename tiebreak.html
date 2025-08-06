@@ -65,6 +65,7 @@
     const height = container.offsetHeight;
     globe.renderer().setSize(width, height);
     globe.camera().aspect = width / height;
+    globe.scene().children[0].position.x = -100;
     globe.camera().updateProjectionMatrix();
 
     // Manually zoom out and center the globe
@@ -75,7 +76,7 @@
     // Spin the globe
     let angle = 0;
     setInterval(() => {
-      angle += 0.002;
+      angle += 0.004;
       globe.controls().autoRotate = false;
       globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 2.2 }, 0);
     }, 30);
