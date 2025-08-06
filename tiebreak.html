@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spinning Globe</title>
+  <title>Small Spinning Globe</title>
   <style>
     html,
     body {
@@ -15,13 +15,11 @@
     }
 
     #globeViz {
-      position: absolute;
-      top: 50px;
-      left: 300px;
       width: 300px;
       height: 300px;
-      pointer-events: none;
-      /* optional: disables mouse interaction */
+      position: absolute;
+      top: 50px;
+      left: 50px;
     }
 
     #globeViz canvas {
@@ -40,35 +38,38 @@
   <script src="https://unpkg.com/globe.gl"></script>
 
   <script>
-    // Make sure this is AFTER the DOM is loaded
     const container = document.getElementById('globeViz');
 
     const world = Globe()(container)
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
 
-    // Set transparent background
+    // Make background transparent
     world.renderer().setClearColor(0x000000, 0);
     world.scene().background = null;
 
-    // Force renderer and camera to use container's size
-    const resizeRenderer = () => {
+    // Resize renderer to container
+    const resize = () => {
       const width = container.offsetWidth;
       const height = container.offsetHeight;
 
-      world.renderer().setSize(width, height);
-      world.renderer().setPixelRatio(window.devicePixelRatio);
+      const renderer = world.renderer();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(window.devicePixelRatio);
 
-      world.camera().aspect = width / height;
-      world.camera().updateProjectionMatrix();
+      const camera = world.camera();
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
     };
+    resize();
 
-    resizeRenderer(); // Call once to set the size
-    window.addEventListener('resize', resizeRenderer); // Optional: responsive resize
+    // Zoom camera out so globe looks small
+    world.camera().position.z = 500; // increase this to make the globe smaller
+    world.controls().update();
 
-    // Make the globe spin
+    // Spin the globe
     let angle = 0;
     setInterval(() => {
-      angle += 0.015;
+      angle += 0.0015;
       world.controls().autoRotate = false;
       world.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
     }, 30);
