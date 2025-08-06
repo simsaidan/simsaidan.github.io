@@ -47,14 +47,18 @@
       (document.getElementById('globeViz'))
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
 
-    world.renderer().setClearColor(0x000000, 0);
+    world.renderer().setClearColor(0xFFFFFF, 0);
     world.scene().background = null;
+
+    world.renderer().setSize(container.offsetWidth, container.offsetHeight);
+    world.camera().aspect = container.offsetWidth / container.offsetHeight;
+    world.camera().updateProjectionMatrix();
 
 
     // Make the globe spin
     let angle = 0;
     setInterval(() => {
-      angle += 0.0015;
+      angle += 0.005;
       world.controls().autoRotate = false;
       world.pointOfView({ lat: 0, lng: angle * 180 / Math.PI }, 0);
     }, 30);
