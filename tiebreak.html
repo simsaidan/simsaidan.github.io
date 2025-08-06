@@ -4,12 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Small Globe Example</title>
+  <title>Mini Globe Test</title>
   <style>
     html,
     body {
       margin: 0;
-      padding: 0;
       background: white;
       font-family: sans-serif;
     }
@@ -17,13 +16,13 @@
     #globeContainer {
       width: 300px;
       height: 300px;
-
       position: relative;
       overflow: hidden;
+      display: inline-block;
+      vertical-align: top;
       border: 1px solid #ccc;
     }
 
-    /* Constrain the internal canvas manually */
     #globeContainer canvas {
       position: absolute !important;
       width: 100% !important;
@@ -33,60 +32,53 @@
     }
 
     #otherContent {
+      display: inline-block;
       padding: 20px;
     }
   </style>
 </head>
 
 <body>
+
   <h1>Experiment</h1>
 
-  <div style="display: flex; gap: 40px; align-items: flex-start;">
-    <div id="globeContainer"></div>
+  <div id="globeContainer"></div>
 
-    <div id="otherContent">
-      <h2>Another Heading</h2>
-      <p>This content is no longer hidden behind the canvas.</p>
-    </div>
+  <div id="otherContent">
+    <h2>This should not be hidden</h2>
+    <p>The globe is small and stays in its box!</p>
   </div>
 
-  <!-- Load Globe.gl -->
   <script src="https://unpkg.com/globe.gl"></script>
-
   <script>
     const container = document.getElementById('globeContainer');
 
     const globe = Globe()(container)
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
 
-    // Make background transparent
+    // Transparent background
     globe.renderer().setClearColor(0x000000, 0);
     globe.scene().background = null;
 
-    // Resize canvas to match container
-    const resizeGlobe = () => {
-      const width = container.offsetWidth;
-      const height = container.offsetHeight;
+    // Force canvas to fit container
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    globe.renderer().setSize(width, height);
+    globe.camera().aspect = width / height;
+    globe.camera().updateProjectionMatrix();
 
-      globe.renderer().setSize(width, height);
-      globe.camera().aspect = width / height;
-      globe.camera().updateProjectionMatrix();
-    };
-    resizeGlobe();
-
-    // ✅ Center and zoom the camera manually
-    globe.camera().position.set(0, 0, 500); // Zoom out
-    globe.camera().lookAt(0, 0, 0);         // Look at globe center
+    // Manually zoom out and center the globe
+    globe.camera().position.z = 800;
+    globe.controls().target.set(0, 0, 0);
     globe.controls().update();
 
-    // ✅ Spin the globe
+    // Spin the globe
     let angle = 0;
     setInterval(() => {
-      angle += 0.0015;
+      angle += 0.002;
       globe.controls().autoRotate = false;
-      globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 2.5 }, 0);
+      globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 2.2 }, 0);
     }, 30);
-
   </script>
 </body>
 
