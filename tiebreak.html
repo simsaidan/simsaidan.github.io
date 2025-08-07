@@ -89,12 +89,17 @@
         const lat = location.latitude;
         const lng = location.longitude;
 
-        // Add marker
+        const pointData = [{ lat, lng }];
+
+        // Set styles first
         globe
-          .pointsData([{ lat, lng, size: 1 }])
-          .pointAltitude(0.02)
           .pointColor(() => 'red')
-          .pointRadius(0.5);
+          .pointAltitude(0.03)
+          .pointRadius(0.5)
+          .pointsData(pointData); // Set data LAST
+
+        // Optionally zoom in to visitor's location for a second
+        globe.pointOfView({ lat, lng, altitude: 2 }, 3000);
       })
       .catch(err => {
         console.error("Could not fetch user location:", err);
