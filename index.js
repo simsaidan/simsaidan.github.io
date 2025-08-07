@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Manually zoom out and center the globe
   globe.camera().position.z = 800;
+  globe.camera().position.y = 300;
   globe.controls().target.set(0, 0, 0);
   globe.controls().update();
 
