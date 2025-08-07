@@ -27,6 +27,6 @@ window.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     angle += 0.004;
     globe.controls().autoRotate = false;
-    globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
+    globe.pointOfView({ lat: 20, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
   }, 30);
 });
