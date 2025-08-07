@@ -2,7 +2,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('globeContainer');
 
   const globe = Globe()(container)
-    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg');
+    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-day.jpg')
+    .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png');
 
   // Transparent background
   globe.renderer().setClearColor(0x000000, 0);
@@ -25,6 +26,6 @@ window.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     angle += 0.004;
     globe.controls().autoRotate = false;
-    globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 2.2 }, 0);
+    globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
   }, 30);
 });
