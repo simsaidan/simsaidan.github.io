@@ -17,8 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
   globe.camera().updateProjectionMatrix();
 
   // Manually zoom out and center the globe
-  globe.camera().position.z = 800;
-  globe.camera().position.y = 300;
+  globe.camera().position.z = 1300;
   globe.controls().target.set(0, 0, 0);
   globe.controls().update();
 
@@ -27,6 +26,6 @@ window.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     angle += 0.004;
     globe.controls().autoRotate = false;
-    globe.pointOfView({ lat: 20, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
+    globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
   }, 30);
 });

@@ -12,6 +12,40 @@
   <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <script src="index.js" defer></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+
+    const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co'
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w'
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+    async function addVisitorLocation(lat, lng) {
+      await supabase.from('markers').insert([{ lat, lng }])
+    }
+
+    async function loadAllMarkers() {
+      let { data } = await supabase.from('markers').select('*')
+      data.forEach(point => {
+        globe.addMarker({
+          lat: point.lat,
+          lng: point.lng,
+          size: 0.5,
+          color: 'red'
+        })
+      })
+    }
+
+    // Example: Get location via IP
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(async location => {
+        const { latitude, longitude } = location
+        await addVisitorLocation(latitude, longitude)
+        await loadAllMarkers()
+      })
+  </script>
+
 </head>
 
 <body>
