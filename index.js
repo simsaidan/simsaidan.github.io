@@ -53,9 +53,19 @@ async function loadAllMarkers() {
 }
 
 // Add visitor location to DB
+function roundCoord(value) {
+  return Math.round(value * 1000) / 1000; // 3 decimal places
+}
+
 async function addVisitorLocation(lat, lng) {
-  const { error } = await supabase.from('markers').insert([{ lat, lng }]);
-  if (error) console.error(error);
+  const rLat = roundCoord(lat);
+  const rLng = roundCoord(lng);
+  const { error } = await supabase.from('markers').insert([{ lat: rLat, lng: rLng }]);
+  if (error && error.code === '23505') {
+    console.log('Marker already exists for this location.');
+  } else if (error) {
+    console.error(error);
+  }
 }
 
 // Get visitor location via IP API, save to DB, then load all markers
