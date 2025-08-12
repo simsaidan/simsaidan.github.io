@@ -26,7 +26,7 @@ globe.controls().update();
 // Spin the globe
 let angle = 0;
 setInterval(() => {
-  angle += 0.004;
+  angle += 0.014;
   globe.controls().autoRotate = false;
   globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
 }, 30);

@@ -1,5 +1,33 @@
 let playerData, rankingsData, singlesData, doublesData, endgameData;
 
+import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
+const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function roundCoord(value) {
+  return Math.round(value * 1000) / 1000;
+}
+
+async function addVisitorLocation(lat, lng) {
+  const rLat = roundCoord(lat);
+  const rLng = roundCoord(lng);
+  const { error } = await supabase.from('markers').insert([{ lat: rLat, lng: rLng }]);
+  if (error && error.code !== '23505') {
+    console.error(error);
+  }
+}
+
+fetch('https://ipapi.co/json/')
+  .then(res => res.json())
+  .then(location => {
+    addVisitorLocation(location.latitude, location.longitude);
+  })
+  .catch(err => console.error('Could not fetch location:', err));
+
+
 function fetchData(jsonFilePath) {
   return fetch(jsonFilePath)
     .then(response => {
