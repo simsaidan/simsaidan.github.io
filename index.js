@@ -26,9 +26,9 @@ globe.controls().update();
 // Spin the globe
 let angle = 0;
 setInterval(() => {
-  angle += 0.014;
+  angle += 0.009;
   globe.controls().autoRotate = false;
-  globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI, altitude: 5.2 }, 0);
+  globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI + 20, altitude: 5.2 }, 0);
 }, 30);
 
 // ---------- Supabase Setup ----------
