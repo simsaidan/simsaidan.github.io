@@ -31,6 +31,13 @@ setInterval(() => {
   globe.pointOfView({ lat: 0, lng: angle * 180 / Math.PI + 20, altitude: 5.2 }, 0);
 }, 30);
 
+window.addEventListener('load', () => {
+  const pageWidth = window.innerWidth;        // Get page width
+  const desiredWidth = -1 * pageWidth + 795;
+  const myglobe = document.getElementById('globeContainer');
+  myblobe.style.width = desiredWidth + 'px';   // Set width dynamically
+});
+
 // ---------- Supabase Setup ----------
 const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w'
