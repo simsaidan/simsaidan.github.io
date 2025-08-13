@@ -197,7 +197,6 @@ main p {
 #globeContainer {
   width: 1100px;
   height: 100vh;
-  left: -545px;
   position: relative;
   overflow: hidden;
   display: inline-block;
