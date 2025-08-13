@@ -20,6 +20,7 @@ globe.camera().updateProjectionMatrix();
 
 // Zoom out and center
 globe.camera().position.z = 1300;
+camera.position.y += 50;
 globe.controls().target.set(0, 0, 0);
 globe.controls().update();
 
