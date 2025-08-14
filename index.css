@@ -233,7 +233,7 @@ main p {
   }
 }
 
-@media (max-width: 1340px) {
+@media (max-width: 1370px) {
   #right-sidebar {
     display: none;
     /* hide it on small screens */
