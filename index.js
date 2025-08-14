@@ -34,7 +34,7 @@ setInterval(() => {
 
 window.addEventListener('load', () => {
   const pageWidth = window.innerWidth;        // Get page width
-  const desiredWidth = -1 / 2 * pageWidth + 141;
+  const desiredWidth = -1 / 2 * pageWidth + 134;
   const myglobe = document.getElementById('globeContainer');
   myglobe.style.left = desiredWidth + 'px';   // Set width dynamically
 });
