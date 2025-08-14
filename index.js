@@ -36,7 +36,7 @@ window.addEventListener('load', () => {
   const pageWidth = window.innerWidth;        // Get page width
   const desiredWidth = -1 * pageWidth + 795;
   const myglobe = document.getElementById('globeContainer');
-  myblobe.style.left = desiredWidth + 'px';   // Set width dynamically
+  myglobe.style.left = desiredWidth + 'px';   // Set width dynamically
 });
 
 // ---------- Supabase Setup ----------
