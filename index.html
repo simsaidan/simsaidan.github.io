@@ -12,6 +12,35 @@
   <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <script type="module" src="index.js" defer></script>
+  <script>
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('form-status');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusEl.textContent = 'Sending...';
+
+        try {
+          const data = new FormData(form);
+          const resp = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (resp.ok) {
+            form.reset();
+            statusEl.textContent = "Thanks! I’ll get back to you soon.";
+          } else {
+            statusEl.textContent = "Oops—there was a problem. Please try again.";
+          }
+        } catch {
+          statusEl.textContent = "Network error—please try again.";
+        }
+      });
+    }
+  </script>
 </head>
 
 <body>
