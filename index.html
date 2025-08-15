@@ -141,14 +141,21 @@
 
     <section id="contact">
       <h1>Contact Me</h1>
-      <form action="mailto:simsaidan@gmail.com" method="post" enctype="text/plain">
+      <form id="contact-form" action="https://formspree.io/f/xrbldyrg" method="POST">
         <label>Name:</label><br>
         <input type="text" name="name" required><br><br>
+
         <label>Email:</label><br>
         <input type="email" name="email" required><br><br>
+
         <label>Message:</label><br>
         <textarea name="message" rows="5" required></textarea><br><br>
+
+        <!-- Simple spam trap (leave blank) -->
+        <input type="text" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;">
+
         <input type="submit" value="Send">
+        <p id="form-status" role="status" aria-live="polite" style="margin-top:8px;"></p>
       </form>
     </section>
 
