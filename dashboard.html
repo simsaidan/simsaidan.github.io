@@ -52,6 +52,15 @@
       </p>
       <section id="introduction">
         <h2>Introduction</h2>
+        <p>In many sports, player ratings are essential for evaluating
+          individual performance, making roster decisions, and increasing fan
+          engagement. However, existing rating
+          systems in tennis, such as UTR and NTRP, primarily measure long-term
+          ability and do not adequately capture
+          short-term performance. This presents a gap in the
+          evaluation of players, particularly in high-level team
+          tennis, where coaches and players require quantitative analysis to improve.
+        </p>
         <p>
           The goal of this project was to come up with a way to rate tennis
           performances in a single match, looking at important match statistics,
@@ -74,8 +83,20 @@
       <section id="motivation">
         <h2>Motivation</h2>
         <p>
-          Let's start by defining the difference between rating a player's ability
-          and rating someone's performance. To illustrate these differences further,
+          Let's start by defining the difference between rating a
+          player's ability and rating someone's performance.
+          Ability is meant to capture a player’s underlying
+          skill level — how strong they are independent of any single
+          match. It is more stable over time and usually changes
+          slowly as a player improves or declines. Performance,
+          on the other hand, reflects how well a player actually
+          played in a given match or even a specific set.
+          Performance can fluctuate day to day depending on form,
+          fitness, mental state, or external conditions.Measuring these two things
+          should be considered seperate ideas.
+        </p>
+        <p> To illustrate these
+          differences further,
           consider a scenario where Carlos Alcaraz plays a match on the ATP tour
           and a fifteen-year old plays a match in a local tournament on the same day.
           It is perfectly feasible that Carlos Alcaraz's performance out of 10 is worse
@@ -87,8 +108,8 @@
 
           Currently, there are a wide variety of tools to rate the ability of
           a tennis player. The most popular and effective way is the
-          <a href="https://www.utrsports.net/" target="_blank"> Universal Tennis Rating</a>
-          , in which competitive tennis players are assigned a number between 1 (novice)
+          <a href="https://www.utrsports.net/" target="_blank">Universal Tennis Rating</a>, in which competitive tennis
+          players are assigned a number between 1 (novice)
           and 16 (top professional men's player). There is also
           <a href="https://www.usta.com/en/home/coach-organize/tennis-tool-center/run-usta-programs/national/understanding-ntrp-ratings.html"
             target="_blank">NTRP</a>,
@@ -121,6 +142,14 @@
 
         With all this in mind, let's establish some principles that a good performance
         rating system should have.
+        <ol>
+          <li>You should be able to compare ratings across matches.</li>
+          <li>Ratings should be (almost) independent of the level of a player.</li>
+          <li>Ratings should be independent of (but probably very correlated to)
+            winning and losing. </li>
+        </ol>
+        Some events, like hitting aces, are indicative of beter play and are more
+        accessible to high level players.
         </p>
       </section>
       <section id="implementation">
@@ -128,8 +157,7 @@
         <p>
           Data for this project was obtained from the
           <a href="https://ultimatetennisstatistics.com/" target="_blank">Ultimate
-            Tennis Statistics
-          </a> website (probably the best tennis match data source online). The project uses match
+            Tennis Statistics</a> website (probably the best tennis match data source online). The project uses match
           data from 1081 men's tennis matches from the Master's, Tour Finals, and ATP 500
           level during the 2019, 2021, 2022, and 2023 seasons.
           - what data was gotten, how the method was chosen, something about logistic,
@@ -149,12 +177,49 @@
       <section id="conclusion">
         <h2>Conclusion & Reflections</h2>
         <p>
+          To evaluate the model, I split the dataset into training and test
+          sets so that the algorithm would be trained on one portion of the
+          matches and then asked to make predictions on matches it had never
+          seen before. For each test example, the model produced a win
+          probability between 0 and 1, which I compared against the true
+          outcome. Predictions above 0.5 were classified as wins, and
+          those below as losses.
           - basic testing
           - future testing
           why i think its bad j
           - too correlated with winning
 
           next steps
+        </p>
+        <figure>
+          <img src="images/histogram.png" alt="2023 Madrid Open Final" />
+          <figcaption>
+            Figure 1: Distribution of predicted player ratings from the logistic regression model.
+          </figcaption>
+        </figure>
+        <p>
+          While logistic regression models are simple, there are a few drawbacks
+          to this model which must be taken into consideration. First, rating a player
+          by predicting whether they are going to win or not strays slightly from the
+          goal of measuring performance. A player can win despite putting in a poor
+          performance and likewise, they can lose despite putting in a good one.
+          This model will not capture that completely. In addition, many indicators
+          of good play, like depth of shot, average height over the net of a shot,
+          are not directly captured by the model.
+        </p>
+        <p>
+          Another drawback is the number of statistics a user needs to keep track of
+          to use the model. It is difficult to track over twenty tennis statistics
+          accurately without the help of software which takes point result input. This
+          presents a barrier to large-scale adoption of this model.
+        </p>
+        <p>
+          Going forward, the model needs additonal testing in tennis matches at
+          a variety of levels. One way to do this is by incorporating this model
+          into match statictic tracking software like
+          <a href="https://simsaidan.github.io/grid.html" target="_blank">this one</a>.
+          This would solve two problems at once: it would lead to easy testing of the
+          model at scale and would make statistic collection feasible.
         </p>
       </section>
       <section id="dashboard">
