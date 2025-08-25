@@ -7,8 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rating Dashboard</title>
   <style>
-
   </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </head>
 
 <body>
@@ -126,9 +128,22 @@
         <p>
           Data for this project was obtained from the
           <a href="https://ultimatetennisstatistics.com/" target="_blank">Ultimate
-            Tennis Statistics Website
-          </a> (probably the best tennis match data source online).
-
+            Tennis Statistics
+          </a> website (probably the best tennis match data source online). The project uses match
+          data from 1081 men's tennis matches from the Master's, Tour Finals, and ATP 500
+          level during the 2019, 2021, 2022, and 2023 seasons.
+          - what data was gotten, how the method was chosen, something about logistic,
+          - go all the way through
+        </p>
+        <p>
+          Initially,
+        </p>
+        <p>
+          Logistic regression models the probability of a binary outcome (win/loss) as:
+          {"$$\\hat{y} = \\sigma(w^T x + b)$$"}
+          where
+          {"$$\\sigma(z) = \\frac{1}{1 + e^{-z}}$$"}
+          is the sigmoid function.
         </p>
       </section>
       <section id="conclusion">
@@ -137,6 +152,8 @@
           - basic testing
           - future testing
           why i think its bad j
+          - too correlated with winning
+
           next steps
         </p>
       </section>
