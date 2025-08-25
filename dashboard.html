@@ -173,7 +173,15 @@
           {"$$\\sigma(z) = \\frac{1}{1 + e^{-z}}$$"}
           is the sigmoid function.
         </p>
+        <p>
+          To fit the model, I optimized the parameters \(w\) and \(b\) by minimizing the
+          <i>log loss</i> function, which measures how far the predicted probabilities
+          are from the actual match outcomes. The loss for a dataset of \(m\) examples is:
+          {"$$\\mathcal{L}(y, \\hat{y}) = - \\frac{1}{m} \\sum_{i=1}^m \\Big[ y^{(i)} \\log(\\hat{y}^{(i)}) + (1 -
+          y^{(i)}) \\log(1 - \\hat{y}^{(i)}) \\Big]$$"}
+        </p>
       </section>
+      <section>Results</section>
       <section id="conclusion">
         <h2>Conclusion & Reflections</h2>
         <p>
