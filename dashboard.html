@@ -41,13 +41,14 @@
         <li><a href="#motivation">Motivation</a></li>
         <li><a href="#dashboard">The Rating Dashboard</a></li>
         <li><a href="#implementation">Implementation Details</a></li>
+        <li><a href="#results">Results</a></li>
         <li><a href="#conclusion">Conclusion & Reflections</a></li>
       </ul>
     </aside>
     <main class="main-content">
       <h1 style="margin-top: 20px;">A Logistic Regression-Based Tennis Match Rating System</h1>
       <p>
-        This blog post is based on a work I did in Spring 2023 as an analyst with
+        This blog post is based on a work I performed in Spring 2023 as an analyst with
         the Cornell Sports Analytics Club.
       </p>
       <section id="introduction">
@@ -95,6 +96,12 @@
           fitness, mental state, or external conditions.Measuring these two things
           should be considered seperate ideas.
         </p>
+        <figure>
+          <img src="miami.png" alt="2023 Miami Open Final" />
+          <figcaption>
+            Despite having very similar UTRs, Sinner 8.53, 3.65
+          </figcaption>
+        </figure>
         <p> To illustrate these
           differences further,
           consider a scenario where Carlos Alcaraz plays a match on the ATP tour
@@ -159,29 +166,107 @@
           <a href="https://ultimatetennisstatistics.com/" target="_blank">Ultimate
             Tennis Statistics</a> website (probably the best tennis match data source online). The project uses match
           data from 1081 men's tennis matches from the Master's, Tour Finals, and ATP 500
-          level during the 2019, 2021, 2022, and 2023 seasons.
-          - what data was gotten, how the method was chosen, something about logistic,
-          - go all the way through
+          level during the 2019, 2021, 2022, and 2023 seasons. This data was split
+          into a training set and a testing set using a 80-20 split. The features
+          collected were:
+        <ul>
+          <li><strong>Serving Stats</strong>
+            <ul>
+              <li>Ace Percentage</li>
+              <li>Double Fault Percentage</li>
+              <li>First Serve Percentage</li>
+              <li>First Serve Win Percentage</li>
+              <li>Second Serve Win Percentage</li>
+              <li>Break Points Saved Percentage</li>
+              <li>Service Points Won Percentage</li>
+              <li>Aces per Service Game</li>
+              <li>Double Faults per Second Serve</li>
+              <li>Double Faults per Service Game</li>
+              <li>Service In-Play Points Won</li>
+              <li>Points per Service Game</li>
+              <li>Points Lost per Service Game</li>
+              <li>Break Points per Service Game</li>
+              <li>Service Games Won Percentage</li>
+              <li>Service Games Lost per Set</li>
+            </ul>
+          </li>
+
+          <li><strong>Returning Stats</strong>
+            <ul>
+              <li>First Serve Return Points Won Percentage</li>
+              <li>Second Serve Return Points Won Percentage</li>
+              <li>Break Points Won Percentage</li>
+              <li>Return Points Won Percentage</li>
+              <li>Return In-Play Points Won</li>
+              <li>Points per Return Game</li>
+              <li>Points Won per Return Game</li>
+              <li>Return Games Won Percentage</li>
+            </ul>
+          </li>
+
+          <li><strong>Net Play</strong>
+            <ul>
+              <li>Points Played at the Net Percentage</li>
+              <li>Net Points Won Percentage</li>
+              <li>Points Won at the Net Percentage</li>
+            </ul>
+          </li>
+
+          <li><strong>Overall / Other</strong>
+            <ul>
+              <li>Points Won Percentage (All points)</li>
+              <li>Winner Percentage (Winners per Point Won)</li>
+              <li>Unforced Error Percentage (per Point Lost)</li>
+              <li>Forced Error Percentage</li>
+              <li>Avg Second Serve Speed / First Serve Speed</li>
+              <li>Avg Serve Speed / Max Serve Speed</li>
+              <li>Games Won Percentage</li>
+            </ul>
+          </li>
+        </ul>
+
         </p>
         <p>
-          Initially,
+          Initially, I tried to explore more direct methods for training a model
+          to rate performances, like manually sorting a large corpus of match data
+          and then learning what features led to the sorted order. However, these
+          approaches were not efficient. The key insight is that in tennis,
+          <b>good performances tend to translate into wins</b>, so instead of
+          trying to rate performance directly, I can use logistic regression
+          to predict the probability of winning a match based on the available
+          features.
+        </p>
+
+        <p>
+          Logistic regression has several advantages in this context. It is
+          mathematically simple and computationally efficient, so it can be trained
+          quickly even on large datasets. The model is also highly interpretable:
+          each feature weight directly reflects how that statistic contributes to
+          the chance of winning. Finally, the output of the model is a probability,
+          which gives a nuanced sense of confidence rather than a strict yes/no
+          prediction.
         </p>
         <p>
           Logistic regression models the probability of a binary outcome (win/loss) as:
           $$\hat{y} = \sigma(w^T x + b)$$
           where
           $$\sigma(z) = \frac{1}{1 + e^{-z}}$$
-          is the sigmoid function. In this project, the sig
+          is the sigmoid function. In this project, the sigmoid function used has
+          an extra parameter s, which makes it
+          $$\sigma(z) = \frac{1}{1 + e^{-z/s}}$$
         </p>
         <p>
           To fit the model, I optimized the parameters \(w\) and \(b\) by minimizing the
           <i>log loss</i> function, which measures how far the predicted probabilities
           are from the actual match outcomes. The loss for a dataset of \(m\) examples is:
-          {"$$\\mathcal{L}(y, \\hat{y}) = - \\frac{1}{m} \\sum_{i=1}^m \\Big[ y^{(i)} \\log(\\hat{y}^{(i)}) + (1 -
-          y^{(i)}) \\log(1 - \\hat{y}^{(i)}) \\Big]$$"}
+          $$\mathcal{L}(y, \hat{y}) = - \frac{1}{m} \sum_{i=1}^m \Big[ y^{(i)} \log(\hat{y}^{(i)}) + (1 -
+          y^{(i)}) \log(1 - \hat{y}^{(i)}) \Big]$$
         </p>
+
+
+
       </section>
-      <section>Results</section>
+      <section id="Results">Results</section>
       <section id="conclusion">
         <h2>Conclusion & Reflections</h2>
         <p>
@@ -192,19 +277,13 @@
           probability between 0 and 1, which I compared against the true
           outcome. Predictions above 0.5 were classified as wins, and
           those below as losses.
-          - basic testing
-          - future testing
-          why i think its bad j
-          - too correlated with winning
-
-          next steps
         </p>
         <figure>
           <img src="madrid.png" alt="2023 Madrid Open Final" />
           <figcaption>
             In the 2023 Madrid Open Final, Alcaraz (right) defeated
             Struff 6-4, 3-6, 6-3. The model rates Alcaraz's performance as an
-            X and Struff's as a Y.
+            6.77 and Struff's as a 6.34.
           </figcaption>
         </figure>
         <p>
