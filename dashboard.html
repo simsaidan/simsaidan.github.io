@@ -273,7 +273,23 @@
           $$\mathcal{L}(y, \hat{y}) = - \frac{1}{m} \sum_{i=1}^m \Big[ y^{(i)} \log(\hat{y}^{(i)}) + (1 -
           y^{(i)}) \log(1 - \hat{y}^{(i)}) \Big]$$
         </p>
-        <p>First, the input data was normalized </p>
+        <p>
+          First, the input data was normalized so that each feature had zero mean and unit variance.
+          For feature <i>j</i> and sample <i>i</i>, the normalized value was computed as
+        </p>
+
+        <p>
+          \[
+          \tilde{x}_{ij} = \frac{x_{ij} - \mu_j}{\sigma_j},
+          \]
+        </p>
+
+        <p>
+          where \(\mu_j\) and \(\sigma_j\) are the mean and standard deviation of feature <i>j</i>.
+          If a feature had zero variance, \(\sigma_j\) was set to 1 to avoid division by zero.
+          This ensures all features contribute on a comparable scale.
+        </p>
+
 
         <p>Next, the model was trained. testing</p>
         <p> Finally, when predicting on new data, the same normalization step was applied using the
