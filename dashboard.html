@@ -291,13 +291,48 @@
         </p>
 
 
-        <p>Next, the model was trained. testing</p>
+        <p>Next, the model was trained using 20000 iterations and a learning
+          rate of 0.001. In each iteration, a set of predictions were calculated
+          using the current weights and bias. The loss was calculated using the
+          log-loss function.
+        </p>
+        <p>
+          The gradients of the loss with respect to the weights and bias are
+        </p>
+
+        <p>
+          \[
+          \frac{\partial L}{\partial w} = \frac{1}{m} X^T (\hat{y} - y),
+          \quad
+          \frac{\partial L}{\partial b} = \frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})
+          \]
+        </p>
+
+        <p>
+          and the update rules at each step of gradient descent are
+        </p>
+
+        <p>
+          \[
+          w \leftarrow w - \alpha \cdot \frac{1}{m} X^T (\hat{y} - y),
+          \quad
+          b \leftarrow b - \alpha \cdot \frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)}),
+          \]
+        </p>
+
+        <p>
+          where \(\alpha\) is the learning rate. After 20000 iterations, the change loss between iterations
+          was near-zero.
+        </p>
         <p> Finally, when predicting on new data, the same normalization step was applied using the
           training set statistics \((\mu_j, \sigma_j)\).</p>
 
 
       </section>
-      <section id="Results">Results</section>
+      <section id="Results">Results
+        test training, average, distribution,
+
+      </section>
       <section id="conclusion">
         <h2>Conclusion & Reflections</h2>
         <p>
