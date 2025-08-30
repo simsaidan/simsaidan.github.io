@@ -252,8 +252,19 @@
           where
           $$\sigma(z) = \frac{1}{1 + e^{-z}}$$
           is the sigmoid function. In this project, the sigmoid function used has
-          an extra parameter s, which makes it
-          $$\sigma(z) = \frac{1}{1 + e^{-z/s}}$$
+          an extra parameter <i>s</i>, which makes it
+          $$\sigma(z) = \frac{1}{1 + e^{-z/s}}$$.
+        </p>
+        <p>The goal of the model is not just to
+          produce a binary win/loss prediction, but to derive a continuous
+          rating that reflects how strongly a player is expected to
+          perform. If the sigmoid is too steep, most predictions collapse
+          toward 0 or 1, and the intermediate values that could be
+          interpreted as a “rating” are lost. By dividing <i>z</i> by
+          <i>s</i>, the curve is “compressed” and becomes less steep.
+          This spreads the predictions more evenly across the output interval
+          so the output can serve as a rating measure instead of a hard classification.
+
         </p>
         <p>
           To fit the model, I optimized the parameters \(w\) and \(b\) by minimizing the
@@ -262,7 +273,11 @@
           $$\mathcal{L}(y, \hat{y}) = - \frac{1}{m} \sum_{i=1}^m \Big[ y^{(i)} \log(\hat{y}^{(i)}) + (1 -
           y^{(i)}) \log(1 - \hat{y}^{(i)}) \Big]$$
         </p>
+        <p>First, the input data was normalized </p>
 
+        <p>Next, the model was trained. testing</p>
+        <p> Finally, when predicting on new data, the same normalization step was applied using the
+          training set statistics \((\mu_j, \sigma_j)\).</p>
 
 
       </section>
