@@ -43,6 +43,7 @@
         <li><a href="#implementation">Implementation Details</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#conclusion">Conclusion & Reflections</a></li>
+        <li><a href="#dashboard"></a></li>
       </ul>
     </aside>
     <main class="main-content">
@@ -99,7 +100,9 @@
         <figure>
           <img src="miami.png" alt="2023 Miami Open Final" />
           <figcaption>
-            Despite having very similar UTRs, Sinner 8.53, 3.65
+            Despite having very similar UTRs, Jannik Sinner (right) defeated Alex
+            De Minaur in the 2023 Canadian Open final. Sinner receives a rating
+            of 8.72 and De Minaur a 2.81 according to the model.
           </figcaption>
         </figure>
         <p> To illustrate these
@@ -218,8 +221,6 @@
               <li>Winner Percentage (Winners per Point Won)</li>
               <li>Unforced Error Percentage (per Point Lost)</li>
               <li>Forced Error Percentage</li>
-              <li>Avg Second Serve Speed / First Serve Speed</li>
-              <li>Avg Serve Speed / Max Serve Speed</li>
               <li>Games Won Percentage</li>
             </ul>
           </li>
@@ -286,7 +287,7 @@
 
         <p>
           where \(\mu_j\) and \(\sigma_j\) are the mean and standard deviation of feature <i>j</i>.
-          If a feature had zero variance, \(\sigma_j\) was set to 1 to avoid division by zero.
+          If a feature had zero variance, \(\sigma_j\) was set to one to avoid division by zero.
           This ensures all features contribute on a comparable scale.
         </p>
 
@@ -329,27 +330,34 @@
 
 
       </section>
-      <section id="Results">Results
-        test training, average, distribution,
-
+      <section id="Results">
+        <h2>Results</h2>
+        <p>
+          In the data, there were 1729 rows of training data and 433 rows of
+          testing data. The model can first be tested in the traditional way for
+          a logistic regression model, by seeing how many wins and losses can
+          be correctly predicted.
+        </p>
+        <p>
+          In the training set, the model correctly predicts wins and losses
+          for 1609 out of 1729 rows, a 93% accuracy rate. For the testing set,
+          the model correctly predicts the outcome of 406 out of 433 rows, a 94
+          percent accuracy rate. I checked that the accuracy did not increase
+          significantly with more iterations. The average rating in the test set is a 5.00 out
+          of 10 and 5.77% of ratings are above 9 or less than 1.
+        </p>
+        <p>The results of the model have been incorporated into this
+          dashboard <a href="#dashboard">below</a>.
+        </p>
       </section>
       <section id="conclusion">
         <h2>Conclusion & Reflections</h2>
-        <p>
-          To evaluate the model, I split the dataset into training and test
-          sets so that the algorithm would be trained on one portion of the
-          matches and then asked to make predictions on matches it had never
-          seen before. For each test example, the model produced a win
-          probability between 0 and 1, which I compared against the true
-          outcome. Predictions above 0.5 were classified as wins, and
-          those below as losses.
-        </p>
         <figure>
           <img src="madrid.png" alt="2023 Madrid Open Final" />
           <figcaption>
             In the 2023 Madrid Open Final, Alcaraz (right) defeated
             Struff 6-4, 3-6, 6-3. The model rates Alcaraz's performance as an
-            6.77 and Struff's as a 6.34.
+            6.73 and Struff's as a 6.32.
           </figcaption>
         </figure>
         <p>
@@ -384,11 +392,11 @@
             <table style="margin: 0 auto;">
               <tr>
                 <td><label for="acePct">Ace Percentage</label></td>
-                <td><input type="number" id="acePct" placeholder="%" step="0.1"></td>
+                <td><input type="number" min="0" max="1" id="acePct" placeholder="%" step="0.1"></td>
               </tr>
               <tr>
                 <td><label for="dfPct">Double Fault Percentage</label></td>
-                <td><input type="number" id="dfPct" placeholder="%" step="0.1"></td>
+                <td><input type="number" min="0" max="1" id="dfPct" placeholder="%" step="0.1"></td>
               </tr>
               <tr>
                 <td><label for="firstServePct">First Serve Percentage</label></td>
@@ -571,60 +579,46 @@
       const serveSpeedMaxRatio = parseFloat(document.getElementById("serveSpeedMaxRatio").value) || 0;
       const gamesWonPct = parseFloat(document.getElementById("gamesWonPct").value) || 0;
 
-      // Example: sum all values (for demonstration)
       const sum =
-        11360 * acePct +
-        -5670 * dfPct +
-        4502 * firstServePct +
-        29596 * firstServeWinPct +
-        26273 * secondServeWinPct +
-        57111 * breakPointsSavedPct +
-        33408 * servicePointsWonPct +
-        36208 * firstServeReturnPtsWonPct +
-        31558 * secondServeReturnPtsWonPct +
-        64654 * breakPointsWonPct +
-        73296 * returnPointsWonPct +
-        31887 * totalPointsWonPct +
-        64655 * acesPerServiceGame +
-        -12328 * dfPerSecondServe +
-        -40540 * dfPerServiceGame +
-        25440 * serviceInPlayPtsWon +
-        -80998 * pointsPerServiceGame +
-        -209633 * pointsLostPerServiceGame +
-        -89646 * breakPointsPerServiceGame +
-        60917 * serviceGamesWonPct +
-        -283257 * serviceGamesLostPerSet +
-        31112 * returnInPlayPtsWon +
-        62381 * pointsPerReturnGame +
-        251228 * pointsWonPerReturnGame +
-        73296 * returnGamesWonPct +
-        -1862 * winnerPct +
-        -13627 * uePct +
-        13959 * fePct +
-        -1233 * netPtsPlayedPct +
-        21526 * netPtsWonPct +
-        -6317 * ptsWonAtNetPct;
+        4.7487 * ((t_points_won - 0.5002) / 0.0651) +
+        4.7417 * ((gwp - 0.5005) / 0.1378) +
+        3.8626 * ((r_games_won_p - 0.2157) / 0.1712) +
+        3.7691 * ((r_points_won - 0.3617) / 0.0904) +
+        3.6639 * ((r_inplay_ptswon - 0.3643) / 0.0887) +
+        3.5316 * ((sg_wonp - 0.7853) / 0.1704) +
+        3.4340 * ((s_inplay_ptswon - 0.6361) / 0.0890) +
+        3.4236 * ((s_points_won_p - 0.6388) / 0.0907) +
+        3.2814 * ((pw_perrg - 2.3580) / 0.7664) +
+        3.0326 * ((f_return_won_p - 0.2821) / 0.1022) +
+        2.8976 * ((s_return_won_p - 0.4896) / 0.1213) +
+        2.7623 * ((fserve_won_p - 0.7180) / 0.1024) +
+        2.5820 * ((sserve_won_p - 0.5115) / 0.1216) +
+        2.3942 * ((bp_won_p - 0.3905) / 0.2678) +
+        2.2642 * ((bp_saved_p - 0.6111) / 0.2673) +
+        1.2452 * ((pprg - 6.4159) / 0.8684) +
+        1.1194 * ((netwp - 0.6294) / 0.2021) +
+        0.9477 * ((rpsp_ratio - 1.0191) / 0.2011) +
+        0.8609 * ((ace_p - 0.0747) / 0.0599) +
+        0.8559 * ((fserve_p - 0.6208) / 0.0739) +
+        0.6701 * ((aces_psgame - 0.4663) / 0.3623) +
+        0.4699 * ((fe_p - 0.4456) / 0.1109) +
+        -0.0917 * ((netpp - 0.1099) / 0.0577) +
+        -0.2325 * ((winner_p - 0.3178) / 0.0951) +
+        -0.4413 * ((ue_p - 0.2366) / 0.1098) +
+        -0.4487 * ((pwnet - 0.1443) / 0.0792) +
+        -0.7323 * ((df_pss - 0.0950) / 0.0727) +
+        -0.9676 * ((df_p - 0.0366) / 0.0297) +
+        -1.0607 * ((ppsg - 6.4133) / 0.8641) +
+        -1.0622 * ((df_psgame - 0.2381) / 0.2006) +
+        -2.5134 * ((bp_persg - 0.5503) / 0.3619) +
+        -2.9682 * ((pl_persg - 2.3536) / 0.7640) +
+        -3.6723 * ((sglps - 1.0163) / 0.7469)
 
-      const sigmoided = 1 / (1 + Math.exp(-1 * (sum - 10.86) / 500000));
+      const sigmoided = 1 / (1 + Math.exp(-1 * (sum + .048) / 35));
       const scaled = 10 * sigmoided;
       let out;
-      if (scaled > 8.4) {
-        out = scaled + 0.1;
-      } else {
-        out = Math.pow((scaled - 5.8) / 3, 3) + 6.5;
-        out += Math.pow(2, scaled - 8);
-      }
-      // Bounds check
-      if (out < 0) {
-        out = 0;
-      } else if (out > 10) {
-        out = 10;
-      }
-
-
+      out = scaled;
       document.getElementById("ratingDisplay").textContent = "Rating: " + out.toFixed(2);
-
-      // You can now use each variable individually for complex logic!
     }
   </script>
 </body>
