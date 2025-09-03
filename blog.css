@@ -1,0 +1,140 @@
+main p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #333;
+}
+
+main h1,
+main h2,
+main h3 {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+main h1 {
+  font-size: 2em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+}
+
+main h2 {
+  font-size: 1.5em;
+  border-left: 4px solid #0072b1;
+  padding-left: 8px;
+}
+
+main h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Lists */
+main ul,
+main ol {
+  margin: 12px 0 16px 24px;
+}
+
+main li {
+  margin-bottom: 6px;
+}
+
+/* Figures */
+figure {
+  margin: 20px auto;
+  text-align: center;
+  max-width: 100%;
+}
+
+figure img {
+  max-width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+figcaption {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #555;
+  font-style: italic;
+}
+
+/* Table of contents (sidebar) */
+.sidebar h3 {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar ul li {
+  margin: 6px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.sidebar ul li a:hover {
+  color: #0072b1;
+}
+
+/* Dashboard Form */
+.dashboard {
+  margin: 24px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  max-width: 700px;
+}
+
+.dashboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard td {
+  padding: 6px 8px;
+  vertical-align: middle;
+}
+
+.dashboard label {
+  font-size: 0.95em;
+}
+
+.dashboard input[type="number"] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dashboard button {
+  padding: 10px 16px;
+  background: #0072b1;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dashboard button:hover {
+  background: #005c8c;
+}
+
+.rating {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #0072b1;
+  text-align: center;
+}
