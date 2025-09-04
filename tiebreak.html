@@ -3,48 +3,34 @@
 
 <head>
   <meta charset="UTF-8" />
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="blog.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini Globe Test</title>
+  <title>Tiebreak Analysis</title>
   <style>
   </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 </head>
 
 <body>
-  <div>
-    -52971709326182877888689201282239270213=
-  </div>
+  <header class="top-nav">
+    <a href="index.html" class="nav-left">Aidan Sims</a>
+    <nav class="nav-right">
+      <a href="index.html#about">About</a>
+      <a href="AidanSimsResumeQ.pdf" target="_blank">Resume</a>
+      <div class="dropdown">
+        <button class="dropbtn">Personal Projects</button>
+        <div class="dropdown-content">
+          <a href="https://simsaidan.github.io/grid.html" target="_blank">Tennis Grid Game</a>
+          <a href="https://simsaidan.github.io/tiebreak.html" target="_self">Tennis Tiebreak Analysis</a>
+          <a href="https://simsaidan.github.io/webtapp.html" target="_blank">Tennis Stat Tracker</a>
+          <a href="https://simsaidan.github.io/dashboard.html" target="_self">Tennis Performance Rating</a>
+        </div>
+      </div>
 
-
-  <script src="https://unpkg.com/globe.gl"></script>
-  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js';
-
-    const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w';
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    function roundCoord(value) {
-      return Math.round(value * 1000) / 1000;
-    }
-
-    async function addVisitorLocation(lat, lng) {
-      const rLat = roundCoord(lat);
-      const rLng = roundCoord(lng);
-      const { error } = await supabase.from('markers').insert([{ lat: rLat, lng: rLng }]);
-      if (error && error.code !== '23505') {
-        console.error(error);
-      }
-    }
-
-    fetch('https://ipapi.co/json/')
-      .then(res => res.json())
-      .then(location => {
-        addVisitorLocation(location.latitude, location.longitude);
-      })
-      .catch(err => console.error('Could not fetch location:', err));
-
-  </script>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
 </body>
-
-</html>

@@ -68,7 +68,7 @@
           and assigning each player a score between 1 and 10. To accomplish this,
           I built
           a logistic regression model that estimates the probability of a player winning a
-          match based on 32 match statistics, which is then scaled to produce
+          match based on 33 match statistics, which is then scaled to produce
           the rating. This approach achieves two main objectives:
         </p>
         <ol>
@@ -562,6 +562,7 @@
       const breakPointsWonPct = parseFloat(document.getElementById("breakPointsWonPct").value) || 0;
       const returnPointsWonPct = parseFloat(document.getElementById("returnPointsWonPct").value) || 0;
       const totalPointsWonPct = parseFloat(document.getElementById("totalPointsWonPct").value) || 0;
+      const rpsp = parseFloat(document.getElementById("rpsp_ratio").value) || 0;
       const acesPerServiceGame = parseFloat(document.getElementById("acesPerServiceGame").value) || 0;
       const dfPerSecondServe = parseFloat(document.getElementById("dfPerSecondServe").value) || 0;
       const dfPerServiceGame = parseFloat(document.getElementById("dfPerServiceGame").value) || 0;
@@ -600,7 +601,7 @@
       const bp_saved_p = breakPointsSavedPct;
       const pprg = pointsPerReturnGame;
       const netwp = netPtsWonPct;
-      const rpsp_ratio = secondServeSpeedRatio;
+      const rpsp_ratio = rpsp_ratio;
       const ace_p = acePct;
       const fserve_p = firstServePct;
 
