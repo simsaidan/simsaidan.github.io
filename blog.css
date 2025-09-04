@@ -5,6 +5,11 @@ main p {
   color: #333;
 }
 
+section {
+  scroll-margin-top: 20px;
+  /* adjust to match your offset */
+}
+
 main h1,
 main h2,
 main h3 {

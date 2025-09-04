@@ -40,7 +40,6 @@
       <ul>
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#motivation">Motivation</a></li>
-        <li><a href="#dashboard">The Rating Dashboard</a></li>
         <li><a href="#implementation">Implementation Details</a></li>
         <li><a href="#results">Results</a></li>
         <li><a href="#conclusion">Conclusion & Reflections</a></li>
@@ -579,6 +578,40 @@
       const netPtsWonPct = parseFloat(document.getElementById("netPtsWonPct").value) || 0;
       const ptsWonAtNetPct = parseFloat(document.getElementById("ptsWonAtNetPct").value) || 0;
       const gamesWonPct = parseFloat(document.getElementById("gamesWonPct").value) || 0;
+
+      const t_points_won = totalPointsWonPct;
+      const gwp = gamesWonPct;
+      const r_games_won_p = returnGamesWonPct;
+      const r_points_won = returnPointsWonPct;
+      const r_inplay_ptswon = returnInPlayPtsWon;
+      const sg_wonp = serviceGamesWonPct;
+      const s_inplay_ptswon = serviceInPlayPtsWon;
+      const s_points_won_p = servicePointsWonPct;
+      const pw_perrg = pointsWonPerReturnGame;
+      const f_return_won_p = firstServeReturnPtsWonPct;
+      const s_return_won_p = secondServeReturnPtsWonPct;
+      const fserve_won_p = firstServeWinPct;
+      const sserve_won_p = secondServeWinPct;
+      const bp_won_p = breakPointsWonPct;
+      const bp_saved_p = breakPointsSavedPct;
+      const pprg = pointsPerReturnGame;
+      const netwp = netPtsWonPct;
+
+      const ace_p = acePct;
+      const fserve_p = firstServePct;
+      const aces_psgame = acesPerServiceGame;
+      const fe_p = fePct;
+      const netpp = netPtsPlayedPct;
+      const winner_p = winnerPct;
+      const ue_p = uePct;
+      const pwnet = ptsWonAtNetPct;
+      const df_pss = dfPerSecondServe;
+      const df_p = dfPct;
+      const ppsg = pointsPerServiceGame;
+      const df_psgame = dfPerServiceGame;
+      const bp_persg = breakPointsPerServiceGame;
+      const pl_persg = pointsLostPerServiceGame;
+      const sglps = serviceGamesLostPerSet;
 
       const sum =
         4.7487 * ((t_points_won - 0.5002) / 0.0651) +
