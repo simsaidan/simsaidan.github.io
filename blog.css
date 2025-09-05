@@ -5,12 +5,8 @@ main p {
   color: #333;
 }
 
-section::before {
-  content: "";
-  display: block;
-  height: 50px;
-  /* height of your offset */
-  margin-top: -50px;
+h2 {
+  scroll-margin-top: 20px;
 }
 
 main h1,
