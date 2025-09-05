@@ -9,6 +9,11 @@ h2 {
   scroll-margin-top: 20px;
 }
 
+section {
+  scroll-margin-top: 20px;
+  /* increase this to match your header height */
+}
+
 main h1,
 main h2,
 main h3 {
