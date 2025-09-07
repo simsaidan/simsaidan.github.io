@@ -39,10 +39,10 @@
       <ul>
         <li><a href="#motivation">Motivation</a></li>
         <li><a href="#background">Background</a></li>
+        <li><a href="#monte">Monte-Carlo Methods</a></li>
         <li><a href="#analysis">Analysis</a></li>
         <li><a href="#conclusion">Conclusion</a></li>
-
-
+        <li><a href="#references">References</a></li>
       </ul>
     </aside>
     <main class="main-content">
@@ -69,30 +69,121 @@
           who serves the first point also serves the fourth, fifth,
           eighth, ninth, and so on.
         </p>
+        <p>history, length</p>
         <p>
-          We now lay out important trends, terms, and rules in a standard
-          tennis match. At almost every level of tennis, the player/team
-          who is serving has an advantage. A hold is defined as the server
-          winning the point or game. Likewise, a break is defined as the
-          returner winning the point or game. When a returner is
-          within one point of winning a game or tiebreaker, the next point is
-          said to be a “break point.” Likewise, when either player is within
-          one point of winning a match, the next point is said to be a
-          “match point.” match point dynamic
-
+          Let's now go over tennis concepts that are important in this project:
+        <ul>
+          <li>At almost every level of tennis, the player
+            who is serving has an advantage.</li>
+          <li>
+            A "hold" is defined as the server their service game (or point in a tiebreaker).
+          </li>
+          <li>Likewise, a "break" is defined as the
+            returner winning the game or tiebreaker point.</li>
+          <li>When a returner is
+            within one point of winning a game, the next point is
+            said to be a “break point”.</li>
+          <li>Likewise, when either player is within
+            one point of winning a match, the next point is said to be a
+            “match point.” match point dynamic</li>
+        </ul>
         </p>
-        <p>finalse</p>
-        history of tiebreaks
-        types of tiebreaks
-        thesis
-
+        <p>
+          In this project, I tried to measure the fairness of three different
+          tiebreak formats: the 7-point and 9-point formats established above,
+          as well as a hybrid "mixed" format. The mixed format is a fixed-length,
+          first to five tiebreak like the 9-point format, but it uses the serving
+          pattern of the 7-point tiebreak.
+        <table>
+          <thead>
+            <tr>
+              <th>Tiebreak</th>
+              <th>Fixed Length?</th>
+              <th>Serve Format</th>
+              <th>Points to Win</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Seven Point</td>
+              <td>No</td>
+              <td>ABBAABB…</td>
+              <td>7+</td>
+            </tr>
+            <tr>
+              <td>Nine Point</td>
+              <td>Yes</td>
+              <td>AABBAABBB</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Mixed</td>
+              <td>Yes</td>
+              <td>ABBAABBAA</td>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
+        </p>
+        <p>
+          Going forward, the player or doubles team which serves first in a tiebreak
+          will be referred to as "Player A" and the other player/team will be
+          referred to as "Player B". Moreover, doubles matches will not be treated
+          differently, and each team is treated as a single entity.
+        </p>
       </section>
       <section id="monte">
         <h2>Monte-Carlo Methods</h2>
+        <p>
+          In computer science and statistics, Monte Carlo methods are a broad
+          class of algorithms that rely on repeated random sampling
+          to achieve a result. These methods are employed when the goal is to estimate
+          a quantity that is difficult to calculate directly. For example, a good way to calculate
+          the value of π from scratch directly is not immediately obvious. However, this
+          is a simple task using randomness. Since a random point with x and y
+          coordinates between 0 and 1 has a π/4 probability of being inside the
+          first quadrant of the unit circle, one can sample a large number of such points
+          and multiply the proportion of points inside the unit circle by 4 to get π.
+          This project uses the same principle:
+          instead of random points, I simulate many random tiebreaks to estimate
+          the likelihood of different outcomes, since the problem is
+          too complex to solve with a simple formula.
+        </p>
       </section>
       <section id="analysis">
         <h2>Analysis</h2>
-        <p>blah</p>
+        Most of the analysis part of this project consists of several "experiments"
+        or "scenarios".
+        <p>
+          First however,
+        </p>
+        <p>
+          To set some context for the simulations, I looked at how ATP Top 100
+          players performed in 2021. Using data from
+          <a href="https://www.ultimatetennisstatistics.com/">Ultimate Tennis Statistics</a>,
+          I calculated average hold rates, return rates, break point stats, and game lengths.
+          These numbers also serve as parameters for the simulations.
+        </p>
+        <p>
+        <ul>
+          <li><strong>Average Service Point Win %:</strong> 63.73% (91 players, 9 with no data)</li>
+          <li><strong>Average Return Point Win %:</strong> 36.97% (91 players)</li>
+          <li><strong>Average Break Points Saved %:</strong> 61.58% (91 players)</li>
+          <li><strong>Average Break Points Converted %:</strong> 39.33% (91 players)</li>
+          <li><strong>Average Points per Service Game:</strong> 6.40 (87 players)</li>
+          <li><strong>Average Points per Return Game:</strong> 6.42 (87 players)</li>
+          <li><strong>Average Game Time:</strong> 4.84 minutes (18 players)</li>
+        </ul>
+
+        </p>
+        <p>
+          Notice that break point stats are slightly skewed compared to overall point stats:
+          break points saved are about 2.15% lower than the average service point win rate,
+          and break points converted are about 2.36% higher than the return point
+          win rate. On average, that’s a 2.26% swing.
+          These small differences highlight the pressure of break points
+          and potentially extend to match points.
+        </p>
         <h3>Scenario 1</h3>
         <h3>Scenario 2</h3>
         <h3>Scenario 3</h3>
@@ -130,7 +221,7 @@
           <li id="ref5">
             <a href="https://www.nytimes.com/1970/07/26/archives/us-open-adopts-suddendeath-set-us-open-will-use-suddendeath-set.html"
               target="_blank" rel="noopener">
-              The New York Times: “U.S. Open Adopts Suddendeath Set”
+              The New York Times: “U.S. Open Adopts Sudden-Death Set”
             </a>
           </li>
         </ol>
