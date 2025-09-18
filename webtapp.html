@@ -4,39 +4,7 @@
   <script src="webtapp.js"></script>
 </head>
 
-<div id="match-setup-popup" class="popup">
-  <div class="popup-content">
-    <h2>Match Setup</h2>
-    <form id="match-setup-form">
-      <label>
-        Match Type:
-        <select id="matchType" required>
-          <option value="singles">Singles</option>
-          <option value="doubles">Doubles</option>
-        </select>
-      </label>
-      <br><br>
 
-      <div id="singles-inputs">
-        <label>Player A: <input type="text" id="playerAName" value="Player A" required></label><br><br>
-        <label>Player B: <input type="text" id="playerBName" value="Player B" required></label><br><br>
-      </div>
-
-      <div id="doubles-inputs" style="display:none;">
-        <label>Team A1: <input type="text" id="teamA1Name" value="Player A1"></label><br><br>
-        <label>Team A2: <input type="text" id="teamA2Name" value="Player A2"></label><br><br>
-        <label>Team B1: <input type="text" id="teamB1Name" value="Player B1"></label><br><br>
-        <label>Team B2: <input type="text" id="teamB2Name" value="Player B2"></label><br><br>
-      </div>
-
-      <label>Who Serves First?</label><br>
-      <input type="radio" name="firstServer" value="A" required> Player A / Team A<br>
-      <input type="radio" name="firstServer" value="B"> Player B / Team B<br><br>
-
-      <button type="submit">Start Match</button>
-    </form>
-  </div>
-</div>
 <div class="score">Score</div>
 <div class="Players">
   <span class="PlayerA">Player A</span>

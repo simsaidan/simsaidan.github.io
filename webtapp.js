@@ -169,8 +169,8 @@ class Match {
   }
 }
 
-let PlayerA = new Player("Player A");
-let PlayerB = new Player("Player B");
+let PlayerA = new Player("Joe Biden");
+let PlayerB = new Player("Donald Trump");
 let match = new Match(PlayerA, PlayerB);
 
 let gameScores = [0, 15, 30, 40];
@@ -999,60 +999,4 @@ function increment() {
   makeStats(winner, selection, servein, prevserver)
 }
 
-window.onload = function () {
-  const popup = document.getElementById("match-setup-popup");
-  const form = document.getElementById("match-setup-form");
-  const matchTypeSelect = document.getElementById("matchType");
-  const singlesInputs = document.getElementById("singles-inputs");
-  const doublesInputs = document.getElementById("doubles-inputs");
 
-  popup.style.display = "flex"; // show popup on load
-
-  // Toggle singles/doubles inputs
-  matchTypeSelect.addEventListener("change", () => {
-    if (matchTypeSelect.value === "singles") {
-      singlesInputs.style.display = "block";
-      doublesInputs.style.display = "none";
-    } else {
-      singlesInputs.style.display = "none";
-      doublesInputs.style.display = "block";
-    }
-  });
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const matchType = matchTypeSelect.value;
-    let playerAName, playerBName;
-
-    if (matchType === "singles") {
-      playerAName = document.getElementById("playerAName").value.trim();
-      playerBName = document.getElementById("playerBName").value.trim();
-    } else {
-      const a1 = document.getElementById("teamA1Name").value.trim();
-      const a2 = document.getElementById("teamA2Name").value.trim();
-      const b1 = document.getElementById("teamB1Name").value.trim();
-      const b2 = document.getElementById("teamB2Name").value.trim();
-
-      playerAName = a1 + " / " + a2;
-      playerBName = b1 + " / " + b2;
-    }
-
-    const firstServer = document.querySelector('input[name="firstServer"]:checked').value;
-
-    // Update player objects
-    PlayerA.name = playerAName;
-    PlayerB.name = playerBName;
-
-    // Update UI names everywhere
-    document.querySelectorAll(".PlayerA").forEach(el => el.textContent = playerAName);
-    document.querySelectorAll(".PlayerB").forEach(el => el.textContent = playerBName);
-
-    // Set server
-    server = (firstServer === "A") ? playerAName : playerBName;
-    document.querySelector(".server").textContent = "Serving: " + server;
-
-    // Hide popup
-    popup.style.display = "none";
-  });
-};
