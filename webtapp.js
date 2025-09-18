@@ -219,11 +219,13 @@ function updateHowWonOptions() {
   const aceOption = document.querySelector('input[name="howwon"][value="ace"]');
   const swinnerOption = document.querySelector('input[name="howwon"][value="swinner"]');
   const dfOption = document.querySelector('input[name="howwon"][value="df"]');
+  const nwOption = document.querySelector('input[name="howwon"][value="nw"]');
+  const neOption = document.querySelector('input[name="howwon"][value="ne"]');
 
-  // reset everything first
-  aceOption.disabled = false;
-  swinnerOption.disabled = false;
-  dfOption.disabled = false;
+  // reset everything
+  [aceOption, swinnerOption, dfOption, nwOption, neOption].forEach(opt => {
+    opt.disabled = false;
+  });
 
   // rule 1: if serve was in, DF not possible
   if (serveInInput && serveInInput.value === "servein") {
@@ -231,18 +233,41 @@ function updateHowWonOptions() {
     dfOption.checked = false;
   }
 
-  // rule 2: if server won point → DF not possible
+  // rule 2: if server won → DF not possible
   if (winnerInput && serverWonPoint(winnerInput.value, server)) {
     dfOption.disabled = true;
     dfOption.checked = false;
   }
 
-  // rule 3: if server lost point → Ace + Service Winner not possible
+  // rule 3: if server lost → Ace + Service Winner not possible
   if (winnerInput && !serverWonPoint(winnerInput.value, server)) {
     aceOption.disabled = true;
     swinnerOption.disabled = true;
     if (aceOption.checked) aceOption.checked = false;
     if (swinnerOption.checked) swinnerOption.checked = false;
+  }
+
+  // --- NEW NET LOGIC ---
+  if (winnerInput) {
+    const winnerAtNet =
+      (winnerInput.value === "Awon" && document.querySelector('input[name="whocame"][value="Acame"]').checked) ||
+      (winnerInput.value === "Bwon" && document.querySelector('input[name="whocame"][value="Bcame"]').checked);
+
+    const loserAtNet =
+      (winnerInput.value === "Awon" && document.querySelector('input[name="whocame"][value="Bcame"]').checked) ||
+      (winnerInput.value === "Bwon" && document.querySelector('input[name="whocame"][value="Acame"]').checked);
+
+    // if winner not at net → no Net Winner
+    if (!winnerAtNet) {
+      nwOption.disabled = true;
+      nwOption.checked = false;
+    }
+
+    // if loser not at net → no Net Error
+    if (!loserAtNet) {
+      neOption.disabled = true;
+      neOption.checked = false;
+    }
   }
 }
 
@@ -251,6 +276,9 @@ document.querySelectorAll('input[name="serveIn"]').forEach(input => {
   input.addEventListener('change', updateHowWonOptions);
 });
 document.querySelectorAll('input[name="whowon"]').forEach(input => {
+  input.addEventListener('change', updateHowWonOptions);
+});
+document.querySelectorAll('input[name="whocame"]').forEach(input => {
   input.addEventListener('change', updateHowWonOptions);
 });
 
