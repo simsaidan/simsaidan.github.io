@@ -172,6 +172,16 @@ class Match {
 let PlayerA = new Player("Joe Biden");
 let PlayerB = new Player("Donald Trump");
 let match = new Match(PlayerA, PlayerB);
+// Update all "PlayerA" elements
+document.querySelectorAll(".PlayerA").forEach(el => {
+  el.textContent = PlayerA.name;
+});
+
+// Update all "PlayerB" elements
+document.querySelectorAll(".PlayerB").forEach(el => {
+  el.textContent = PlayerB.name;
+});
+
 
 let gameScores = [0, 15, 30, 40];
 const score = document.querySelector('.score')
