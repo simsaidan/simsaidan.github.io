@@ -204,17 +204,55 @@ dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
   weekday: 'long'
 }).format(new Date());
 
+function serverWonPoint(winner, server) {
+  return (server === "Player A" && winner === "Awon") ||
+    (server === "Player B" && winner === "Bwon");
+}
+
+// manage howwon options
+function updateHowWonOptions() {
+  const winnerInput = document.querySelector('input[name="whowon"]:checked');
+  const serveInInput = document.querySelector('input[name="serveIn"]:checked');
+
+  const aceOption = document.querySelector('input[name="howwon"][value="ace"]');
+  const swinnerOption = document.querySelector('input[name="howwon"][value="swinner"]');
+  const dfOption = document.querySelector('input[name="howwon"][value="df"]');
+
+  // reset everything first
+  aceOption.disabled = false;
+  swinnerOption.disabled = false;
+  dfOption.disabled = false;
+
+  // rule 1: if serve was in, DF not possible
+  if (serveInInput && serveInInput.value === "servein") {
+    dfOption.disabled = true;
+    dfOption.checked = false;
+  }
+
+  // rule 2: if server won point → DF not possible
+  if (winnerInput && serverWonPoint(winnerInput.value, server)) {
+    dfOption.disabled = true;
+    dfOption.checked = false;
+  }
+
+  // rule 3: if server lost point → Ace + Service Winner not possible
+  if (winnerInput && !serverWonPoint(winnerInput.value, server)) {
+    aceOption.disabled = true;
+    swinnerOption.disabled = true;
+    if (aceOption.checked) aceOption.checked = false;
+    if (swinnerOption.checked) swinnerOption.checked = false;
+  }
+}
+
+// attach listeners
 document.querySelectorAll('input[name="serveIn"]').forEach(input => {
-  input.addEventListener('change', function () {
-    const dfOption = document.querySelector('input[name="howwon"][value="df"]');
-    if (this.value === "servein") {
-      dfOption.disabled = true;
-      dfOption.checked = false;
-    } else {
-      dfOption.disabled = false;
-    }
-  });
+  input.addEventListener('change', updateHowWonOptions);
 });
+document.querySelectorAll('input[name="whowon"]').forEach(input => {
+  input.addEventListener('change', updateHowWonOptions);
+});
+
+
 
 
 function changeTitles(top, mid, bot) {
