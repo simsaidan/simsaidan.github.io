@@ -998,3 +998,34 @@ function increment() {
   makePbp(winner, 0)
   makeStats(winner, selection, servein, prevserver)
 }
+
+window.onload = function () {
+  const popup = document.getElementById("match-setup-popup");
+  const form = document.getElementById("match-setup-form");
+
+  popup.style.display = "flex"; // show popup on load
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const matchType = document.getElementById("matchType").value;
+    const playerAName = document.getElementById("playerAName").value.trim();
+    const playerBName = document.getElementById("playerBName").value.trim();
+    const firstServer = document.querySelector('input[name="firstServer"]:checked').value;
+
+    // Update player objects
+    PlayerA.name = playerAName;
+    PlayerB.name = playerBName;
+
+    // Update UI
+    document.querySelectorAll(".PlayerA").forEach(el => el.textContent = playerAName);
+    document.querySelectorAll(".PlayerB").forEach(el => el.textContent = playerBName);
+
+    // Set first server
+    server = (firstServer === "A") ? playerAName : playerBName;
+    document.querySelector(".server").textContent = "Serving: " + server;
+
+    // Hide popup
+    popup.style.display = "none";
+  });
+};
