@@ -204,6 +204,18 @@ dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
   weekday: 'long'
 }).format(new Date());
 
+document.querySelectorAll('input[name="serveIn"]').forEach(input => {
+  input.addEventListener('change', function () {
+    const dfOption = document.querySelector('input[name="howwon"][value="df"]');
+    if (this.value === "servein") {
+      dfOption.disabled = true;
+      dfOption.checked = false;
+    } else {
+      dfOption.disabled = false;
+    }
+  });
+});
+
 
 function changeTitles(top, mid, bot) {
   const thead = document.querySelector('.btt');
