@@ -4,210 +4,218 @@
   <script src="webtapp.js"></script>
 </head>
 
-<body>
-  <div id="match-setup-popup" class="popup">
-    <div class="popup-content">
-      <h2>Match Setup</h2>
-      <form id="match-setup-form">
-        <label>
-          Match Type:
-          <select id="matchType" required>
-            <option value="singles">Singles</option>
-            <option value="doubles">Doubles</option>
-          </select>
-        </label>
-        <br><br>
+<div id="match-setup-popup" class="popup">
+  <div class="popup-content">
+    <h2>Match Setup</h2>
+    <form id="match-setup-form">
+      <label>
+        Match Type:
+        <select id="matchType" required>
+          <option value="singles">Singles</option>
+          <option value="doubles">Doubles</option>
+        </select>
+      </label>
+      <br><br>
 
+      <div id="singles-inputs">
         <label>Player A: <input type="text" id="playerAName" value="Player A" required></label><br><br>
         <label>Player B: <input type="text" id="playerBName" value="Player B" required></label><br><br>
+      </div>
 
-        <label>Who Serves First?</label><br>
-        <input type="radio" name="firstServer" value="A" required> Player A<br>
-        <input type="radio" name="firstServer" value="B"> Player B<br><br>
+      <div id="doubles-inputs" style="display:none;">
+        <label>Team A1: <input type="text" id="teamA1Name" value="Player A1"></label><br><br>
+        <label>Team A2: <input type="text" id="teamA2Name" value="Player A2"></label><br><br>
+        <label>Team B1: <input type="text" id="teamB1Name" value="Player B1"></label><br><br>
+        <label>Team B2: <input type="text" id="teamB2Name" value="Player B2"></label><br><br>
+      </div>
 
-        <button type="submit">Start Match</button>
-      </form>
-    </div>
-  </div>
-  <div class="score">Score</div>
-  <div class="Players">
-    <span class="PlayerA">Player A</span>
-    <span class="PlayerB">Player Ca</span>
-  </div>
-  <div class="date"> Date</div>
-  <div class="server">Serving:</div>
-  <div class="progress">
-    <progress value="0.5" max="1"></progress>
-  </div>
-  <hr>
-  <div class="pointq">Was the first serve in?</div>
-  <div class="radio">
-    <input type="radio" name="serveIn" value="servein"> Yes
-    <input type="radio" name="serveIn" value="serveout"> No
-  </div>
-  <div class="pointq">Who won the point?</div>
-  <div class="radio">
-    <input type="radio" name="whowon" value="Awon"> Player A
-    <input type="radio" name="whowon" value="Bwon"> Player B
-  </div>
-  <div class="pointq">Who came to the net?</div>
-  <div class="checkboxes">
-    <input type="checkbox" name="whocame" value="Acame"> Player A
-    <input type="checkbox" name="whocame" value="Bcame"> Player B
-  </div>
-  <div class="pointq">How was the point won?</div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="ace"> Ace
-    <input type="radio" name="howwon" value="swinner"> Service Winner
-    <input type="radio" name="howwon" value="df"> Double Fault
-  </div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="fhw"> FH Winner
-    <input type="radio" name="howwon" value="bhw"> BH Winner
-    <input type="radio" name="howwon" value="fhe"> FH Error
-    <input type="radio" name="howwon" value="bhe"> BH Error
-  </div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="nw"> Net Winner
-    <input type="radio" name="howwon" value="ne"> Net Error
-  </div>
-  <div class="button">
-    <button type="button" class="submitb" onclick="increment()">Submit Point</button>
-    <button type="button" class="resetb"
-      onclick="if (confirm('Are you sure you want to reload?')) { location.reload(); }">Reset Match</button>
-  </div>
-  <hr>
-  <div class="Players">
-    <span class="PlayerA">Player A</span>
-    <span class="PlayerB">Player B</span>
-  </div>
-  <div class="Ratings">
-    <span class="RatingA">Player A</span>
-    <span class="RatingB">Player B</span>
-  </div>
-  <div class="Button Menu">
-    <button type="button" class="bmenubutton" onclick="overviewbf()">Overview</button>
-    <button type="button" class="bmenubutton" onclick="servingbf()">Serving</button>
-    <button type="button" class="bmenubutton" onclick="returnbf()">Returning</button>
-    <button type="button" class="bmenubutton" onclick="wenbf()">W/E & Net</button>
-    <button type="button" class="bmenubutton" onclick="adfbf()">Aces/DF</button>
-    <button type="button" class="bmenubutton" onclick="totalbf()">Total</button>
-  </div>
-  <div class="btt">Serve</div>
-  <div>
-    <table>
-      <tr class="table-row">
-        <td class="tl1">0</td>
-        <td class="tm1">Aces</td>
-        <td class="tr1">0</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl2">0</td>
-        <td class="tm2">Double Faults</td>
-        <td class="tr2">0</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl3">-</td>
-        <td class="tm3">1st Serve %</td>
-        <td class="tr3">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl4">-</td>
-        <td class="tm4">1st Serve Won %</td>
-        <td class="tr4">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl5">-</td>
-        <td class="tm5">2nd Serve Won %</td>
-        <td class="tr5">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl6">-</td>
-        <td class="tm6">Break Points</td>
-        <td class="tr6">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="tl7">-</td>
-        <td class="tm7">Service Points Won %</td>
-        <td class="tr7">-</td>
-      </tr>
+      <label>Who Serves First?</label><br>
+      <input type="radio" name="firstServer" value="A" required> Player A / Team A<br>
+      <input type="radio" name="firstServer" value="B"> Player B / Team B<br><br>
 
-    </table>
+      <button type="submit">Start Match</button>
+    </form>
   </div>
-  <div class="btm">Return</div>
-  <div>
-    <table>
-      <tr class="table-row">
-        <td class="ml1">-</td>
-        <td class="mm1">1st Serve Return Won %</td>
-        <td class="mr1">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml2">-</td>
-        <td class="mm2">2nd Serve Return Won %</td>
-        <td class="mr2">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml3">-</td>
-        <td class="mm3">Return Points Won %</td>
-        <td class="mr3">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml4"></td>
-        <td class="mm4"></td>
-        <td class="mr4"></td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml5"></td>
-        <td class="mm5"></td>
-        <td class="mr5"></td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml6"></td>
-        <td class="mm6"></td>
-        <td class="mr6"></td>
-      </tr>
-      <tr class="table-row">
-        <td class="ml7"></td>
-        <td class="mm7"></td>
-        <td class="mr7"></td>
-      </tr>
+</div>
+<div class="score">Score</div>
+<div class="Players">
+  <span class="PlayerA">Player A</span>
+  <span class="PlayerB">Player Ca</span>
+</div>
+<div class="date"> Date</div>
+<div class="server">Serving:</div>
+<div class="progress">
+  <progress value="0.5" max="1"></progress>
+</div>
+<hr>
+<div class="pointq">Was the first serve in?</div>
+<div class="radio">
+  <input type="radio" name="serveIn" value="servein"> Yes
+  <input type="radio" name="serveIn" value="serveout"> No
+</div>
+<div class="pointq">Who won the point?</div>
+<div class="radio">
+  <input type="radio" name="whowon" value="Awon"> Player A
+  <input type="radio" name="whowon" value="Bwon"> Player B
+</div>
+<div class="pointq">Who came to the net?</div>
+<div class="checkboxes">
+  <input type="checkbox" name="whocame" value="Acame"> Player A
+  <input type="checkbox" name="whocame" value="Bcame"> Player B
+</div>
+<div class="pointq">How was the point won?</div>
+<div class="radio">
+  <input type="radio" name="howwon" value="ace"> Ace
+  <input type="radio" name="howwon" value="swinner"> Service Winner
+  <input type="radio" name="howwon" value="df"> Double Fault
+</div>
+<div class="radio">
+  <input type="radio" name="howwon" value="fhw"> FH Winner
+  <input type="radio" name="howwon" value="bhw"> BH Winner
+  <input type="radio" name="howwon" value="fhe"> FH Error
+  <input type="radio" name="howwon" value="bhe"> BH Error
+</div>
+<div class="radio">
+  <input type="radio" name="howwon" value="nw"> Net Winner
+  <input type="radio" name="howwon" value="ne"> Net Error
+</div>
+<div class="button">
+  <button type="button" class="submitb" onclick="increment()">Submit Point</button>
+  <button type="button" class="resetb"
+    onclick="if (confirm('Are you sure you want to reload?')) { location.reload(); }">Reset Match</button>
+</div>
+<hr>
+<div class="Players">
+  <span class="PlayerA">Player A</span>
+  <span class="PlayerB">Player B</span>
+</div>
+<div class="Ratings">
+  <span class="RatingA">Player A</span>
+  <span class="RatingB">Player B</span>
+</div>
+<div class="Button Menu">
+  <button type="button" class="bmenubutton" onclick="overviewbf()">Overview</button>
+  <button type="button" class="bmenubutton" onclick="servingbf()">Serving</button>
+  <button type="button" class="bmenubutton" onclick="returnbf()">Returning</button>
+  <button type="button" class="bmenubutton" onclick="wenbf()">W/E & Net</button>
+  <button type="button" class="bmenubutton" onclick="adfbf()">Aces/DF</button>
+  <button type="button" class="bmenubutton" onclick="totalbf()">Total</button>
+</div>
+<div class="btt">Serve</div>
+<div>
+  <table>
+    <tr class="table-row">
+      <td class="tl1">0</td>
+      <td class="tm1">Aces</td>
+      <td class="tr1">0</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl2">0</td>
+      <td class="tm2">Double Faults</td>
+      <td class="tr2">0</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl3">-</td>
+      <td class="tm3">1st Serve %</td>
+      <td class="tr3">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl4">-</td>
+      <td class="tm4">1st Serve Won %</td>
+      <td class="tr4">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl5">-</td>
+      <td class="tm5">2nd Serve Won %</td>
+      <td class="tr5">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl6">-</td>
+      <td class="tm6">Break Points</td>
+      <td class="tr6">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="tl7">-</td>
+      <td class="tm7">Service Points Won %</td>
+      <td class="tr7">-</td>
+    </tr>
 
-    </table>
-  </div>
-  <div class="btb">Total</div>
-  <div>
-    <table>
-      <tr class="table-row">
-        <td class="bl1">-</td>
-        <td class="bm1">Point Dominance</td>
-        <td class="br1">-</td>
-      </tr>
-      <tr class="table-row">
-        <td class="bl2">0</td>
-        <td class="bm2">Total Points Won</td>
-        <td class="br2">0</td>
-      </tr>
-      <tr class="table-row">
-        <td class="bl3">0:00</td>
-        <td class="bm3">Match Time</td>
-        <td class="br3">0:00</td>
-      </tr>
-      <tr class="table-row">
-        <td class="bl4"></td>
-        <td class="bm4"></td>
-        <td class="br4"></td>
-      </tr>
-      <tr class="table-row">
-        <td class="bl5"></td>
-        <td class="bm5"></td>
-        <td class="br5"></td>
-      </tr>
-    </table>
-  </div>
-  <hr>
-  <div>Play-by-Play</div>
-  <div class="pbp"></div>
+  </table>
+</div>
+<div class="btm">Return</div>
+<div>
+  <table>
+    <tr class="table-row">
+      <td class="ml1">-</td>
+      <td class="mm1">1st Serve Return Won %</td>
+      <td class="mr1">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml2">-</td>
+      <td class="mm2">2nd Serve Return Won %</td>
+      <td class="mr2">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml3">-</td>
+      <td class="mm3">Return Points Won %</td>
+      <td class="mr3">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml4"></td>
+      <td class="mm4"></td>
+      <td class="mr4"></td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml5"></td>
+      <td class="mm5"></td>
+      <td class="mr5"></td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml6"></td>
+      <td class="mm6"></td>
+      <td class="mr6"></td>
+    </tr>
+    <tr class="table-row">
+      <td class="ml7"></td>
+      <td class="mm7"></td>
+      <td class="mr7"></td>
+    </tr>
+
+  </table>
+</div>
+<div class="btb">Total</div>
+<div>
+  <table>
+    <tr class="table-row">
+      <td class="bl1">-</td>
+      <td class="bm1">Point Dominance</td>
+      <td class="br1">-</td>
+    </tr>
+    <tr class="table-row">
+      <td class="bl2">0</td>
+      <td class="bm2">Total Points Won</td>
+      <td class="br2">0</td>
+    </tr>
+    <tr class="table-row">
+      <td class="bl3">0:00</td>
+      <td class="bm3">Match Time</td>
+      <td class="br3">0:00</td>
+    </tr>
+    <tr class="table-row">
+      <td class="bl4"></td>
+      <td class="bm4"></td>
+      <td class="br4"></td>
+    </tr>
+    <tr class="table-row">
+      <td class="bl5"></td>
+      <td class="bm5"></td>
+      <td class="br5"></td>
+    </tr>
+  </table>
+</div>
+<hr>
+<div>Play-by-Play</div>
+<div class="pbp"></div>
 
 </body>
 
