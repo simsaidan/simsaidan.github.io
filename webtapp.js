@@ -205,10 +205,8 @@ dateDiv.textContent = dateDiv.textContent = new Intl.DateTimeFormat('en-US', {
 }).format(new Date());
 
 function serverWonPoint(winner, server) {
-  console.log(winner);
-  console.log(server)
-  return (server === "Player A" && winner === "Awon") ||
-    (server === "Player B" && winner === "Bwon");
+  return (server === PlayerA && winner === "Awon") ||
+    (server === PlayerB && winner === "Bwon");
 }
 
 // manage howwon options
