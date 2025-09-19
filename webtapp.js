@@ -189,10 +189,10 @@ score.textContent = match.getPoints(PlayerA) + '-' + match.getPoints(PlayerB);
 var statmode = 'Overview'
 
 var tiebreak = 0;
-var server = "Player A";
+var server = PlayerA
 var tbserver = '';
 var divserver = document.querySelector(".server");
-divserver.textContent = "Serving: " + server;
+divserver.textContent = "Serving: " + server.name;
 var startTime = new Date();
 
 
@@ -283,7 +283,19 @@ document.querySelectorAll('input[name="whocame"]').forEach(input => {
 });
 
 
+function resetPointInputs() {
+  // clear all radios
+  document.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.checked = false;
+    r.disabled = false; // restore enabled state
+  });
 
+  // clear all checkboxes
+  document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+    c.checked = false;
+    c.disabled = false; // restore enabled state
+  });
+}
 
 function changeTitles(top, mid, bot) {
   const thead = document.querySelector('.btt');
@@ -301,16 +313,10 @@ function formatTotalTime(t) {
 }
 
 function toggleServer() {
-  var divserver = document.querySelector(".server");
-
-  if (divserver.textContent === "Serving: Player A") {
-    divserver.textContent = "Serving: Player B";
-    server = "Player B"
-  } else {
-    divserver.textContent = "Serving: Player A";
-    server = "Player A"
-  }
+  server = (server === PlayerA) ? PlayerB : PlayerA;
+  document.querySelector(".server").textContent = "Serving: " + server.name;
 }
+
 function changeValue(code, lef, mid, rig) {
   const left = document.querySelector('.' + code[0] + 'l' + code[1])
   left.textContent = lef
