@@ -203,14 +203,33 @@
         <figure>
           <img src="scenario1.png" alt="Scenario 1 Results" />
           <figcaption>
-            Despite having very similar UTRs, Jannik Sinner (right) defeated Alex
-            De Minaur 6-4, 6-1 in the 2023 Canadian Open final.
-            According to the model, Sinner receives a performance rating
-            of 8.72 and De Minaur scores a 2.81.
+            Simulated outcomes of 100 trials comparing fairness of the 9-point
+            and 7-point tiebreak formats at a 63.73% hold rate. Each point
+            represents the number of tiebreaks (out of 1000) won by Player A
+            in a single trial. The dashed lines show the median number
+            of wins for each format. The 7-point format clusters closely around
+            500 wins, indicating fairness, while the 9-point format consistently
+            falls below, showing a structural disadvantage for the first server.
           </figcaption>
         </figure>
         <p>
-          Explain the result here.
+          At a representative hold rate of 63.7%, the Monte Carlo simulations
+          reveal a clear difference in fairness between the two
+          tiebreak formats. In the 9-point format, Player A, the first
+          server, won an average of only 46.2% of tiebreaks,
+          compared to roughly 49.7% in the standard 7-point format.
+          This bias is statistically significant,
+          with a t-statistic of -22.1 for the 9-point format
+          versus -2.3 for the 7-point format. The results indicate that the
+          9-point structure inherently favors the second server (Player B),
+          largely because Player B serves more points.
+          By contrast, the 7-point tiebreak
+          distributes serving advantages more evenly, producing outcomes much
+          closer to a fair 50-50 split. In short, the simulation supports the
+          conclusion that the 7-point tiebreaker is statistically fairer,
+          while the 9-point format systematically
+          disadvantages the opening server. I hypothesized that the 9-point format
+          would disadvantage someone, but the second server instead.
         </p>
 
 
