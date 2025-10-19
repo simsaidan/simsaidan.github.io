@@ -149,9 +149,9 @@
           a quantity that is difficult to calculate directly. For example, a good way to calculate
           the value of π from scratch directly is not immediately obvious. However, this
           is a simple task using randomness. Since a random point with x and y
-          coordinates between 0 and 1 has a π/4 probability of being inside the
+          coordinates between 0 and 1 has a \(\frac{\pi}{4} \) probability of being inside the
           first quadrant of the unit circle, one can sample a large number of such points
-          and multiply the proportion of points inside the unit circle by 4 to get π.
+          and multiply the proportion of points inside the unit circle by 4 to get \(\pi \).
           This project uses the same principle:
           instead of random points, I simulate many random tiebreaks to estimate
           the likelihood of different outcomes, since the problem is
@@ -218,9 +218,56 @@
           tiebreak formats. In the 9-point format, Player A, the first
           server, won an average of only 46.2% of tiebreaks,
           compared to roughly 49.7% in the standard 7-point format.
-          This bias is statistically significant,
-          with a t-statistic of -22.1 for the 9-point format
-          versus -2.3 for the 7-point format. The results indicate that the
+        </p>
+        To test whether either tiebreak format systematically favors the first server (Player A),
+        I performed a one-sample <i>t</i>-test comparing the simulated mean number of wins per trial
+        to the expected fair outcome of 500 (half of 1000).
+        The <i>t</i>-statistic is given by:
+        </p>
+
+        <p style="text-align:center;">
+          $$
+          t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
+          $$
+        </p>
+
+        <p>
+          where:
+        <ul>
+          <li>\(\bar{x}\): sample mean number of Player A wins (out of 1000)</li>
+          <li>\(\mu_0 = 500\): expected mean if both players are equally strong</li>
+          <li>\(s\): sample standard deviation of the 100 trial means</li>
+          <li>\(n = 100\): number of trials</li>
+        </ul>
+        </p>
+
+        <p>
+          Plugging in the values for the 9-point format:
+        </p>
+
+        <p style="text-align:center;">
+          $$
+          t = \frac{462.5 - 500}{\sqrt{286.86} / 10} \approx -22.1
+          $$
+        </p>
+
+        <p>
+          and for the 7-point format:
+        </p>
+
+        <p style="text-align:center;">
+          $$
+          t = \frac{496.99 - 500}{\sqrt{170.82} / 10} \approx -2.30
+          $$
+        </p>
+
+        <p>
+          A large magnitude of \(t\) indicates a significant deviation from fairness.
+          Thus, the 9-point format shows a highly significant bias (|t| ≫ 2),
+          while the 7-point format remains statistically consistent with a fair outcome.
+        </p>
+        <p>
+          The results indicate that the
           9-point structure inherently favors the second server (Player B),
           largely because Player B serves more points.
           By contrast, the 7-point tiebreak
