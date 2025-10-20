@@ -279,9 +279,6 @@
           would disadvantage someone, but the second server instead.
         </p>
 
-
-
-
         <h3>Scenario 2</h3>
         <p>
           The second scenario introduced two main changes. First, I considered the
@@ -289,7 +286,21 @@
           of hold rates, rather than just one.
         </p>
         <p>
-          In this experiment,
+          In this experiment, I ran 15 trials, and each trial had a hold rate
+          between 20% and 90% (increasing by 5% each time). For each of the 15
+          hold rates, the simulation ran 100 trials, and each trial
+          consisted of 500 simulated tiebreaks of each format: the
+          7-point, 9-point, and “mixed” (9-point length with
+          7-point serving order).
+
+          For each hold rate, I recorded how often Player A won, and then
+          averaged those results across all trials. This produced a curve
+          showing how each format’s fairness changes as serving
+          becomes more or less dominant. The first plot shows the
+          mean number of wins by Player A out of 500
+          (a value of 250 would indicate perfect fairness), while
+          the second plot shows the absolute deviation from fairness,
+          as a measure of imbalance.
         </p>
         <figure>
           <img src="scenario2.png" alt="Scenario 2 Results" />
@@ -303,36 +314,113 @@
             one player as serving advantage changes.
           </figcaption>
         </figure>
-        <p>explain</p>
+        <p>After plotting the resulting data, I found that the chance that Player
+          A wins is independent of serving ability for the 7-Point format. However,
+          for the other two formats, the chance that Player A wins is affected by
+          serving ability. Only when the hold rate is around .5 are those formats
+          fair.
+          Below, I plotted the difference between the average number of tiebreaks
+          Player A wins and the value 250, which makes it easier to visually compare
+          the 9-point and the hybrid format. The lines are almost identical, which
+          shows that contrary to my original hypothesis, the hybrid format does
+          not have a fairness advantage.
+        </p>
         <figure>
           <img src="scenario2a.png" alt="Scenario 2 Results" />
           <figcaption>
-            Despite having very similar UTRs, Jannik Sinner (right) defeated Alex
-            De Minaur 6-4, 6-1 in the 2023 Canadian Open final.
-            According to the model, Sinner receives a performance rating
-            of 8.72 and De Minaur scores a 2.81.
+            Absolute deviation from fairness, for each tiebreak format at
+            different hold rates. Smaller values indicate greater fairness.
+            The 7-point format consistently shows the least deviation,
+            demonstrating that it remains balanced regardless of serving
+            strength, while the 9-point and hybrid formats become
+            increasingly unbalanced at extreme hold rates.
           </figcaption>
         </figure>
-
-
         <h3>Scenario 3</h3>
         <p>
-          In the third scenario,
+          Originally, one aspect of the 9-point I disliked the most was that a
+          player could face multiple match points without previously losing a service
+          point. Facing a match point adds additional pressure and therefore changes
+          the probability of winning a point. Although I could not find data on match
+          point conversion, I found data which showed that in professional tennis, the
+          server wins on break point 2-3% less than on a normal point.
         </p>
-        <h3>Scenario 4</h3>
-        <p>Finally, </p>
+        <p>
+          To factor this in, I reran Scenario 2, but with an addional match point
+          penalty of 5% (factoring in that there is more pressure on match point
+          than break point and that professional players might be less susceptible
+          to pressure than the average player). In a server was down match point,
+          they would have a lower chance of winning the point, whereas if they were
+          one point away from victory, they would receive a boost.
+        </p>
         <figure>
-          <img src="scenario1.png" alt="Scenario 1 Results" />
+          <img src="scenario3.png" alt="Scenario 3 Results" />
           <figcaption>
-            Despite having very similar UTRs, Jannik Sinner (right) defeated Alex
-            De Minaur 6-4, 6-1 in the 2023 Canadian Open final.
-            According to the model, Sinner receives a performance rating
-            of 8.72 and De Minaur scores a 2.81.
+            Simulated outcomes of 15 trials comparing tiebreaker fairness
+            across a range of hold rates (20%–90%) with a 5% match point penalty. Each point represents the
+            average number of tiebreaks won by Player A out of 500 at a
+            given hold rate. A perfectly fair format would yield 250 wins.
+            The 7-point tiebreak remains near this level across all hold rates,
+            while the 9-point and mixed formats show increasing bias toward
+            one player as serving advantage changes.
           </figcaption>
         </figure>
         <p>
-          explain
+          These plots closely resemble the plots from Scenario 2, and the match
+          point penalty does not have a major effect. Again, the 9-point and hybrid formats
+          have are only fair when the hold rate is roughly 50%, whereas the 7-point
+          format yields a chance of winning independent of the hold rate. In the plot below,
+          there is some difference shown between the hybrod line and the 9-point line,
+          but it could be due to noise.
         </p>
+        <figure>
+          <img src="scenario3a.png" alt="Scenario 3 Results" />
+          <figcaption>
+            Absolute deviation from fairness, for each tiebreak format at
+            different hold rates with a 5% match point penalty. Smaller values indicate greater fairness.
+            The 7-point format consistently shows the least deviation,
+            demonstrating that it remains balanced regardless of serving
+            strength, while the 9-point and hybrid formats become
+            increasingly unbalanced at extreme hold rates.
+          </figcaption>
+        </figure>
+        <h3>Scenario 4</h3>
+        <p>Because the hybrid format did not show any advantages over the other two,
+          I did not include it in Scenario 4. In this scenario, I wanted to explore
+          how much time using the 9-Point format saves, since that is one of its
+          purported advantages.
+        </p>
+        <figure>
+          <img src="scenario4.png" alt="Scenario 4 Results" />
+          <figcaption>
+            Average tiebreak length (in total points played) for the 7-point
+            and 9-point formats across hold rates ranging from 20% to 90%.
+            As hold rate increases, meaning servers become more dominant, both
+            formats tend to last longer on average, but the 7-point tiebreak
+            is consistently several points longer because of its
+            “win-by-two” rule, which allows extended play when both
+            players continue holding serve.
+          </figcaption>
+        </figure>
+        <p>
+          The first plot shows how the expected tiebreak length changes with
+          hold rate for each format. The second plot directly compares the two, displaying the additional number of
+          points the 7-point format typically requires relative to the 9-point format. This experiment provides context
+          for how much longer a fairer, “win-by-two” format tends to last—and whether that added fairness comes at the
+          cost of significantly extended play.
+        </p>
+        <figure>
+          <img src="scenario4a.png" alt="Scenario 4 Results" />
+          <figcaption>
+            Difference in expected length between the 7-point and 9-point
+            tiebreakers as a function of hold rate. The 7-point format
+            typically lasts about four to five points longer on average,
+            with the gap widening as hold rate increases. This indicates
+            that the additional fairness of the 7-point tiebreak
+            comes at the cost of slightly longer decider.
+          </figcaption>
+        </figure>
+
       </section>
       <section id="conclusion">
         <h2>Conclusion</h2>
