@@ -191,7 +191,7 @@
           To set some context for the simulations, I looked at how ATP Top 100
           players performed in 2021. Using data from
           <a href="https://www.ultimatetennisstatistics.com/">Ultimate Tennis Statistics</a>,
-          I calculated average hold rates, return rates, break point stats, and game lengths.
+          I calculated average hold rates, return rates, break point stats, and game lengths <a href="#ref3">[3]</a>.
           These numbers also serve as parameters for the simulations.
         </p>
         <p>
@@ -454,8 +454,41 @@
       </section>
       <section id="conclusion">
         <h2>Conclusion</h2>
-        findings
-        recommendation
+        <p>
+          The goal of this project was to evaluate the fairness and
+          practicality of the 9-point tennis tiebreaker compared
+          to the more common 7-point format, using Monte Carlo
+          simulations grounded in real ATP player data. Across all simulated
+          scenarios, the 7-point tiebreak consistently produced
+          results closest to a 50–50 split between the first and
+          second server, confirming its statistical fairness.
+          In contrast, the 9-point tiebreak systematically
+          favored the second server at realistic hold rates, with Player A
+          winning only about 46% of the time at realistic hold rates.
+          Introducing a hybrid format (same length as the 9-point
+          but using the 7-point serving order) did not improve
+          fairness, and applying a “match point pressure”
+          adjustment also had minimal effect on outcomes.
+        </p>
+        <p> At the beginning, I had hypothesized that the 9-point format was
+          biased in favor of the first server rather than the second. I think future
+          work could seek to include more real world factors and see if they sway
+          the fairness of the 9-point format in the other direction.
+        </p>
+        <p>
+          The 9-point format’s only measurable advantage is speed: simulations
+          showed it saves roughly four to five points on average compared
+          to the 7-point format. However, this time savings comes at the
+          cost of a substantial structural bias against the first server,
+          meaning the format sacrifices competitive integrity for only a
+          modest reduction in match length.
+
+          Given these results, the 7-point “win-by-two” tiebreak should remain
+          the standard format for competitive play.
+          The 9-point version, while efficient, is not fair under realistic
+          conditions, and the hybrid alternative
+          offers no meaningful improvement.
+        </p>
       </section>
       <section id="references">
         <h2>References</h2>
@@ -485,6 +518,12 @@
             <a href="https://www.nytimes.com/1970/07/26/archives/us-open-adopts-suddendeath-set-us-open-will-use-suddendeath-set.html"
               target="_blank" rel="noopener">
               The New York Times: “U.S. Open Adopts Sudden-Death Set”
+            </a>
+          </li>
+          <li id="ref6">
+            <a href="https://en.wikipedia.org/wiki/Tennis_scoring_system#Tiebreak_scoring" target="_blank"
+              rel="noopener">
+              Wikipedia: “Tennis Scoring System — Tiebreak Scoring”
             </a>
           </li>
         </ol>
