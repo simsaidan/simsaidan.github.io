@@ -40,9 +40,9 @@ function fetchData(jsonFilePath) {
     });
 }
 
-const [playersPath, rankingsPath] = ['./json/players.json', './json/rankings.json'];
-const [singlesPath, doublesPath] = ['./json/singles.json', './json/doubles.json'];
-const [endgamePath, endgameResPath] = ['./json/endgame.json', './json/endgameres.json'];
+const [playersPath, rankingsPath] = ['/json/players.json', '/json/rankings.json'];
+const [singlesPath, doublesPath] = ['/json/singles.json', '/json/doubles.json'];
+const [endgamePath, endgameResPath] = ['/json/endgame.json', '/json/endgameres.json'];
 let playerData, rankingsData, singlesData, doublesData, endgameData, endgameResData;
 
 fetchData(playersPath)
