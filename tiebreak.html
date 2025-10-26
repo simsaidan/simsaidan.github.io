@@ -413,7 +413,7 @@
         </figure>
         <h3>Scenario 4</h3>
         <p>Because the hybrid format did not show any advantages over the other two,
-          I did not include it in Scenario 4. In this scenario, I wanted to explore
+          I excluded it from Scenario 4. In this scenario, I wanted to explore
           how much time using the 9-point format saves, since that is one of its
           purported advantages.
         </p>
@@ -423,7 +423,7 @@
           and 9-point formats at each hold rate. For every simulated tiebreak,
           I recorded the total number of points played and then averaged those
           results. I included a match point adjustment factor like in Scenario 3,
-          but only used 2.255 %.
+          but used a smaller value of 2.255%.
         </p>
         <figure>
           <img src="images/scenario4.png" alt="Scenario 4 Results" />
@@ -455,6 +455,16 @@
             comes at the cost of slightly longer decider.
           </figcaption>
         </figure>
+        <p> To translate this difference into real time, consider that an
+          average service game lasts about 4.84 minutes and contains
+          roughly 6.40 points. That means each point takes about
+          \( \frac{4.84}{6.40} \approx 0.76 \) minutes,
+          or about 46 seconds. Since the 7-point format typically
+          lasts up to five points longer than the 9-point format,
+          this corresponds to roughly \( 5 \times 0.76 = 3.8 \) additional
+          minutes of play. In other words, the fairer “win-by-two” format
+          only extends a tiebreak by about three to four minutes on
+          averagem a modest trade-off for significantly improved fairness. </p>
 
       </section>
       <section id="conclusion">
@@ -462,20 +472,20 @@
         <p>
           The goal of this project was to evaluate the fairness and
           practicality of the 9-point tennis tiebreak compared
-          to the more common 7-point format, using Monte Carlo
+          to the standard 7-point format, using Monte Carlo
           simulations grounded in real ATP player data. Across all simulated
           scenarios, the 7-point tiebreak consistently produced
           results closest to a 50–50 split between the first and
           second server, confirming its statistical fairness.
           In contrast, the 9-point tiebreak systematically
           favored the second server at realistic hold rates, with Player A
-          winning only about 46% of the time at realistic hold rates.
+          winning only about 46% of the time at the ATP average hold rate.
           Introducing a hybrid format (same length as the 9-point
           but using the 7-point serving order) did not improve
           fairness, and applying a “match point pressure”
           adjustment also had minimal effect on outcomes.
         </p>
-        <p> At the beginning, I had hypothesized that the 9-point format was
+        <p> Initially, I had hypothesized that the 9-point format was
           biased in favor of the first server rather than the second. Future work
           could include additional real-world factors to assess
           whether they influence the fairness of the 9-point format.
