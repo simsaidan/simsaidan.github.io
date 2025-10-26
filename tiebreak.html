@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/blog.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tiebreak Analysis</title>
@@ -49,44 +49,45 @@
       <h1 style="margin-top: 20px;">Evaluating the Fairness of the 9-Point Tennis Tiebreak Using Monte Carlo Methods
       </h1>
       <p>
-        This blog post is based on a work I did in Fall 2022 as an analyst with
+        This blog post is based on a project I worked on in Fall 2022 as an analyst with
         the Cornell Sports Analytics Club.
       </p>
       <section id="motivation">
         <h2>Motivation</h2>
         My interest in this project started from experience on court. During a
-        college club tournament, I played in the deciding match of the semifinals
-        which came down to a tiebreak. The tournament dictated that a 9-point
-        tiebreak format should be used, an unorthodox format I had never played before.
+        college club tournament, I played in the deciding match of the semifinals,
+        which came down to a tiebreak. The tournament used a 9-point
+        tiebreak format, an unorthodox format I had never played before.
         Neither team broke serve over the first six points, but suddenly, we were
         staring down three match points. I found it frustrating that a player
-        could be so close to losing despite never losing serve. I wanted to pursue this
-        project to back up my belief that the 9-point format is inferior and
-        inherently flawed.
+        could be so close to losing despite never losing serve. This experience
+        made me want to explore whether the 9-point format is indeed
+        inferior and fundamentally unfair.
       </section>
       <section id="background">
         <h2>Background</h2>
         <p>
           Under most standard tennis scoring formats, tiebreaks are used
           to decide sets that are tied after a fixed number of games
-          (7-point tiebreak) or to decide matches that are tied one to one
-          in sets (10-point tiebreak). In both cases, the first player to
-          that number of points wins but they must be ahead by two points
-          or the tiebreak continues. In addition, both tiebreak
-          formats use the “A-B-B-A” serving format in which the player/team
+          (7-point tiebreak) or to decide matches that are tied one set
+          apiece (10-point tiebreak). In both cases, the first player to
+          reach the required number of points wins,
+          but they must be ahead by two points
+          for the tiebreak to end. Both
+          formats use the “A-B-B-A” serving format in which the player or team
           who serves the first point also serves the fourth, fifth,
           eighth, ninth, and so on.
         </p>
         <p>The idea of a tiebreak was chiefly championed by James “Jimmy”
           Van Alen in the 1950s, as part of his broader
           “Van Alen Streamlined Scoring System” (VASSS). He proposed a
-          “first to five” sudden-death tiebreak (9-point format) as a way to
-          prevent marathon sets, which could drag on interminably
+          “first to five” sudden-death tiebreak (the 9-point format) as a way to
+          prevent marathon sets that could drag on indefinitely
           under the traditional rule requiring a two-game lead <a href="#ref1">[1]</a>. Van Alen also
           considered a longer “best-of-twelve” (7-point format) variant, which
           over time became the more widely accepted form <a href="#ref2">[2]</a>.
-          It is worth noting that professional players at the time complained
-          that the 9-point format was "unfair" since one player received an
+          Interestingly, many professional players at the time complained
+          that the 9-point format was "unfair," since one player received an
           extra serve <a href="#ref3">[3]</a>.
         </p>
         <p>
@@ -94,36 +95,35 @@
           using Van Alen’s sudden-death “first to five” system
           (with no two-point margin at 4–4) <a href="#ref4">[4]</a>. That version was used
           through 1974, after which the tournament, and eventually others,
-          transitioned to the now-familiar 12-point
-          tiebreak (first to seven, win by two). Over subsequent decades,
+          transitioned to the 7-point
+          tiebreak. Over subsequent decades,
           most major tournaments adopted tiebreaks in earlier sets,
           and gradually also in final sets, making the tiebreak
           a staple of modern tennis scoring. Today, the 7-point tiebreak format
           is widely used across almost every level of tennis, although the 9-point
-          format is used in World Team tennis events.
+          format survives mainly in World Team tennis events.
         </p>
         <p>
-          Let's now go over tennis concepts that are important in this project:
+          Let's now go over tennis concepts that are relevant this project:
         <ul>
-          <li>At almost every level of tennis, the player
-            who is serving has an advantage.</li>
+          <li>At almost every level of tennis, the server has an advantage.</li>
           <li>
             A "hold" is defined as the server winning their service game (or point in a tiebreak).
           </li>
-          <li>Likewise, a "break" is defined as the
+          <li>A "break" is defined as the
             returner winning the game or tiebreak point.</li>
           <li>When a returner is
             within one point of winning a game, the next point is
-            said to be a “break point”.</li>
-          <li>Likewise, when either player is within
-            one point of winning a match, the next point is said to be a
+            a “break point”.</li>
+          <li>When either player is within
+            one point of winning a match, the next point is a
             “match point.”</li>
         </ul>
         </p>
         <p>
           In this project, I tried to measure the fairness of three different
           tiebreak formats: the 7-point and 9-point formats established above,
-          as well as a hybrid "mixed" format. The mixed format is a fixed-length,
+          as well as a hybrid "mixed" format I propose. The mixed format is a fixed-length,
           first to five tiebreak like the 9-point format, but it uses the serving
           pattern of the 7-point tiebreak.
         <table>
@@ -159,8 +159,8 @@
         </p>
         <p>
           Going forward, the player or doubles team which serves first in a tiebreak
-          will be referred to as "Player A" and the other player/team will be
-          referred to as "Player B". Moreover, doubles matches will not be treated
+          will be referred to as "Player A" and the other will be
+          referred to as "Player B". Doubles matches will not be treated
           differently, and each team is treated as a single entity.
         </p>
       </section>
@@ -169,13 +169,13 @@
         <p>
           In computer science and statistics, Monte Carlo methods are a broad
           class of algorithms that rely on repeated random sampling
-          to achieve a result <a href="#ref5">[5]</a>. These methods are employed when the goal is to estimate
+          to estimate results <a href="#ref5">[5]</a>. These methods are employed when the goal is to estimate
           a quantity that is difficult to calculate directly. For example, a good way to calculate
-          the value of π from scratch directly is not immediately obvious. However, this
-          is a simple task using randomness. Since a random point with x and y
+          the value of π from first principles is not straightfoward. However, this
+          is a simple task using randomness: since a random point with x and y
           coordinates between 0 and 1 has a \(\frac{\pi}{4} \) probability of being inside the
           first quadrant of the unit circle, one can sample a large number of such points
-          and multiply the proportion of points inside the unit circle by 4 to get \(\pi \).
+          and multiply the proportion of points inside the unit circle by 4 to approximate \(\pi \).
           This project uses the same principle:
           instead of random points, I simulate many random tiebreaks to estimate
           the likelihood of different outcomes, since the problem is
@@ -184,17 +184,18 @@
       </section>
       <section id="analysis">
         <h2>Analysis</h2>
-        Most of the analysis part of this project consists of several "experiments"
+        Most of the analysis in this project is organized into several "experiments"
         or "scenarios".
         <p>
-          First, however, it’s important to establish some statistical
+          Before diving into them, it’s important to establish some statistical
           context for the simulations by grounding them in real ATP performance data.
         </p>
         <p>
-          To set some context for the simulations, I looked at how ATP Top 100
-          players performed in 2021. Using data from
+          I looked at how ATP Top 100
+          players performed in 2021 using data from
           <a href="https://www.ultimatetennisstatistics.com/">Ultimate Tennis Statistics</a>,
-          I calculated average hold rates, return rates, break point stats, and game lengths <a href="#ref6">[6]</a>.
+          I calculated average hold rates, return rates, break point statistics, and game lengths <a
+            href="#ref6">[6]</a>.
           These numbers also serve as parameters for the simulations.
         </p>
         <p>
@@ -210,7 +211,8 @@
 
         </p>
         <p>
-          Notice that break point stats are slightly skewed compared to overall point stats:
+          Notice that break point statistics are slightly skewed compared
+          to overall point statistics:
           break points saved are about 2.15% lower than the average service point win rate,
           and break points converted are about 2.36% higher than the return point
           win rate. On average, that’s a 2.26% swing.
@@ -220,10 +222,10 @@
         <h3>Scenario 1</h3>
         <p>
           In the first scenario, I compared the fairness of the 9-point and
-          7-point Tiebreak formats at a hold rate of .6373 or 63.73%.
+          7-point tiebreak formats at a hold rate of .6373 or 63.73%.
           In this scenario, I ran 100 trials. In each trial,
           I simulate 1000 tiebreaks of each type and recorded the number of
-          times out of 1000 that Player A was victorious.
+          times that Player A (the first server) was victorious.
         </p>
         <figure>
           <img src="images/scenario1.png" alt="Scenario 1 Results" />
@@ -292,33 +294,33 @@
           while the 7-point format remains statistically consistent with a fair outcome.
         </p>
         <p>
-          The results indicate that the
+          These results indicate that the
           9-point structure inherently favors the second server (Player B),
-          largely because Player B serves more points.
-          By contrast, the 7-point tiebreak
+          primarily because Player B serves more points.
+          In contrast, the 7-point tiebreak
           distributes serving advantages more evenly, producing outcomes much
           closer to a fair 50-50 split. In short, the simulation supports the
           conclusion that the 7-point tiebreak is statistically fairer,
           while the 9-point format systematically
           disadvantages the opening server. I hypothesized that the 9-point format
-          would disadvantage someone, but the second server instead.
+          would disadvantage someone, but I expected it to be the second server instead.
         </p>
 
         <h3>Scenario 2</h3>
         <p>
-          The second scenario introduced two main changes. First, I considered the
+          The second scenario introduced two main changes. First, I includeded the
           third hybrid (Mixed) tiebreak format. Moreover, this scenario considered a range
           of hold rates, rather than just one.
         </p>
         <p>
-          In this experiment, I ran 15 trials, and each trial had a hold rate
+          In this experiment, I ran 15 trials, each with a hold rate
           between 20% and 90% (increasing by 5% each time). For each of the 15
           hold rates, the simulation ran 100 trials, and each trial
           consisted of 500 simulated tiebreaks of each format: the
           7-point, 9-point, and “mixed” (9-point length with
           7-point serving order).
 
-          For each hold rate, I recorded how often Player A won, and then
+          For each hold rate, I recorded how often Player A won and then
           averaged those results across all trials. This produced a curve
           showing how each format’s fairness changes as serving
           becomes more or less dominant. The first plot shows the
@@ -340,13 +342,13 @@
           </figcaption>
         </figure>
         <p>After plotting the resulting data, I found that the chance that Player
-          A wins is independent of serving ability for the 7-point format. However,
+          A wins is independent of serving ability under the 7-point format. However,
           for the other two formats, the chance that Player A wins is affected by
           serving ability. Only when the hold rate is around .5 are those formats
           fair.
           Below, I plotted the difference between the average number of tiebreaks
           Player A wins and the value 250, which makes it easier to visually compare
-          the 9-point and the hybrid format. The lines are almost identical, which
+          the 9-point and the hybrid formats. The lines are almost identical, which
           shows that contrary to my original hypothesis, the hybrid format does
           not have a fairness advantage.
         </p>
@@ -363,11 +365,11 @@
         </figure>
         <h3>Scenario 3</h3>
         <p>
-          Originally, one aspect of the 9-point I disliked the most was that a
+          Originally, one aspect of the 9-point I originally disliked was that a
           player could face multiple match points without previously losing a service
           point. Facing a match point adds additional pressure and therefore changes
-          the probability of winning a point. Although I could not find data on match
-          point conversion, I found data which showed that in professional tennis, the
+          the probability of winning a point. Although I could not find direct data on match
+          point conversion, I found data showing that in professional tennis, the
           server wins on break point 2-3% less than on a normal point.
         </p>
         <p>
@@ -375,8 +377,8 @@
           penalty of 5% (factoring in that there is more pressure on match point
           than break point and that professional players might be less susceptible
           to pressure than the average player). If a server was down match point,
-          they would have a lower chance of winning the point, whereas if they were
-          one point away from victory, they would receive a boost.
+          they would have a 5% lower chance of winning the point, whereas if they were
+          one point away from victory, they would receive a 5% boost.
         </p>
         <figure>
           <img src="images/scenario3.png" alt="Scenario 3 Results" />
@@ -396,7 +398,7 @@
           are only fair when the hold rate is roughly 50%, whereas the 7-point
           format yields a chance of winning independent of the hold rate. In the plot below,
           there is some difference shown between the hybrid line and the 9-point line,
-          but it could be due to noise.
+          but the differnece is small it could be due to noise.
         </p>
         <figure>
           <img src="images/scenario3a.png" alt="Scenario 3 Results" />
