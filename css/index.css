@@ -218,6 +218,13 @@ main p {
   padding: 20px;
 }
 
+.top-nav a.active {
+  color: #00bfff;
+  /* light blue highlight */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
