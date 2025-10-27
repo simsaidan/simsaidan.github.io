@@ -10,18 +10,21 @@ function loadComponent(id, file) {
 
 function highlightActiveLink() {
   const currentUrl = window.location.href;
+  const currentPage = window.location.pathname.split('/').pop(); // e.g. "tiebreak.html" or ""
 
-  // Get all navbar links (including dropdown)
+  // Don't highlight anything on index page or root
+  if (currentPage === '' || currentPage === 'index.html') return;
+
   const links = document.querySelectorAll('.top-nav a');
 
   links.forEach(link => {
-    // Compare without hash fragments
     const linkHref = link.href.split('#')[0];
-    const currentPage = currentUrl.split('#')[0];
+    const linkPage = link.pathname.split('/').pop();
 
-    if (linkHref === currentPage) {
+    if (linkPage === currentPage) {
       link.classList.add('active');
-      // Optional: highlight dropdown parent
+
+      // Optional: highlight dropdown parent if inside one
       const dropdown = link.closest('.dropdown');
       if (dropdown) {
         dropdown.querySelector('.dropbtn').classList.add('active');
