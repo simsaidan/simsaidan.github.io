@@ -15,25 +15,7 @@
 </head>
 
 <body>
-  <header class="top-nav">
-    <a href="index.html" class="nav-left">Aidan Sims</a>
-    <nav class="nav-right">
-      <a href="index.html#about">About</a>
-      <a href="AidanSimsResumeQ.pdf" target="_blank">Resume</a>
-      <div class="dropdown">
-        <button class="dropbtn">Personal Projects</button>
-        <div class="dropdown-content">
-          <a href="https://simsaidan.github.io/grid.html" target="_blank">Tennis Grid Game</a>
-          <a href="https://simsaidan.github.io/tiebreak.html" target="_self">Tennis Tiebreak Analysis</a>
-          <a href="https://simsaidan.github.io/webtapp.html" target="_blank">Tennis Stat Tracker</a>
-          <a href="https://simsaidan.github.io/dashboard.html" target="_self">Tennis Performance Rating</a>
-        </div>
-      </div>
-
-      <a href="index.html#contact">Contact</a>
-    </nav>
-  </header>
-
+  <div id="navbar"></div>
   <div class="layout">
     <aside class="sidebar">
       <h3>Table of Contents</h3>
@@ -660,6 +642,10 @@
       out = scaled;
       document.getElementById("ratingDisplay").textContent = "Rating: " + out.toFixed(2);
     }
+  </script>
+  <script src="loadComponent.js"></script>
+  <script>
+    loadComponent('navbar', 'components/navbar.html');
   </script>
 </body>
 

@@ -48,24 +48,7 @@
 <body>
 
   <!-- Top Navigation Bar -->
-  <header class="top-nav">
-    <a href="index.html" class="nav-left">Aidan Sims</a>
-    <nav class="nav-right">
-      <a href="#about">About</a>
-      <a href="AidanSimsResumeQ.pdf" target="_blank">Resume</a>
-      <div class="dropdown">
-        <button class="dropbtn">Personal Projects</button>
-        <div class="dropdown-content">
-          <a href="https://simsaidan.github.io/grid.html" target="_blank">Tennis Grid Game</a>
-          <a href="https://simsaidan.github.io/tiebreak.html" target="_self">Tennis Tiebreak Analysis</a>
-          <a href="https://simsaidan.github.io/webtapp.html" target="_blank">Tennis Stat Tracker</a>
-          <a href="https://simsaidan.github.io/dashboard.html" target="_self">Tennis Performance Rating</a>
-        </div>
-      </div>
-
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div id="navbar"></div>
 
   <!-- Sidebar -->
   <aside class="sidebar">
@@ -191,6 +174,10 @@
 
 
   </main>
+  <script src="loadComponent.js"></script>
+  <script>
+    loadComponent('navbar', 'components/navbar.html');
+  </script>
 
 </body>
 
