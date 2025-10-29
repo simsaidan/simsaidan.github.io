@@ -340,8 +340,6 @@ var statmode = 'Overview'
 
 var tiebreak = 0;
 var tbserver = '';
-var divserver = document.querySelector(".server");
-divserver.textContent = "Serving: " + server.name;
 var startTime = new Date();
 
 
