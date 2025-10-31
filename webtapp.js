@@ -335,7 +335,7 @@ document.querySelectorAll(".PlayerB").forEach(el => {
 
 let gameScores = [0, 15, 30, 40];
 const score = document.querySelector('.score')
-score.textContent = match.getPoints(PlayerA) + '-' + match.getPoints(PlayerB);
+score.textContent = match.aPoints + '-' + match.bPoints;
 var statmode = 'Overview'
 
 var tiebreak = 0;
@@ -358,7 +358,6 @@ function serverWonPoint(winner, serverKey) {
   return false;
 }
 
-// manage howwon options
 function updateHowWonOptions() {
   const winnerInput = document.querySelector('input[name="whowon"]:checked');
   const serveInInput = document.querySelector('input[name="serveIn"]:checked');
@@ -368,8 +367,24 @@ function updateHowWonOptions() {
   const dfOption = document.querySelector('input[name="howwon"][value="df"]');
   const nwOption = document.querySelector('input[name="howwon"][value="nw"]');
   const neOption = document.querySelector('input[name="howwon"][value="ne"]');
+  const allHowWon = document.querySelectorAll('input[name="howwon"]');
 
-  // reset everything
+  // --- Step 0: Disable all "howwon" if no winner selected ---
+  if (!winnerInput) {
+    allHowWon.forEach(opt => {
+      opt.checked = false;
+      opt.disabled = true;
+    });
+    return; // don't continue until who-won is chosen
+  }
+
+  // --- Step 1: Re-enable for use now that we have a winner ---
+  allHowWon.forEach(opt => {
+    opt.disabled = false;
+  });
+
+  // --- Step 2: Apply your special rules ---
+  // reset all first
   [aceOption, swinnerOption, dfOption, nwOption, neOption].forEach(opt => {
     opt.disabled = false;
   });
@@ -392,6 +407,18 @@ function updateHowWonOptions() {
     swinnerOption.disabled = true;
     if (aceOption.checked) aceOption.checked = false;
     if (swinnerOption.checked) swinnerOption.checked = false;
+  }
+
+  // --- NEW RULE: If someone was at the net → disable Ace, DF, and Service Winner ---
+  const someoneAtNet =
+    document.querySelector('input[name="whocame"][value="Acame"]').checked ||
+    document.querySelector('input[name="whocame"][value="Bcame"]').checked;
+
+  if (someoneAtNet) {
+    [aceOption, dfOption, swinnerOption].forEach(opt => {
+      opt.disabled = true;
+      opt.checked = false;
+    });
   }
 
   // --- NEW NET LOGIC ---
@@ -419,28 +446,43 @@ function updateHowWonOptions() {
 }
 
 // attach listeners
+document.querySelectorAll('input[name="serveIn"], input[name="whowon"], input[name="whocame"]').forEach(input => {
+  input.addEventListener('change', updateHowWonOptions);
+});
+
+// enable "whowon" when "serveIn" selected
 document.querySelectorAll('input[name="serveIn"]').forEach(input => {
-  input.addEventListener('change', updateHowWonOptions);
+  input.addEventListener('change', () => {
+    document.querySelectorAll('input[name="whowon"]').forEach(r => r.disabled = false);
+  });
 });
+
+// enable "whocame" only when "whowon" selected
 document.querySelectorAll('input[name="whowon"]').forEach(input => {
-  input.addEventListener('change', updateHowWonOptions);
+  input.addEventListener('change', () => {
+    document.querySelectorAll('input[name="whocame"]').forEach(c => c.disabled = false);
+    updateHowWonOptions(); // this will now safely enable howwon only when winner exists
+  });
 });
-document.querySelectorAll('input[name="whocame"]').forEach(input => {
-  input.addEventListener('change', updateHowWonOptions);
+
+// enable submit when "howwon" selected
+document.querySelectorAll('input[name="howwon"]').forEach(input => {
+  input.addEventListener('change', () => {
+    const submitBtn = document.querySelector('.submitB');
+    if (submitBtn) submitBtn.disabled = false;
+  });
 });
+
 
 
 function resetPointInputs() {
-  // clear all radios
   document.querySelectorAll('input[type="radio"]').forEach(r => {
     r.checked = false;
-    r.disabled = false; // restore enabled state
+    r.disabled = (r.name !== "serveIn");
   });
-
-  // clear all checkboxes
   document.querySelectorAll('input[type="checkbox"]').forEach(c => {
     c.checked = false;
-    c.disabled = false; // restore enabled state
+    c.disabled = true;
   });
 }
 
@@ -522,11 +564,23 @@ function ratio(a, b) {
 function getServiceGamesLostPerSet(playerKey) {
   const player = match.getPlayer(playerKey);
   const totalSetsCompleted = match.prevSets.length; // only finished sets
-  const serviceGamesLost = player.stats["Service Games Lost"] ?? 0;
+  const serviceGamesLost = player.getTotalStats().serviceGamesLost || 0;
   return totalSetsCompleted === 0 ? '-' : (serviceGamesLost / totalSetsCompleted).toFixed(2);
 }
 
+function clearAllRows() {
+  // clear text in all cells that match your layout classes
+  document.querySelectorAll('.tl1, .tm1, .tr1, .ml1, .mm1, .mr1, .bl1, .bm1, .br1, \
+                             .tl2, .tm2, .tr2, .ml2, .mm2, .mr2, .bl2, .bm2, .br2, \
+                             .tl3, .tm3, .tr3, .ml3, .mm3, .mr3, .bl3, .bm3, .br3, \
+                             .tl4, .tm4, .tr4, .ml4, .mm4, .mr4, .bl4, .bm4, .br4, \
+                             .tl5, .tm5, .tr5, .ml5, .mm5, .mr5, .bl5, .bm5, .br5, \
+                             .tl6, .tm6, .tr6, .ml6, .mm6, .mr6, .tl7, .tm7, .tr7, .ml7, .mr7, .mm7')
+    .forEach(cell => cell.textContent = '');
+}
+
 function totalbf() {
+  clearAllRows()
   statmode = 'Total'
   changeTitles('Points', 'Games', 'Time')
 
@@ -586,6 +640,7 @@ function totalbf() {
 }
 
 function overviewbf() {
+  clearAllRows()
   changeTitles('Serve', 'Return', 'Total')
   statmode = 'Overview'
   const eTime = new Date() - startTime;
@@ -624,10 +679,16 @@ function overviewbf() {
     { section: 'b', label: 'Match Time', valueA: () => formatTotalTime(eTime), valueB: () => formatTotalTime(eTime) }
   ];
 
-  rows.forEach((r, i) => updateRow(r.section, i + 1, r.label, r.valueA(), r.valueB()));
+  const counters = { t: 1, m: 1, b: 1 };
+
+  rows.forEach((r) => {
+    const i = counters[r.section]++;
+    updateRow(r.section, i, r.label, r.valueA(), r.valueB());
+  });
 }
 
 function servingbf() {
+  clearAllRows()
   statmode = 'Serving'
   changeTitles('Serve', 'Points', 'Games')
 
@@ -640,8 +701,14 @@ function servingbf() {
     },
     {
       section: 't', label: '2nd Serve %',
-      valueA: () => percent(1 - safeDiv(PlayerA.getDoubleFaults(), PlayerA.getSecondServePoints()), 1),
-      valueB: () => percent(1 - safeDiv(PlayerB.getDoubleFaults(), PlayerB.getSecondServePoints()), 1)
+      valueA: () => percent(
+        PlayerA.getSecondServePoints() - PlayerA.getDoubleFaults(),
+        PlayerA.getSecondServePoints()
+      ),
+      valueB: () => percent(
+        PlayerB.getSecondServePoints() - PlayerB.getDoubleFaults(),
+        PlayerB.getSecondServePoints()
+      )
     },
     {
       section: 't', label: '1st Serve Won %',
@@ -653,7 +720,20 @@ function servingbf() {
       valueA: () => percent(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()),
       valueB: () => percent(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints())
     },
-    { section: 't', label: '1st Serve Reliance', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 't',
+      label: '1st Serve Reliance',
+      valueA: () => {
+        const fsWinRate = safeDiv(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints());
+        const ssWinRate = safeDiv(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints());
+        return ssWinRate === 0 ? '-' : (100 * fsWinRate / ssWinRate).toFixed(1) + '%';
+      },
+      valueB: () => {
+        const fsWinRate = safeDiv(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints());
+        const ssWinRate = safeDiv(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints());
+        return ssWinRate === 0 ? '-' : (100 * fsWinRate / ssWinRate).toFixed(1) + '%';
+      }
+    },
     { section: 't', label: 'Serve Rating', valueA: () => '-', valueB: () => '-' },
 
     // ─────── MIDDLE: Service point and break defense ───────
@@ -678,10 +758,16 @@ function servingbf() {
     },
   ];
 
-  rows.forEach((r, i) => updateRow(r.section, i + 1, r.label, r.valueA(), r.valueB()));
+  const counters = { t: 1, m: 1, b: 1 };
+
+  rows.forEach((r) => {
+    const i = counters[r.section]++;
+    updateRow(r.section, i, r.label, r.valueA(), r.valueB());
+  });
 }
 
 function returnbf() {
+  clearAllRows()
   statmode = 'Returning';
   changeTitles("Return", "Points", "Games");
 
@@ -713,10 +799,16 @@ function returnbf() {
     { section: 'b', label: 'Return Games Won per Set', valueA: () => '-', valueB: () => '-' },
   ];
 
-  rows.forEach((r, i) => updateRow(r.section, i + 1, r.label, r.valueA(), r.valueB()));
+  const counters = { t: 1, m: 1, b: 1 };
+
+  rows.forEach((r) => {
+    const i = counters[r.section]++;
+    updateRow(r.section, i, r.label, r.valueA(), r.valueB());
+  });
 }
 
 function wenbf() {
+  clearAllRows()
   statmode = 'Wen'
   changeTitles('Winners & Errors', 'Net', "Dominance")
   const rows = [
@@ -750,10 +842,16 @@ function wenbf() {
     { section: 'b', label: 'Dominance Ratio', valueA: () => '-', valueB: () => '-' },
   ];
 
-  rows.forEach((r, i) => updateRow(r.section, i + 1, r.label, r.valueA(), r.valueB()));
+  const counters = { t: 1, m: 1, b: 1 };
+
+  rows.forEach((r) => {
+    const i = counters[r.section]++;
+    updateRow(r.section, i, r.label, r.valueA(), r.valueB());
+  });
 }
 
 function adfbf() {
+  clearAllRows()
   statmode = 'Adf'
   changeTitles("Aces", "Double Faults", "Other")
   const rows = [
@@ -773,8 +871,11 @@ function adfbf() {
     // --- BOTTOM (Ratios/Other) ---
     { section: 'b', label: 'Ace/DF Ratio', valueA: () => ratio(PlayerA.getAces(), PlayerA.getDoubleFaults()), valueB: () => ratio(PlayerB.getAces(), PlayerB.getDoubleFaults()) }
   ];
-  rows.forEach((r, i) => {
-    updateRow(r.section, i + 1, r.label, r.valueA(), r.valueB());
+  const counters = { t: 1, m: 1, b: 1 };
+
+  rows.forEach((r) => {
+    const i = counters[r.section]++;
+    updateRow(r.section, i, r.label, r.valueA(), r.valueB());
   });
 }
 
@@ -802,7 +903,7 @@ function makeScore() {
 
 function makeStats(winner, event, fsin, ps) {
   const winnerKey = winner === 'Awon' ? 'A' : 'B';
-  const serverKey = ps === 'Player A' ? 'A' : 'B';
+  const serverKey = ps;
 
   const selections = Array.from(document.querySelectorAll('input[name="whocame"]:checked')).map(el => el.value);
   for (const playerKey of ['A', 'B']) {
@@ -879,87 +980,111 @@ function makePbp(winner, event) {
 }
 
 function increment() {
-  var div = document.querySelector(".score");
-  let winner = document.querySelector('input[name="whowon"]:checked').value;
-  const winnerKey = (winner === 'Awon') ? 'A' : 'B';
-  const loserKey = (winnerKey === 'A') ? 'B' : 'A';
-  const serverKey = match.currentServer; // 'A' or 'B'
-  const isTiebreak = tiebreak === 7;
 
-  if (isBreakPoint(serverKey, match.aPoints, match.bPoints)) {
+  const submitBtn = document.querySelector(".submitB");
+  submitBtn.disabled = true;
+
+  const winner = getCheckedValue("whowon");
+  const selection = getCheckedValue("howwon");
+  const serveIn = getCheckedValue("serveIn");
+
+  if (!winner || !selection || !serveIn) {
+    console.warn("Missing radio selection (whowon / howwon / serveIn)");
+
+  }
+  else {
+    document.querySelector(".score").textContent = makeScore();
+    makePbp(winner, 0);
+    // makeStats(winner, selection, serveIn, match.currentServer);
+  }
+
+  const winnerKey = (winner === 'Awon') ? 'A' : 'B';
+  const serverKey = match.currentServer; // 'A' or 'B'
+  const isTiebreak = match.activeTiebreak === true || tiebreak === 7;
+
+  if (!isTiebreak && isBreakPoint(serverKey, match.aPoints, match.bPoints)) {
+    console.log("Break Point");
     const returnerKey = serverKey === "A" ? "B" : "A";
     match.getPlayer(returnerKey).inc("Break Points", { playerKey: returnerKey });
     if (winnerKey === returnerKey) {
       match.getPlayer(returnerKey).inc("Break Points Won", { playerKey: returnerKey });
     }
   }
-  match.getPlayer(winnerKey).inc("Points", { playerKey: winnerKey });
+  makeStats(winner, selection, serveIn, match.currentServer);
   if (isTiebreak) {
-    match.setPoints(winnerKey === "A" ? PlayerA : PlayerB, match.getPoints(winnerKey === "A" ? PlayerA : PlayerB) + 1);
-    const aPts = match.getPoints(PlayerA);
-    const bPts = match.getPoints(PlayerB);
-    if ((winnerKey === "A" && aPts >= 7 && aPts > bPts + 1) ||
-      (winnerKey === "B" && bPts >= 7 && bPts > aPts + 1)) {
 
-      match.finishGame(winnerKey);
-      match.addPrevSets(match.aGames + '-' + match.bGames + ' (' + (winnerKey === "A" ? bPts : aPts) + ')');
+    if (winnerKey === 'A') match.aPoints++;
+    else match.bPoints++;
+
+    const aPts = match.aPoints;
+    const bPts = match.bPoints;
+
+
+    if ((aPts >= 7 || bPts >= 7) && Math.abs(aPts - bPts) > 1) {
+      const setScore = `${match.aGames}-${match.bGames} (${winnerKey === 'A' ? bPts : aPts})`;
+      match.addPrevSets(setScore);
       match.finishSet();
+      match.aPoints = 0;
+      match.bPoints = 0;
+      match.tiebreakActive = false;
       tiebreak = 0;
+
+      if (serverKey === match.tbServer) toggleServer();
     }
     if ((aPts + bPts) % 2 === 1) toggleServer();
-    div.innerHTML = makeScore();
+    document.querySelector('.score').textContent = makeScore();
     return;
   }
 
-  const aPts = match.getPoints(PlayerA);
-  const bPts = match.getPoints(PlayerB);
+  const gameScores = [0, 15, 30, 40];
+  let aPts = match.aPoints;
+  let bPts = match.bPoints;
 
-  if (winnerKey === "A") {
-    if (aPts === 40 && bPts === "AD") {
-      match.setPoints(PlayerB, 40);
-    } else if (aPts === 40 && bPts === 40) {
-      match.setPoints(PlayerA, "AD");
-    } else if (aPts === 40 || aPts === "AD") {
-      match.finishGame("A");
-
-      if ((match.getGames(PlayerA) === 6 && match.getGames(PlayerB) < 5) ||
-        match.getGames(PlayerA) === 7) {
-        match.addPrevSets(match.aGames + '-' + match.bGames);
-        match.finishSet();
-      } else if (match.getGames(PlayerA) === 6 && match.getGames(PlayerB) === 6) {
-        tiebreak = 7;
-        tbserver = serverKey;
-      }
+  const finishGame = (gameWinner) => {
+    if (gameWinner === 'A') {
+      match.aGames++;
     } else {
-      match.setPoints(PlayerA, gameScores[gameScores.indexOf(aPts) + 1]);
+      match.bGames++;
     }
+    match.aPoints = 0;
+    match.bPoints = 0;
+    toggleServer();
+
+    if (
+      (match.aGames >= 6 || match.bGames >= 6) &&
+      Math.abs(match.aGames - match.bGames) >= 2
+    ) {
+      match.addPrevSets(`${match.aGames}-${match.bGames}`);
+      match.finishSet();
+    } else if (match.aGames === 6 && match.bGames === 6) {
+      match.tiebreakActive = true;
+      match.tbServer = serverKey;
+      tiebreak = 7;
+    }
+  };
+
+  if (winnerKey === 'A') {
+    // A wins point
+    if (aPts === 40 && bPts === 'AD') match.bPoints = 40;
+    else if (aPts === 40 && bPts === 40) match.aPoints = 'AD';
+    else if (aPts === 40 || aPts === 'AD') finishGame('A');
+    else match.aPoints = gameScores[gameScores.indexOf(aPts) + 1] || 40;
+  } else {
+    // B wins point
+    if (bPts === 40 && aPts === 'AD') match.aPoints = 40;
+    else if (bPts === 40 && aPts === 40) match.bPoints = 'AD';
+    else if (bPts === 40 || bPts === 'AD') finishGame('B');
+    else match.bPoints = gameScores[gameScores.indexOf(bPts) + 1] || 40;
   }
 
-  else if (winnerKey === "B") {
-    if (bPts === 40 && aPts === "AD") {
-      match.setPoints(PlayerA, 40);
-    } else if (bPts === 40 && aPts === 40) {
-      match.setPoints(PlayerB, "AD");
-    } else if (bPts === 40 || bPts === "AD") {
-      match.finishGame("B");
-      if ((match.getGames(PlayerB) === 6 && match.getGames(PlayerA) < 5) ||
-        match.getGames(PlayerB) === 7) {
-        match.addPrevSets(match.aGames + '-' + match.bGames);
-        match.finishSet();
-      } else if (match.getGames(PlayerB) === 6 && match.getGames(PlayerA) === 6) {
-        tiebreak = 7;
-        tbserver = serverKey;
-      }
-    } else {
-      match.setPoints(PlayerB, gameScores[gameScores.indexOf(bPts) + 1]);
-    }
-  }
-  div.innerHTML = makeScore();
+  document.querySelector('.score').textContent = makeScore();
+  resetPointInputs();
 }
 
-const selection = document.querySelector('input[name="howwon"]:checked').value;
-const servein = document.querySelector('input[name="serveIn"]:checked').value;
-
-div.textContent = makeScore();
-makePbp(winner, 0)
-makeStats(winner, selection, servein, prevserver)
+function getCheckedValue(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+const submitBtn = document.querySelector(".submitB");
+submitBtn.disabled = true;
+resetPointInputs()
