@@ -3,12 +3,16 @@ class GameStats {
     this.server = serverKey;      // 'A' or 'B' - who served this game
     this.pointsTotal = 0;
     this.pointsWon = 0;           // points won by the player this game
+    this.spointsLost = 0;
     this.aces = 0;
     this.doubleFaults = 0;
     this.serviceWinners = 0;
     this.forehandWinners = 0;
     this.backhandWinners = 0;
+    this.forehandErrors = 0;
+    this.backhandErrors = 0;
     this.netWinners = 0;
+    this.netErrors = 0;
     this.netPoints = 0;
     this.netPointsWon = 0;
     this.firstServePoints = 0;
@@ -35,7 +39,10 @@ class SetStats {
     this.serviceWinners = 0;
     this.forehandWinners = 0;
     this.backhandWinners = 0;
+    this.forehandErrors = 0;
+    this.backhandErrors = 0;
     this.netWinners = 0;
+    this.netErrors = 0;
     this.netPoints = 0;
     this.netPointsWon = 0;
     this.firstServePoints = 0;
@@ -60,29 +67,6 @@ class SetStats {
       B: this.currentGame.B
     };
     this.games.push(gameSnapshot);
-
-    // update set-level aggregates from the finished game for both players: 
-    // sum the numeric fields (choose fields you want aggregated)
-    for (const p of ['A', 'B']) {
-      const g = gameSnapshot[p];
-      this.aces += g.aces;
-      this.doubleFaults += g.doubleFaults;
-      this.serviceWinners += g.serviceWinners;
-      this.forehandWinners += g.forehandWinners;
-      this.backhandWinners += g.backhandWinners;
-      this.netWinners += g.netWinners;
-      this.netPoints += g.netPoints;
-      this.netPointsWon += g.netPointsWon;
-      this.firstServePoints += g.firstServePoints;
-      this.firstServePointsWon += g.firstServePointsWon;
-      this.secondServePoints += g.secondServePoints;
-      this.secondServePointsWon += g.secondServePointsWon;
-      this.breakPoints += g.breakPointsFaced;
-      this.breaks += g.breakPointsWon;
-      this.pointsWon += g.pointsWon;
-    }
-
-    // reset currentGame for next game; server will be set by Match.startGame()
     this.currentGame = { A: new GameStats(), B: new GameStats() };
   }
 
@@ -122,11 +106,64 @@ class Player {
     this.currentSet = new SetStats();
   }
 
+  getStatFinishedGamesOnly(statKey) {
+    let total = 0;
+
+    for (const set of this.sets) {
+      total += set[statKey] || 0;
+    }
+
+    const current = this.currentSet;
+    if (current && current.games && current.games.length > 0) {
+      for (const g of current.games) {
+        total += (g.A?.[statKey] || 0) + (g.B?.[statKey] || 0);
+      }
+    }
+
+    return total;
+  }
+
+
+  getCompletedServiceGames() {
+    let total = 0;
+
+    // 1️⃣ Include finished sets
+    for (const set of this.sets) {
+      total += (set.serviceGamesWon || 0) + (set.serviceGamesLost || 0);
+    }
+
+    // 2️⃣ Include finished games within the current set
+    const current = this.currentSet;
+    if (current) {
+      total += (current.serviceGamesWon || 0) + (current.serviceGamesLost || 0);
+    }
+
+    return total;
+  }
+
+  getAcesFinishedGamesOnly() {
+    return this.getStatFinishedGamesOnly('aces');
+  }
+
+  getDoubleFaultsFinishedGamesOnly() {
+    return this.getStatFinishedGamesOnly('doubleFaults');
+  }
+
+  getPointsFinishedGamesOnly() {
+    return this.getStatFinishedGamesOnly('pointsTotal');
+  }
+
+  getPointsLostFinishedGamesOnly() {
+    return this.getStatFinishedGamesOnly('spointsLost');
+  }
+
+
   // Backwards-compatible inc API: accept common stat labels and put them into currentSet or currentGame
   inc(stat, options = {}) {
     // options: {playerKey: 'A'|'B', serverKey: 'A'|'B'}
     const pKey = options.playerKey || 'A';
     const set = this.currentSet;
+
     // map legacy stat names to set/currentGame fields
     switch (stat) {
       case "Games":
@@ -154,6 +191,10 @@ class Player {
       case "Net Points":
         set.currentGame[pKey].netPoints++;
         set.netPoints++;
+        break;
+      case "Net Errors":
+        set.currentGame[pKey].netErrors++;
+        set.netErrors++;
         break;
       case "Net Points Won":
         set.currentGame[pKey].netPointsWon++;
@@ -183,6 +224,15 @@ class Player {
         set.currentGame[pKey].backhandWinners++;
         set.backhandWinners++;
         break;
+      case "Forehand Errors":
+        set.currentGame[pKey].forehandErrors++;
+        set.forehandErrors++;
+        break;
+
+      case "Backhand Errors":
+        set.currentGame[pKey].backhandErrors++;
+        set.backhandErrors++;
+        break;
       case "Net Winners":
         set.currentGame[pKey].netWinners++;
         set.netWinners++;
@@ -197,24 +247,19 @@ class Player {
     }
   }
 
-  // helper getters so existing UI code stays compatible (these use totals = completed sets + currentSet)
   getTotalStats() {
     const total = new SetStats();
-    // add completed sets
     for (const s of this.sets) {
-      // add aggregate numerical values
       for (const k of Object.keys(s)) {
         if (typeof s[k] === 'number') total[k] = (total[k] || 0) + s[k];
       }
     }
-    // add currentSet
     for (const k of Object.keys(this.currentSet)) {
       if (typeof this.currentSet[k] === 'number') total[k] = (total[k] || 0) + this.currentSet[k];
     }
     return total;
   }
 
-  // Backwards compatible getters used in your UI:
   getAces() { return this.getTotalStats().aces || 0; }
   getDoubleFaults() { return this.getTotalStats().doubleFaults || 0; }
   getPointsWon() { return this.getTotalStats().pointsWon || 0; }
@@ -226,13 +271,38 @@ class Player {
   getFirstServePointsWon() { return this.getTotalStats().firstServePointsWon || 0; }
   getSecondServePointsWon() { return this.getTotalStats().secondServePointsWon || 0; }
   getNetPoints() { return this.getTotalStats().netPoints || 0; }
+  getWinners() {
+    const stats = this.getTotalStats();
+    return (
+      (stats.aces || 0) +
+      (stats.serviceWinners || 0) +
+      (stats.forehandWinners || 0) +
+      (stats.backhandWinners || 0) +
+      (stats.netWinners || 0)
+    );
+  }
+  getErrors() {
+    const stats = this.getTotalStats();
+    return (
+      (stats.doubleFaults || 0) +
+      (stats.netErrors || 0) +
+      (stats.forehandErrors || 0) +
+      (stats.backhandErrors || 0)
+    );
+  }
+
+  getErrorPercent() {
+    const totalPointsWon = this.getPointsWon();
+    const totalPointsLost = match.getTotalPoints() - totalPointsWon;
+    return percent(this.getErrors(), totalPointsLost);
+  }
   getNetPointsWon() { return this.getTotalStats().netPointsWon || 0; }
   getPointsServed() { return this.getTotalStats().firstServePoints + this.getTotalStats().secondServePoints || 0; }
   getServicePointsWon() { return this.getTotalStats().firstServePointsWon + this.getTotalStats().secondServePointsWon || 0; }
 
   // total of completed sets only
   completedServiceGamesLost() {
-    return this.sets.reduce((s, set) => s + set.serviceGamesLost(), 0);
+    return this.sets.reduce((s, set) => s + set.serviceGamesLost, 0);
   }
 }
 
@@ -252,6 +322,11 @@ class Match {
     return this.players[key];
   }
 
+  addPrevSets(scoreString) {
+    if (!this.prevSets) this.prevSets = [];
+    this.prevSets.push(scoreString);
+  }
+
   // Start a new game — sets currentGame.server for both players so GameStats.server aligns
   startNewGame(serverKey) {
     // serverKey: 'A' or 'B'
@@ -269,7 +344,6 @@ class Match {
     this.players.A.currentSet.finishGame(winnerKey);
     this.players.B.currentSet.finishGame(winnerKey);
 
-    // update games counters on match level
     if (winnerKey === 'A') this.aGames++;
     else this.bGames++;
 
@@ -285,9 +359,30 @@ class Match {
       winner.currentSet.returnGamesWon++;
       loser.currentSet.serviceGamesLost++;
     }
+
+    this.aPoints = 0;
+    this.bPoints = 0;
+
+    if (
+      (this.aGames >= 6 || this.bGames >= 6) &&
+      Math.abs(this.aGames - this.bGames) >= 2
+    ) {
+      if (typeof this.addPrevSets === "function") {
+        this.addPrevSets(`${this.aGames}-${this.bGames}`);
+      }
+      this.finishSet();
+    } else if (this.aGames === 6 && this.bGames === 6) {
+      this.tiebreakActive = true;
+      this.tbServer = serverKey;
+      if (typeof window !== "undefined") window.tiebreak = 7;
+    }
     this.toggleServer();
     this.startNewGame(this.currentServer);
+    if (typeof window !== 'undefined' && typeof updateCurrentStatView === 'function') {
+      updateCurrentStatView();
+    }
   }
+
 
   // Finish a set: move current set into each player's .sets and add textual prevSet
   finishSet() {
@@ -301,9 +396,12 @@ class Match {
     this.tiebreak = false;
   }
 
-  // Toggle server helper useful for your existing code
   toggleServer() {
     this.currentServer = (this.currentServer === 'A') ? 'B' : 'A';
+    const serverElem = document.querySelector('.server');
+    if (serverElem) {
+      serverElem.textContent = 'Serving: ' + this.getPlayer(this.currentServer).name;
+    }
   }
 
   // convenience totals
@@ -311,16 +409,25 @@ class Match {
   getTotalGames() { return this.players.A.getGamesWon() + this.players.B.getGamesWon(); }
 }
 
+function updateCurrentStatView() {
+  switch (statmode) {
+    case 'Total': totalbf(); break;
+    case 'Overview': overviewbf(); break;
+    case 'Wen': wenbf(); break;
+    case 'Returning': returnbf(); break;
+    case 'Adf': adfbf(); break;
+    case 'Serving': servingbf(); break;
+  }
+}
 
 let match = new Match("Catten Sims", "Aidan Sims");
 let PlayerA = match.getPlayer('A');
 let PlayerB = match.getPlayer('B');
 
 match.startNewGame('A');
-let server = match.currentServer;
-let divserver = document.querySelector(".server");
-divserver.textContent = "Serving: " + match.getPlayer(server).name;
 
+document.querySelector(".server").textContent =
+  "Serving: " + match.getPlayer(match.currentServer).name;
 
 // Update all "PlayerA" elements
 document.querySelectorAll(".PlayerA").forEach(el => {
@@ -383,7 +490,6 @@ function updateHowWonOptions() {
     opt.disabled = false;
   });
 
-  // --- Step 2: Apply your special rules ---
   // reset all first
   [aceOption, swinnerOption, dfOption, nwOption, neOption].forEach(opt => {
     opt.disabled = false;
@@ -396,13 +502,13 @@ function updateHowWonOptions() {
   }
 
   // rule 2: if server won → DF not possible
-  if (winnerInput && serverWonPoint(winnerInput.value, server)) {
+  if (winnerInput && serverWonPoint(winnerInput.value, match.currentServer)) {
     dfOption.disabled = true;
     dfOption.checked = false;
   }
 
   // rule 3: if server lost → Ace + Service Winner not possible
-  if (winnerInput && !serverWonPoint(winnerInput.value, server)) {
+  if (winnerInput && !serverWonPoint(winnerInput.value, match.currentServer)) {
     aceOption.disabled = true;
     swinnerOption.disabled = true;
     if (aceOption.checked) aceOption.checked = false;
@@ -501,13 +607,6 @@ function formatTotalTime(t) {
   return hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
 }
 
-//Here
-function toggleServer() {
-  match.toggleServer();
-  server = match.currentServer;
-  document.querySelector(".server").textContent = "Serving: " + match.getPlayer(server).name;
-}
-
 function changeValue(code, lef, mid, rig) {
   const left = document.querySelector('.' + code[0] + 'l' + code[1])
   left.textContent = lef
@@ -569,7 +668,6 @@ function getServiceGamesLostPerSet(playerKey) {
 }
 
 function clearAllRows() {
-  // clear text in all cells that match your layout classes
   document.querySelectorAll('.tl1, .tm1, .tr1, .ml1, .mm1, .mr1, .bl1, .bm1, .br1, \
                              .tl2, .tm2, .tr2, .ml2, .mm2, .mr2, .bl2, .bm2, .br2, \
                              .tl3, .tm3, .tr3, .ml3, .mm3, .mr3, .bl3, .bm3, .br3, \
@@ -726,12 +824,12 @@ function servingbf() {
       valueA: () => {
         const fsWinRate = safeDiv(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints());
         const ssWinRate = safeDiv(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints());
-        return ssWinRate === 0 ? '-' : (100 * fsWinRate / ssWinRate).toFixed(1) + '%';
+        return ssWinRate === 0 ? '-' : safeDiv(fsWinRate, ssWinRate).toFixed(2);
       },
       valueB: () => {
         const fsWinRate = safeDiv(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints());
         const ssWinRate = safeDiv(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints());
-        return ssWinRate === 0 ? '-' : (100 * fsWinRate / ssWinRate).toFixed(1) + '%';
+        return ssWinRate === 0 ? '-' : safeDiv(fsWinRate, ssWinRate).toFixed(2);
       }
     },
     { section: 't', label: 'Serve Rating', valueA: () => '-', valueB: () => '-' },
@@ -743,9 +841,19 @@ function servingbf() {
       valueB: () => percent(PlayerB.getServicePointsWon(), PlayerB.getPointsServed())
     },
     { section: 'm', label: 'Service In-Play Points Won', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Points Per Service Game', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Points Lost per Service Game', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Break Points', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 'm',
+      label: 'Points Per Service Game',
+      valueA: () => ratio(PlayerA.getPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerB.getPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+    },
+    {
+      section: 'm',
+      label: 'Points Lost per Service Game',
+      valueA: () => ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+    },
+    { section: 'm', label: 'Break Points', valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`, valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}` },
     { section: 'm', label: 'BPs Faced per Service Game', valueA: () => '-', valueB: () => '-' },
     { section: 'm', label: 'BPs Faced per Set', valueA: () => '-', valueB: () => '-' },
 
@@ -778,7 +886,7 @@ function returnbf() {
       valueA: () => percent(PlayerB.getFirstServePoints() - PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()),
       valueB: () => percent(PlayerA.getFirstServePoints() - PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints())
     },
-    { section: 't', label: '2nd Serve Return Won %', valueA: () => '-', valueB: () => '-' },
+    { section: 't', label: '2nd Serve Return Won %', valueA: () => percent(PlayerB.getSecondServePoints() - PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()), valueB: () => percent(PlayerA.getSecondServePoints() - PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()) },
     { section: 't', label: 'Return Rating', valueA: () => '-', valueB: () => '-' },
 
     // ─────── MIDDLE: Return points and break opportunities ───────
@@ -788,9 +896,19 @@ function returnbf() {
       valueB: () => percent(PlayerA.getPointsServed() - PlayerA.getServicePointsWon(), PlayerA.getPointsServed())
     },
     { section: 'm', label: 'Return In-Play Points Won', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Points Per Return Game', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Points Won per Return Game', valueA: () => '-', valueB: () => '-' },
-    { section: 'm', label: 'Break Points', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 'm',
+      label: 'Points Per Return Game',
+      valueA: () => ratio(PlayerB.getPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerA.getPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames())
+    },
+    {
+      section: 'm',
+      label: 'Points Won per Return Game',
+      valueA: () => ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames())
+    },
+    { section: 'm', label: 'Break Points', valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`, valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}` },
     { section: 'm', label: 'BPs per Return Game', valueA: () => '-', valueB: () => '-' },
     { section: 'm', label: 'BPs per Set', valueA: () => '-', valueB: () => '-' },
 
@@ -813,10 +931,31 @@ function wenbf() {
   changeTitles('Winners & Errors', 'Net', "Dominance")
   const rows = [
     // ─────── TOP: Winners vs Errors ───────
-    { section: 't', label: 'Winner %', valueA: () => '-', valueB: () => '-' },
-    { section: 't', label: 'Error %', valueA: () => '-', valueB: () => '-' },
-    { section: 't', label: 'Winners per Error', valueA: () => '-', valueB: () => '-' },
-    { section: 't', label: 'Winners per Opp. Error', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 't',
+      label: 'Winner %',
+      valueA: () => percent(PlayerA.getWinners(), PlayerA.getPointsWon()),
+      valueB: () => percent(PlayerB.getWinners(), PlayerB.getPointsWon())
+    },
+    ,
+    {
+      section: 't',
+      label: 'Error %',
+      valueA: () => PlayerA.getErrorPercent(),
+      valueB: () => PlayerB.getErrorPercent()
+    }, ,
+    {
+      section: 't',
+      label: 'Winners per Error',
+      valueA: () => ratio(PlayerA.getWinners(), PlayerA.getErrors()),
+      valueB: () => ratio(PlayerB.getWinners(), PlayerB.getErrors())
+    },
+    {
+      section: 't',
+      label: 'Winners per Opp. Error',
+      valueA: () => ratio(PlayerA.getWinners(), PlayerB.getErrors()),
+      valueB: () => ratio(PlayerB.getWinners(), PlayerA.getErrors())
+    },
 
     // ─────── MIDDLE: Net play ───────
     {
@@ -834,10 +973,36 @@ function wenbf() {
       valueA: () => (PlayerA.getPointsWon() === 0) ? '-' : (PlayerA.getNetPointsWon() / PlayerA.getPointsWon()).toFixed(2),
       valueB: () => (PlayerB.getPointsWon() === 0) ? '-' : (PlayerB.getNetPointsWon() / PlayerB.getPointsWon()).toFixed(2)
     },
-    { section: 'm', label: 'Net Effectiveness', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 'm',
+      label: 'Net Effectiveness',
+      valueA: () => {
+        const netWinRate = safeDiv(PlayerA.getNetPointsWon(), PlayerA.getNetPoints());
+        const totalWinRate = safeDiv(PlayerA.getPointsWon(), match.getTotalPoints());
+        return totalWinRate === 0 ? '-' : safeDiv(netWinRate, totalWinRate).toFixed(2);
+      },
+      valueB: () => {
+        const netWinRate = safeDiv(PlayerB.getNetPointsWon(), PlayerB.getNetPoints());
+        const totalWinRate = safeDiv(PlayerB.getPointsWon(), match.getTotalPoints());
+        return totalWinRate === 0 ? '-' : safeDiv(netWinRate, totalWinRate).toFixed(2);
+      }
+    },
 
     // ─────── BOTTOM: Dominance ───────
-    { section: 'b', label: 'Points Dominance', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 'b', label: 'Points Dominance', valueA: () => {
+        if (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) return '-';
+        const Ahold = PlayerA.getServicePointsWon() / PlayerA.getPointsServed();
+        const Bhold = PlayerB.getServicePointsWon() / PlayerB.getPointsServed();
+        return ((1 - Bhold) / (1 - Ahold)).toFixed(2);
+      },
+      valueB: () => {
+        if (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0) return '-';
+        const Ahold = PlayerA.getServicePointsWon() / PlayerA.getPointsServed();
+        const Bhold = PlayerB.getServicePointsWon() / PlayerB.getPointsServed();
+        return ((1 - Ahold) / (1 - Bhold)).toFixed(2);
+      }
+    },
     { section: 'b', label: 'Game Dominance', valueA: () => '-', valueB: () => '-' },
     { section: 'b', label: 'Dominance Ratio', valueA: () => '-', valueB: () => '-' },
   ];
@@ -858,14 +1023,23 @@ function adfbf() {
     // --- TOP (Aces section) ---
     { section: 't', label: 'Aces', valueA: () => PlayerA.getAces(), valueB: () => PlayerB.getAces() },
     { section: 't', label: 'Ace %', valueA: () => percent(PlayerA.getAces(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getAces(), PlayerB.getPointsServed()) },
-    { section: 't', label: 'Aces per Service Game', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 't',
+      label: 'Aces per Service Game',
+      valueA: () => ratio(PlayerA.getAcesFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerB.getAcesFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+    },
     { section: 't', label: 'Aces per Set', valueA: () => '-', valueB: () => '-' },
 
     // --- MIDDLE (Double faults section) ---
     { section: 'm', label: 'Double Faults', valueA: () => PlayerA.getDoubleFaults(), valueB: () => PlayerB.getDoubleFaults() },
     { section: 'm', label: 'Double Fault %', valueA: () => percent(PlayerA.getDoubleFaults(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getDoubleFaults(), PlayerB.getPointsServed()) },
     { section: 'm', label: 'DFs per 2nd Serve', valueA: () => safeDiv(PlayerA.getDoubleFaults(), PlayerA.getSecondServePoints()).toFixed(2), valueB: () => safeDiv(PlayerB.getDoubleFaults(), PlayerB.getSecondServePoints()).toFixed(2) },
-    { section: 'm', label: 'DFs per Service Game', valueA: () => '-', valueB: () => '-' },
+    {
+      section: 'm', label: 'DFs per Service Game',
+      valueA: () => ratio(PlayerA.getDoubleFaultsFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () => ratio(PlayerB.getDoubleFaultsFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+    },
     { section: 'm', label: 'DFs per Set', valueA: () => '-', valueB: () => '-' },
 
     // --- BOTTOM (Ratios/Other) ---
@@ -903,6 +1077,7 @@ function makeScore() {
 
 function makeStats(winner, event, fsin, ps) {
   const winnerKey = winner === 'Awon' ? 'A' : 'B';
+  const loserKey = winnerKey === 'A' ? 'B' : 'A';
   const serverKey = ps;
 
   const selections = Array.from(document.querySelectorAll('input[name="whocame"]:checked')).map(el => el.value);
@@ -932,6 +1107,10 @@ function makeStats(winner, event, fsin, ps) {
   }
 
   match.getPlayer(winnerKey).inc("Points", { playerKey: winnerKey });
+  match.getPlayer(serverKey).currentSet.currentGame[serverKey].pointsTotal++;
+  if (winnerKey !== serverKey) {
+    match.getPlayer(serverKey).currentSet.currentGame[serverKey].spointsLost++;
+  }
 
   switch (event) {
     case 'ace':
@@ -953,30 +1132,66 @@ function makeStats(winner, event, fsin, ps) {
     case 'bhw':
       match.getPlayer(winnerKey).inc("Backhand Winners", { playerKey: winnerKey });
       break;
+    case 'fhe': // Forehand error
+      match.getPlayer(loserKey).inc("Forehand Errors", { playerKey: loserKey });
+      break;
 
+    case 'bhe': // Backhand error
+      match.getPlayer(loserKey).inc("Backhand Errors", { playerKey: loserKey });
+      break;
     case 'nw':
       match.getPlayer(winnerKey).inc("Net Winners", { playerKey: winnerKey });
       break;
+    case 'ne':
+      match.getPlayer(loserKey).inc("Net Errors", { playerKey: loserKey });
+      break;
   }
 
-  switch (statmode) {
-    case 'Total': totalbf(); break;
-    case 'Overview': overviewbf(); break;
-    case 'Wen': wenbf(); break;
-    case 'Returning': returnbf(); break;
-    case 'Adf': adfbf(); break;
-    case 'Serving': servingbf(); break;
-  }
+  updateCurrentStatView();
 }
 
 function makePbp(winner, event) {
   const pbp = document.querySelector('.pbp');
-  if (winner === 'Awon') {
-    pbp.textContent += 'A won the point';
-    pbp.textContent += '\n'
-  } else if (winner === 'Bwon') {
-    pbp.textContent += 'B won the point \n';
+  const winnerKey = winner === 'Awon' ? 'A' : 'B';
+  const loserKey = winnerKey === 'A' ? 'B' : 'A';
+  const winnerName = match.getPlayer(winnerKey).name;
+  const loserName = match.getPlayer(loserKey).name;
+
+  let message = '';
+
+  switch (event) {
+    case 'ace':
+      message = `${winnerName} hit an ace`;
+      break;
+    case 'df':
+      message = `${loserName} double faulted`;
+      break;
+    case 'swinner':
+      message = `${winnerName} hit a service winner`;
+      break;
+    case 'fhw':
+      message = `${winnerName} hit a forehand winner`;
+      break;
+    case 'bhw':
+      message = `${winnerName} hit a backhand winner`;
+      break;
+    case 'nw':
+      message = `${winnerName} hit a net winner`;
+      break;
+    case 'fhe':
+      message = `${loserName} made a forehand error`;
+      break;
+    case 'bhe':
+      message = `${loserName} made a backhand error`;
+      break;
+    case 'ne':
+      message = `${loserName} made a net error`;
+      break;
+    default:
+      message = `${winnerName} won the point`;
   }
+
+  pbp.textContent += message + '\n';
 }
 
 function increment() {
@@ -994,7 +1209,7 @@ function increment() {
   }
   else {
     document.querySelector(".score").textContent = makeScore();
-    makePbp(winner, 0);
+    makePbp(winner, selection);
     // makeStats(winner, selection, serveIn, match.currentServer);
   }
 
@@ -1029,9 +1244,9 @@ function increment() {
       match.tiebreakActive = false;
       tiebreak = 0;
 
-      if (serverKey === match.tbServer) toggleServer();
+      if (serverKey === match.tbServer) match.toggleServer();
     }
-    if ((aPts + bPts) % 2 === 1) toggleServer();
+    if ((aPts + bPts) % 2 === 1) match.toggleServer();
     document.querySelector('.score').textContent = makeScore();
     return;
   }
@@ -1040,40 +1255,17 @@ function increment() {
   let aPts = match.aPoints;
   let bPts = match.bPoints;
 
-  const finishGame = (gameWinner) => {
-    if (gameWinner === 'A') {
-      match.aGames++;
-    } else {
-      match.bGames++;
-    }
-    match.aPoints = 0;
-    match.bPoints = 0;
-    toggleServer();
-
-    if (
-      (match.aGames >= 6 || match.bGames >= 6) &&
-      Math.abs(match.aGames - match.bGames) >= 2
-    ) {
-      match.addPrevSets(`${match.aGames}-${match.bGames}`);
-      match.finishSet();
-    } else if (match.aGames === 6 && match.bGames === 6) {
-      match.tiebreakActive = true;
-      match.tbServer = serverKey;
-      tiebreak = 7;
-    }
-  };
-
   if (winnerKey === 'A') {
     // A wins point
     if (aPts === 40 && bPts === 'AD') match.bPoints = 40;
     else if (aPts === 40 && bPts === 40) match.aPoints = 'AD';
-    else if (aPts === 40 || aPts === 'AD') finishGame('A');
+    else if (aPts === 40 || aPts === 'AD') match.finishGame('A');
     else match.aPoints = gameScores[gameScores.indexOf(aPts) + 1] || 40;
   } else {
     // B wins point
     if (bPts === 40 && aPts === 'AD') match.aPoints = 40;
     else if (bPts === 40 && aPts === 40) match.bPoints = 'AD';
-    else if (bPts === 40 || bPts === 'AD') finishGame('B');
+    else if (bPts === 40 || bPts === 'AD') match.finishGame('B');
     else match.bPoints = gameScores[gameScores.indexOf(bPts) + 1] || 40;
   }
 
