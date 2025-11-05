@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://simsaidan.github.io/sitemap.xml
