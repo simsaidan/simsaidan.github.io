@@ -1,7 +1,24 @@
+/* global layout widths */
+div,
+.pointq,
+.radio,
+.checkboxes,
+.qblock,
+.Players,
+.Ratings,
+.Button.Menu,
+.progress,
+.btt+div,
+.btm+div,
+.btb+div {
+  max-width: 650px;
+  /* was 500px */
+}
+
 div {
   text-align: center;
-  margin: auto;
-  width: 500px;
+  margin: 0 auto;
+  width: 90%;
 }
 
 table {
@@ -13,5 +30,456 @@ table {
 }
 
 .score {
-  font-size: 2em;
+  font-size: 3em;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.pointq {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: .5rem;
+  color: #222;
+}
+
+.pointq+.radio+.radio,
+.pointq+.radio+.radio+.radio {
+  margin-top: 0;
+  border-top: none;
+}
+
+.radio,
+.checkboxes {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* Center the options */
+  text-align: center;
+  /* Center text and labels */
+  gap: .8rem;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.radio input,
+.checkboxes input {
+  margin-right: 0.4rem;
+}
+
+/* --- Button section --- */
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 600px;
+  /* keeps layout tidy */
+}
+
+
+.submitb:hover {
+  background-color: #27ae60;
+}
+
+/* Center the Submit button */
+.submitb {
+  background-color: #1e8449;
+  color: white;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+  margin: 0 auto;
+  /* centers within flexbox */
+}
+
+.resetb {
+  position: absolute;
+  right: 0;
+  background-color: rgba(231, 76, 60, 0.85);
+  /* slightly transparent red */
+  color: white;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  /* smaller size */
+  border-radius: 8px;
+  font-weight: 500;
+  /* a bit lighter weight */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.85;
+  /* slightly faded look */
+}
+
+.resetb:hover {
+  background-color: #c0392b;
+  /* solid red on hover */
+  opacity: 1;
+}
+
+.pointq+.radio+.radio,
+.pointq+.radio+.radio+.radio {
+  border-top: none;
+  margin-top: 0;
+}
+
+.pointq+.radio+.radio::before,
+.pointq+.radio+.radio+.radio::before {
+  content: "";
+  display: block;
+  width: 100%;
+  border-top: 1px solid #e0e0e0;
+  margin: 0.5rem 0;
+}
+
+.progress {
+  width: 90%;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Style all radio and checkbox labels as selectable chips */
+.radio label,
+.checkboxes label {
+  background: white;
+  border: 1.5px solid #ccc;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+/* Hover and focus effect */
+.radio label:hover,
+.checkboxes label:hover {
+  background-color: #f1f1f1;
+  border-color: #999;
+}
+
+/* Selected (checked) state */
+.radio input[type="radio"]:checked+span,
+.checkboxes input[type="checkbox"]:checked+span {
+  background-color: #1e8449;
+  color: white;
+  border-color: #145a32;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.Players {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0.5rem auto;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* Slightly larger "Serving:" label for clarity */
+.server {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+.TopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0.8rem auto 0.3rem auto;
+}
+
+.TopRow .score {
+  font-size: 2.2rem;
+  /* smaller than before to fit cleanly */
+  font-weight: 700;
+  color: #222;
+}
+
+/* Limit Player name styles to top rows and stat areas */
+.TopRow .PlayerA,
+.TopRow .PlayerB,
+.Players .PlayerA,
+.Players .PlayerB,
+.btt+div .PlayerA,
+.btt+div .PlayerB,
+.btm+div .PlayerA,
+.btm+div .PlayerB,
+.btb+div .PlayerA,
+.btb+div .PlayerB {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.TopRow .PlayerA,
+.Players .PlayerA,
+.btt+div .PlayerA,
+.btm+div .PlayerA,
+.btb+div .PlayerA {
+  color: #1e8449;
+  /* deep green */
+}
+
+.TopRow .PlayerB,
+.Players .PlayerB,
+.btt+div .PlayerB,
+.btm+div .PlayerB,
+.btb+div .PlayerB {
+  color: #2e86de;
+  /* soft blue */
+}
+
+hr {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 0.3rem 0;
+}
+
+/* --- Stats Tables --- */
+.btt,
+.btm,
+.btb {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+  text-align: center;
+  color: #222;
+}
+
+/* Card containers for each stats section */
+.btt+div,
+.btm+div,
+.btb+div {
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 0.8rem 1rem;
+  width: 90%;
+  margin: 0 auto 1rem auto;
+}
+
+/* Table layout improvements */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-row td {
+  padding: 0.4rem 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* Stat labels left-aligned */
+.table-row td:nth-child(2) {
+  text-align: left;
+  color: #333;
+}
+
+/* Player numbers right and left aligned for balance */
+.table-row td:first-child {
+  text-align: right;
+  font-weight: 600;
+  color: #1e8449;
+}
+
+.table-row td:last-child {
+  text-align: left;
+  font-weight: 600;
+  color: #2e86de;
+}
+
+/* Subtle alternating row color */
+.table-row:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Optional: slightly more separation between cards */
+hr+.btt {
+  margin-top: 1rem;
+}
+
+.table-row td:nth-child(2) {
+  text-align: center;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Section headers with simple underline accent */
+.btt,
+.btm,
+.btb {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.2rem;
+}
+
+.btt::after,
+.btm::after,
+.btb::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background-color: #000000;
+  /* subtle green accent */
+  border-radius: 2px;
+}
+
+/* --- Stats View Buttons --- */
+.bmenubutton {
+  background-color: #f8f8f8;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+/* Hover effect */
+.bmenubutton:hover {
+  background-color: #e8f5e9;
+  border-color: #1e8449;
+  color: #1e8449;
+}
+
+/* Active state (add a JS toggle if needed) */
+.bmenubutton.active {
+  background-color: #1e8449;
+  color: white;
+  border-color: #145a32;
+}
+
+/* Container layout */
+.Button.Menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 90%;
+  margin: 1rem auto;
+  gap: 0.4rem;
+}
+
+.Ratings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0.2rem auto 0.8rem auto;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* --- Question Card Structure --- */
+.qblock {
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: .8rem 0;
+  margin: 0.4rem auto;
+  width: 90%;
+  text-align: center;
+  align-items: center;
+}
+
+/* Question prompt */
+.qblock .pointq {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+}
+
+/* Answer area */
+.qblock .radio,
+.qblock .checkboxes {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+/* Answer "chips" */
+.qblock label {
+  background: white;
+  border: 1.5px solid #ccc;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.qblock label:hover {
+  background-color: #f1f1f1;
+  border-color: #999;
+}
+
+.qblock input[type="radio"]:checked+span,
+.qblock input[type="checkbox"]:checked+span {
+  background-color: #1e8449;
+  color: white;
+  border-color: #145a32;
+  border-radius: 20px;
+}
+
+.qblock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.qblock .pointq {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto 0.6rem auto;
+}
+
+.qblock .radio,
+.qblock .checkboxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
 }

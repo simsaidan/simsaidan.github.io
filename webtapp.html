@@ -5,9 +5,9 @@
 </head>
 
 <body>
-  <div class="score">Score</div>
-  <div class="Players">
+  <div class="TopRow">
     <span class="PlayerA">Player A</span>
+    <span class="score">Score</span>
     <span class="PlayerB">Player Ca</span>
   </div>
   <div class="date"> Date</div>
@@ -16,48 +16,85 @@
     <progress value="0.5" max="1"></progress>
   </div>
   <hr>
-  <div class="pointq">Was the first serve in?</div>
-  <div class="radio">
-    <input type="radio" name="serveIn" value="servein"> Yes
-    <input type="radio" name="serveIn" value="serveout"> No
+  <div class="qblock">
+    <div class="pointq">Was the first serve in?</div>
+    <div class="radio">
+      <label><input type="radio" name="serveIn" value="servein"><span>Yes</span></label>
+      <label><input type="radio" name="serveIn" value="serveout"><span>No</span></label>
+    </div>
   </div>
-  <div class="pointq">Who won the point?</div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="whowon" value="Awon">
-      <span class="PlayerA">Player A</span>
-    </label>
-    <label>
-      <input type="radio" name="whowon" value="Bwon">
-      <span class="PlayerB">Player B</span>
-    </label>
+  <div class="qblock">
+    <div class="pointq">Who won the point?</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="whowon" value="Awon">
+        <span class="PlayerA">Player A</span>
+      </label>
+      <label>
+        <input type="radio" name="whowon" value="Bwon">
+        <span class="PlayerB">Player B</span>
+      </label>
+    </div>
   </div>
-  <div class="pointq">Who came to the net?</div>
-  <div class="checkboxes">
-    <label>
-      <input type="checkbox" name="whocame" value="Acame">
-      <span class="PlayerA">Player A</span>
-    </label>
-    <label>
-      <input type="checkbox" name="whocame" value="Bcame">
-      <span class="PlayerB">Player B</span>
-    </label>
+  <div class="qblock">
+    <div class="pointq">Who came to the net?</div>
+    <div class="checkboxes">
+      <label>
+        <input type="checkbox" name="whocame" value="Acame">
+        <span class="PlayerA">Player A</span>
+      </label>
+      <label>
+        <input type="checkbox" name="whocame" value="Bcame">
+        <span class="PlayerB">Player B</span>
+      </label>
+    </div>
   </div>
-  <div class="pointq">How was the point won?</div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="ace"> Ace
-    <input type="radio" name="howwon" value="swinner"> Service Winner
-    <input type="radio" name="howwon" value="df"> Double Fault
-  </div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="fhw"> FH Winner
-    <input type="radio" name="howwon" value="bhw"> BH Winner
-    <input type="radio" name="howwon" value="fhe"> FH Error
-    <input type="radio" name="howwon" value="bhe"> BH Error
-  </div>
-  <div class="radio">
-    <input type="radio" name="howwon" value="nw"> Net Winner
-    <input type="radio" name="howwon" value="ne"> Net Error
+  <div class="qblock">
+    <div class="pointq">How was the point won?</div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="howwon" value="ace">
+        <span>Ace</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="swinner">
+        <span>Service Winner</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="df">
+        <span>Double Fault</span>
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="howwon" value="fhw">
+        <span>FH Winner</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="bhw">
+        <span>BH Winner</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="fhe">
+        <span>FH Error</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="bhe">
+        <span>BH Error</span>
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="howwon" value="nw">
+        <span>Net Winner</span>
+      </label>
+      <label>
+        <input type="radio" name="howwon" value="ne">
+        <span>Net Error</span>
+      </label>
+    </div>
   </div>
   <div class="button">
     <button type="button" class="submitb" onclick="increment()">Submit Point</button>
@@ -74,12 +111,12 @@
     <span class="RatingB">Player B</span>
   </div>
   <div class="Button Menu">
-    <button type="button" class="bmenubutton" onclick="overviewbf()">Overview</button>
-    <button type="button" class="bmenubutton" onclick="servingbf()">Serving</button>
-    <button type="button" class="bmenubutton" onclick="returnbf()">Returning</button>
-    <button type="button" class="bmenubutton" onclick="wenbf()">W/E & Net</button>
-    <button type="button" class="bmenubutton" onclick="adfbf()">Aces/DF</button>
-    <button type="button" class="bmenubutton" onclick="totalbf()">Total</button>
+    <button type="button" class="bmenubutton active" onclick="overviewbf(); setActive(this)">Overview</button>
+    <button type="button" class="bmenubutton" onclick="servingbf(); setActive(this)">Serving</button>
+    <button type="button" class="bmenubutton" onclick="returnbf(); setActive(this)">Returning</button>
+    <button type="button" class="bmenubutton" onclick="wenbf(); setActive(this)">W/E & Net</button>
+    <button type="button" class="bmenubutton" onclick="adfbf(); setActive(this)">Aces/DF</button>
+    <button type="button" class="bmenubutton" onclick="totalbf(); setActive(this)">Total</button>
   </div>
   <div class="btt">Serve</div>
   <div>
