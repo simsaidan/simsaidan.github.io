@@ -7,10 +7,10 @@
 <body>
   <div class="TopRow">
     <span class="PlayerA">Player A</span>
-    <span class="score">Score</span>
-    <span class="PlayerB">Player Ca</span>
+    <span class="score">Loading..</span>
+    <span class="PlayerB">Player B</span>
   </div>
-  <div class="date"> Date</div>
+  <div class="date"> Loading..</div>
   <div class="server">Serving:</div>
   <div class="progress">
     <progress value="0.5" max="1"></progress>
@@ -233,6 +233,52 @@
   <hr>
   <div>Play-by-Play</div>
   <div class="pbp"></div>
+  <div id="matchSetupModal" class="modal">
+    <div class="modal-content">
+      <h2>Match Setup</h2>
+
+      <h3 class="modal-section-title">Match Type</h3>
+      <div id="matchTypeGroup" class="modal-button-group">
+        <button class="modal-toggle-btn active" data-value="singles">Singles</button>
+        <button class="modal-toggle-btn" data-value="doubles">Doubles</button>
+      </div>
+
+
+
+      <h3 class="modal-section-title">Players</h3>
+      <label id="nameLabelA">Player A Name:</label>
+      <input id="playerAInput" type="text" placeholder="Player A">
+
+      <label id="nameLabelB">Player B Name:</label>
+      <input id="playerBInput" type="text" placeholder="Player B">
+
+      <p id="nameWarning" style="display:none; color:#b30000; font-size:0.9rem; margin-top:6px;">
+        Please enter both names before starting the match.
+      </p>
+
+      <h3 class="modal-section-title">Match Format</h3>
+      <div id="matchFormatGroup" class="modal-button-group">
+        <button class="modal-toggle-btn active" data-value="1">1 Set</button>
+        <button class="modal-toggle-btn" data-value="3">Best of 3 (Full Third)</button>
+        <button class="modal-toggle-btn" data-value="3-super">Best of 3 (10 Point TB)</button>
+      </div>
+
+      <h3 class="modal-section-title">First Server</h3>
+      <div id="firstServerGroup" class="modal-button-group">
+        <button class="modal-toggle-btn active" data-value="A">Player A</button>
+        <button class="modal-toggle-btn" data-value="B">Player B</button>
+      </div>
+      <button id="startMatchBtn">Start Match</button>
+    </div>
+  </div>
+
+  <div id="matchEndModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Match Complete</h2>
+      <div id="finalScore" style="font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0; color: #222;"></div>
+      <button id="downloadStatsBtn">Download Stats</button>
+    </div>
+  </div>
 
 </body>
 

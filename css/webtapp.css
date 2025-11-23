@@ -207,6 +207,15 @@ body {
   align-items: center;
   width: 90%;
   margin: 0.8rem auto 0.3rem auto;
+  position: relative;
+}
+
+.TopRow .PlayerA {
+  flex: 0 0 auto;
+}
+
+.TopRow .PlayerB {
+  flex: 0 0 auto;
 }
 
 .TopRow .score {
@@ -214,6 +223,10 @@ body {
   /* smaller than before to fit cleanly */
   font-weight: 700;
   color: #222;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 /* Limit Player name styles to top rows and stat areas */
@@ -286,11 +299,18 @@ table {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  table-layout: fixed;
 }
 
 .table-row td {
-  padding: 0.4rem 0.3rem;
+  padding: 0.4rem 1rem;
   font-size: 0.95rem;
+}
+
+.table-row td:first-child,
+.table-row td:last-child {
+  padding-left: 7rem;
+  padding-right: 7rem;
 }
 
 /* Stat labels left-aligned */
@@ -482,4 +502,181 @@ hr+.btt {
   width: 100%;
   margin: 0 auto;
   padding: 0;
+}
+
+#matchSetupModal,
+#matchEndModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.30);
+  /* softer than before */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  /* high, but not "hard lock" level */
+  backdrop-filter: blur(2px);
+  /* subtle blur effect */
+}
+
+
+#matchSetupModal .modal-content,
+#matchEndModal .modal-content {
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 1.4rem 1.8rem;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+
+#matchSetupModal h2,
+#matchEndModal h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+#matchSetupModal .modal-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+#matchSetupModal label {
+  display: block;
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #333;
+  margin-top: 0.7rem;
+}
+
+#matchSetupModal input,
+#matchSetupModal select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  margin-top: 0.3rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#matchSetupModal input:focus,
+#matchSetupModal select:focus {
+  border-color: #1e8449;
+  box-shadow: 0 0 3px rgba(30, 132, 73, 0.4);
+  outline: none;
+}
+
+
+#startMatchBtn {
+  background-color: #1e8449;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+#startMatchBtn:hover {
+  background-color: #27ae60;
+}
+
+#downloadStatsBtn {
+  background-color: #1e8449;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+#downloadStatsBtn:hover {
+  background-color: #27ae60;
+}
+
+#finalScore {
+  text-align: center;
+  width: 100%;
+}
+
+#finalScore>div {
+  text-align: center;
+  width: 100%;
+}
+
+#matchSetupModal,
+#matchEndModal {
+  animation: fadeIn 0.25s ease-out;
+}
+
+#matchSetupModal .modal-content,
+#matchEndModal .modal-content {
+  animation: pop 0.18s ease-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.modal-toggle-btn {
+  background-color: #f8f8f8;
+  border: 1.5px solid #ccc;
+  border-radius: 20px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.modal-toggle-btn:hover {
+  background-color: #e8f5e9;
+  border-color: #1e8449;
+  color: #1e8449;
+}
+
+.modal-toggle-btn.active {
+  background-color: #1e8449;
+  color: white;
+  border-color: #145a32;
 }

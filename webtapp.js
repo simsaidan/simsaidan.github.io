@@ -255,6 +255,7 @@ class Player {
         break;
       case "Points":
         set.pointsWon++;
+        set.currentGame[pKey].pointsWon++;
         break;
       case "First Serve Points":
         set.currentGame[pKey].firstServePoints++;
@@ -388,11 +389,184 @@ class Player {
   completedServiceGamesLost() {
     return this.sets.reduce((s, set) => s + set.serviceGamesLost, 0);
   }
+
+  getPlayerRating() {
+    const totalPoints = match.getTotalPoints();
+    const pointsWon = this.getPointsWon();
+    const oppKey = this === PlayerA ? 'B' : 'A';
+    const opponent = match.getPlayer(oppKey);
+    const myCompletedServiceGames = this.getCompletedServiceGames();
+    const oppCompletedServiceGames = opponent.getCompletedServiceGames();
+
+    const totalGames = match.getTotalGames();
+    const gamesWon = this.getGamesWon();
+    const gwp = pctOrBase(gamesWon, totalGames, 0.5);
+    const t_points_won = pctOrBase(pointsWon, totalPoints, 0.5);
+
+    const r_games_won = pctOrBase(
+      this.getTotalStats().returnGamesWon || 0,
+      oppCompletedServiceGames,
+      0.2157
+    );
+
+    const oppPointsServed = opponent.getPointsServed();
+    const oppServicePointsWon = opponent.getServicePointsWon();
+    const r_points_won = pctOrBase(oppPointsServed - oppServicePointsWon, oppPointsServed, 0.3617);
+
+    const oppAces = opponent.getAces();
+    const oppServiceWinners = opponent.getTotalStats().serviceWinners || 0;
+    const oppDoubleFaults = opponent.getDoubleFaults();
+
+    let r_inplay_ptswon;
+    if (oppPointsServed === 0) {
+      r_inplay_ptswon = 0.3643; // default baseline
+    } else {
+      const returnPointsWon = oppPointsServed - oppServicePointsWon;
+      const inPlayWon = returnPointsWon - oppAces - oppServiceWinners;
+      const inPlayTotal =
+        oppPointsServed - oppAces - oppDoubleFaults - oppServiceWinners;
+      r_inplay_ptswon = inPlayTotal <= 0 ? 0.3643 : inPlayWon / inPlayTotal;
+    }
+
+    const aces = this.getAces();
+    const doubleFaults = this.getDoubleFaults();
+    const serviceWinners = this.getTotalStats().serviceWinners || 0;
+    const pointsServed = this.getPointsServed();
+    const servicePointsWon = this.getServicePointsWon();
+
+    let s_inplay_ptswon;
+    if (pointsServed === 0) {
+      s_inplay_ptswon = 0.6361; // default baseline
+    } else {
+      const inPlayWon = servicePointsWon - aces - serviceWinners;
+      const inPlayTotal = pointsServed - aces - doubleFaults - serviceWinners;
+      s_inplay_ptswon = inPlayTotal <= 0 ? 0.6361 : inPlayWon / inPlayTotal;
+    }
+
+    const serviceGamesWon = this.getTotalStats().serviceGamesWon || 0;
+    const sg_wonp = pctOrBase(serviceGamesWon, myCompletedServiceGames, 0.7853);
+    const s_points_won_p = pctOrBase(servicePointsWon, pointsServed, 0.6388);
+
+    const oppSPointsLostFinished = opponent.getPointsLostFinishedGamesOnly();
+    const pw_perrg = pctOrBase(oppSPointsLostFinished, oppCompletedServiceGames, 2.3580);
+
+    const opp1stServePoints = opponent.getFirstServePoints();
+    const opp1stServeWon = opponent.getFirstServePointsWon();
+    const f_return_won_p = pctOrBase(opp1stServePoints - opp1stServeWon, opp1stServePoints, 0.2821);
+
+    const opp2ndServePoints = opponent.getSecondServePoints();
+    const opp2ndServeWon = opponent.getSecondServePointsWon();
+    const s_return_won_p = pctOrBase(opp2ndServePoints - opp2ndServeWon, opp2ndServePoints, 0.4896);
+
+    const fservePoints = this.getFirstServePoints();
+    const fserveWon = this.getFirstServePointsWon();
+    const fserve_won_p = pctOrBase(fserveWon, fservePoints, 0.7180);
+
+    const sservePoints = this.getSecondServePoints();
+    const sserveWon = this.getSecondServePointsWon();
+    const sserve_won_p = pctOrBase(sserveWon, sservePoints, 0.5115);
+
+    const myBreakPoints = this.getBreakPoints();
+    const myBreakPointsWon = this.getBreakPointsWon();
+    const bp_won_p = pctOrBase(myBreakPointsWon, myBreakPoints, 0);
+
+    const oppBreakPoints = opponent.getBreakPoints();
+    const oppBreakPointsWon = opponent.getBreakPointsWon();
+    const bp_saved_p = pctOrBase(oppBreakPoints - oppBreakPointsWon, oppBreakPoints, 1);
+
+    const oppPointsInFinishedServiceGames = opponent.getPointsFinishedGamesOnly();
+    const pprg = pctOrBase(oppPointsInFinishedServiceGames, oppCompletedServiceGames, 6.4159);
+
+    const netPoints = this.getNetPoints();
+    const netPointsWon = this.getNetPointsWon();
+    const netwp = pctOrBase(netPointsWon, netPoints, 0.6294);
+    const ace_p = pctOrBase(aces, pointsServed, 0);
+
+    let rpsp_ratio;
+    if (myCompletedServiceGames === 0 || oppCompletedServiceGames === 0) {
+      rpsp_ratio = 1.0;
+    } else {
+      rpsp_ratio =
+        pointsServed === 0 ? 1.0 : oppPointsServed / pointsServed;
+    }
+
+    const fserve_p = pctOrBase(fservePoints, pointsServed, 0.6208);
+    const acesFinished = this.getAcesFinishedGamesOnly();
+    const aces_psgame = pctOrBase(acesFinished, myCompletedServiceGames, 0);
+    const netpp = pctOrBase(netPoints, totalPoints, 0);
+    const winners = this.getWinners();
+    const winner_p = pctOrBase(winners, pointsWon, 0);
+
+    const ue_p =
+      totalPoints === 0 ? 0.2366 : this.getErrorPercent();
+
+    const myNetPointsWon = this.getNetPointsWon();
+    const pwnet = pctOrBase(myNetPointsWon, pointsWon, 0.1443);
+    const secondServePoints = this.getSecondServePoints();
+    const df_pss = pctOrBase(doubleFaults, secondServePoints, 0);
+    const df_p = pctOrBase(doubleFaults, pointsServed, 0);
+
+    const pointsInFinishedServiceGames = this.getPointsFinishedGamesOnly();
+    const ppsg = pctOrBase(pointsInFinishedServiceGames, myCompletedServiceGames, 6.4133);
+
+    const dfFinished = this.getDoubleFaultsFinishedGamesOnly();
+    const df_psgame = pctOrBase(dfFinished, myCompletedServiceGames, 0);
+
+    const oppBreakPointsFinished = opponent.getBreakPointsFinishedGamesOnly();
+    const bp_persg = pctOrBase(oppBreakPointsFinished, myCompletedServiceGames, 0);
+
+    const pointsLostFinished = this.getPointsLostFinishedGamesOnly();
+    const pl_persg = myCompletedServiceGames === 0 ? 0 : pointsLostFinished / myCompletedServiceGames;
+    let raw_sglps = getServiceGamesLostPerSet(this === PlayerA ? 'A' : 'B');
+    const sglps =
+      typeof raw_sglps !== "number" || isNaN(raw_sglps)
+        ? 1.0163
+        : raw_sglps;
+
+    const sum = 4.7487 * ((t_points_won - 0.5002) / 0.0651) +
+      4.7417 * ((gwp - 0.5005) / 0.1378) +
+      3.8626 * ((r_games_won - 0.2157) / 0.1712) +
+      3.7691 * ((r_points_won - 0.3617) / 0.0904) +
+      3.6639 * ((r_inplay_ptswon - 0.3643) / 0.0887) +
+      3.5316 * ((sg_wonp - 0.7853) / 0.1704) +
+      3.4340 * ((s_inplay_ptswon - 0.6361) / 0.0890) +
+      3.4236 * ((s_points_won_p - 0.6388) / 0.0907) +
+      3.2814 * ((pw_perrg - 2.3580) / 0.7664) +
+      3.0326 * ((f_return_won_p - 0.2821) / 0.1022) +
+      2.8976 * ((s_return_won_p - 0.4896) / 0.1213) +
+      2.7623 * ((fserve_won_p - 0.7180) / 0.1024) +
+      2.5820 * ((sserve_won_p - 0.5115) / 0.1216) +
+      2.3942 * ((bp_won_p - 0.3905) / 0.2678) +
+      2.2642 * ((bp_saved_p - 0.6111) / 0.2673) +
+      1.2452 * ((pprg - 6.4159) / 0.8684) +
+      1.1194 * ((netwp - 0.6294) / 0.2021) +
+      0.9477 * ((rpsp_ratio - 1.0191) / 0.2011) +
+      0.8609 * ((ace_p - 0.0747) / 0.0599) +
+      0.8559 * ((fserve_p - 0.6208) / 0.0739) +
+      0.6701 * ((aces_psgame - 0.4663) / 0.3623)
+      - 0.0917 * ((netpp - 0.1099) / 0.0577)
+      - 0.2325 * ((winner_p - 0.3178) / 0.0951)
+      - 0.4413 * ((ue_p - 0.2366) / 0.1098)
+      - 0.4487 * ((pwnet - 0.1443) / 0.0792)
+      - 0.7323 * ((df_pss - 0.0950) / 0.0727)
+      - 0.9676 * ((df_p - 0.0366) / 0.0297)
+      - 1.0607 * ((ppsg - 6.4133) / 0.8641)
+      - 1.0622 * ((df_psgame - 0.2381) / 0.2006)
+      - 2.5134 * ((bp_persg - 0.5503) / 0.3619)
+      - 2.9682 * ((pl_persg - 2.3536) / 0.7640)
+      - 3.6723 * ((sglps - 1.0163) / 0.7469);
+
+    const sigmoided = 1 / (1 + Math.exp(-1 * (sum + 0.048) / 35));
+    const scaled = 10 * sigmoided;
+    return scaled.toFixed(2);
+  }
 }
 
 class Match {
-  constructor(playerAName, playerBName) {
+  constructor(playerAName, playerBName, matchType, matchFormat) {
     this.players = { A: new Player(playerAName), B: new Player(playerBName) };
+    this.matchType = matchType;     // "singles" or "doubles"
+    this.matchFormat = matchFormat;
     this.aPoints = 0;
     this.bPoints = 0;
     this.aGames = 0;
@@ -506,6 +680,18 @@ class Match {
     this.tiebreak = false;
 
     this.setStartTimes.push(now);
+
+    // Check if match is over
+    if (this.isMatchOver()) {
+      this.finishMatch();
+    }
+  }
+
+  // Finish the match and show end match modal
+  finishMatch() {
+    if (typeof window !== 'undefined' && typeof showMatchEndModal === 'function') {
+      showMatchEndModal();
+    }
   }
 
   getAverageSetTimeMinutes() {
@@ -526,6 +712,53 @@ class Match {
     if (serviceGames.length === 0) return '-';
     const avgMs = serviceGames.reduce((sum, g) => sum + g.duration, 0) / serviceGames.length;
     return (avgMs / 60000).toFixed(1); // minutes
+  }
+
+  // Get sets won by each player
+  getSetsWon() {
+    let setsWonA = 0;
+    let setsWonB = 0;
+
+    for (const setScore of this.prevSets) {
+      // Parse set score like "6-4" or "6-4 (7-5)" for tiebreak
+      const match = setScore.match(/^(\d+)-(\d+)/);
+      if (match) {
+        const aGames = parseInt(match[1]);
+        const bGames = parseInt(match[2]);
+        if (aGames > bGames) setsWonA++;
+        else setsWonB++;
+      }
+    }
+
+    return { A: setsWonA, B: setsWonB };
+  }
+
+  // Check if match is over based on match format
+  isMatchOver() {
+    // TESTING: End match after one point
+    if (this.getTotalPoints() > 0) {
+      return true;
+    }
+
+    const { A: setsWonA, B: setsWonB } = this.getSetsWon();
+
+    if (this.matchFormat === "1") {
+      // 1 Set: match ends after 1 set
+      return setsWonA + setsWonB >= 1;
+    } else if (this.matchFormat === "3" || this.matchFormat === "3-super") {
+      // Best of 3: match ends when someone wins 2 sets
+      return setsWonA >= 2 || setsWonB >= 2;
+    }
+
+    return false;
+  }
+
+  // Get match winner
+  getMatchWinner() {
+    const { A: setsWonA, B: setsWonB } = this.getSetsWon();
+    if (setsWonA > setsWonB) return 'A';
+    if (setsWonB > setsWonA) return 'B';
+    return null;
   }
 
   toggleServer() {
@@ -556,30 +789,39 @@ function setActive(button) {
   document.querySelectorAll('.bmenubutton').forEach(btn => btn.classList.remove('active'));
   button.classList.add('active');
 }
+let match;
+let PlayerA;
+let PlayerB;
 
-let match = new Match("Catten Sims", "Aidan Sims");
-let PlayerA = match.getPlayer('A');
-let PlayerB = match.getPlayer('B');
+function updateRatings() {
+  // Update text values
+  let ratingA = Number(PlayerA.getPlayerRating());
+  let ratingB = Number(PlayerB.getPlayerRating());
 
-match.startNewGame('A');
+  // Handle any invalid or undefined results
+  if (!isFinite(ratingA)) ratingA = 5;
+  if (!isFinite(ratingB)) ratingB = 5;
 
-document.querySelector(".server").textContent =
-  "Serving: " + match.getPlayer(match.currentServer).name;
+  document.querySelectorAll(".RatingA").forEach(el => {
+    el.textContent = `Rating: ${ratingA.toFixed(2)}`;
+  });
+  document.querySelectorAll(".RatingB").forEach(el => {
+    el.textContent = `Rating: ${ratingB.toFixed(2)}`;
+  });
 
-// Update all "PlayerA" elements
-document.querySelectorAll(".PlayerA").forEach(el => {
-  el.textContent = PlayerA.name;
-});
+  // Update progress bar to reflect A's share of total rating
+  const total = ratingA + ratingB;
+  const progressValue = total === 0 ? 0.5 : ratingA / total;
 
-// Update all "PlayerB" elements
-document.querySelectorAll(".PlayerB").forEach(el => {
-  el.textContent = PlayerB.name;
-});
+  const progressBar = document.querySelector(".progress progress");
+  if (progressBar) progressBar.value = progressValue;
+}
 
+function pctOrBase(numerator, denominator, baseline = 0) {
+  return denominator === 0 ? baseline : numerator / denominator;
+}
 
 let gameScores = [0, 15, 30, 40];
-const score = document.querySelector('.score')
-score.textContent = match.aPoints + '-' + match.bPoints;
 var statmode = 'Overview'
 
 var tiebreak = 0;
@@ -587,7 +829,7 @@ var tbserver = '';
 var startTime = new Date();
 
 const pbp = document.querySelector('.pbp');
-if (pbp) {
+if (pbp && match) {
   pbp.textContent = match.currentServer === 'A' ? '0*-0\n' : '0-0*\n';
 }
 
@@ -1321,7 +1563,8 @@ function wenbf() {
 
         for (const set of PlayerA.sets.concat([PlayerA.currentSet])) {
           for (const game of set.games) {
-            const totalPointsThisGame = game.A.pointsTotal + game.B.pointsTotal;
+
+            const totalPointsThisGame = Math.max(game.A.pointsTotal, game.B.pointsTotal);
             if (game.winner === 'A') {
               pointsInGamesWon += game.A.pointsWon;
               totalPointsInGamesWon += totalPointsThisGame;
@@ -1346,7 +1589,7 @@ function wenbf() {
 
         for (const set of PlayerB.sets.concat([PlayerB.currentSet])) {
           for (const game of set.games) {
-            const totalPointsThisGame = game.A.pointsTotal + game.B.pointsTotal;
+            const totalPointsThisGame = Math.max(game.A.pointsTotal, game.B.pointsTotal);
             if (game.winner === 'B') {
               pointsInGamesWon += game.B.pointsWon;
               totalPointsInGamesWon += totalPointsThisGame;
@@ -1356,7 +1599,6 @@ function wenbf() {
             }
           }
         }
-
         const pointsWonInGamesWonPct =
           totalPointsInGamesWon === 0 ? 0 : (pointsInGamesWon / totalPointsInGamesWon) * 100;
         const pointsWonInGamesLostPct =
@@ -1501,7 +1743,10 @@ function makeStats(winner, event, fsin, ps) {
   }
 
   match.getPlayer(winnerKey).inc("Points", { playerKey: winnerKey });
-  match.getPlayer(serverKey).currentSet.currentGame[serverKey].pointsTotal++;
+  match.getPlayer('A').currentSet.currentGame.A.pointsTotal++;
+  match.getPlayer('A').currentSet.currentGame.B.pointsTotal++;
+  match.getPlayer('B').currentSet.currentGame.A.pointsTotal++;
+  match.getPlayer('B').currentSet.currentGame.B.pointsTotal++;
   if (winnerKey !== serverKey) {
     match.getPlayer(serverKey).currentSet.currentGame[serverKey].spointsLost++;
   }
@@ -1641,6 +1886,11 @@ function increment() {
     }
     if ((aPts + bPts) % 2 === 1) match.toggleServer();
     document.querySelector('.score').textContent = makeScore();
+
+    // TESTING: Check if match is over after each point
+    if (match.isMatchOver()) {
+      match.finishMatch();
+    }
     return;
   }
 
@@ -1664,6 +1914,12 @@ function increment() {
 
   document.querySelector('.score').textContent = makeScore();
   resetPointInputs();
+  updateRatings();
+
+  // TESTING: Check if match is over after each point
+  if (match.isMatchOver()) {
+    match.finishMatch();
+  }
 }
 
 function getCheckedValue(name) {
@@ -1673,3 +1929,174 @@ function getCheckedValue(name) {
 const submitBtn = document.querySelector(".submitB");
 submitBtn.disabled = true;
 resetPointInputs()
+
+window.addEventListener("load", () => {
+  const modal = document.getElementById("matchSetupModal");
+  const startBtn = document.getElementById("startMatchBtn");
+  updateNameLabelsForMatchType();
+
+  // Update first server button labels when player names are entered
+  const inputA = document.getElementById("playerAInput");
+  const inputB = document.getElementById("playerBInput");
+
+  if (inputA) {
+    inputA.addEventListener("input", updateFirstServerButtonLabels);
+  }
+  if (inputB) {
+    inputB.addEventListener("input", updateFirstServerButtonLabels);
+  }
+
+  startBtn.addEventListener("click", () => {
+    const nameA = document.getElementById("playerAInput")?.value.trim();
+    const nameB = document.getElementById("playerBInput")?.value.trim();
+
+    const warning = document.getElementById("nameWarning");
+
+    if (!nameA || !nameB) {
+      warning.style.display = "block";
+      return; // stop start
+    }
+
+    warning.style.display = "none"; // hide if valid
+
+    // For now, we ignore the other selections but capture them
+    const matchType =
+      document.querySelector("#matchTypeGroup .modal-toggle-btn.active").dataset.value;
+
+    const matchFormat =
+      document.querySelector("#matchFormatGroup .modal-toggle-btn.active").dataset.value;
+
+    const firstServer =
+      document.querySelector("#firstServerGroup .modal-toggle-btn.active").dataset.value;
+
+    match = new Match(nameA, nameB, matchType, matchFormat);
+    PlayerA = match.getPlayer('A');
+    PlayerB = match.getPlayer('B');
+
+    // Update UI labels
+    document.querySelectorAll(".PlayerA").forEach(el => el.textContent = nameA);
+    document.querySelectorAll(".PlayerB").forEach(el => el.textContent = nameB);
+
+    // Start first game with selected first server
+    match.startNewGame(firstServer);
+    const score = document.querySelector('.score');
+    score.textContent = match.aPoints + '-' + match.bPoints;
+    pbp.textContent += match.currentServer === 'A' ? '0*-0\n' : '0-0*\n';
+
+    // Update server label
+    const serverElem = document.querySelector(".server");
+    if (serverElem) {
+      serverElem.textContent = "Serving: " + match.getPlayer(match.currentServer).name;
+    }
+
+    // Hide modal
+    modal.style.display = "none";
+
+    // Initialize ratings
+    updateRatings();
+  });
+});
+
+function updateFirstServerButtonLabels() {
+  const matchType =
+    document.querySelector("#matchTypeGroup .modal-toggle-btn.active")?.dataset.value || "singles";
+
+  const inputA = document.getElementById("playerAInput");
+  const inputB = document.getElementById("playerBInput");
+  const firstServerButtons = document.querySelectorAll("#firstServerGroup .modal-toggle-btn");
+
+  if (firstServerButtons.length >= 2) {
+    const nameA = inputA?.value.trim() || "";
+    const nameB = inputB?.value.trim() || "";
+
+    // Use entered names if available, otherwise use defaults
+    if (matchType === "doubles") {
+      firstServerButtons[0].textContent = nameA || "Team A";
+      firstServerButtons[1].textContent = nameB || "Team B";
+    } else {
+      firstServerButtons[0].textContent = nameA || "Player A";
+      firstServerButtons[1].textContent = nameB || "Player B";
+    }
+  }
+}
+
+function updateNameLabelsForMatchType() {
+  const matchType =
+    document.querySelector("#matchTypeGroup .modal-toggle-btn.active").dataset.value;
+
+  const labelA = document.getElementById("nameLabelA");
+  const labelB = document.getElementById("nameLabelB");
+  const inputA = document.getElementById("playerAInput");
+  const inputB = document.getElementById("playerBInput");
+
+  if (matchType === "doubles") {
+    labelA.textContent = "Team A Name:";
+    labelB.textContent = "Team B Name:";
+    inputA.placeholder = "Team A";
+    inputB.placeholder = "Team B";
+  } else {
+    labelA.textContent = "Player A Name:";
+    labelB.textContent = "Player B Name:";
+    inputA.placeholder = "Player A";
+    inputB.placeholder = "Player B";
+  }
+
+  // Update first server button labels when match type changes
+  updateFirstServerButtonLabels();
+}
+
+function setupToggleGroup(groupId) {
+  const group = document.getElementById(groupId);
+  const buttons = group.querySelectorAll(".modal-toggle-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // make buttons mutually exclusive
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      if (groupId === "matchTypeGroup") {
+        updateNameLabelsForMatchType();
+      }
+    });
+  });
+}
+
+function showMatchEndModal() {
+  const modal = document.getElementById("matchEndModal");
+  const finalScoreDiv = document.getElementById("finalScore");
+
+  if (!modal || !finalScoreDiv || !match) return;
+
+  // Format final score - include set scores and current game score
+  const setScores = match.prevSets.length > 0 ? match.prevSets.join(", ") : "";
+  const currentScore = `${match.aPoints}-${match.bPoints}`;
+  const finalScore = setScores ? `${setScores}, ${currentScore}` : currentScore;
+
+  const winner = match.getMatchWinner();
+  const winnerName = winner ? match.getPlayer(winner).name : "Unknown";
+
+  // Display final score with winner (centered)
+  finalScoreDiv.innerHTML = `
+    <div style="margin-bottom: 0.5rem; text-align: center; width: 100%; display: block;">${finalScore}</div>
+    <div style="font-size: 1.2rem; color: #1e8449; margin-top: 0.5rem; text-align: center; width: 100%; display: block;">
+      Winner: ${winnerName}
+    </div>
+  `;
+
+  // Show modal
+  modal.style.display = "flex";
+
+  // Setup download stats button (does nothing for now)
+  const downloadBtn = document.getElementById("downloadStatsBtn");
+  if (downloadBtn) {
+    downloadBtn.onclick = () => {
+      // Placeholder for future functionality
+      console.log("Download stats clicked");
+    };
+  }
+}
+
+setupToggleGroup("matchTypeGroup");
+setupToggleGroup("matchFormatGroup");
+setupToggleGroup("firstServerGroup");
