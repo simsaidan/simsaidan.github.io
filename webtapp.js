@@ -1457,9 +1457,9 @@ function returnbf() {
         const returnPointsWon = PlayerB.getPointsServed() - PlayerB.getServicePointsWon();
         const oppAces = PlayerB.getAces();
         const oppServiceWinners = PlayerB.getTotalStats().serviceWinners || 0;
-        const inPlayWon = returnPointsWon - oppAces - oppServiceWinners;
-        const returnPointsTotal = PlayerB.getPointsServed();
         const oppDoubleFaults = PlayerB.getDoubleFaults();
+        const inPlayWon = returnPointsWon - oppDoubleFaults;
+        const returnPointsTotal = PlayerB.getPointsServed();
         const inPlayTotal = returnPointsTotal - oppAces - oppDoubleFaults - oppServiceWinners;
         return percent(inPlayWon, inPlayTotal);
       },
