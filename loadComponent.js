@@ -4,6 +4,7 @@ function loadComponent(id, file) {
     .then(data => {
       document.getElementById(id).innerHTML = data;
       highlightActiveLink(); // Run after navbar is loaded
+      setupMobileDropdownToggle(); // Enable dropdown click on touch devices
     })
     .catch(err => console.error(`Error loading ${file}:`, err));
 }
@@ -30,5 +31,38 @@ function highlightActiveLink() {
         dropdown.querySelector('.dropbtn').classList.add('active');
       }
     }
+  });
+}
+
+function setupMobileDropdownToggle() {
+  // Only bind click toggles when hover is not available (mobile/tablet).
+  const canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const shouldBindClick = !canHover || coarsePointer;
+  if (!shouldBindClick) return;
+
+  const dropdowns = document.querySelectorAll('.dropdown');
+  dropdowns.forEach(dropdown => {
+    const btn = dropdown.querySelector('.dropbtn');
+    if (!btn) return;
+    if (btn.dataset.dropdownBound === '1') return;
+    btn.dataset.dropdownBound = '1';
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Close other open dropdowns.
+      document.querySelectorAll('.dropdown.show').forEach(d => {
+        if (d !== dropdown) d.classList.remove('show');
+      });
+
+      dropdown.classList.toggle('show');
+    });
+  });
+
+  // Click outside closes.
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
   });
 }
