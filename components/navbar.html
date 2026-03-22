@@ -1,10 +1,22 @@
 <header class="top-nav">
-  <a href="index.html" class="nav-left">Aidan Sims</a>
-  <nav class="nav-right">
+  <a href="index.html" class="nav-left" aria-label="Aidan Sims home">
+    <span class="nav-brand-full">Aidan Sims</span>
+    <span class="nav-brand-short" aria-hidden="true">AS</span>
+  </a>
+  <button type="button" class="nav-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false"
+    aria-controls="primary-nav">
+    <span class="nav-menu-toggle-bar" aria-hidden="true"></span>
+    <span class="nav-menu-toggle-bar" aria-hidden="true"></span>
+    <span class="nav-menu-toggle-bar" aria-hidden="true"></span>
+  </button>
+  <nav class="nav-right" id="primary-nav" aria-label="Main navigation">
     <a href="index.html#about">About</a>
     <a href="components/AidanSimsResumeQ.pdf" target="_blank">Resume</a>
     <div class="dropdown">
-      <button class="dropbtn">Personal Projects</button>
+      <button type="button" class="dropbtn">
+        <span class="dropbtn-label-full">Personal Projects</span>
+        <span class="dropbtn-label-short">Projects</span>
+      </button>
       <div class="dropdown-content">
         <a href="https://simsaidan.github.io/grid.html" target="_blank">Tennis Grid Game</a>
         <a href="https://simsaidan.github.io/tiebreak.html" target="_self">Tennis Tiebreak Analysis</a>
