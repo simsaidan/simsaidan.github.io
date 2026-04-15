@@ -1,8 +1,12 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js'
 
+// globe.gl is loaded via a classic script tag; ES modules do not see `Globe` as a bare identifier.
+const Globe = globalThis.Globe;
+
 // ---------- Globe Setup ----------
 const container = document.getElementById('globeContainer');
 const shouldInitGlobe =
+  typeof Globe === 'function' &&
   container &&
   container.offsetWidth > 0 &&
   container.offsetHeight > 0;
