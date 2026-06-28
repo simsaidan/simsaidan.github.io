@@ -8,28 +8,51 @@ function loadComponent(id, file) {
   container.setAttribute('aria-busy', 'true');
 
   return fetch(file)
-    .then(res => {
+    .then((res) => {
       if (!res.ok) {
         throw new Error(`HTTP ${res.status} loading ${file}`);
       }
       return res.text();
     })
-    .then(data => {
+    .then((data) => {
       container.innerHTML = data;
       container.removeAttribute('aria-busy');
       highlightActiveLink();
       setupMobileDropdownToggle();
       setupMobileNavMenu();
     })
-    .catch(err => {
+    .catch((err) => {
       container.removeAttribute('aria-busy');
       container.innerHTML = '<p class="component-error">Navigation failed to load.</p>';
       console.error(`Error loading ${file}:`, err);
     });
 }
 
-function initBlogPage() {
+function initSitePage() {
   loadComponent('navbar', 'components/navbar.html');
+  loadComponent('footer', 'components/footer.html').then(setupFooter);
+}
+
+function initBlogPage() {
+  initSitePage();
+}
+
+function setupFooter() {
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+
+  const updatedEl = document.getElementById('footer-updated');
+  if (updatedEl) {
+    const modified = new Date(document.lastModified);
+    updatedEl.dateTime = modified.toISOString().split('T')[0];
+    updatedEl.textContent = modified.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
 }
 
 function highlightActiveLink() {
@@ -39,7 +62,7 @@ function highlightActiveLink() {
 
   const links = document.querySelectorAll('.top-nav a');
 
-  links.forEach(link => {
+  links.forEach((link) => {
     const linkPage = link.pathname.split('/').pop();
 
     if (linkPage === currentPage) {
@@ -60,7 +83,7 @@ function setupMobileDropdownToggle() {
   if (!shouldBindClick) return;
 
   const dropdowns = document.querySelectorAll('.dropdown');
-  dropdowns.forEach(dropdown => {
+  dropdowns.forEach((dropdown) => {
     const btn = dropdown.querySelector('.dropbtn');
     if (!btn) return;
     if (btn.dataset.dropdownBound === '1') return;
@@ -70,7 +93,7 @@ function setupMobileDropdownToggle() {
       e.preventDefault();
       e.stopPropagation();
 
-      document.querySelectorAll('.dropdown.show').forEach(d => {
+      document.querySelectorAll('.dropdown.show').forEach((d) => {
         if (d !== dropdown) d.classList.remove('show');
       });
 
@@ -79,7 +102,7 @@ function setupMobileDropdownToggle() {
   });
 
   document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
+    document.querySelectorAll('.dropdown.show').forEach((d) => d.classList.remove('show'));
   });
 }
 

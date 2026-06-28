@@ -1,0 +1,10 @@
+node_modules
+scripts/node_modules
+scripts/exports
+*.json
+*.html
+*.css
+*.md
+soccer.js
+farsi_app.js
+level.js

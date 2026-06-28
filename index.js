@@ -1,4 +1,4 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js';
 
 // globe.gl is loaded via a classic script tag; ES modules do not see `Globe` as a bare identifier.
 const Globe = globalThis.Globe;
@@ -38,19 +38,20 @@ if (shouldInitGlobe) {
   setInterval(() => {
     angle += 0.009;
     globe.controls().autoRotate = false;
-    globe.pointOfView({ lat: 20, lng: angle * 180 / Math.PI + 20, altitude: 5.2 }, 0);
+    globe.pointOfView({ lat: 20, lng: (angle * 180) / Math.PI + 20, altitude: 5.2 }, 0);
   }, 30);
 
   window.addEventListener('load', () => {
-    const pageWidth = window.innerWidth;        // Get page width
-    const desiredWidth = -1 / 2 * pageWidth + 134;
+    const pageWidth = window.innerWidth; // Get page width
+    const desiredWidth = (-1 / 2) * pageWidth + 134;
     const myglobe = document.getElementById('globeContainer');
-    myglobe.style.left = desiredWidth + 'px';   // Set width dynamically
+    myglobe.style.left = desiredWidth + 'px'; // Set width dynamically
   });
 
   // ---------- Supabase Setup ----------
-  const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co'
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w'
+  const SUPABASE_URL = 'https://fivdlwpvvysahzxtnnej.supabase.co';
+  const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpdmRsd3B2dnlzYWh6eHRubmVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ4Njc4NzAsImV4cCI6MjA3MDQ0Mzg3MH0.JvzGYMnZMJul2kUxE1hunbGIoOcQ_dfdhAjSb6IOk5w';
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -66,7 +67,7 @@ if (shouldInitGlobe) {
       .pointColor(() => 'red')
       .pointAltitude(0.03)
       .pointRadius(0.5)
-      .pointsData(data.map(row => ({ lat: row.lat, lng: row.lng })));
+      .pointsData(data.map((row) => ({ lat: row.lat, lng: row.lng })));
   }
 
   // Add visitor location to DB
@@ -87,18 +88,19 @@ if (shouldInitGlobe) {
 
   // Get visitor location via IP API, save to DB, then load all markers
   fetch('https://ipapi.co/json/')
-    .then(res => res.json())
-    .then(async location => {
+    .then((res) => res.json())
+    .then(async (location) => {
       const lat = location.latitude;
       const lng = location.longitude;
       await addVisitorLocation(lat, lng);
       await loadAllMarkers();
     })
-    .catch(err => console.error('Could not fetch location:', err));
+    .catch((err) => console.error('Could not fetch location:', err));
 
   // ---------- Optional: Realtime Updates ----------
-  supabase.channel('realtime:public:markers')
-    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'markers' }, payload => {
+  supabase
+    .channel('realtime:public:markers')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'markers' }, (payload) => {
       const newPoint = { lat: payload.new.lat, lng: payload.new.lng };
       const currentData = globe.pointsData();
       globe.pointsData([...currentData, newPoint]);

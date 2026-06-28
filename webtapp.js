@@ -29,7 +29,7 @@ class SetStats {
     this.games = [];
     this.currentGame = {
       A: new GameStats('A'),
-      B: new GameStats('A')
+      B: new GameStats('A'),
     };
     this.aces = 0;
     this.doubleFaults = 0;
@@ -62,15 +62,15 @@ class SetStats {
     const gameSnapshot = {
       winner: winnerKey,
       A: this.currentGame.A,
-      B: this.currentGame.B
+      B: this.currentGame.B,
     };
     this.games.push(gameSnapshot);
     this.currentGame = { A: new GameStats(), B: new GameStats() };
   }
 
   avgAcesPerServiceGame(playerKey) {
-    const svcGames = this.games.filter(g => {
-      const server = (g.A.server === 'A' || g.B.server === 'A') ? 'A' : 'B';
+    const svcGames = this.games.filter((g) => {
+      const server = g.A.server === 'A' || g.B.server === 'A' ? 'A' : 'B';
       return server === playerKey;
     });
     if (svcGames.length === 0) return '-';
@@ -79,7 +79,7 @@ class SetStats {
   }
 
   serviceGamesLost(playerKey) {
-    return this.games.filter(g => {
+    return this.games.filter((g) => {
       const server = g.A.server;
       if (server !== playerKey) return false;
       return g.winner !== server;
@@ -106,7 +106,7 @@ class Player {
       total += set[statKey] || 0;
     }
     if (setOnly) {
-      return total
+      return total;
     }
     const current = this.currentSet;
     if (current && current.games && current.games.length > 0) {
@@ -117,7 +117,6 @@ class Player {
 
     return total;
   }
-
 
   getCompletedServiceGames() {
     let total = 0;
@@ -193,23 +192,26 @@ class Player {
   getReturnRating(opponent) {
     const opp1stServePoints = opponent.getFirstServePoints();
     const opp1stServeWon = opponent.getFirstServePointsWon();
-    const firstReturnPct = opp1stServePoints === 0 ? 0 :
-      ((opp1stServePoints - opp1stServeWon) / opp1stServePoints) * 100;
+    const firstReturnPct =
+      opp1stServePoints === 0
+        ? 0
+        : ((opp1stServePoints - opp1stServeWon) / opp1stServePoints) * 100;
 
     const opp2ndServePoints = opponent.getSecondServePoints();
     const opp2ndServeWon = opponent.getSecondServePointsWon();
-    const secondReturnPct = opp2ndServePoints === 0 ? 0 :
-      ((opp2ndServePoints - opp2ndServeWon) / opp2ndServePoints) * 100;
+    const secondReturnPct =
+      opp2ndServePoints === 0
+        ? 0
+        : ((opp2ndServePoints - opp2ndServeWon) / opp2ndServePoints) * 100;
 
     const myBreakPoints = this.getBreakPoints();
     const myBreakPointsWon = this.getBreakPointsWon();
-    const breakPct = myBreakPoints === 0 ? 0 :
-      (myBreakPointsWon / myBreakPoints) * 100;
+    const breakPct = myBreakPoints === 0 ? 0 : (myBreakPointsWon / myBreakPoints) * 100;
 
     const oppCompletedServiceGames = opponent.getCompletedServiceGames();
     const myReturnGamesWon = this.getTotalStats().returnGamesWon || 0;
-    const returnGamesPct = oppCompletedServiceGames === 0 ? 0 :
-      (myReturnGamesWon / oppCompletedServiceGames) * 100;
+    const returnGamesPct =
+      oppCompletedServiceGames === 0 ? 0 : (myReturnGamesWon / oppCompletedServiceGames) * 100;
 
     const rating = firstReturnPct + secondReturnPct + breakPct + returnGamesPct;
     return Math.round(rating);
@@ -221,110 +223,117 @@ class Player {
 
     const dfPct = pointsServed === 0 ? 0 : (this.getDoubleFaults() / pointsServed) * 100;
 
-    const firstServePct = pointsServed === 0 ? 0 :
-      (this.getFirstServePoints() / pointsServed) * 100;
+    const firstServePct =
+      pointsServed === 0 ? 0 : (this.getFirstServePoints() / pointsServed) * 100;
 
     const first1stServePoints = this.getFirstServePoints();
-    const firstServeWonPct = first1stServePoints === 0 ? 0 :
-      (this.getFirstServePointsWon() / first1stServePoints) * 100;
+    const firstServeWonPct =
+      first1stServePoints === 0 ? 0 : (this.getFirstServePointsWon() / first1stServePoints) * 100;
 
     const second2ndServePoints = this.getSecondServePoints();
-    const secondServeWonPct = second2ndServePoints === 0 ? 0 :
-      (this.getSecondServePointsWon() / second2ndServePoints) * 100;
+    const secondServeWonPct =
+      second2ndServePoints === 0
+        ? 0
+        : (this.getSecondServePointsWon() / second2ndServePoints) * 100;
 
     const myCompletedServiceGames = this.getCompletedServiceGames();
     const myServiceGamesWon = this.getTotalStats().serviceGamesWon || 0;
-    const serviceGamesPct = myCompletedServiceGames === 0 ? 0 :
-      (myServiceGamesWon / myCompletedServiceGames) * 100;
+    const serviceGamesPct =
+      myCompletedServiceGames === 0 ? 0 : (myServiceGamesWon / myCompletedServiceGames) * 100;
 
     const oppBreakPoints = opponent.getBreakPoints();
     const oppBreakPointsWon = opponent.getBreakPointsWon();
-    const breakPointsSavedPct = oppBreakPoints === 0 ? 0 :
-      ((oppBreakPoints - oppBreakPointsWon) / oppBreakPoints) * 100;
+    const breakPointsSavedPct =
+      oppBreakPoints === 0 ? 0 : ((oppBreakPoints - oppBreakPointsWon) / oppBreakPoints) * 100;
 
-    const rating = acePct - dfPct + firstServePct + firstServeWonPct +
-      secondServeWonPct + serviceGamesPct + breakPointsSavedPct;
+    const rating =
+      acePct -
+      dfPct +
+      firstServePct +
+      firstServeWonPct +
+      secondServeWonPct +
+      serviceGamesPct +
+      breakPointsSavedPct;
     return Math.round(rating);
   }
-
 
   inc(stat, options = {}) {
     const pKey = options.playerKey || 'A';
     const set = this.currentSet;
     switch (stat) {
-      case "Games":
+      case 'Games':
         set.gamesWon++;
         break;
-      case "Points":
+      case 'Points':
         set.pointsWon++;
         set.currentGame[pKey].pointsWon++;
         break;
-      case "First Serve Points":
+      case 'First Serve Points':
         set.currentGame[pKey].firstServePoints++;
         set.firstServePoints++;
         break;
-      case "Second Serve Points":
+      case 'Second Serve Points':
         set.currentGame[pKey].secondServePoints++;
         set.secondServePoints++;
         break;
-      case "First Serve Points Won":
+      case 'First Serve Points Won':
         set.currentGame[pKey].firstServePointsWon++;
         set.firstServePointsWon++;
         break;
-      case "Second Serve Points Won":
+      case 'Second Serve Points Won':
         set.currentGame[pKey].secondServePointsWon++;
         set.secondServePointsWon++;
         break;
-      case "Net Points":
+      case 'Net Points':
         set.currentGame[pKey].netPoints++;
         set.netPoints++;
         break;
-      case "Net Errors":
+      case 'Net Errors':
         set.currentGame[pKey].netErrors++;
         set.netErrors++;
         break;
-      case "Net Points Won":
+      case 'Net Points Won':
         set.currentGame[pKey].netPointsWon++;
         set.netPointsWon++;
         break;
-      case "Break Points":
+      case 'Break Points':
         set.currentGame[pKey].breakPoints++;
         set.breakPoints++;
         break;
-      case "Break Points Won":
+      case 'Break Points Won':
         set.currentGame[pKey].breakPointsWon++;
         set.breaks++;
         break;
-      case "Aces":
+      case 'Aces':
         set.currentGame[pKey].aces++;
         set.aces++;
         break;
-      case "Double Faults":
+      case 'Double Faults':
         set.currentGame[pKey].doubleFaults++;
         set.doubleFaults++;
         break;
-      case "Forehand Winners":
+      case 'Forehand Winners':
         set.currentGame[pKey].forehandWinners++;
         set.forehandWinners++;
         break;
-      case "Backhand Winners":
+      case 'Backhand Winners':
         set.currentGame[pKey].backhandWinners++;
         set.backhandWinners++;
         break;
-      case "Forehand Errors":
+      case 'Forehand Errors':
         set.currentGame[pKey].forehandErrors++;
         set.forehandErrors++;
         break;
 
-      case "Backhand Errors":
+      case 'Backhand Errors':
         set.currentGame[pKey].backhandErrors++;
         set.backhandErrors++;
         break;
-      case "Net Winners":
+      case 'Net Winners':
         set.currentGame[pKey].netWinners++;
         set.netWinners++;
         break;
-      case "Service Winners":
+      case 'Service Winners':
         set.currentGame[pKey].serviceWinners++;
         set.serviceWinners++;
         break;
@@ -346,17 +355,39 @@ class Player {
     return total;
   }
 
-  getAces() { return this.getTotalStats().aces || 0; }
-  getDoubleFaults() { return this.getTotalStats().doubleFaults || 0; }
-  getPointsWon() { return this.getTotalStats().pointsWon || 0; }
-  getGamesWon() { return this.getTotalStats().gamesWon || 0; }
-  getBreakPoints() { return this.getTotalStats().breakPoints || 0; }
-  getBreakPointsWon() { return this.getTotalStats().breaks || 0; }
-  getFirstServePoints() { return this.getTotalStats().firstServePoints || 0; }
-  getSecondServePoints() { return this.getTotalStats().secondServePoints || 0; }
-  getFirstServePointsWon() { return this.getTotalStats().firstServePointsWon || 0; }
-  getSecondServePointsWon() { return this.getTotalStats().secondServePointsWon || 0; }
-  getNetPoints() { return this.getTotalStats().netPoints || 0; }
+  getAces() {
+    return this.getTotalStats().aces || 0;
+  }
+  getDoubleFaults() {
+    return this.getTotalStats().doubleFaults || 0;
+  }
+  getPointsWon() {
+    return this.getTotalStats().pointsWon || 0;
+  }
+  getGamesWon() {
+    return this.getTotalStats().gamesWon || 0;
+  }
+  getBreakPoints() {
+    return this.getTotalStats().breakPoints || 0;
+  }
+  getBreakPointsWon() {
+    return this.getTotalStats().breaks || 0;
+  }
+  getFirstServePoints() {
+    return this.getTotalStats().firstServePoints || 0;
+  }
+  getSecondServePoints() {
+    return this.getTotalStats().secondServePoints || 0;
+  }
+  getFirstServePointsWon() {
+    return this.getTotalStats().firstServePointsWon || 0;
+  }
+  getSecondServePointsWon() {
+    return this.getTotalStats().secondServePointsWon || 0;
+  }
+  getNetPoints() {
+    return this.getTotalStats().netPoints || 0;
+  }
   getWinners() {
     const stats = this.getTotalStats();
     return (
@@ -382,7 +413,9 @@ class Player {
     const totalPointsLost = match.getTotalPoints() - totalPointsWon;
     return percent(this.getErrors(), totalPointsLost);
   }
-  getNetPointsWon() { return this.getTotalStats().netPointsWon || 0; }
+  getNetPointsWon() {
+    return this.getTotalStats().netPointsWon || 0;
+  }
   getPointsServed() {
     const stats = this.getTotalStats();
     return (stats.firstServePoints || 0) + (stats.secondServePoints || 0);
@@ -429,8 +462,7 @@ class Player {
     } else {
       const returnPointsWon = oppPointsServed - oppServicePointsWon;
       const inPlayWon = returnPointsWon - oppDoubleFaults;
-      const inPlayTotal =
-        oppPointsServed - oppAces - oppDoubleFaults - oppServiceWinners;
+      const inPlayTotal = oppPointsServed - oppAces - oppDoubleFaults - oppServiceWinners;
       r_inplay_ptswon = inPlayTotal <= 0 ? 0.3643 : inPlayWon / inPlayTotal;
     }
 
@@ -454,7 +486,7 @@ class Player {
     const s_points_won_p = pctOrBase(servicePointsWon, pointsServed, 0.6388);
 
     const oppSPointsLostFinished = opponent.getPointsLostFinishedGamesOnly();
-    const pw_perrg = pctOrBase(oppSPointsLostFinished, oppCompletedServiceGames, 2.3580);
+    const pw_perrg = pctOrBase(oppSPointsLostFinished, oppCompletedServiceGames, 2.358);
 
     const opp1stServePoints = opponent.getFirstServePoints();
     const opp1stServeWon = opponent.getFirstServePointsWon();
@@ -466,7 +498,7 @@ class Player {
 
     const fservePoints = this.getFirstServePoints();
     const fserveWon = this.getFirstServePointsWon();
-    const fserve_won_p = pctOrBase(fserveWon, fservePoints, 0.7180);
+    const fserve_won_p = pctOrBase(fserveWon, fservePoints, 0.718);
 
     const sservePoints = this.getSecondServePoints();
     const sserveWon = this.getSecondServePointsWon();
@@ -491,8 +523,7 @@ class Player {
     if (myCompletedServiceGames === 0 || oppCompletedServiceGames === 0) {
       rpsp_ratio = 1.0;
     } else {
-      rpsp_ratio =
-        pointsServed === 0 ? 1.0 : oppPointsServed / pointsServed;
+      rpsp_ratio = pointsServed === 0 ? 1.0 : oppPointsServed / pointsServed;
     }
 
     const fserve_p = pctOrBase(fservePoints, pointsServed, 0.6208);
@@ -512,8 +543,6 @@ class Player {
     const df_p = pctOrBase(doubleFaults, pointsServed, 0);
 
     const playerKey = this === PlayerA ? 'A' : 'B';
-    const finishedServiceGames = getFinishedServiceGames(playerKey);
-    const pointsInFinishedServiceGames = finishedServiceGames.reduce((sum, g) => sum + (g[playerKey]?.pointsTotal || 0), 0);
     const ppsg = getPointsPerServiceGameNumeric(playerKey);
 
     const dfFinished = this.getDoubleFaultsFinishedGamesOnly();
@@ -523,12 +552,10 @@ class Player {
     const bp_persg = pctOrBase(oppBreakPointsFinished, myCompletedServiceGames, 0);
 
     const pointsLostFinished = this.getPointsLostFinishedGamesOnly();
-    const pl_persg = myCompletedServiceGames === 0 ? 0 : pointsLostFinished / myCompletedServiceGames;
-    let raw_sglps = getServiceGamesLostPerSet(this === PlayerA ? 'A' : 'B');
-    const sglps =
-      typeof raw_sglps !== "number" || isNaN(raw_sglps)
-        ? 1.0163
-        : raw_sglps;
+    const pl_persg =
+      myCompletedServiceGames === 0 ? 0 : pointsLostFinished / myCompletedServiceGames;
+    const raw_sglps = getServiceGamesLostPerSet(this === PlayerA ? 'A' : 'B');
+    const sglps = typeof raw_sglps !== 'number' || isNaN(raw_sglps) ? 1.0163 : raw_sglps;
 
     const scaled = calculateTennisRating({
       t_points_won,
@@ -573,7 +600,7 @@ class Player {
 class Match {
   constructor(playerAName, playerBName, matchType, matchFormat) {
     this.players = { A: new Player(playerAName), B: new Player(playerBName) };
-    this.matchType = matchType;     // "singles" or "doubles"
+    this.matchType = matchType; // "singles" or "doubles"
     this.matchFormat = matchFormat;
     this.aPoints = 0;
     this.bPoints = 0;
@@ -641,18 +668,15 @@ class Match {
 
     const pbp = document.querySelector('.pbp');
     if (pbp) {
-      pbp.textContent += '\n' + makeScore(false) + "\n";
+      pbp.textContent += '\n' + makeScore(false) + '\n';
     }
 
-    if (
-      (this.aGames >= 6 || this.bGames >= 6) &&
-      Math.abs(this.aGames - this.bGames) >= 2
-    ) {
+    if ((this.aGames >= 6 || this.bGames >= 6) && Math.abs(this.aGames - this.bGames) >= 2) {
       this.finishSet(`${this.aGames}-${this.bGames}`);
     } else if (this.aGames === 6 && this.bGames === 6) {
       this.tiebreakActive = true;
       this.tbServer = serverKey;
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         window.tiebreak = 7;
         tiebreak = 7;
       }
@@ -665,9 +689,7 @@ class Match {
     }
   }
 
-
   finishSet(finalScoreString) {
-
     const now = new Date();
     if (this.setStartTimes.length > 0) {
       const lastStart = this.setStartTimes[this.setStartTimes.length - 1];
@@ -684,10 +706,10 @@ class Match {
     this.bPoints = 0;
     this.tiebreak = false;
 
-    if (this.matchFormat === "3-super" && this.prevSets.length === 2) {
+    if (this.matchFormat === '3-super' && this.prevSets.length === 2) {
       this.tiebreakActive = true;
       this.tbServer = this.currentServer; // Use current server as tiebreak server
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         window.tiebreak = 10;
         tiebreak = 10;
       }
@@ -702,14 +724,14 @@ class Match {
 
   finishMatch() {
     const serveInInputs = document.querySelectorAll('input[name="serveIn"]');
-    serveInInputs.forEach(input => {
+    serveInInputs.forEach((input) => {
       input.disabled = true;
       input.checked = false;
     });
 
-    const submitBtn = document.querySelector(".submitb");
+    const submitBtn = document.querySelector('.submitb');
     if (submitBtn) {
-      submitBtn.textContent = "See Results";
+      submitBtn.textContent = 'See Results';
       submitBtn.removeAttribute('onclick');
       submitBtn.disabled = false;
 
@@ -741,7 +763,7 @@ class Match {
 
   getAverageServiceGameTimeMinutes(playerKey) {
     if (!this.completedGames || this.completedGames.length === 0) return '-';
-    const serviceGames = this.completedGames.filter(g => g.server === playerKey);
+    const serviceGames = this.completedGames.filter((g) => g.server === playerKey);
     if (serviceGames.length === 0) return '-';
     const avgMs = serviceGames.reduce((sum, g) => sum + g.duration, 0) / serviceGames.length;
     return (avgMs / 60000).toFixed(1); // minutes
@@ -766,9 +788,9 @@ class Match {
 
   isMatchOver() {
     const { A: setsWonA, B: setsWonB } = this.getSetsWon();
-    if (this.matchFormat === "1") {
+    if (this.matchFormat === '1') {
       return setsWonA + setsWonB >= 1;
-    } else if (this.matchFormat === "3" || this.matchFormat === "3-super") {
+    } else if (this.matchFormat === '3' || this.matchFormat === '3-super') {
       return setsWonA >= 2 || setsWonB >= 2;
     }
     return false;
@@ -782,30 +804,46 @@ class Match {
   }
 
   toggleServer() {
-    this.currentServer = (this.currentServer === 'A') ? 'B' : 'A';
+    this.currentServer = this.currentServer === 'A' ? 'B' : 'A';
     const serverElem = document.querySelector('.server');
     if (serverElem) {
       serverElem.textContent = 'Serving: ' + this.getPlayer(this.currentServer).name;
     }
   }
 
-  getTotalPoints() { return this.players.A.getPointsWon() + this.players.B.getPointsWon(); }
-  getTotalGames() { return this.players.A.getGamesWon() + this.players.B.getGamesWon(); }
+  getTotalPoints() {
+    return this.players.A.getPointsWon() + this.players.B.getPointsWon();
+  }
+  getTotalGames() {
+    return this.players.A.getGamesWon() + this.players.B.getGamesWon();
+  }
 }
 
 function updateCurrentStatView() {
   switch (statmode) {
-    case 'Total': totalbf(); break;
-    case 'Overview': overviewbf(); break;
-    case 'Wen': wenbf(); break;
-    case 'Returning': returnbf(); break;
-    case 'Adf': adfbf(); break;
-    case 'Serving': servingbf(); break;
+    case 'Total':
+      totalbf();
+      break;
+    case 'Overview':
+      overviewbf();
+      break;
+    case 'Wen':
+      wenbf();
+      break;
+    case 'Returning':
+      returnbf();
+      break;
+    case 'Adf':
+      adfbf();
+      break;
+    case 'Serving':
+      servingbf();
+      break;
   }
 }
 
 function setActive(button) {
-  document.querySelectorAll('.bmenubutton').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.bmenubutton').forEach((btn) => btn.classList.remove('active'));
   button.classList.add('active');
 }
 let match;
@@ -819,17 +857,17 @@ function updateRatings() {
   if (!isFinite(ratingA)) ratingA = 5;
   if (!isFinite(ratingB)) ratingB = 5;
 
-  document.querySelectorAll(".RatingA").forEach(el => {
+  document.querySelectorAll('.RatingA').forEach((el) => {
     el.textContent = `Rating: ${ratingA.toFixed(2)}`;
   });
-  document.querySelectorAll(".RatingB").forEach(el => {
+  document.querySelectorAll('.RatingB').forEach((el) => {
     el.textContent = `Rating: ${ratingB.toFixed(2)}`;
   });
 
   const total = ratingA + ratingB;
   const progressValue = total === 0 ? 0.5 : ratingA / total;
 
-  const progressBar = document.querySelector(".progress progress");
+  const progressBar = document.querySelector('.progress progress');
   if (progressBar) progressBar.value = progressValue;
 
   return { ratingA, ratingB };
@@ -839,18 +877,16 @@ function pctOrBase(numerator, denominator, baseline = 0) {
   return denominator === 0 ? baseline : numerator / denominator;
 }
 
-let gameScores = [0, 15, 30, 40];
-var statmode = 'Overview'
+const gameScores = [0, 15, 30, 40];
+let statmode = 'Overview';
 
-var tiebreak = 0;
-var tbserver = '';
-var startTime = new Date();
+let tiebreak = 0;
+const startTime = new Date();
 
 const pbp = document.querySelector('.pbp');
 if (pbp && match) {
   pbp.textContent = match.currentServer === 'A' ? '0*-0\n' : '0-0*\n';
 }
-
 
 const dateDiv = document.querySelector('.date');
 if (dateDiv) {
@@ -858,7 +894,7 @@ if (dateDiv) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    weekday: 'long'
+    weekday: 'long',
   }).format(new Date());
 }
 
@@ -881,22 +917,22 @@ function updateHowWonOptions() {
   const allHowWon = document.querySelectorAll('input[name="howwon"]');
 
   if (!winnerInput) {
-    allHowWon.forEach(opt => {
+    allHowWon.forEach((opt) => {
       opt.checked = false;
       opt.disabled = true;
     });
     return;
   }
 
-  allHowWon.forEach(opt => {
+  allHowWon.forEach((opt) => {
     opt.disabled = false;
   });
 
-  [aceOption, swinnerOption, dfOption, nwOption, neOption].forEach(opt => {
+  [aceOption, swinnerOption, dfOption, nwOption, neOption].forEach((opt) => {
     opt.disabled = false;
   });
 
-  if (serveInInput && serveInInput.value === "servein") {
+  if (serveInInput && serveInInput.value === 'servein') {
     dfOption.disabled = true;
     dfOption.checked = false;
   }
@@ -918,7 +954,7 @@ function updateHowWonOptions() {
     document.querySelector('input[name="whocame"][value="Bcame"]').checked;
 
   if (someoneAtNet) {
-    [aceOption, dfOption, swinnerOption].forEach(opt => {
+    [aceOption, dfOption, swinnerOption].forEach((opt) => {
       opt.disabled = true;
       opt.checked = false;
     });
@@ -926,12 +962,16 @@ function updateHowWonOptions() {
 
   if (winnerInput) {
     const winnerAtNet =
-      (winnerInput.value === "Awon" && document.querySelector('input[name="whocame"][value="Acame"]').checked) ||
-      (winnerInput.value === "Bwon" && document.querySelector('input[name="whocame"][value="Bcame"]').checked);
+      (winnerInput.value === 'Awon' &&
+        document.querySelector('input[name="whocame"][value="Acame"]').checked) ||
+      (winnerInput.value === 'Bwon' &&
+        document.querySelector('input[name="whocame"][value="Bcame"]').checked);
 
     const loserAtNet =
-      (winnerInput.value === "Awon" && document.querySelector('input[name="whocame"][value="Bcame"]').checked) ||
-      (winnerInput.value === "Bwon" && document.querySelector('input[name="whocame"][value="Acame"]').checked);
+      (winnerInput.value === 'Awon' &&
+        document.querySelector('input[name="whocame"][value="Bcame"]').checked) ||
+      (winnerInput.value === 'Bwon' &&
+        document.querySelector('input[name="whocame"][value="Acame"]').checked);
 
     if (!winnerAtNet) {
       nwOption.disabled = true;
@@ -945,38 +985,38 @@ function updateHowWonOptions() {
   }
 }
 
-document.querySelectorAll('input[name="serveIn"], input[name="whowon"], input[name="whocame"]').forEach(input => {
-  input.addEventListener('change', updateHowWonOptions);
-});
+document
+  .querySelectorAll('input[name="serveIn"], input[name="whowon"], input[name="whocame"]')
+  .forEach((input) => {
+    input.addEventListener('change', updateHowWonOptions);
+  });
 
-document.querySelectorAll('input[name="serveIn"]').forEach(input => {
+document.querySelectorAll('input[name="serveIn"]').forEach((input) => {
   input.addEventListener('change', () => {
-    document.querySelectorAll('input[name="whowon"]').forEach(r => r.disabled = false);
+    document.querySelectorAll('input[name="whowon"]').forEach((r) => (r.disabled = false));
   });
 });
 
-document.querySelectorAll('input[name="whowon"]').forEach(input => {
+document.querySelectorAll('input[name="whowon"]').forEach((input) => {
   input.addEventListener('change', () => {
-    document.querySelectorAll('input[name="whocame"]').forEach(c => c.disabled = false);
+    document.querySelectorAll('input[name="whocame"]').forEach((c) => (c.disabled = false));
     updateHowWonOptions();
   });
 });
 
-document.querySelectorAll('input[name="howwon"]').forEach(input => {
+document.querySelectorAll('input[name="howwon"]').forEach((input) => {
   input.addEventListener('change', () => {
     const submitBtn = document.querySelector('.submitB');
     if (submitBtn) submitBtn.disabled = false;
   });
 });
 
-
-
 function resetPointInputs() {
-  document.querySelectorAll('input[type="radio"]').forEach(r => {
+  document.querySelectorAll('input[type="radio"]').forEach((r) => {
     r.checked = false;
-    r.disabled = (r.name !== "serveIn");
+    r.disabled = r.name !== 'serveIn';
   });
-  document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+  document.querySelectorAll('input[type="checkbox"]').forEach((c) => {
     c.checked = false;
     c.disabled = true;
   });
@@ -992,38 +1032,31 @@ function changeTitles(top, mid, bot) {
 }
 
 function formatTotalTime(t) {
-  let hours = Math.floor(t / 3600000);
-  let minutes = Math.floor((t - (hours * 3600000)) / 60000);
+  const hours = Math.floor(t / 3600000);
+  const minutes = Math.floor((t - hours * 3600000) / 60000);
   return hours + ':' + (minutes < 10 ? '0' + minutes : minutes);
 }
 
 function changeValue(code, lef, mid, rig) {
-  const left = document.querySelector('.' + code[0] + 'l' + code[1])
-  left.textContent = lef
+  const left = document.querySelector('.' + code[0] + 'l' + code[1]);
+  left.textContent = lef;
 
-  const middle = document.querySelector('.' + code[0] + 'm' + code[1])
-  middle.textContent = mid
+  const middle = document.querySelector('.' + code[0] + 'm' + code[1]);
+  middle.textContent = mid;
 
-  const right = document.querySelector('.' + code[0] + 'r' + code[1])
-  right.textContent = rig
+  const right = document.querySelector('.' + code[0] + 'r' + code[1]);
+  right.textContent = rig;
 }
 
 function isBreakPoint(serverKey, aPoints, bPoints) {
   const serverPoints = [0, 15, 30];
 
   if (serverKey === 'A') {
-    if (
-      (bPoints === 40 && serverPoints.includes(aPoints)) ||
-      bPoints === 'AD'
-    ) {
+    if ((bPoints === 40 && serverPoints.includes(aPoints)) || bPoints === 'AD') {
       return true;
     }
-  }
-  else if (serverKey === 'B') {
-    if (
-      (aPoints === 40 && serverPoints.includes(bPoints)) ||
-      aPoints === 'AD'
-    ) {
+  } else if (serverKey === 'B') {
+    if ((aPoints === 40 && serverPoints.includes(bPoints)) || aPoints === 'AD') {
       return true;
     }
   }
@@ -1042,7 +1075,7 @@ function safeDiv(a, b) {
   return b === 0 ? 0 : a / b;
 }
 function percent(a, b) {
-  return b === 0 ? '-' : (100 * a / b).toFixed(2);
+  return b === 0 ? '-' : ((100 * a) / b).toFixed(2);
 }
 function ratio(a, b) {
   if (a === 0 && b === 0) return '-';
@@ -1056,7 +1089,7 @@ function getFinishedServiceGames(playerKey) {
   const collect = (set) => {
     if (!set || !set.games) return;
     for (const g of set.games) {
-      const server = (g.A && g.A.server) ? g.A.server : (g.B && g.B.server);
+      const server = g.A && g.A.server ? g.A.server : g.B && g.B.server;
       if (server === playerKey) games.push(g);
     }
   };
@@ -1110,25 +1143,28 @@ function getServiceGamesLostPerSet(playerKey) {
 }
 
 function clearAllRows() {
-  document.querySelectorAll('.tl1, .tm1, .tr1, .ml1, .mm1, .mr1, .bl1, .bm1, .br1, \
+  document
+    .querySelectorAll(
+      '.tl1, .tm1, .tr1, .ml1, .mm1, .mr1, .bl1, .bm1, .br1, \
                              .tl2, .tm2, .tr2, .ml2, .mm2, .mr2, .bl2, .bm2, .br2, \
                              .tl3, .tm3, .tr3, .ml3, .mm3, .mr3, .bl3, .bm3, .br3, \
                              .tl4, .tm4, .tr4, .ml4, .mm4, .mr4, .bl4, .bm4, .br4, \
                              .tl5, .tm5, .tr5, .ml5, .mm5, .mr5, .bl5, .bm5, .br5, \
-                             .tl6, .tm6, .tr6, .ml6, .mm6, .mr6, .tl7, .tm7, .tr7, .ml7, .mr7, .mm7')
-    .forEach(cell => cell.textContent = '');
+                             .tl6, .tm6, .tr6, .ml6, .mm6, .mr6, .tl7, .tm7, .tr7, .ml7, .mr7, .mm7'
+    )
+    .forEach((cell) => (cell.textContent = ''));
 }
 
 function totalbf() {
-  clearAllRows()
-  statmode = 'Total'
-  changeTitles('Points', 'Games', 'Time')
+  clearAllRows();
+  statmode = 'Total';
+  changeTitles('Points', 'Games', 'Time');
 
   const eTime = new Date() - startTime;
   const totalPoints = match.getTotalPoints();
   const totalGames = match.getTotalGames();
 
-  const pointTime = totalPoints === 0 ? '-' : ((eTime / 1000) / totalPoints).toFixed(1);
+  const pointTime = totalPoints === 0 ? '-' : (eTime / 1000 / totalPoints).toFixed(1);
   const matchTime = formatTotalTime(eTime);
 
   const topRows = [
@@ -1136,17 +1172,19 @@ function totalbf() {
     { label: 'Points Won', valueA: PlayerA.getPointsWon(), valueB: PlayerB.getPointsWon() },
     {
       label: 'Points Won %',
-      valueA: totalPoints === 0 ? '-' : (100 * PlayerA.getPointsWon() / totalPoints).toFixed(2),
-      valueB: totalPoints === 0 ? '-' : (100 * PlayerB.getPointsWon() / totalPoints).toFixed(2),
+      valueA: totalPoints === 0 ? '-' : ((100 * PlayerA.getPointsWon()) / totalPoints).toFixed(2),
+      valueB: totalPoints === 0 ? '-' : ((100 * PlayerB.getPointsWon()) / totalPoints).toFixed(2),
     },
     {
       label: 'Rtn. to Svc. Points Ratio',
-      valueA: (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0)
-        ? '-'
-        : (PlayerB.getPointsServed() / PlayerA.getPointsServed()).toFixed(2),
-      valueB: (PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0)
-        ? '-'
-        : (PlayerA.getPointsServed() / PlayerB.getPointsServed()).toFixed(2),
+      valueA:
+        PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0
+          ? '-'
+          : (PlayerB.getPointsServed() / PlayerA.getPointsServed()).toFixed(2),
+      valueB:
+        PlayerA.getPointsServed() === 0 || PlayerB.getPointsServed() === 0
+          ? '-'
+          : (PlayerA.getPointsServed() / PlayerB.getPointsServed()).toFixed(2),
     },
   ];
 
@@ -1157,8 +1195,8 @@ function totalbf() {
     { label: 'Games Won', valueA: PlayerA.getGamesWon(), valueB: PlayerB.getGamesWon() },
     {
       label: 'Games Won %',
-      valueA: totalGames === 0 ? '-' : (100 * PlayerA.getGamesWon() / totalGames).toFixed(2),
-      valueB: totalGames === 0 ? '-' : (100 * PlayerB.getGamesWon() / totalGames).toFixed(2),
+      valueA: totalGames === 0 ? '-' : ((100 * PlayerA.getGamesWon()) / totalGames).toFixed(2),
+      valueB: totalGames === 0 ? '-' : ((100 * PlayerB.getGamesWon()) / totalGames).toFixed(2),
     },
   ];
 
@@ -1166,38 +1204,119 @@ function totalbf() {
 
   const bottomRows = [
     { label: 'Avg. Point Time (Sec)', valueA: pointTime, valueB: pointTime },
-    { label: 'Avg. Game Time (min)', valueA: match.getAverageGameTimeMinutes(), valueB: match.getAverageGameTimeMinutes() },
+    {
+      label: 'Avg. Game Time (min)',
+      valueA: match.getAverageGameTimeMinutes(),
+      valueB: match.getAverageGameTimeMinutes(),
+    },
     {
       label: 'Avg. Service Game Time (min)',
       valueA: match.getAverageServiceGameTimeMinutes('A'),
-      valueB: match.getAverageServiceGameTimeMinutes('B')
+      valueB: match.getAverageServiceGameTimeMinutes('B'),
     },
-    { label: 'Avg. Set Time (min)', valueA: match.getAverageSetTimeMinutes(), valueB: match.getAverageSetTimeMinutes() },
+    {
+      label: 'Avg. Set Time (min)',
+      valueA: match.getAverageSetTimeMinutes(),
+      valueB: match.getAverageSetTimeMinutes(),
+    },
     { label: 'Match Time', valueA: matchTime, valueB: matchTime },
   ];
 
   bottomRows.forEach((r, i) => updateRow('b', i + 1, r.label, r.valueA, r.valueB));
-
 }
 
 function overviewbf() {
-  clearAllRows()
-  changeTitles('Serve', 'Return', 'Total')
-  statmode = 'Overview'
+  clearAllRows();
+  changeTitles('Serve', 'Return', 'Total');
+  statmode = 'Overview';
   const eTime = new Date() - startTime;
 
   const rows = [
-    { section: 't', label: 'Aces', valueA: () => PlayerA.getAces(), valueB: () => PlayerB.getAces() },
-    { section: 't', label: 'Double Faults', valueA: () => PlayerA.getDoubleFaults(), valueB: () => PlayerB.getDoubleFaults() },
-    { section: 't', label: '1st Serve %', valueA: () => percent(PlayerA.getFirstServePoints(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getFirstServePoints(), PlayerB.getPointsServed()) },
-    { section: 't', label: '1st Serve Won %', valueA: () => percent(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints()), valueB: () => percent(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()) },
-    { section: 't', label: '2nd Serve Won %', valueA: () => percent(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()), valueB: () => percent(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()) },
-    { section: 't', label: 'Break Points', valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`, valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}` },
-    { section: 't', label: 'Service Points Won %', valueA: () => percent(PlayerA.getServicePointsWon(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getServicePointsWon(), PlayerB.getPointsServed()) },
+    {
+      section: 't',
+      label: 'Aces',
+      valueA: () => PlayerA.getAces(),
+      valueB: () => PlayerB.getAces(),
+    },
+    {
+      section: 't',
+      label: 'Double Faults',
+      valueA: () => PlayerA.getDoubleFaults(),
+      valueB: () => PlayerB.getDoubleFaults(),
+    },
+    {
+      section: 't',
+      label: '1st Serve %',
+      valueA: () => percent(PlayerA.getFirstServePoints(), PlayerA.getPointsServed()),
+      valueB: () => percent(PlayerB.getFirstServePoints(), PlayerB.getPointsServed()),
+    },
+    {
+      section: 't',
+      label: '1st Serve Won %',
+      valueA: () => percent(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints()),
+      valueB: () => percent(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()),
+    },
+    {
+      section: 't',
+      label: '2nd Serve Won %',
+      valueA: () => percent(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()),
+      valueB: () => percent(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()),
+    },
+    {
+      section: 't',
+      label: 'Break Points',
+      valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`,
+      valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}`,
+    },
+    {
+      section: 't',
+      label: 'Service Points Won %',
+      valueA: () => percent(PlayerA.getServicePointsWon(), PlayerA.getPointsServed()),
+      valueB: () => percent(PlayerB.getServicePointsWon(), PlayerB.getPointsServed()),
+    },
 
-    { section: 'm', label: '1st Serve Return Won %', valueA: () => percent(PlayerB.getFirstServePoints() - PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()), valueB: () => percent(PlayerA.getFirstServePoints() - PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints()) },
-    { section: 'm', label: '2nd Serve Return Won %', valueA: () => percent(PlayerB.getSecondServePoints() - PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()), valueB: () => percent(PlayerA.getSecondServePoints() - PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()) },
-    { section: 'm', label: 'Return Points Won %', valueA: () => percent(PlayerB.getPointsServed() - PlayerB.getServicePointsWon(), PlayerB.getPointsServed()), valueB: () => percent(PlayerA.getPointsServed() - PlayerA.getServicePointsWon(), PlayerA.getPointsServed()) },
+    {
+      section: 'm',
+      label: '1st Serve Return Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getFirstServePoints() - PlayerB.getFirstServePointsWon(),
+          PlayerB.getFirstServePoints()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getFirstServePoints() - PlayerA.getFirstServePointsWon(),
+          PlayerA.getFirstServePoints()
+        ),
+    },
+    {
+      section: 'm',
+      label: '2nd Serve Return Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getSecondServePoints() - PlayerB.getSecondServePointsWon(),
+          PlayerB.getSecondServePoints()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getSecondServePoints() - PlayerA.getSecondServePointsWon(),
+          PlayerA.getSecondServePoints()
+        ),
+    },
+    {
+      section: 'm',
+      label: 'Return Points Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getPointsServed() - PlayerB.getServicePointsWon(),
+          PlayerB.getPointsServed()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getPointsServed() - PlayerA.getServicePointsWon(),
+          PlayerA.getPointsServed()
+        ),
+    },
 
     {
       section: 'b',
@@ -1225,10 +1344,20 @@ function overviewbf() {
 
         const val = (1 - Ahold) / (1 - Bhold);
         return isNaN(val) ? '-' : val.toFixed(2);
-      }
+      },
     },
-    { section: 'b', label: 'Total Points Won', valueA: () => PlayerA.getPointsWon(), valueB: () => PlayerB.getPointsWon() },
-    { section: 'b', label: 'Match Time', valueA: () => formatTotalTime(eTime), valueB: () => formatTotalTime(eTime) }
+    {
+      section: 'b',
+      label: 'Total Points Won',
+      valueA: () => PlayerA.getPointsWon(),
+      valueB: () => PlayerB.getPointsWon(),
+    },
+    {
+      section: 'b',
+      label: 'Match Time',
+      valueA: () => formatTotalTime(eTime),
+      valueB: () => formatTotalTime(eTime),
+    },
   ];
 
   const counters = { t: 1, m: 1, b: 1 };
@@ -1240,57 +1369,75 @@ function overviewbf() {
 }
 
 function servingbf() {
-  clearAllRows()
-  statmode = 'Serving'
-  changeTitles('Serve', 'Points', 'Games')
+  clearAllRows();
+  statmode = 'Serving';
+  changeTitles('Serve', 'Points', 'Games');
 
   const rows = [
     {
-      section: 't', label: '1st Serve %',
+      section: 't',
+      label: '1st Serve %',
       valueA: () => percent(PlayerA.getFirstServePoints(), PlayerA.getPointsServed()),
-      valueB: () => percent(PlayerB.getFirstServePoints(), PlayerB.getPointsServed())
+      valueB: () => percent(PlayerB.getFirstServePoints(), PlayerB.getPointsServed()),
     },
     {
-      section: 't', label: '2nd Serve %',
-      valueA: () => percent(
-        PlayerA.getSecondServePoints() - PlayerA.getDoubleFaults(),
-        PlayerA.getSecondServePoints()
-      ),
-      valueB: () => percent(
-        PlayerB.getSecondServePoints() - PlayerB.getDoubleFaults(),
-        PlayerB.getSecondServePoints()
-      )
+      section: 't',
+      label: '2nd Serve %',
+      valueA: () =>
+        percent(
+          PlayerA.getSecondServePoints() - PlayerA.getDoubleFaults(),
+          PlayerA.getSecondServePoints()
+        ),
+      valueB: () =>
+        percent(
+          PlayerB.getSecondServePoints() - PlayerB.getDoubleFaults(),
+          PlayerB.getSecondServePoints()
+        ),
     },
     {
-      section: 't', label: '1st Serve Won %',
+      section: 't',
+      label: '1st Serve Won %',
       valueA: () => percent(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints()),
-      valueB: () => percent(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints())
+      valueB: () => percent(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()),
     },
     {
-      section: 't', label: '2nd Serve Won %',
+      section: 't',
+      label: '2nd Serve Won %',
       valueA: () => percent(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()),
-      valueB: () => percent(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints())
+      valueB: () => percent(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()),
     },
     {
       section: 't',
       label: '1st Serve Reliance',
       valueA: () => {
         const fsWinRate = safeDiv(PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints());
-        const ssWinRate = safeDiv(PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints());
+        const ssWinRate = safeDiv(
+          PlayerA.getSecondServePointsWon(),
+          PlayerA.getSecondServePoints()
+        );
         return ssWinRate === 0 ? '-' : safeDiv(fsWinRate, ssWinRate).toFixed(2);
       },
       valueB: () => {
         const fsWinRate = safeDiv(PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints());
-        const ssWinRate = safeDiv(PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints());
+        const ssWinRate = safeDiv(
+          PlayerB.getSecondServePointsWon(),
+          PlayerB.getSecondServePoints()
+        );
         return ssWinRate === 0 ? '-' : safeDiv(fsWinRate, ssWinRate).toFixed(2);
-      }
+      },
     },
-    { section: 't', label: 'Serve Rating', valueA: () => PlayerA.getServeRating(PlayerB), valueB: () => PlayerB.getServeRating(PlayerA) },
+    {
+      section: 't',
+      label: 'Serve Rating',
+      valueA: () => PlayerA.getServeRating(PlayerB),
+      valueB: () => PlayerB.getServeRating(PlayerA),
+    },
 
     {
-      section: 'm', label: 'Service Points Won %',
+      section: 'm',
+      label: 'Service Points Won %',
       valueA: () => percent(PlayerA.getServicePointsWon(), PlayerA.getPointsServed()),
-      valueB: () => percent(PlayerB.getServicePointsWon(), PlayerB.getPointsServed())
+      valueB: () => percent(PlayerB.getServicePointsWon(), PlayerB.getPointsServed()),
     },
     {
       section: 'm',
@@ -1314,26 +1461,35 @@ function servingbf() {
         const doubleFaults = PlayerB.getDoubleFaults();
         const inPlayTotal = pointsServed - aces - doubleFaults - serviceWinners;
         return percent(inPlayWon, inPlayTotal);
-      }
+      },
     },
     {
       section: 'm',
       label: 'Points Per Service Game',
       valueA: () => pointsPerServiceGame('A'),
-      valueB: () => pointsPerServiceGame('B')
+      valueB: () => pointsPerServiceGame('B'),
     },
     {
       section: 'm',
       label: 'Points Lost per Service Game',
-      valueA: () => ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
-      valueB: () => ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+      valueA: () =>
+        ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () =>
+        ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
     },
-    { section: 'm', label: 'Break Points', valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`, valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}` },
+    {
+      section: 'm',
+      label: 'Break Points',
+      valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`,
+      valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}`,
+    },
     {
       section: 'm',
       label: 'BPs Faced per Service Game',
-      valueA: () => ratio(PlayerB.getBreakPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
-      valueB: () => ratio(PlayerA.getBreakPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+      valueA: () =>
+        ratio(PlayerB.getBreakPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
+      valueB: () =>
+        ratio(PlayerA.getBreakPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
     },
     {
       section: 'm',
@@ -1347,7 +1503,7 @@ function servingbf() {
         const completedSets = PlayerB.sets.length;
         const bpsFaced = PlayerA.getBreakPointsCompletedSetsOnly();
         return completedSets === 0 ? '-' : (bpsFaced / completedSets).toFixed(2);
-      }
+      },
     },
 
     {
@@ -1362,12 +1518,13 @@ function servingbf() {
         const total = PlayerB.getCompletedServiceGames();
         const won = PlayerB.getTotalStats().serviceGamesWon || 0;
         return percent(won, total);
-      }
+      },
     },
     {
-      section: 'b', label: 'Service Games Lost per Set',
+      section: 'b',
+      label: 'Service Games Lost per Set',
       valueA: () => getServiceGamesLostPerSet('A'),
-      valueB: () => getServiceGamesLostPerSet('B')
+      valueB: () => getServiceGamesLostPerSet('B'),
     },
   ];
 
@@ -1380,23 +1537,59 @@ function servingbf() {
 }
 
 function returnbf() {
-  clearAllRows()
+  clearAllRows();
   statmode = 'Returning';
-  changeTitles("Return", "Points", "Games");
+  changeTitles('Return', 'Points', 'Games');
 
   const rows = [
     {
-      section: 't', label: '1st Serve Return Won %',
-      valueA: () => percent(PlayerB.getFirstServePoints() - PlayerB.getFirstServePointsWon(), PlayerB.getFirstServePoints()),
-      valueB: () => percent(PlayerA.getFirstServePoints() - PlayerA.getFirstServePointsWon(), PlayerA.getFirstServePoints())
+      section: 't',
+      label: '1st Serve Return Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getFirstServePoints() - PlayerB.getFirstServePointsWon(),
+          PlayerB.getFirstServePoints()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getFirstServePoints() - PlayerA.getFirstServePointsWon(),
+          PlayerA.getFirstServePoints()
+        ),
     },
-    { section: 't', label: '2nd Serve Return Won %', valueA: () => percent(PlayerB.getSecondServePoints() - PlayerB.getSecondServePointsWon(), PlayerB.getSecondServePoints()), valueB: () => percent(PlayerA.getSecondServePoints() - PlayerA.getSecondServePointsWon(), PlayerA.getSecondServePoints()) },
-    { section: 't', label: 'Return Rating', valueA: () => PlayerA.getReturnRating(PlayerB), valueB: () => PlayerB.getReturnRating(PlayerA) },
+    {
+      section: 't',
+      label: '2nd Serve Return Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getSecondServePoints() - PlayerB.getSecondServePointsWon(),
+          PlayerB.getSecondServePoints()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getSecondServePoints() - PlayerA.getSecondServePointsWon(),
+          PlayerA.getSecondServePoints()
+        ),
+    },
+    {
+      section: 't',
+      label: 'Return Rating',
+      valueA: () => PlayerA.getReturnRating(PlayerB),
+      valueB: () => PlayerB.getReturnRating(PlayerA),
+    },
 
     {
-      section: 'm', label: 'Return Points Won %',
-      valueA: () => percent(PlayerB.getPointsServed() - PlayerB.getServicePointsWon(), PlayerB.getPointsServed()),
-      valueB: () => percent(PlayerA.getPointsServed() - PlayerA.getServicePointsWon(), PlayerA.getPointsServed())
+      section: 'm',
+      label: 'Return Points Won %',
+      valueA: () =>
+        percent(
+          PlayerB.getPointsServed() - PlayerB.getServicePointsWon(),
+          PlayerB.getPointsServed()
+        ),
+      valueB: () =>
+        percent(
+          PlayerA.getPointsServed() - PlayerA.getServicePointsWon(),
+          PlayerA.getPointsServed()
+        ),
     },
     {
       section: 'm',
@@ -1420,26 +1613,35 @@ function returnbf() {
         const returnPointsTotal = PlayerA.getPointsServed();
         const inPlayTotal = returnPointsTotal - oppAces - oppDoubleFaults - oppServiceWinners;
         return percent(inPlayWon, inPlayTotal);
-      }
+      },
     },
     {
       section: 'm',
       label: 'Points Per Return Game',
       valueA: () => pointsPerReturnGame('A'),
-      valueB: () => pointsPerReturnGame('B')
+      valueB: () => pointsPerReturnGame('B'),
     },
     {
       section: 'm',
       label: 'Points Won per Return Game',
-      valueA: () => ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
-      valueB: () => ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames())
+      valueA: () =>
+        ratio(PlayerB.getPointsLostFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
+      valueB: () =>
+        ratio(PlayerA.getPointsLostFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
     },
-    { section: 'm', label: 'Break Points', valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`, valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}` },
+    {
+      section: 'm',
+      label: 'Break Points',
+      valueA: () => `${PlayerA.getBreakPointsWon()}/${PlayerA.getBreakPoints()}`,
+      valueB: () => `${PlayerB.getBreakPointsWon()}/${PlayerB.getBreakPoints()}`,
+    },
     {
       section: 'm',
       label: 'BPs per Return Game',
-      valueA: () => ratio(PlayerA.getBreakPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
-      valueB: () => ratio(PlayerB.getBreakPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames())
+      valueA: () =>
+        ratio(PlayerA.getBreakPointsFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
+      valueB: () =>
+        ratio(PlayerB.getBreakPointsFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
     },
     {
       section: 'm',
@@ -1453,7 +1655,7 @@ function returnbf() {
         const completedSets = PlayerB.sets.length;
         const bps = PlayerB.getBreakPointsCompletedSetsOnly();
         return completedSets === 0 ? '-' : (bps / completedSets).toFixed(2);
-      }
+      },
     },
 
     {
@@ -1468,7 +1670,7 @@ function returnbf() {
         const total = PlayerA.getCompletedServiceGames();
         const won = PlayerB.getTotalStats().returnGamesWon || 0;
         return percent(won, total);
-      }
+      },
     },
     { section: 'b', label: 'Return Games Won per Set', valueA: () => '-', valueB: () => '-' },
   ];
@@ -1482,49 +1684,70 @@ function returnbf() {
 }
 
 function wenbf() {
-  clearAllRows()
-  statmode = 'Wen'
-  changeTitles('Winners & Errors', 'Net', "Dominance")
+  clearAllRows();
+  statmode = 'Wen';
+  changeTitles('Winners & Errors', 'Net', 'Dominance');
   const rows = [
     {
       section: 't',
       label: 'Winner %',
       valueA: () => percent(PlayerA.getWinners(), PlayerA.getPointsWon()),
-      valueB: () => percent(PlayerB.getWinners(), PlayerB.getPointsWon())
+      valueB: () => percent(PlayerB.getWinners(), PlayerB.getPointsWon()),
     },
     {
       section: 't',
       label: 'Error %',
       valueA: () => PlayerA.getErrorPercent(),
-      valueB: () => PlayerB.getErrorPercent()
+      valueB: () => PlayerB.getErrorPercent(),
     },
     {
       section: 't',
       label: 'Winners per Error',
       valueA: () => ratio(PlayerA.getWinners(), PlayerA.getErrors()),
-      valueB: () => ratio(PlayerB.getWinners(), PlayerB.getErrors())
+      valueB: () => ratio(PlayerB.getWinners(), PlayerB.getErrors()),
     },
     {
       section: 't',
       label: 'Winners per Opp. Error',
       valueA: () => ratio(PlayerA.getWinners(), PlayerB.getErrors()),
-      valueB: () => ratio(PlayerB.getWinners(), PlayerA.getErrors())
+      valueB: () => ratio(PlayerB.getWinners(), PlayerA.getErrors()),
     },
 
     {
-      section: 'm', label: 'Net Points %',
-      valueA: () => (match.getTotalPoints() === 0) ? '-' : (PlayerA.getNetPoints() / match.getTotalPoints()).toFixed(2),
-      valueB: () => (match.getTotalPoints() === 0) ? '-' : (PlayerB.getNetPoints() / match.getTotalPoints()).toFixed(2)
+      section: 'm',
+      label: 'Net Points %',
+      valueA: () =>
+        match.getTotalPoints() === 0
+          ? '-'
+          : (PlayerA.getNetPoints() / match.getTotalPoints()).toFixed(2),
+      valueB: () =>
+        match.getTotalPoints() === 0
+          ? '-'
+          : (PlayerB.getNetPoints() / match.getTotalPoints()).toFixed(2),
     },
     {
-      section: 'm', label: 'Net Points Won %',
-      valueA: () => (PlayerA.getNetPoints() === 0) ? '-' : (PlayerA.getNetPointsWon() / PlayerA.getNetPoints()).toFixed(2),
-      valueB: () => (PlayerB.getNetPoints() === 0) ? '-' : (PlayerB.getNetPointsWon() / PlayerB.getNetPoints()).toFixed(2)
+      section: 'm',
+      label: 'Net Points Won %',
+      valueA: () =>
+        PlayerA.getNetPoints() === 0
+          ? '-'
+          : (PlayerA.getNetPointsWon() / PlayerA.getNetPoints()).toFixed(2),
+      valueB: () =>
+        PlayerB.getNetPoints() === 0
+          ? '-'
+          : (PlayerB.getNetPointsWon() / PlayerB.getNetPoints()).toFixed(2),
     },
     {
-      section: 'm', label: 'Points Won at Net %',
-      valueA: () => (PlayerA.getPointsWon() === 0) ? '-' : (PlayerA.getNetPointsWon() / PlayerA.getPointsWon()).toFixed(2),
-      valueB: () => (PlayerB.getPointsWon() === 0) ? '-' : (PlayerB.getNetPointsWon() / PlayerB.getPointsWon()).toFixed(2)
+      section: 'm',
+      label: 'Points Won at Net %',
+      valueA: () =>
+        PlayerA.getPointsWon() === 0
+          ? '-'
+          : (PlayerA.getNetPointsWon() / PlayerA.getPointsWon()).toFixed(2),
+      valueB: () =>
+        PlayerB.getPointsWon() === 0
+          ? '-'
+          : (PlayerB.getNetPointsWon() / PlayerB.getPointsWon()).toFixed(2),
     },
     {
       section: 'm',
@@ -1538,7 +1761,7 @@ function wenbf() {
         const netWinRate = safeDiv(PlayerB.getNetPointsWon(), PlayerB.getNetPoints());
         const totalWinRate = safeDiv(PlayerB.getPointsWon(), match.getTotalPoints());
         return totalWinRate === 0 ? '-' : safeDiv(netWinRate, totalWinRate).toFixed(2);
-      }
+      },
     },
 
     {
@@ -1567,7 +1790,7 @@ function wenbf() {
 
         const val = (1 - Ahold) / (1 - Bhold);
         return isNaN(val) ? '-' : val.toFixed(2);
-      }
+      },
     },
     {
       section: 'b',
@@ -1595,10 +1818,12 @@ function wenbf() {
 
         if (serviceGamesLostPct === 0) return returnGamesWonPct === 0 ? '-' : 'inf';
         return (returnGamesWonPct / serviceGamesLostPct).toFixed(2);
-      }
+      },
     },
     {
-      section: 'b', label: 'Dominance Ratio', valueA: () => {
+      section: 'b',
+      label: 'Dominance Ratio',
+      valueA: () => {
         let pointsInGamesWon = 0;
         let totalPointsInGamesWon = 0;
         let pointsInGamesLost = 0;
@@ -1606,7 +1831,6 @@ function wenbf() {
 
         for (const set of PlayerA.sets.concat([PlayerA.currentSet])) {
           for (const game of set.games) {
-
             const totalPointsThisGame = Math.max(game.A.pointsTotal, game.B.pointsTotal);
             if (game.winner === 'A') {
               pointsInGamesWon += game.A.pointsWon;
@@ -1624,7 +1848,8 @@ function wenbf() {
           totalPointsInGamesLost === 0 ? 0 : (pointsInGamesLost / totalPointsInGamesLost) * 100;
 
         return Math.round(pointsWonInGamesWonPct + pointsWonInGamesLostPct);
-      }, valueB: () => {
+      },
+      valueB: () => {
         let pointsInGamesWon = 0;
         let totalPointsInGamesWon = 0;
         let pointsInGamesLost = 0;
@@ -1648,7 +1873,7 @@ function wenbf() {
           totalPointsInGamesLost === 0 ? 0 : (pointsInGamesLost / totalPointsInGamesLost) * 100;
 
         return Math.round(pointsWonInGamesWonPct + pointsWonInGamesLostPct);
-      }
+      },
     },
   ];
 
@@ -1661,17 +1886,27 @@ function wenbf() {
 }
 
 function adfbf() {
-  clearAllRows()
-  statmode = 'Adf'
-  changeTitles("Aces", "Double Faults", "Other")
+  clearAllRows();
+  statmode = 'Adf';
+  changeTitles('Aces', 'Double Faults', 'Other');
   const rows = [
-    { section: 't', label: 'Aces', valueA: () => PlayerA.getAces(), valueB: () => PlayerB.getAces() },
-    { section: 't', label: 'Ace %', valueA: () => percent(PlayerA.getAces(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getAces(), PlayerB.getPointsServed()) },
+    {
+      section: 't',
+      label: 'Aces',
+      valueA: () => PlayerA.getAces(),
+      valueB: () => PlayerB.getAces(),
+    },
+    {
+      section: 't',
+      label: 'Ace %',
+      valueA: () => percent(PlayerA.getAces(), PlayerA.getPointsServed()),
+      valueB: () => percent(PlayerB.getAces(), PlayerB.getPointsServed()),
+    },
     {
       section: 't',
       label: 'Aces per Service Game',
       valueA: () => ratio(PlayerA.getAcesFinishedGamesOnly(), PlayerA.getCompletedServiceGames()),
-      valueB: () => ratio(PlayerB.getAcesFinishedGamesOnly(), PlayerB.getCompletedServiceGames())
+      valueB: () => ratio(PlayerB.getAcesFinishedGamesOnly(), PlayerB.getCompletedServiceGames()),
     },
     {
       section: 't',
@@ -1685,16 +1920,32 @@ function adfbf() {
         const completedSets = PlayerB.sets.length;
         const aces = PlayerB.getAcesCompletedSetsOnly();
         return completedSets === 0 ? '-' : (aces / completedSets).toFixed(2);
-      }
+      },
     },
 
-    { section: 'm', label: 'Double Faults', valueA: () => PlayerA.getDoubleFaults(), valueB: () => PlayerB.getDoubleFaults() },
-    { section: 'm', label: 'Double Fault %', valueA: () => percent(PlayerA.getDoubleFaults(), PlayerA.getPointsServed()), valueB: () => percent(PlayerB.getDoubleFaults(), PlayerB.getPointsServed()) },
-    { section: 'm', label: 'DFs per 2nd Serve', valueA: () => safeDiv(PlayerA.getDoubleFaults(), PlayerA.getSecondServePoints()).toFixed(2), valueB: () => safeDiv(PlayerB.getDoubleFaults(), PlayerB.getSecondServePoints()).toFixed(2) },
     {
-      section: 'm', label: 'DFs per Service Game',
+      section: 'm',
+      label: 'Double Faults',
+      valueA: () => PlayerA.getDoubleFaults(),
+      valueB: () => PlayerB.getDoubleFaults(),
+    },
+    {
+      section: 'm',
+      label: 'Double Fault %',
+      valueA: () => percent(PlayerA.getDoubleFaults(), PlayerA.getPointsServed()),
+      valueB: () => percent(PlayerB.getDoubleFaults(), PlayerB.getPointsServed()),
+    },
+    {
+      section: 'm',
+      label: 'DFs per 2nd Serve',
+      valueA: () => safeDiv(PlayerA.getDoubleFaults(), PlayerA.getSecondServePoints()).toFixed(2),
+      valueB: () => safeDiv(PlayerB.getDoubleFaults(), PlayerB.getSecondServePoints()).toFixed(2),
+    },
+    {
+      section: 'm',
+      label: 'DFs per Service Game',
       valueA: () => doubleFaultsPerServiceGame('A'),
-      valueB: () => doubleFaultsPerServiceGame('B')
+      valueB: () => doubleFaultsPerServiceGame('B'),
     },
     {
       section: 'm',
@@ -1708,10 +1959,15 @@ function adfbf() {
         const completedSets = PlayerB.sets.length;
         const dfs = PlayerB.getDoubleFaultsCompletedSetsOnly();
         return completedSets === 0 ? '-' : (dfs / completedSets).toFixed(2);
-      }
+      },
     },
 
-    { section: 'b', label: 'Ace/DF Ratio', valueA: () => ratio(PlayerA.getAces(), PlayerA.getDoubleFaults()), valueB: () => ratio(PlayerB.getAces(), PlayerB.getDoubleFaults()) }
+    {
+      section: 'b',
+      label: 'Ace/DF Ratio',
+      valueA: () => ratio(PlayerA.getAces(), PlayerA.getDoubleFaults()),
+      valueB: () => ratio(PlayerB.getAces(), PlayerB.getDoubleFaults()),
+    },
   ];
   const counters = { t: 1, m: 1, b: 1 };
 
@@ -1726,19 +1982,14 @@ function makeScore(includePoints = true) {
   const parts = [];
 
   if (prevSets.length > 0) {
-    const formattedSets = prevSets.map(set =>
-      set.replace(/\s*\(\s*(\d+)\s*\)/, "($1)")
-    );
-    parts.push(formattedSets.join(", "));
+    const formattedSets = prevSets.map((set) => set.replace(/\s*\(\s*(\d+)\s*\)/, '($1)'));
+    parts.push(formattedSets.join(', '));
   }
   if (aGames > 0 || bGames > 0) {
     if (includePoints) {
       parts.push(`${aGames}-${bGames}`);
     } else {
-      const serverStar =
-        currentServer === "A"
-          ? `${aGames}-${bGames}*`
-          : `${aGames}*-${bGames}`;
+      const serverStar = currentServer === 'A' ? `${aGames}-${bGames}*` : `${aGames}*-${bGames}`;
       parts.push(serverStar);
     }
   }
@@ -1746,42 +1997,43 @@ function makeScore(includePoints = true) {
     parts.push(`${aPoints}-${bPoints}`);
   }
 
-  return parts.join(", ");
+  return parts.join(', ');
 }
-
 
 function makeStats(winner, event, fsin, ps) {
   const winnerKey = winner === 'Awon' ? 'A' : 'B';
   const loserKey = winnerKey === 'A' ? 'B' : 'A';
   const serverKey = ps;
 
-  const selections = Array.from(document.querySelectorAll('input[name="whocame"]:checked')).map(el => el.value);
+  const selections = Array.from(document.querySelectorAll('input[name="whocame"]:checked')).map(
+    (el) => el.value
+  );
   for (const playerKey of ['A', 'B']) {
     const cameTag = playerKey + 'came';
     if (selections.includes(cameTag)) {
-      match.getPlayer(playerKey).inc("Net Points", { playerKey });
+      match.getPlayer(playerKey).inc('Net Points', { playerKey });
       if (winnerKey === playerKey) {
-        match.getPlayer(playerKey).inc("Net Points Won", { playerKey });
+        match.getPlayer(playerKey).inc('Net Points Won', { playerKey });
       }
     }
   }
 
   const server = match.getPlayer(serverKey);
-  const isFirstServe = (fsin === 'servein');
+  const isFirstServe = fsin === 'servein';
 
   if (isFirstServe) {
-    server.inc("First Serve Points", { playerKey: serverKey });
+    server.inc('First Serve Points', { playerKey: serverKey });
     if (winnerKey === serverKey) {
-      server.inc("First Serve Points Won", { playerKey: serverKey });
+      server.inc('First Serve Points Won', { playerKey: serverKey });
     }
   } else {
-    server.inc("Second Serve Points", { playerKey: serverKey });
+    server.inc('Second Serve Points', { playerKey: serverKey });
     if (winnerKey === serverKey) {
-      server.inc("Second Serve Points Won", { playerKey: serverKey });
+      server.inc('Second Serve Points Won', { playerKey: serverKey });
     }
   }
 
-  match.getPlayer(winnerKey).inc("Points", { playerKey: winnerKey });
+  match.getPlayer(winnerKey).inc('Points', { playerKey: winnerKey });
   match.getPlayer('A').currentSet.currentGame.A.pointsTotal++;
   match.getPlayer('A').currentSet.currentGame.B.pointsTotal++;
   match.getPlayer('B').currentSet.currentGame.A.pointsTotal++;
@@ -1792,7 +2044,7 @@ function makeStats(winner, event, fsin, ps) {
 
   switch (event) {
     case 'ace':
-      match.getPlayer(serverKey).inc("Aces", { playerKey: serverKey });
+      match.getPlayer(serverKey).inc('Aces', { playerKey: serverKey });
       if (match.tiebreakActive || tiebreak === 7 || tiebreak === 10) {
         const player = match.getPlayer(serverKey);
         if (player && player.currentSet) {
@@ -1802,38 +2054,39 @@ function makeStats(winner, event, fsin, ps) {
       break;
 
     case 'df':
-      match.getPlayer(serverKey).inc("Double Faults", { playerKey: serverKey });
+      match.getPlayer(serverKey).inc('Double Faults', { playerKey: serverKey });
       if (match.tiebreakActive || tiebreak === 7 || tiebreak === 10) {
         const player = match.getPlayer(serverKey);
         if (player && player.currentSet) {
-          player.currentSet.tiebreakDoubleFaults = (player.currentSet.tiebreakDoubleFaults || 0) + 1;
+          player.currentSet.tiebreakDoubleFaults =
+            (player.currentSet.tiebreakDoubleFaults || 0) + 1;
         }
       }
       break;
 
     case 'swinner':
-      match.getPlayer(winnerKey).inc("Service Winners", { playerKey: winnerKey });
+      match.getPlayer(winnerKey).inc('Service Winners', { playerKey: winnerKey });
       break;
 
     case 'fhw':
-      match.getPlayer(winnerKey).inc("Forehand Winners", { playerKey: winnerKey });
+      match.getPlayer(winnerKey).inc('Forehand Winners', { playerKey: winnerKey });
       break;
 
     case 'bhw':
-      match.getPlayer(winnerKey).inc("Backhand Winners", { playerKey: winnerKey });
+      match.getPlayer(winnerKey).inc('Backhand Winners', { playerKey: winnerKey });
       break;
     case 'fhe': // Forehand error
-      match.getPlayer(loserKey).inc("Forehand Errors", { playerKey: loserKey });
+      match.getPlayer(loserKey).inc('Forehand Errors', { playerKey: loserKey });
       break;
 
     case 'bhe': // Backhand error
-      match.getPlayer(loserKey).inc("Backhand Errors", { playerKey: loserKey });
+      match.getPlayer(loserKey).inc('Backhand Errors', { playerKey: loserKey });
       break;
     case 'nw':
-      match.getPlayer(winnerKey).inc("Net Winners", { playerKey: winnerKey });
+      match.getPlayer(winnerKey).inc('Net Winners', { playerKey: winnerKey });
       break;
     case 'ne':
-      match.getPlayer(loserKey).inc("Net Errors", { playerKey: loserKey });
+      match.getPlayer(loserKey).inc('Net Errors', { playerKey: loserKey });
       break;
   }
 
@@ -1886,49 +2139,49 @@ function makePbp(winner, event) {
 }
 
 function increment() {
-
-  const submitBtn = document.querySelector(".submitB");
+  const submitBtn = document.querySelector('.submitB');
   submitBtn.disabled = true;
 
-  const winner = getCheckedValue("whowon");
-  const selection = getCheckedValue("howwon");
-  const serveIn = getCheckedValue("serveIn");
+  const winner = getCheckedValue('whowon');
+  const selection = getCheckedValue('howwon');
+  const serveIn = getCheckedValue('serveIn');
 
   let pbpMessage = '';
   if (!winner || !selection || !serveIn) {
-    console.warn("Missing radio selection (whowon / howwon / serveIn)");
-
-  }
-  else {
-    document.querySelector(".score").textContent = makeScore();
+    console.warn('Missing radio selection (whowon / howwon / serveIn)');
+  } else {
+    document.querySelector('.score').textContent = makeScore();
     pbpMessage = makePbp(winner, selection);
   }
 
-  const winnerKey = (winner === 'Awon') ? 'A' : 'B';
+  const winnerKey = winner === 'Awon' ? 'A' : 'B';
   const serverKey = match.currentServer; // 'A' or 'B'
   const isTiebreak = match.tiebreakActive === true || tiebreak === 7 || tiebreak === 10;
 
   if (!isTiebreak && isBreakPoint(serverKey, match.aPoints, match.bPoints)) {
-    const returnerKey = serverKey === "A" ? "B" : "A";
-    match.getPlayer(returnerKey).inc("Break Points", { playerKey: returnerKey });
+    const returnerKey = serverKey === 'A' ? 'B' : 'A';
+    match.getPlayer(returnerKey).inc('Break Points', { playerKey: returnerKey });
     if (winnerKey === returnerKey) {
-      match.getPlayer(returnerKey).inc("Break Points Won", { playerKey: returnerKey });
+      match.getPlayer(returnerKey).inc('Break Points Won', { playerKey: returnerKey });
     }
   }
   makeStats(winner, selection, serveIn, match.currentServer);
   if (isTiebreak) {
-
     if (winnerKey === 'A') match.aPoints++;
     else match.bPoints++;
 
     const aPts = match.aPoints;
     const bPts = match.bPoints;
 
-    const isThirdSet = (match.matchFormat === "3" || match.matchFormat === "3-super") && match.prevSets.length === 2;
-    const isSuperTiebreakSet = match.matchFormat === "3-super" && isThirdSet;
+    const isThirdSet =
+      (match.matchFormat === '3' || match.matchFormat === '3-super') && match.prevSets.length === 2;
+    const isSuperTiebreakSet = match.matchFormat === '3-super' && isThirdSet;
     const tiebreakWinThreshold = isSuperTiebreakSet ? 10 : 7;
 
-    if ((aPts >= tiebreakWinThreshold || bPts >= tiebreakWinThreshold) && Math.abs(aPts - bPts) > 1) {
+    if (
+      (aPts >= tiebreakWinThreshold || bPts >= tiebreakWinThreshold) &&
+      Math.abs(aPts - bPts) > 1
+    ) {
       if (isSuperTiebreakSet) {
         const tbScore = `${aPts}-${bPts}`;
         match.finishSet(tbScore);
@@ -1958,7 +2211,7 @@ function increment() {
       match.pointHistory.push({
         point: `${currentScore} - ${pointDescription}`,
         ratingA: isFinite(ratingA) ? ratingA.toFixed(2) : '5.00',
-        ratingB: isFinite(ratingB) ? ratingB.toFixed(2) : '5.00'
+        ratingB: isFinite(ratingB) ? ratingB.toFixed(2) : '5.00',
       });
     }
 
@@ -1968,8 +2221,8 @@ function increment() {
     return;
   }
 
-  let aPts = match.aPoints;
-  let bPts = match.bPoints;
+  const aPts = match.aPoints;
+  const bPts = match.bPoints;
 
   if (winnerKey === 'A') {
     if (aPts === 40 && bPts === 'AD') match.bPoints = 40;
@@ -1994,7 +2247,7 @@ function increment() {
     match.pointHistory.push({
       point: `${currentScore} - ${pointDescription}`,
       ratingA: isFinite(ratingA) ? ratingA.toFixed(2) : '5.00',
-      ratingB: isFinite(ratingB) ? ratingB.toFixed(2) : '5.00'
+      ratingB: isFinite(ratingB) ? ratingB.toFixed(2) : '5.00',
     });
   }
 
@@ -2007,7 +2260,7 @@ function getCheckedValue(name) {
   const el = document.querySelector(`input[name="${name}"]:checked`);
   return el ? el.value : null;
 }
-const submitBtn = document.querySelector(".submitB");
+const submitBtn = document.querySelector('.submitB');
 if (submitBtn) {
   submitBtn.disabled = true;
 }
@@ -2015,112 +2268,115 @@ if (typeof resetPointInputs === 'function') {
   resetPointInputs();
 }
 
-window.addEventListener("load", () => {
-  const modal = document.getElementById("matchSetupModal");
-  const startBtn = document.getElementById("startMatchBtn");
+window.addEventListener('load', () => {
+  const modal = document.getElementById('matchSetupModal');
+  const startBtn = document.getElementById('startMatchBtn');
   updateNameLabelsForMatchType();
 
-  const inputA = document.getElementById("playerAInput");
-  const inputB = document.getElementById("playerBInput");
+  const inputA = document.getElementById('playerAInput');
+  const inputB = document.getElementById('playerBInput');
 
   if (inputA) {
-    inputA.addEventListener("input", updateFirstServerButtonLabels);
+    inputA.addEventListener('input', updateFirstServerButtonLabels);
   }
   if (inputB) {
-    inputB.addEventListener("input", updateFirstServerButtonLabels);
+    inputB.addEventListener('input', updateFirstServerButtonLabels);
   }
 
-  startBtn.addEventListener("click", () => {
-    const nameA = document.getElementById("playerAInput")?.value.trim();
-    const nameB = document.getElementById("playerBInput")?.value.trim();
+  startBtn.addEventListener('click', () => {
+    const nameA = document.getElementById('playerAInput')?.value.trim();
+    const nameB = document.getElementById('playerBInput')?.value.trim();
 
-    const warning = document.getElementById("nameWarning");
+    const warning = document.getElementById('nameWarning');
 
     if (!nameA || !nameB) {
-      warning.style.display = "block";
+      warning.style.display = 'block';
       return;
     }
 
-    warning.style.display = "none";
+    warning.style.display = 'none';
 
-    const matchType =
-      document.querySelector("#matchTypeGroup .modal-toggle-btn.active").dataset.value;
+    const matchType = document.querySelector('#matchTypeGroup .modal-toggle-btn.active').dataset
+      .value;
 
-    const matchFormat =
-      document.querySelector("#matchFormatGroup .modal-toggle-btn.active").dataset.value;
+    const matchFormat = document.querySelector('#matchFormatGroup .modal-toggle-btn.active').dataset
+      .value;
 
-    const firstServer =
-      document.querySelector("#firstServerGroup .modal-toggle-btn.active").dataset.value;
+    const firstServer = document.querySelector('#firstServerGroup .modal-toggle-btn.active').dataset
+      .value;
 
     match = new Match(nameA, nameB, matchType, matchFormat);
     PlayerA = match.getPlayer('A');
     PlayerB = match.getPlayer('B');
 
-    document.querySelectorAll(".PlayerA").forEach(el => el.textContent = nameA);
-    document.querySelectorAll(".PlayerB").forEach(el => el.textContent = nameB);
+    document.querySelectorAll('.PlayerA').forEach((el) => (el.textContent = nameA));
+    document.querySelectorAll('.PlayerB').forEach((el) => (el.textContent = nameB));
 
     match.startNewGame(firstServer);
     const score = document.querySelector('.score');
     score.textContent = makeScore();
-    pbp.textContent += match.currentServer === 'A' ? `${match.aGames}*-${match.bGames}\n` : `${match.aGames}-${match.bGames}*\n`;
+    pbp.textContent +=
+      match.currentServer === 'A'
+        ? `${match.aGames}*-${match.bGames}\n`
+        : `${match.aGames}-${match.bGames}*\n`;
 
-    const serverElem = document.querySelector(".server");
+    const serverElem = document.querySelector('.server');
     if (serverElem) {
-      serverElem.textContent = "Serving: " + match.getPlayer(match.currentServer).name;
+      serverElem.textContent = 'Serving: ' + match.getPlayer(match.currentServer).name;
     }
 
-    modal.style.display = "none";
+    modal.style.display = 'none';
     ModalFocus.close();
 
     updateRatings();
   });
 
   ModalFocus.open(modal, {
-    initialFocus: "#playerAInput",
+    initialFocus: '#playerAInput',
   });
 });
 
 function updateFirstServerButtonLabels() {
   const matchType =
-    document.querySelector("#matchTypeGroup .modal-toggle-btn.active")?.dataset.value || "singles";
+    document.querySelector('#matchTypeGroup .modal-toggle-btn.active')?.dataset.value || 'singles';
 
-  const inputA = document.getElementById("playerAInput");
-  const inputB = document.getElementById("playerBInput");
-  const firstServerButtons = document.querySelectorAll("#firstServerGroup .modal-toggle-btn");
+  const inputA = document.getElementById('playerAInput');
+  const inputB = document.getElementById('playerBInput');
+  const firstServerButtons = document.querySelectorAll('#firstServerGroup .modal-toggle-btn');
 
   if (firstServerButtons.length >= 2) {
-    const nameA = inputA?.value.trim() || "";
-    const nameB = inputB?.value.trim() || "";
+    const nameA = inputA?.value.trim() || '';
+    const nameB = inputB?.value.trim() || '';
 
-    if (matchType === "doubles") {
-      firstServerButtons[0].textContent = nameA || "Team A";
-      firstServerButtons[1].textContent = nameB || "Team B";
+    if (matchType === 'doubles') {
+      firstServerButtons[0].textContent = nameA || 'Team A';
+      firstServerButtons[1].textContent = nameB || 'Team B';
     } else {
-      firstServerButtons[0].textContent = nameA || "Player A";
-      firstServerButtons[1].textContent = nameB || "Player B";
+      firstServerButtons[0].textContent = nameA || 'Player A';
+      firstServerButtons[1].textContent = nameB || 'Player B';
     }
   }
 }
 
 function updateNameLabelsForMatchType() {
-  const matchType =
-    document.querySelector("#matchTypeGroup .modal-toggle-btn.active").dataset.value;
+  const matchType = document.querySelector('#matchTypeGroup .modal-toggle-btn.active').dataset
+    .value;
 
-  const labelA = document.getElementById("nameLabelA");
-  const labelB = document.getElementById("nameLabelB");
-  const inputA = document.getElementById("playerAInput");
-  const inputB = document.getElementById("playerBInput");
+  const labelA = document.getElementById('nameLabelA');
+  const labelB = document.getElementById('nameLabelB');
+  const inputA = document.getElementById('playerAInput');
+  const inputB = document.getElementById('playerBInput');
 
-  if (matchType === "doubles") {
-    labelA.textContent = "Team A Name:";
-    labelB.textContent = "Team B Name:";
-    inputA.placeholder = "Team A";
-    inputB.placeholder = "Team B";
+  if (matchType === 'doubles') {
+    labelA.textContent = 'Team A Name:';
+    labelB.textContent = 'Team B Name:';
+    inputA.placeholder = 'Team A';
+    inputB.placeholder = 'Team B';
   } else {
-    labelA.textContent = "Player A Name:";
-    labelB.textContent = "Player B Name:";
-    inputA.placeholder = "Player A";
-    inputB.placeholder = "Player B";
+    labelA.textContent = 'Player A Name:';
+    labelB.textContent = 'Player B Name:';
+    inputA.placeholder = 'Player A';
+    inputB.placeholder = 'Player B';
   }
 
   updateFirstServerButtonLabels();
@@ -2128,14 +2384,14 @@ function updateNameLabelsForMatchType() {
 
 function setupToggleGroup(groupId) {
   const group = document.getElementById(groupId);
-  const buttons = group.querySelectorAll(".modal-toggle-btn");
+  const buttons = group.querySelectorAll('.modal-toggle-btn');
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
 
-      if (groupId === "matchTypeGroup") {
+      if (groupId === 'matchTypeGroup') {
         updateNameLabelsForMatchType();
       }
     });
@@ -2143,20 +2399,22 @@ function setupToggleGroup(groupId) {
 }
 
 function showMatchEndModal() {
-  const modal = document.getElementById("matchEndModal");
-  const finalScoreDiv = document.getElementById("finalScore");
+  const modal = document.getElementById('matchEndModal');
+  const finalScoreDiv = document.getElementById('finalScore');
 
   if (!modal || !finalScoreDiv || !match) return;
 
-  const setScores = match.prevSets.length > 0 ? match.prevSets.join(", ") : "";
+  const setScores = match.prevSets.length > 0 ? match.prevSets.join(', ') : '';
   const includeCurrent = !match.isMatchOver();
-  const currentScore = includeCurrent ? `${match.aPoints}-${match.bPoints}` : "";
+  const currentScore = includeCurrent ? `${match.aPoints}-${match.bPoints}` : '';
   const finalScore = currentScore
-    ? (setScores ? `${setScores}, ${currentScore}` : currentScore)
+    ? setScores
+      ? `${setScores}, ${currentScore}`
+      : currentScore
     : setScores;
 
   const winner = match.getMatchWinner();
-  const winnerName = winner ? match.getPlayer(winner).name : "Unknown";
+  const winnerName = winner ? match.getPlayer(winner).name : 'Unknown';
 
   finalScoreDiv.innerHTML = `
     <div style="margin-bottom: 0.5rem; text-align: center; width: 100%; display: block;">${finalScore}</div>
@@ -2165,21 +2423,21 @@ function showMatchEndModal() {
     </div>
   `;
 
-  modal.style.display = "flex";
+  modal.style.display = 'flex';
 
   ModalFocus.open(modal, {
     onEscape: closeMatchEndModal,
-    initialFocus: "#closeMatchEndModal",
+    initialFocus: '#closeMatchEndModal',
   });
 
-  const downloadBtn = document.getElementById("downloadStatsBtn");
+  const downloadBtn = document.getElementById('downloadStatsBtn');
   if (downloadBtn) {
     downloadBtn.onclick = () => {
       downloadMatchStatsCSV();
     };
   }
 
-  const closeBtn = document.getElementById("closeMatchEndModal");
+  const closeBtn = document.getElementById('closeMatchEndModal');
   if (closeBtn) {
     closeBtn.onclick = () => {
       closeMatchEndModal();
@@ -2188,9 +2446,9 @@ function showMatchEndModal() {
 }
 
 function closeMatchEndModal() {
-  const modal = document.getElementById("matchEndModal");
+  const modal = document.getElementById('matchEndModal');
   if (modal) {
-    modal.style.display = "none";
+    modal.style.display = 'none';
   }
   ModalFocus.close();
 }
@@ -2238,7 +2496,7 @@ function downloadMatchStatsCSV() {
     const totalWinRate = safeDiv(playerB.getPointsWon(), totalPoints);
     return totalWinRate === 0 ? '-' : (netWinRate / totalWinRate).toFixed(2);
   })();
-  const avgPointSeconds = totalPoints === 0 ? '-' : ((elapsedMs / 1000) / totalPoints).toFixed(1);
+  const avgPointSeconds = totalPoints === 0 ? '-' : (elapsedMs / 1000 / totalPoints).toFixed(1);
   const avgServiceGameTimeA = match.getAverageServiceGameTimeMinutes('A');
   const avgServiceGameTimeB = match.getAverageServiceGameTimeMinutes('B');
 
@@ -2249,24 +2507,98 @@ function downloadMatchStatsCSV() {
     ['Points Won', pointsWonA, pointsWonB],
     ['', '', ''],
     ['Aces', playerA.getAces(), playerB.getAces()],
-    ['Ace %', percent(playerA.getAces(), playerA.getPointsServed()), percent(playerB.getAces(), playerB.getPointsServed())],
+    [
+      'Ace %',
+      percent(playerA.getAces(), playerA.getPointsServed()),
+      percent(playerB.getAces(), playerB.getPointsServed()),
+    ],
     ['Service Winners', serviceWinnersA, serviceWinnersB],
     ['Double Faults', playerA.getDoubleFaults(), playerB.getDoubleFaults()],
-    ['Double Fault %', percent(playerA.getDoubleFaults(), playerA.getPointsServed()), percent(playerB.getDoubleFaults(), playerB.getPointsServed())],
-    ['1st Serve %', percent(playerA.getFirstServePoints(), playerA.getPointsServed()), percent(playerB.getFirstServePoints(), playerB.getPointsServed())],
-    ['1st Serve Won %', percent(playerA.getFirstServePointsWon(), playerA.getFirstServePoints()), percent(playerB.getFirstServePointsWon(), playerB.getFirstServePoints())],
-    ['2nd Serve %', percent(playerA.getSecondServePoints() - playerA.getDoubleFaults(), playerA.getSecondServePoints()), percent(playerB.getSecondServePoints() - playerB.getDoubleFaults(), playerB.getSecondServePoints())],
-    ['2nd Serve Won %', percent(playerA.getSecondServePointsWon(), playerA.getSecondServePoints()), percent(playerB.getSecondServePointsWon(), playerB.getSecondServePoints())],
-    ['Break Points', `${playerA.getBreakPointsWon()}/${playerA.getBreakPoints()}`, `${playerB.getBreakPointsWon()}/${playerB.getBreakPoints()}`],
-    ['Service Points Won %', percent(playerA.getServicePointsWon(), playerA.getPointsServed()), percent(playerB.getServicePointsWon(), playerB.getPointsServed())],
+    [
+      'Double Fault %',
+      percent(playerA.getDoubleFaults(), playerA.getPointsServed()),
+      percent(playerB.getDoubleFaults(), playerB.getPointsServed()),
+    ],
+    [
+      '1st Serve %',
+      percent(playerA.getFirstServePoints(), playerA.getPointsServed()),
+      percent(playerB.getFirstServePoints(), playerB.getPointsServed()),
+    ],
+    [
+      '1st Serve Won %',
+      percent(playerA.getFirstServePointsWon(), playerA.getFirstServePoints()),
+      percent(playerB.getFirstServePointsWon(), playerB.getFirstServePoints()),
+    ],
+    [
+      '2nd Serve %',
+      percent(
+        playerA.getSecondServePoints() - playerA.getDoubleFaults(),
+        playerA.getSecondServePoints()
+      ),
+      percent(
+        playerB.getSecondServePoints() - playerB.getDoubleFaults(),
+        playerB.getSecondServePoints()
+      ),
+    ],
+    [
+      '2nd Serve Won %',
+      percent(playerA.getSecondServePointsWon(), playerA.getSecondServePoints()),
+      percent(playerB.getSecondServePointsWon(), playerB.getSecondServePoints()),
+    ],
+    [
+      'Break Points',
+      `${playerA.getBreakPointsWon()}/${playerA.getBreakPoints()}`,
+      `${playerB.getBreakPointsWon()}/${playerB.getBreakPoints()}`,
+    ],
+    [
+      'Service Points Won %',
+      percent(playerA.getServicePointsWon(), playerA.getPointsServed()),
+      percent(playerB.getServicePointsWon(), playerB.getPointsServed()),
+    ],
     ['', '', ''],
-    ['1st Serve Return Won %', percent(playerB.getFirstServePoints() - playerB.getFirstServePointsWon(), playerB.getFirstServePoints()), percent(playerA.getFirstServePoints() - playerA.getFirstServePointsWon(), playerA.getFirstServePoints())],
-    ['2nd Serve Return Won %', percent(playerB.getSecondServePoints() - playerB.getSecondServePointsWon(), playerB.getSecondServePoints()), percent(playerA.getSecondServePoints() - playerA.getSecondServePointsWon(), playerA.getSecondServePoints())],
-    ['Return Points Won %', percent(playerB.getPointsServed() - playerB.getServicePointsWon(), playerB.getPointsServed()), percent(playerA.getPointsServed() - playerA.getServicePointsWon(), playerA.getPointsServed())],
+    [
+      '1st Serve Return Won %',
+      percent(
+        playerB.getFirstServePoints() - playerB.getFirstServePointsWon(),
+        playerB.getFirstServePoints()
+      ),
+      percent(
+        playerA.getFirstServePoints() - playerA.getFirstServePointsWon(),
+        playerA.getFirstServePoints()
+      ),
+    ],
+    [
+      '2nd Serve Return Won %',
+      percent(
+        playerB.getSecondServePoints() - playerB.getSecondServePointsWon(),
+        playerB.getSecondServePoints()
+      ),
+      percent(
+        playerA.getSecondServePoints() - playerA.getSecondServePointsWon(),
+        playerA.getSecondServePoints()
+      ),
+    ],
+    [
+      'Return Points Won %',
+      percent(playerB.getPointsServed() - playerB.getServicePointsWon(), playerB.getPointsServed()),
+      percent(playerA.getPointsServed() - playerA.getServicePointsWon(), playerA.getPointsServed()),
+    ],
     ['', '', ''],
-    ['Net Points %', percent(playerA.getNetPoints(), totalPoints), percent(playerB.getNetPoints(), totalPoints)],
-    ['Net Points Won %', percent(playerA.getNetPointsWon(), playerA.getNetPoints()), percent(playerB.getNetPointsWon(), playerB.getNetPoints())],
-    ['Points Won at Net %', percent(playerA.getNetPointsWon(), playerA.getPointsWon()), percent(playerB.getNetPointsWon(), playerB.getPointsWon())],
+    [
+      'Net Points %',
+      percent(playerA.getNetPoints(), totalPoints),
+      percent(playerB.getNetPoints(), totalPoints),
+    ],
+    [
+      'Net Points Won %',
+      percent(playerA.getNetPointsWon(), playerA.getNetPoints()),
+      percent(playerB.getNetPointsWon(), playerB.getNetPoints()),
+    ],
+    [
+      'Points Won at Net %',
+      percent(playerA.getNetPointsWon(), playerA.getPointsWon()),
+      percent(playerB.getNetPointsWon(), playerB.getPointsWon()),
+    ],
     ['', '', ''],
     ['Winners', winnersA, winnersB],
     ['Errors', errorsA, errorsB],
@@ -2283,13 +2615,11 @@ function downloadMatchStatsCSV() {
   csvRows.push(['', '', '']);
   csvRows.push(['Point', playerAName + ' Rating', playerBName + ' Rating']);
 
-  match.pointHistory.forEach(pointData => {
+  match.pointHistory.forEach((pointData) => {
     csvRows.push([pointData.point, pointData.ratingA, pointData.ratingB]);
   });
 
-  const csvContent = csvRows.map(row =>
-    row.map(cell => `"${cell}"`).join(',')
-  ).join('\n');
+  const csvContent = csvRows.map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n');
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
@@ -2303,6 +2633,6 @@ function downloadMatchStatsCSV() {
   document.body.removeChild(link);
 }
 
-setupToggleGroup("matchTypeGroup");
-setupToggleGroup("matchFormatGroup");
-setupToggleGroup("firstServerGroup");
+setupToggleGroup('matchTypeGroup');
+setupToggleGroup('matchFormatGroup');
+setupToggleGroup('firstServerGroup');

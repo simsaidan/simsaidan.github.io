@@ -1,7 +1,15 @@
 # Ignore data files
 *.json
+!package.json
+!package-lock.json
+!scripts/package.json
+!scripts/exports/.gitkeep
+!scripts/exports/*.json
 csv/
 
 # System files
 .DS_Store
 .DS_Store
+
+node_modules/
+scripts/node_modules/
