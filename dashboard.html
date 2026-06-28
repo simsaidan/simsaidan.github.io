@@ -3,32 +3,50 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tennis Performance Rating | Aidan Sims</title>
+  <meta name="description"
+    content="A logistic regression model that rates single-match tennis performance from 33 stats, with an interactive calculator.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://simsaidan.github.io/dashboard.html">
+  <meta property="og:title" content="Tennis Performance Rating | Aidan Sims">
+  <meta property="og:description"
+    content="A logistic regression model that rates single-match tennis performance from 33 stats, with an interactive calculator.">
+  <meta property="og:url" content="https://simsaidan.github.io/dashboard.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Aidan Sims">
+  <meta property="og:image" content="https://simsaidan.github.io/images/miami.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tennis Performance Rating | Aidan Sims">
+  <meta name="twitter:description"
+    content="A logistic regression model that rates single-match tennis performance from 33 stats, with an interactive calculator.">
+  <meta name="twitter:image" content="https://simsaidan.github.io/images/miami.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/blog.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rating Dashboard</title>
-  <style>
-  </style>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
 </head>
 
 <body>
   <div id="navbar"></div>
-  <div class="layout">
-    <aside class="sidebar">
-      <h3>Table of Contents</h3>
-      <ul>
+  <div class="blog-layout">
+    <aside class="blog-toc">
+      <details class="blog-toc-panel" open>
+        <summary>Table of Contents</summary>
+        <ul>
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#motivation">Motivation</a></li>
         <li><a href="#implementation">Implementation Details</a></li>
         <li><a href="#Results">Results</a></li>
         <li><a href="#conclusion">Conclusion & Reflections</a></li>
         <li><a href="#dashboard">Dashboard</a></li>
-      </ul>
+        </ul>
+      </details>
     </aside>
-    <main class="main-content">
+    <main class="blog-content">
       <h1 style="margin-top: 20px;">A Logistic Regression-Based Tennis Match Rating System</h1>
       <p>
         This blog post is based on work I did in Spring 2023 as an analyst with
@@ -100,14 +118,14 @@
 
           Currently, there are many ways to rate
           a player's ability. The most popular and effective is the
-          <a href="https://www.utrsports.net/" target="_blank">Universal Tennis Rating</a>, which assigns competitive
+          <a href="https://www.utrsports.net/" target="_blank" rel="noopener noreferrer">Universal Tennis Rating</a>, which assigns competitive
           players a number between 1 (novice)
           and 16 (top professional men's player). Another example is
           <a href="https://www.usta.com/en/home/coach-organize/tennis-tool-center/run-usta-programs/national/understanding-ntrp-ratings.html"
-            target="_blank">NTRP</a>,
+            target="_blank" rel="noopener noreferrer">NTRP</a>,
           an outdated system that rates ability from 1 to 7, and
           a newer system called
-          <a href="https://worldtennisnumber.com/" target="_blank">World Tennis Number</a>.
+          <a href="https://worldtennisnumber.com/" target="_blank" rel="noopener noreferrer">World Tennis Number</a>.
 
           While there are strong systems for measuring ability, there is still
           no widely used system for measuring <em>performance</em> in tennis.
@@ -125,7 +143,7 @@
 
         I was inspired by performance rating systems from other sports. In soccer,
         for example,
-        <a href="https://www.whoscored.com/explanations" target="_blank">WhoScored.com</a>
+        <a href="https://www.whoscored.com/explanations" target="_blank" rel="noopener noreferrer">WhoScored.com</a>
         assigns players a rating between 1 and 10 for each
         match. Positive actions, like a pass leading to a shot,
         increase the rating, whereas negative events, like committing a foul which
@@ -149,7 +167,7 @@
         <h2>Implementation Details</h2>
         <p>
           Data for this project was obtained from the
-          <a href="https://ultimatetennisstatistics.com/" target="_blank">Ultimate
+          <a href="https://ultimatetennisstatistics.com/" target="_blank" rel="noopener noreferrer">Ultimate
             Tennis Statistics</a> website, one of the best public sources of tennis match data. The project uses match
           data from 1081 men's tennis matches from the Masters 1000, ATP Finals, and ATP 500
           levels during the 2019, 2021, 2022, and 2023 seasons. This data was split
@@ -363,7 +381,7 @@
           Going forward, the model requires further testing across tennis matches at
           a variety of levels. One way to accomplish this is by integrating this model
           into match statictic tracking software, such as
-          <a href="https://simsaidan.github.io/grid.html" target="_blank">this tool</a>.
+          <a href="https://simsaidan.github.io/grid.html" target="_blank" rel="noopener noreferrer">this tool</a>.
           This would solve two problems at once: it would lead to easy testing of the
           model at scale and would make data collection feasible.
         </p>
@@ -523,6 +541,7 @@
 
     </main>
   </div>
+  <script src="js/rating.js"></script>
   <script>
     function updateRating() {
       const inputs = document.querySelectorAll("#statsForm input");
@@ -601,52 +620,47 @@
       const pl_persg = pointsLostPerServiceGame;
       const sglps = serviceGamesLostPerSet;
 
-      const sum =
-        4.7487 * ((t_points_won - 0.5002) / 0.0651) +
-        4.7417 * ((gwp - 0.5005) / 0.1378) +
-        3.8626 * ((r_games_won_p - 0.2157) / 0.1712) +
-        3.7691 * ((r_points_won - 0.3617) / 0.0904) +
-        3.6639 * ((r_inplay_ptswon - 0.3643) / 0.0887) +
-        3.5316 * ((sg_wonp - 0.7853) / 0.1704) +
-        3.4340 * ((s_inplay_ptswon - 0.6361) / 0.0890) +
-        3.4236 * ((s_points_won_p - 0.6388) / 0.0907) +
-        3.2814 * ((pw_perrg - 2.3580) / 0.7664) +
-        3.0326 * ((f_return_won_p - 0.2821) / 0.1022) +
-        2.8976 * ((s_return_won_p - 0.4896) / 0.1213) +
-        2.7623 * ((fserve_won_p - 0.7180) / 0.1024) +
-        2.5820 * ((sserve_won_p - 0.5115) / 0.1216) +
-        2.3942 * ((bp_won_p - 0.3905) / 0.2678) +
-        2.2642 * ((bp_saved_p - 0.6111) / 0.2673) +
-        1.2452 * ((pprg - 6.4159) / 0.8684) +
-        1.1194 * ((netwp - 0.6294) / 0.2021) +
-        0.9477 * ((rpsp_ratio - 1.0191) / 0.2011) +
-        0.8609 * ((ace_p - 0.0747) / 0.0599) +
-        0.8559 * ((fserve_p - 0.6208) / 0.0739) +
-        0.6701 * ((aces_psgame - 0.4663) / 0.3623) +
-        0.4699 * ((fe_p - 0.4456) / 0.1109) +
-        -0.0917 * ((netpp - 0.1099) / 0.0577) +
-        -0.2325 * ((winner_p - 0.3178) / 0.0951) +
-        -0.4413 * ((ue_p - 0.2366) / 0.1098) +
-        -0.4487 * ((pwnet - 0.1443) / 0.0792) +
-        -0.7323 * ((df_pss - 0.0950) / 0.0727) +
-        -0.9676 * ((df_p - 0.0366) / 0.0297) +
-        -1.0607 * ((ppsg - 6.4133) / 0.8641) +
-        -1.0622 * ((df_psgame - 0.2381) / 0.2006) +
-        -2.5134 * ((bp_persg - 0.5503) / 0.3619) +
-        -2.9682 * ((pl_persg - 2.3536) / 0.7640) +
-        -3.6723 * ((sglps - 1.0163) / 0.7469)
+      const rating = calculateTennisRating({
+          t_points_won,
+          gwp,
+          r_games_won_p,
+          r_points_won,
+          r_inplay_ptswon,
+          sg_wonp,
+          s_inplay_ptswon,
+          s_points_won_p,
+          pw_perrg,
+          f_return_won_p,
+          s_return_won_p,
+          fserve_won_p,
+          sserve_won_p,
+          bp_won_p,
+          bp_saved_p,
+          pprg,
+          netwp,
+          rpsp_ratio,
+          ace_p,
+          fserve_p,
+          aces_psgame,
+          fe_p,
+          netpp,
+          winner_p,
+          ue_p,
+          pwnet,
+          df_pss,
+          df_p,
+          ppsg,
+          df_psgame,
+          bp_persg,
+          pl_persg,
+          sglps,
+        });
 
-      const sigmoided = 1 / (1 + Math.exp(-1 * (sum + .048) / 35));
-      const scaled = 10 * sigmoided;
-      let out;
-      out = scaled;
-      document.getElementById("ratingDisplay").textContent = "Rating: " + out.toFixed(2);
+      document.getElementById("ratingDisplay").textContent = "Rating: " + rating.toFixed(2);
     }
   </script>
   <script src="loadComponent.js"></script>
-  <script>
-    loadComponent('navbar', 'components/navbar.html');
-  </script>
+  <script>initBlogPage();</script>
 </body>
 
 </html>

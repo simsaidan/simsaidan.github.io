@@ -1,0 +1,19 @@
+.standalone-home {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1001;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.standalone-home:hover {
+  color: #0072b1;
+  border-color: #0072b1;
+}

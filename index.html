@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<meta name="description"
-  content="Aidan Sims' portfolio showcasing projects in tennis, quantum computing, and artificial intelligence.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://simsaidan.github.io/">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aidan Sims</title>
+  <meta name="description"
+    content="Aidan Sims' portfolio showcasing projects in tennis, quantum computing, and artificial intelligence.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://simsaidan.github.io/">
+  <meta property="og:title" content="Aidan Sims">
+  <meta property="og:description"
+    content="Aidan Sims' portfolio showcasing projects in tennis, quantum computing, and artificial intelligence.">
+  <meta property="og:url" content="https://simsaidan.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aidan Sims">
+  <meta property="og:image" content="https://simsaidan.github.io/images/pic.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aidan Sims">
+  <meta name="twitter:description"
+    content="Aidan Sims' portfolio showcasing projects in tennis, quantum computing, and artificial intelligence.">
+  <meta name="twitter:image" content="https://simsaidan.github.io/images/pic.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/index.css" />
   <!-- globe.gl bundles Three.js; loading three.min.js separately causes duplicate THREE and breaks the globe. -->
   <script src="https://cdn.jsdelivr.net/npm/globe.gl"></script>
-  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <script type="module" src="index.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -57,17 +70,17 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <img src="images/pic.jpg" alt="Profile picture" class="profile-pic" />
-    <h2>Aidan Sims</h2>
+    <h1>Aidan Sims</h1>
 
     <p>Currently: Forward Deployed Engineer, Scale AI</p>
     <p class="location">📍 San Francisco, CA</p>
     <p>
-      <a href="https://github.com/simsaidan" target="_blank" class="social-link github">
+      <a href="https://github.com/simsaidan" target="_blank" rel="noopener noreferrer" class="social-link github">
         <i class="fab fa-github fa-2x"></i> GitHub
       </a>
     </p>
     <p>
-      <a href="https://www.linkedin.com/in/aidan-sims/" target="_blank" class="social-link linkedin">
+      <a href="https://www.linkedin.com/in/aidan-sims/" target="_blank" rel="noopener noreferrer" class="social-link linkedin">
         <i class="fab fa-linkedin fa-2x"></i> LinkedIn
       </a>
     </p>
@@ -83,25 +96,25 @@
   <!-- Main Content -->
   <main class="main-content">
     <section id="about">
-      <h1>About Me</h1>
+      <h2>About Me</h2>
       <p>Hi, and welcome to my website! My name is Aidan Sims and I'm currently a
-        Forward Deployed Engineer at <a href="https://scale.com/" target="_blank">Scale AI</a>. Previously, I was at
-        <a href="https://www.cornell.edu/" target="_blank">Cornell University</a>,
+        Forward Deployed Engineer at <a href="https://scale.com/" target="_blank" rel="noopener noreferrer">Scale AI</a>. Previously, I was at
+        <a href="https://www.cornell.edu/" target="_blank" rel="noopener noreferrer">Cornell University</a>,
         where I received a M.Eng. in Engineering Physics and a B.A. in Computer
         Science (with a minor in Business). I received the
-        <a href="https://www.engineering.cornell.edu/aep/student-awards/#meng" target="_blank">Henri S. Sack Memorial
+        <a href="https://www.engineering.cornell.edu/aep/student-awards/#meng" target="_blank" rel="noopener noreferrer">Henri S. Sack Memorial
           Award</a>
         for best academic performance by a Engineering Physics Master's student.
       </p>
       <p>
-        At Cornell, I was a member of <a href="https://www.markwilde.com/" target="_blank">Mark Wilde</a>'s Quantum
+        At Cornell, I was a member of <a href="https://www.markwilde.com/" target="_blank" rel="noopener noreferrer">Mark Wilde</a>'s Quantum
         Information Science research
         group, where I worked on quantum algorithms. I led a collaboration with the
-        <a href="https://rlab.engineering.ucdavis.edu/" target="_blank">R-Lab</a> from
-        <a href="https://www.ucdavis.edu/" target="_blank">UC Davis</a> where we developed two quantum algorithms to
+        <a href="https://rlab.engineering.ucdavis.edu/" target="_blank" rel="noopener noreferrer">R-Lab</a> from
+        <a href="https://www.ucdavis.edu/" target="_blank" rel="noopener noreferrer">UC Davis</a> where we developed two quantum algorithms to
         simulate the dynamics of
         a cavity QED model called the Open
-        <a href="https://en.wikipedia.org/wiki/Tavis%E2%80%93Cummings_model" target="_blank"> Tavis-Cummings</a> model.
+        <a href="https://en.wikipedia.org/wiki/Tavis%E2%80%93Cummings_model" target="_blank" rel="noopener noreferrer"> Tavis-Cummings</a> model.
       </p>
       <p>
         I've gained practical software engineering experience through
@@ -121,35 +134,35 @@
     </section>
 
     <section id="research">
-      <h1>Research / Publications</h1>
+      <h2>Research / Publications</h2>
 
       <p>
         <strong>Digital Quantum Simulations of the Non-Resonant Open Tavis–Cummings Model</strong>,
         with Mark M. Wilde, Marina Radulaski, Dhrumil Patel, Aby Philip, Alex Rubin, Rahul Bandyopadhyay. <br>
-        <a href="https://journals.aps.org/prresearch/abstract/10.1103/yflv-3s7t" target="_blank">Physical Review
+        <a href="https://journals.aps.org/prresearch/abstract/10.1103/yflv-3s7t" target="_blank" rel="noopener noreferrer">Physical Review
           Research 7, 043302 (2025)</a>. <br>
         DOI: 10.1103/yflv-3s7t <br>
-        <a href="https://arxiv.org/pdf/2501.18522" target="_blank">arXiv:2501.18522</a> [quant-ph]
+        <a href="https://arxiv.org/pdf/2501.18522" target="_blank" rel="noopener noreferrer">arXiv:2501.18522</a> [quant-ph]
       </p>
 
 
       <ul>
         <li>
           Presented as a talk at the
-          <a href="https://summit.aps.org/events/MAR-W01/13" target="_blank">APS Global Physics Summit</a>,
+          <a href="https://summit.aps.org/events/MAR-W01/13" target="_blank" rel="noopener noreferrer">APS Global Physics Summit</a>,
           Anaheim, CA, March 2025.
         </li>
         <li>
           Presented as a poster at
           <a href="https://adwhiteprofessors.cornell.edu/events/cornell-quantum-day-how-fast-can-we-remove-the-entropy-of-a-superconducting-qubit/"
-            target="_blank">Cornell Quantum Day</a>, November 2024.
+            target="_blank" rel="noopener noreferrer">Cornell Quantum Day</a>, November 2024.
         </li>
       </ul>
     </section>
 
 
     <section id="skills">
-      <h1>Skills</h1>
+      <h2>Skills</h2>
       <ul>
         <li><strong>Quantum / Scientific Computing:</strong> Qiskit, Pennylane, QuTiP</li>
         <li><strong>Programming Languages:</strong> Python, Java, OCaml, C</li>
@@ -159,16 +172,16 @@
     </section>
 
     <section id="contact">
-      <h1>Contact Me</h1>
+      <h2>Contact Me</h2>
       <form id="contact-form" action="https://formspree.io/f/xrbldyrg" method="POST">
-        <label>Name:</label><br>
-        <input type="text" name="name" required><br><br>
+        <label for="contact-name">Name:</label><br>
+        <input type="text" id="contact-name" name="name" required><br><br>
 
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+        <label for="contact-email">Email:</label><br>
+        <input type="email" id="contact-email" name="email" required><br><br>
 
-        <label>Message:</label><br>
-        <textarea name="message" rows="5" required></textarea><br><br>
+        <label for="contact-message">Message:</label><br>
+        <textarea id="contact-message" name="message" rows="5" required></textarea><br><br>
 
         <!-- Simple spam trap (leave blank) -->
         <input type="text" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;">

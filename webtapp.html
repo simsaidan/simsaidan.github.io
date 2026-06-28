@@ -1,10 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <title>New Match</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tennis Stat Tracker | Aidan Sims</title>
+  <meta name="description"
+    content="Point-by-point tennis match stat tracker with serve, return, winners, and performance ratings.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://simsaidan.github.io/webtapp.html">
+  <meta property="og:title" content="Tennis Stat Tracker | Aidan Sims">
+  <meta property="og:description"
+    content="Point-by-point tennis match stat tracker with serve, return, winners, and performance ratings.">
+  <meta property="og:url" content="https://simsaidan.github.io/webtapp.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aidan Sims">
+  <meta property="og:image" content="https://simsaidan.github.io/images/pic.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tennis Stat Tracker | Aidan Sims">
+  <meta name="twitter:description"
+    content="Point-by-point tennis match stat tracker with serve, return, winners, and performance ratings.">
+  <meta name="twitter:image" content="https://simsaidan.github.io/images/pic.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/standalone.css">
   <link rel="stylesheet" href="css/webtapp.css">
+  <script src="js/modal-focus.js" defer></script>
+  <script src="js/rating.js" defer></script>
   <script src="webtapp.js" defer></script>
 </head>
 
 <body>
+  <a href="/" class="standalone-home">← Aidan Sims</a>
   <div class="TopRow">
     <span class="PlayerA">Player A</span>
     <span class="score">Loading..</span>
@@ -233,9 +261,9 @@
   <hr>
   <div>Play-by-Play</div>
   <div class="pbp"></div>
-  <div id="matchSetupModal" class="modal">
+  <div id="matchSetupModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="matchSetupTitle">
     <div class="modal-content">
-      <h2>Match Setup</h2>
+      <h2 id="matchSetupTitle">Match Setup</h2>
 
       <h3 class="modal-section-title">Match Type</h3>
       <div id="matchTypeGroup" class="modal-button-group">
@@ -246,11 +274,11 @@
 
 
       <h3 class="modal-section-title">Players</h3>
-      <label id="nameLabelA">Player A Name:</label>
-      <input id="playerAInput" type="text" placeholder="Player A">
+      <label id="nameLabelA" for="playerAInput">Player A Name:</label>
+      <input id="playerAInput" type="text" placeholder="Player A" autocomplete="name">
 
-      <label id="nameLabelB">Player B Name:</label>
-      <input id="playerBInput" type="text" placeholder="Player B">
+      <label id="nameLabelB" for="playerBInput">Player B Name:</label>
+      <input id="playerBInput" type="text" placeholder="Player B" autocomplete="name">
 
       <p id="nameWarning" style="display:none; color:#b30000; font-size:0.9rem; margin-top:6px;">
         Please enter both names before starting the match.
@@ -272,10 +300,11 @@
     </div>
   </div>
 
-  <div id="matchEndModal" class="modal" style="display: none;">
+  <div id="matchEndModal" class="modal" style="display: none;" role="dialog" aria-modal="true"
+    aria-labelledby="matchEndTitle">
     <div class="modal-content">
-      <button id="closeMatchEndModal" class="modal-close-btn">&times;</button>
-      <h2>Match Complete</h2>
+      <button type="button" id="closeMatchEndModal" class="modal-close-btn" aria-label="Close">&times;</button>
+      <h2 id="matchEndTitle">Match Complete</h2>
       <div id="finalScore" style="font-size: 1.5rem; font-weight: 600; margin: 1.5rem 0; color: #222;"></div>
       <button id="downloadStatsBtn">Download Stats</button>
     </div>

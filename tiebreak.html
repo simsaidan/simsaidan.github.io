@@ -3,32 +3,50 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9-Point Tiebreak Analysis | Aidan Sims</title>
+  <meta name="description"
+    content="Monte Carlo analysis of whether the 9-point tennis tiebreak is fair compared to standard 7- and 10-point formats.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://simsaidan.github.io/tiebreak.html">
+  <meta property="og:title" content="9-Point Tiebreak Analysis | Aidan Sims">
+  <meta property="og:description"
+    content="Monte Carlo analysis of whether the 9-point tennis tiebreak is fair compared to standard 7- and 10-point formats.">
+  <meta property="og:url" content="https://simsaidan.github.io/tiebreak.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Aidan Sims">
+  <meta property="og:image" content="https://simsaidan.github.io/images/scenario1.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="9-Point Tiebreak Analysis | Aidan Sims">
+  <meta name="twitter:description"
+    content="Monte Carlo analysis of whether the 9-point tennis tiebreak is fair compared to standard 7- and 10-point formats.">
+  <meta name="twitter:image" content="https://simsaidan.github.io/images/scenario1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/blog.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiebreak Analysis</title>
-  <style>
-  </style>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
 </head>
 
 <body>
   <div id="navbar"></div>
-  <div class="layout">
-    <aside class="sidebar">
-      <h3>Table of Contents</h3>
-      <ul>
+  <div class="blog-layout">
+    <aside class="blog-toc">
+      <details class="blog-toc-panel" open>
+        <summary>Table of Contents</summary>
+        <ul>
         <li><a href="#motivation">Motivation</a></li>
         <li><a href="#background">Background</a></li>
         <li><a href="#monte">Monte-Carlo Methods</a></li>
         <li><a href="#analysis">Analysis</a></li>
         <li><a href="#conclusion">Conclusion</a></li>
         <li><a href="#references">References</a></li>
-      </ul>
+        </ul>
+      </details>
     </aside>
-    <main class="main-content">
+    <main class="blog-content">
       <h1 style="margin-top: 20px;">Evaluating the Fairness of the 9-Point Tennis Tiebreak Using Monte Carlo Methods
       </h1>
       <p>
@@ -492,35 +510,35 @@
         <h2>References</h2>
         <ol>
           <li id="ref1">
-            <a href="https://www.masterclass.com/articles/tennis-tiebreaker-guide" target="_blank" rel="noopener">
+            <a href="https://www.masterclass.com/articles/tennis-tiebreaker-guide" target="_blank" rel="noopener noreferrer">
               MasterClass: “Tennis Tiebreaker Guide: The History and Rules of Tiebreaks”
             </a>
           </li>
           <li id="ref2">
             <a href="https://en.wikipedia.org/wiki/Tennis_scoring_system#Tiebreak_scoring" target="_blank"
-              rel="noopener">
+              rel="noopener noreferrer">
               Wikipedia: “Tennis Scoring System — Tiebreak Scoring”
             </a>
           </li>
           <li id="ref3">
             <a href="https://www.nytimes.com/1970/07/26/archives/us-open-adopts-suddendeath-set-us-open-will-use-suddendeath-set.html"
-              target="_blank" rel="noopener">
+              target="_blank" rel="noopener noreferrer">
               The New York Times: “U.S. Open Adopts Sudden-Death Set”
             </a>
           </li>
           <li id="ref4">
             <a href="https://www.sportspundit.com/tennis/terms/2578-sudden-death-tiebreak" target="_blank"
-              rel="noopener">
+              rel="noopener noreferrer">
               SportsPundit: “Sudden Death Tiebreak”
             </a>
           </li>
           <li id="ref5">
-            <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank" rel="noopener">
+            <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank" rel="noopener noreferrer">
               IBM: “What Is Monte Carlo Simulation?”
             </a>
           </li>
           <li id="ref6">
-            <a href="https://www.ultimatetennisstatistics.com" target="_blank" rel="noopener">
+            <a href="https://www.ultimatetennisstatistics.com" target="_blank" rel="noopener noreferrer">
               Ultimate Tennis Statistics
             </a>
           </li>
@@ -529,7 +547,5 @@
     </main>
   </div>
   <script src="loadComponent.js"></script>
-  <script>
-    loadComponent('navbar', 'components/navbar.html');
-  </script>
+  <script>initBlogPage();</script>
 </body>

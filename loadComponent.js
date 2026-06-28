@@ -1,32 +1,50 @@
 function loadComponent(id, file) {
-  fetch(file)
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById(id).innerHTML = data;
-      highlightActiveLink(); // Run after navbar is loaded
-      setupMobileDropdownToggle(); // Enable dropdown click on touch devices
-      setupMobileNavMenu(); // Hamburger + slide-down nav on narrow screens
+  const container = document.getElementById(id);
+  if (!container) {
+    console.error(`loadComponent: element #${id} not found`);
+    return Promise.reject(new Error(`Element #${id} not found`));
+  }
+
+  container.setAttribute('aria-busy', 'true');
+
+  return fetch(file)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status} loading ${file}`);
+      }
+      return res.text();
     })
-    .catch(err => console.error(`Error loading ${file}:`, err));
+    .then(data => {
+      container.innerHTML = data;
+      container.removeAttribute('aria-busy');
+      highlightActiveLink();
+      setupMobileDropdownToggle();
+      setupMobileNavMenu();
+    })
+    .catch(err => {
+      container.removeAttribute('aria-busy');
+      container.innerHTML = '<p class="component-error">Navigation failed to load.</p>';
+      console.error(`Error loading ${file}:`, err);
+    });
+}
+
+function initBlogPage() {
+  loadComponent('navbar', 'components/navbar.html');
 }
 
 function highlightActiveLink() {
-  const currentUrl = window.location.href;
-  const currentPage = window.location.pathname.split('/').pop(); // e.g. "tiebreak.html" or ""
+  const currentPage = window.location.pathname.split('/').pop();
 
-  // Don't highlight anything on index page or root
   if (currentPage === '' || currentPage === 'index.html') return;
 
   const links = document.querySelectorAll('.top-nav a');
 
   links.forEach(link => {
-    const linkHref = link.href.split('#')[0];
     const linkPage = link.pathname.split('/').pop();
 
     if (linkPage === currentPage) {
       link.classList.add('active');
 
-      // Optional: highlight dropdown parent if inside one
       const dropdown = link.closest('.dropdown');
       if (dropdown) {
         dropdown.querySelector('.dropbtn').classList.add('active');
@@ -36,7 +54,6 @@ function highlightActiveLink() {
 }
 
 function setupMobileDropdownToggle() {
-  // Only bind click toggles when hover is not available (mobile/tablet).
   const canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
   const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   const shouldBindClick = !canHover || coarsePointer;
@@ -53,7 +70,6 @@ function setupMobileDropdownToggle() {
       e.preventDefault();
       e.stopPropagation();
 
-      // Close other open dropdowns.
       document.querySelectorAll('.dropdown.show').forEach(d => {
         if (d !== dropdown) d.classList.remove('show');
       });
@@ -62,7 +78,6 @@ function setupMobileDropdownToggle() {
     });
   });
 
-  // Click outside closes.
   document.addEventListener('click', () => {
     document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
   });

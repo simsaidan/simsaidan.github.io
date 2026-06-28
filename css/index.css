@@ -1,3 +1,25 @@
+/* Design tokens */
+:root {
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-text: #333;
+  --color-heading: #1a1a1a;
+  --color-muted: #555;
+  --color-bg: #fff;
+  --color-surface: #fafafa;
+  --color-border: #ddd;
+  --color-border-light: #eee;
+  --color-border-strong: #ccc;
+  --color-accent: #0072b1;
+  --color-accent-hover: #005a8c;
+  --color-github: #f09333;
+  --color-dropdown-hover: #f1f1f1;
+
+  --nav-height: 50px;
+  --sidebar-width: 290px;
+  --main-offset: 300px;
+}
+
 /* Basic Reset */
 * {
   margin: 0;
@@ -6,9 +28,9 @@
 }
 
 body {
-  font-family: sans-serif;
-  color: #333;
-  background: #fff;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
   line-height: 1.6;
 }
 
@@ -18,9 +40,9 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
-  background: #fafafa;
-  border-bottom: 1px solid #ddd;
+  height: var(--nav-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,8 +54,7 @@ body {
   font-weight: bold;
   font-size: 1.8em;
   text-decoration: none;
-  color: black;
-  font-weight: bold;
+  color: var(--color-heading);
   cursor: pointer;
   flex-shrink: 0;
   min-width: 0;
@@ -48,7 +69,7 @@ body {
 .top-nav .nav-right a {
   margin-left: 15px;
   text-decoration: none;
-  color: #333;
+  color: var(--color-text);
 }
 
 /* Hamburger: hidden on desktop */
@@ -69,7 +90,7 @@ body {
 }
 
 .nav-menu-toggle:focus-visible {
-  outline: 2px solid #00bfff;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
@@ -77,7 +98,7 @@ body {
   display: block;
   width: 22px;
   height: 2px;
-  background: #333;
+  background: var(--color-text);
   border-radius: 1px;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
@@ -97,24 +118,24 @@ body {
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 50px;
+  top: var(--nav-height);
   left: 0;
-  width: 290px;
+  width: var(--sidebar-width);
   padding: 20px;
-  border-right: 1px solid #ddd;
-  height: calc(100% - 50px);
+  border-right: 1px solid var(--color-border);
+  height: calc(100% - var(--nav-height));
   overflow-y: auto;
-  background: #fafafa;
+  background: var(--color-surface);
 }
 
 #right-sidebar {
   position: fixed;
   right: 0;
-  top: 50px;
-  width: 290px;
+  top: var(--nav-height);
+  width: var(--sidebar-width);
   height: 100vh;
-  background-color: #fafafa;
-  border-left: 1px solid #ccc;
+  background-color: var(--color-surface);
+  border-left: 1px solid var(--color-border-strong);
   overflow: auto;
   padding: 10px;
   z-index: 1;
@@ -131,45 +152,42 @@ body {
   margin-bottom: 20px;
 }
 
-.sidebar h2 {
+.sidebar h1 {
   margin: 10px 0;
   font-size: 1.2em;
 }
 
 
-/* Main Content */
+/* Main Content — portfolio homepage only */
 .main-content {
-  margin-left: 300px;
-  /* Sidebar width + some space */
+  margin-left: var(--main-offset);
   padding: 80px 40px 40px;
   max-width: 800px;
 }
 
-
-main h1 {
+.main-content h1 {
   font-size: 1.5em;
   margin-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 5px;
   margin-top: 40px;
 }
 
-main ul {
+.main-content ul {
   margin-left: 20px;
 }
 
-main p {
+.main-content p {
   margin-bottom: 10px;
 }
 
 .sidebar p a i {
-  color: #333;
+  color: var(--color-text);
   margin-right: 10px;
 }
 
 .sidebar p a:hover i {
-  color: #0072b1;
-  /* LinkedIn blue on hover */
+  color: var(--color-accent);
 }
 
 /* Dropdown */
@@ -182,7 +200,7 @@ main p {
   background: none;
   border: none;
   font: inherit;
-  color: #333;
+  color: var(--color-text);
   cursor: pointer;
   margin-left: 15px;
 }
@@ -190,21 +208,21 @@ main p {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #fff;
+  background-color: var(--color-bg);
   min-width: 200px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
   z-index: 1001;
 }
 
 .dropdown-content a {
-  color: #333;
+  color: var(--color-text);
   padding: 10px 16px;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-content a:hover {
-  background-color: #f1f1f1;
+  background-color: var(--color-dropdown-hover);
 }
 
 .dropdown:hover .dropdown-content {
@@ -220,7 +238,7 @@ main p {
   display: flex;
   align-items: center;
   font-size: 1.1em;
-  color: #333;
+  color: var(--color-text);
   text-decoration: none;
   margin-bottom: 10px;
   transition: color 0.2s ease;
@@ -234,20 +252,20 @@ main p {
 
 /* LINKEDIN: hover changes both icon and text to blue */
 .sidebar p a.social-link.linkedin:hover {
-  color: #0072b1;
+  color: var(--color-accent);
 }
 
 .sidebar p a.social-link.linkedin:hover i.fab.fa-linkedin {
-  color: #0072b1;
+  color: var(--color-accent);
 }
 
 /* GITHUB: hover changes both icon and text to orange */
 .sidebar p a.social-link.github:hover {
-  color: #f09333;
+  color: var(--color-github);
 }
 
 .sidebar p a.social-link.github:hover i.fab.fa-github {
-  color: #f09333;
+  color: var(--color-github);
 }
 
 #globeContainer {
@@ -257,7 +275,7 @@ main p {
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border-strong);
 }
 
 #globeContainer canvas {
@@ -274,11 +292,17 @@ main p {
   padding: 20px;
 }
 
-.top-nav a.active {
-  color: #00bfff;
-  /* light blue highlight */
+.top-nav a.active,
+.dropbtn.active {
+  color: var(--color-accent);
   font-weight: bold;
   text-decoration: underline;
+}
+
+.component-error {
+  color: #b30000;
+  padding: 8px 16px;
+  font-size: 0.9rem;
 }
 
 /* Abbreviate brand when horizontal space is tight (desktop layout unchanged above 992px) */
@@ -317,8 +341,8 @@ main p {
     right: 0;
     flex-direction: column;
     align-items: stretch;
-    background: #fafafa;
-    border-bottom: 1px solid #ddd;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
     padding: 4px 16px 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   }
@@ -330,13 +354,13 @@ main p {
   .top-nav .nav-right>a {
     margin-left: 0;
     padding: 12px 4px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .top-nav .dropdown {
     display: block;
     width: 100%;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .top-nav .dropbtn {
@@ -359,7 +383,7 @@ main p {
     position: static;
     min-width: unset;
     box-shadow: none;
-    border-left: 3px solid #ddd;
+    border-left: 3px solid var(--color-border);
     margin: 0 0 8px 8px;
   }
 

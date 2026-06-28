@@ -189,14 +189,30 @@ const hints = {
 
 let [clicked, seen] = ['button1', []]
 
+function openModal(el, focusOptions) {
+  el.classList.add('is-open');
+  ModalFocus.open(el, focusOptions);
+}
+
+function closeModal(el) {
+  el.classList.remove('is-open');
+  ModalFocus.close();
+}
+
 function openForm(b) {
   document.getElementById("email").value = "";
   clicked = b;
-  document.getElementById("myForm").style.display = "block";
+  const form = document.getElementById("myForm");
+  form.style.display = "block";
+  ModalFocus.open(form, {
+    onEscape: closeForm,
+    initialFocus: "#email",
+  });
 }
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
+  ModalFocus.close();
 }
 
 function giveUp() {
@@ -946,13 +962,16 @@ function showResult() {
     .replace(/(https:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
 
   document.getElementById('resultText').innerHTML = html + footer;
-  document.getElementById('resultPopup').dataset.copy = copy;  // If you want full footer in copy, do copy + footer
-  document.getElementById('resultPopup').style.display = 'flex';
+  document.getElementById('resultPopup').dataset.copy = copy;
+  openModal(document.getElementById('resultPopup'), {
+    onEscape: closeResult,
+    initialFocus: '#resultPopup button',
+  });
 }
 
 
 function closeResult() {
-  document.getElementById('resultPopup').style.display = 'none';
+  closeModal(document.getElementById('resultPopup'));
 }
 
 function copyResult() {
@@ -1047,10 +1066,13 @@ let info3 = `Data Source: Player and match data provided by <a href="https://git
 function showIntro() {
   const intro = "Welcome to Tennis Grid!\n\n" + info + "\n\n" + info2 + "\n\n" + info3;
   document.getElementById('introText').innerHTML = intro.replace(/\n/g, "<br>");
-  document.getElementById('introPopup').style.display = 'flex';
+  openModal(document.getElementById('introPopup'), {
+    onEscape: closeIntro,
+    initialFocus: '#introPopup .modal-ok',
+  });
 }
 
 function closeIntro() {
-  document.getElementById('introPopup').style.display = 'none';
+  closeModal(document.getElementById('introPopup'));
 }
 showIntro();
