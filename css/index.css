@@ -141,6 +141,16 @@ body {
   z-index: 1;
 }
 
+#globeContainer {
+  width: 1100px;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid var(--color-border-strong);
+}
+
 .sidebar .profile-pic {
   width: 200px;
   margin-bottom: 20px;
@@ -157,6 +167,14 @@ body {
   font-size: 1.2em;
 }
 
+.sidebar p a i {
+  color: var(--color-text);
+  margin-right: 10px;
+}
+
+.sidebar p a:hover i {
+  color: var(--color-accent);
+}
 
 /* Main Content — portfolio homepage only */
 .main-content {
@@ -165,29 +183,155 @@ body {
   max-width: 800px;
 }
 
-.main-content h1 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
+.main-content section + section {
+  margin-top: 48px;
+}
+
+.main-content h1,
+.main-content h2 {
+  font-size: 1.35em;
+  color: var(--color-heading);
+  margin-bottom: 16px;
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: 5px;
+  padding-bottom: 8px;
+}
+
+.main-content h1 {
   margin-top: 40px;
 }
 
-.main-content ul {
+.main-content h2 {
+  margin-top: 0;
+}
+
+.main-content ul:not(.skill-groups) {
   margin-left: 20px;
 }
 
 .main-content p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.sidebar p a i {
-  color: var(--color-text);
-  margin-right: 10px;
+.research-cvxquad {
+  margin-top: 24px;
 }
 
-.sidebar p a:hover i {
+.research-contributions {
+  margin-top: 24px;
+}
+
+.main-content a {
   color: var(--color-accent);
+}
+
+.main-content a:hover {
+  text-decoration: underline;
+}
+
+/* Skills pills */
+.skill-groups {
+  list-style: none;
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skill-groups > li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-category {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+/* Contact form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 6px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 0.2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.contact-submit {
+  align-self: flex-start;
+  padding: 10px 24px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.contact-submit:hover {
+  background: var(--color-accent-hover);
+}
+
+.form-status {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
 }
 
 /* Dropdown */
@@ -244,7 +388,6 @@ body {
   transition: color 0.2s ease;
 }
 
-/* Icon spacing + transition */
 .sidebar p a.social-link i {
   margin-right: 8px;
   transition: color 0.2s ease;
@@ -266,16 +409,6 @@ body {
 
 .sidebar p a.social-link.github:hover i.fab.fa-github {
   color: var(--color-github);
-}
-
-#globeContainer {
-  width: 1100px;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: top;
-  border: 1px solid var(--color-border-strong);
 }
 
 #globeContainer canvas {
@@ -396,12 +529,15 @@ body {
     padding: 80px 20px 20px;
   }
 
-  /* Contact form: make fields fill available width */
-  #contact input[type="text"],
-  #contact input[type="email"],
-  #contact textarea {
-    width: 100%;
+  .contact-form {
     max-width: 100%;
+  }
+}
+
+@media (min-width: 1371px) {
+  .main-content,
+  .footer-portfolio {
+    margin-right: calc(var(--sidebar-width) + 24px);
   }
 }
 
