@@ -8,25 +8,43 @@ const GLOBE_SPIN_RAD_PER_SEC = 0.3;
 const GLOBE_POV = { lat: 20, lng: 20, altitude: 5.2 };
 
 const container = document.getElementById('globeContainer');
+const sidebar = document.getElementById('right-sidebar');
+
 let globe = null;
 let spinAngle = 0;
 let lastSpinTime = 0;
 let animationFrameId = null;
+let spinning = false;
 
-function resizeGlobe() {
-  if (!globe || !container) return;
+function isSidebarVisible() {
+  return sidebar && getComputedStyle(sidebar).display !== 'none';
+}
 
-  const width = container.offsetWidth;
-  const height = container.offsetHeight;
-  if (width === 0 || height === 0) return;
+function getGlobeDimensions() {
+  if (!container || !isSidebarVisible()) return null;
 
-  globe.renderer().setSize(width, height);
-  globe.camera().aspect = width / height;
-  globe.camera().updateProjectionMatrix();
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  if (width === 0 || height === 0) return null;
+
+  return { width, height };
+}
+
+function resizeGlobe(instance = globe) {
+  const activeGlobe = instance ?? globe;
+  const dimensions = getGlobeDimensions();
+  if (!activeGlobe || !dimensions) return;
+
+  const { width, height } = dimensions;
+  // Use globe.gl's sizing API so renderer, camera, and scene-container stay in sync.
+  activeGlobe.width(width).height(height);
 }
 
 function spinGlobe(time) {
-  if (!globe) return;
+  if (!globe || !spinning) {
+    animationFrameId = null;
+    return;
+  }
 
   if (lastSpinTime) {
     spinAngle += GLOBE_SPIN_RAD_PER_SEC * ((time - lastSpinTime) / 1000);
@@ -48,18 +66,18 @@ function spinGlobe(time) {
 
 function positionGlobeContainer() {
   if (!container) return;
-  const desiredLeft = (-1 / 2) * window.innerWidth + 134;
-  container.style.left = `${desiredLeft}px`;
+  container.style.left = '';
 }
 
 function createGlobe() {
-  if (typeof Globe !== 'function' || !container) return null;
+  if (typeof Globe !== 'function' || !container || !isSidebarVisible()) return null;
 
-  const width = container.offsetWidth;
-  const height = container.offsetHeight;
-  if (width === 0 || height === 0) return null;
+  const dimensions = getGlobeDimensions();
+  if (!dimensions) return null;
 
   const instance = Globe()(container)
+    .width(dimensions.width)
+    .height(dimensions.height)
     .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-day.jpg')
     .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png');
 
@@ -71,13 +89,14 @@ function createGlobe() {
   instance.controls().target.set(0, 0, 0);
   instance.controls().update();
 
-  resizeGlobe();
+  resizeGlobe(instance);
 
-  const resizeObserver = new ResizeObserver(resizeGlobe);
+  const resizeObserver = new ResizeObserver(() => resizeGlobe());
   resizeObserver.observe(container);
 
+  spinning = true;
+  lastSpinTime = 0;
   animationFrameId = requestAnimationFrame(spinGlobe);
-  positionGlobeContainer();
   return instance;
 }
 
@@ -133,21 +152,43 @@ function tryInitGlobe() {
   new ResizeObserver(() => tryInitGlobe()).observe(container);
 }
 
+function stopGlobeSpin() {
+  spinning = false;
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+  lastSpinTime = 0;
+}
+
+function startGlobeSpin() {
+  if (!globe) return;
+  stopGlobeSpin();
+  spinning = true;
+  animationFrameId = requestAnimationFrame(spinGlobe);
+}
+
+function onSidebarShown() {
+  tryInitGlobe();
+  positionGlobeContainer();
+  requestAnimationFrame(() => {
+    resizeGlobe();
+    startGlobeSpin();
+  });
+}
+
 export function initGlobeVisitors() {
   tryInitGlobe();
   window.addEventListener('load', () => {
     tryInitGlobe();
     positionGlobeContainer();
   });
-  window.addEventListener('resize', positionGlobeContainer);
 
   window.matchMedia('(min-width: 1371px)').addEventListener('change', (event) => {
     if (event.matches) {
-      tryInitGlobe();
-    } else if (animationFrameId) {
-      cancelAnimationFrame(animationFrameId);
-      animationFrameId = null;
-      lastSpinTime = 0;
+      onSidebarShown();
+    } else {
+      stopGlobeSpin();
     }
   });
 }
